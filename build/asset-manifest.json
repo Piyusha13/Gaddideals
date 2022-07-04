@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b326338b.css",
+    "main.js": "/static/js/main.7ff6b80f.js",
+    "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
+    "static/media/truck-home.png": "/static/media/truck-home.d21e6cbe13c16b374e57.png",
+    "static/media/crane-home.png": "/static/media/crane-home.ceb69df303cde019f974.png",
+    "static/media/app-store-logos.png": "/static/media/app-store-logos.6bf3fcbb1f637927f775.png",
+    "static/media/tractor-home.png": "/static/media/tractor-home.3c6ffe44391b1c4ebcd0.png",
+    "static/media/location-home.png": "/static/media/location-home.46ce9bc14baa6728126b.png",
+    "static/media/girl_image.png": "/static/media/girl_image.c2d84d9c754ef415a44d.png",
+    "static/media/cargo-truck-home.png": "/static/media/cargo-truck-home.ec9437e48aa21e3c5e5b.png",
+    "static/media/user-icon.png": "/static/media/user-icon.8bd9ff31c80ca190589d.png",
+    "static/media/bus-home.png": "/static/media/bus-home.d7fc65d9c259648ef671.png",
+    "index.html": "/index.html",
+    "main.b326338b.css.map": "/static/css/main.b326338b.css.map",
+    "main.7ff6b80f.js.map": "/static/js/main.7ff6b80f.js.map",
+    "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b326338b.css",
+    "static/js/main.7ff6b80f.js"
+  ]
+}
