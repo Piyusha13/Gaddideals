@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
+import VehicleDetails from "./pages/VehicleDetails";
+// import HeroSection from "./pages/SellerHeroSection";
+import VehicleListings from "./pages/VehicleListings";
+// import SellerFormVehicle from "./pages/SellerFormVehicle";
+// import VehicleCard from "./pages/VehicleCard";
+// import FAQ from "./pages/FAQ";
+// import SellerForm from "./pages/SellerForm";
+import { Routes, Route } from "react-router-dom";
+import SellerHomePage from "./pages/SellerHomePage";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route element={<SellerHomePage />} index />
+      <Route element={<VehicleListings />} path="/vehiclelistings" />
+      <Route element={<VehicleDetails />} path="/vehicledetails" />
+    </Routes>
   );
 }
 

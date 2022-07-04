@@ -1,0 +1,224 @@
+.seller-form-container {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.form-routes {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  z-index: 50;
+  flex: 1 0 25%;
+}
+.form-routes::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 40%;
+  background-color: #646464;
+  top: 20%;
+  left: 13%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.form-routes .route-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-routes .route-nav a {
+  text-decoration: none;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #929292;
+}
+
+.form-routes .route-nav a.active {
+  text-decoration: underline;
+  color: #00adef;
+}
+
+.form-routes .route-nav .circle {
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border: 0.5px solid #ebebeb;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.form-routes .route-nav .circle.active {
+  border: 2px solid #00adef;
+}
+
+/* Form Register */
+.form-registration-container {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.form-registration-container .filter-tags {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 50px;
+}
+
+.form-registration-container .filter-tags .tag {
+  background: #ffffff;
+  border: 1px solid #f5f5f5;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-registration-container .filter-tags .tag span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 8px;
+  color: #929292;
+}
+
+.form-registration-container .filter-tags .tag .cancel-icon {
+  cursor: pointer;
+}
+
+.line {
+  width: 100%;
+  height: 0.1px;
+  background-color: #d4d4d4;
+  margin-top: 20px;
+}
+
+.form-register {
+  padding: 20px;
+}
+
+.form-register-controls {
+  display: flex;
+  align-content: center;
+  margin: 20px 0px 0px 0px;
+  gap: 20px;
+}
+
+.form-register-controls label {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 15px;
+  color: #050f56;
+  display: inline-block;
+  width: 150px;
+}
+
+.form-register-controls input {
+  width: 100%;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  font-family: "Roboto";
+  padding: 5px 20px;
+}
+
+.form-register-controls .permits {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.form-register-controls .permits .permit {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 30px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .permits .permit.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .permits .permit span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 15px;
+  color: #4a4a4a;
+}
+
+.form-register-controls .conditions {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.form-register-controls .conditions .condition {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 30px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .conditions .condition span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 15px;
+  color: #4a4a4a;
+}
+.form-register-controls .conditions .condition.active {
+  border: 1px solid #00adef;
+}
+
+.btn-next {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-next button {
+  border: none;
+  padding: 10px 50px;
+  background: #050f56;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-family: "Roboto";
+}

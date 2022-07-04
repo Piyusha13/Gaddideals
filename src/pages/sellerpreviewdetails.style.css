@@ -1,0 +1,229 @@
+.seller-preview-container {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.form-routes {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  z-index: 50;
+  flex: 1 0 25%;
+}
+.form-routes.preview::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 26%;
+  background-color: #646464;
+  top: 15%;
+  left: 13%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.form-routes .route-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-routes .route-nav a {
+  text-decoration: none;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #929292;
+}
+
+.form-routes .route-nav a.active {
+  text-decoration: underline;
+  color: #00adef;
+}
+
+.form-routes .route-nav .circle {
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border: 0.5px solid #ebebeb;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.form-routes .route-nav .circle.active {
+  border: 2px solid #00adef;
+}
+
+.preview-detail-container {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.preview-detail-container .preview-details-wrapper {
+  padding: 20px;
+  position: relative;
+  width: 100%;
+}
+.preview-detail-container .preview-details-wrapper .preview-line {
+  width: 100%;
+  height: 0.1px;
+  background-color: #d4d4d4;
+  margin-top: 10px;
+}
+
+.preview-detail-container .preview-details-wrapper .edit-icon {
+  position: absolute;
+  top: 10px;
+  cursor: pointer;
+  right: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  width: 100%;
+}
+.row .detail {
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+}
+.row .detail h6 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 15px;
+  color: #050f56;
+  margin: 0;
+}
+.row .detail p {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 14px;
+  color: #929292;
+}
+
+.preview-row-one {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.preview-row-one .preview-vehicle-document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+.preview-row-one .preview-vehicle-document h6 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 14px;
+  color: #050f56;
+}
+.preview-row-one .preview-vehicle-document .document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 40px;
+}
+
+.preview-row-two {
+  margin-top: 20px;
+}
+.preview-row-two .vehicle-documents {
+  display: flex;
+  align-items: flex-start;
+  gap: 47px;
+}
+.preview-row-two h6 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 15px;
+  color: #050f56;
+}
+.preview-row-two .vehicle-documents .document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 40px;
+  cursor: pointer;
+}
+
+.preview-row-three {
+  margin-top: 20px;
+}
+.preview-row-three .vehicle-documents {
+  display: flex;
+  align-items: flex-start;
+  gap: 47px;
+}
+.preview-row-three h6 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 15px;
+  color: #050f56;
+}
+.preview-row-three .vehicle-documents .document {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 40px;
+  cursor: pointer;
+}
+
+.preview-btns {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.preview-btns button {
+  border: none;
+  padding: 10px 50px;
+  background: #050f56;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 20px;
+  font-family: "Roboto";
+  width: 100%;
+}
+.preview-btns .edit {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  color: #000000;
+}
+.preview-btns .save {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  color: #000000;
+}

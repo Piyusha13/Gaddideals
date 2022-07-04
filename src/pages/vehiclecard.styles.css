@@ -1,0 +1,126 @@
+.vehicle-card-container {
+  width: 643px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.vehicle-card-container .card {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.card .card-img-wrapper img {
+  width: 213px;
+  height: 168px;
+  object-fit: cover;
+}
+
+.card .card-info {
+  padding: 20px 20px;
+  margin-bottom: 0px;
+  width: 100%;
+}
+.card .card-info .card-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card .card-info .card-info-header .card-info-title {
+  display: flex;
+  flex-direction: column;
+}
+.card .card-info .card-info-header .card-info-title .location {
+  display: flex;
+  align-items: center;
+}
+.card .card-info .card-info-header .card-info-title h1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  color: #050f56;
+  margin: 0;
+  padding: 0;
+}
+.card .card-info .card-info-header .card-info-title .location span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  margin-left: 5px;
+  color: #121212;
+}
+
+.card .card-info .card-info-header .card-publish-review {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.card .card-info .card-info-header .card-publish-review .review {
+  background: rgba(254, 98, 13, 0.15);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card .card-info .card-info-header .card-publish-review .review strong {
+  display: inline-block;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  color: #fe620d;
+  margin: 0;
+}
+.card .card-info .card-info-header .card-publish-review span {
+  display: inline-block;
+  margin-top: 5px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 8px;
+  color: #000000;
+}
+
+.card .card-info .card-price {
+  margin-top: 10px;
+}
+.card .card-info .card-price h3 {
+  margin: 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  color: #00adef;
+}
+
+.card .card-info .card-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.card .card-info .card-stats .stat {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 5px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card .card-info .card-stats .stat span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  color: #121212;
+}
