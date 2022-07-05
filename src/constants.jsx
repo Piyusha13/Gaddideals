@@ -37,7 +37,8 @@ const Constant = {
     postAllModels: mainDomain + "api/model",
     postAllSubscriptions: mainDomain + "api/subscription",
     postAllSignups: mainDomain + "api/user/auth/signup",
-    postAllSignins: mainDomain + "api/user/auth/signup",
+    postAllSignins: mainDomain + "api/user/auth/signin",
+    postAllOtps: mainDomain +"api/user/auth/verifyOTP",
   },
 };
 export default Constant;

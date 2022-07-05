@@ -202,3 +202,444 @@
     display: none;
   }
 }
+
+/* .SignUpModal{
+  height: 100vh !important;
+  width: 35% !important;
+  background-color: #050f56 !important;
+} */
+
+.closing-arrow{
+  width: 2rem;
+  cursor: pointer;
+  margin-bottom: 8%;
+}
+
+
+.parent{
+  background-color: rgba(128, 128, 128, 0.274);
+  position:fixed;
+  z-index:9999;
+  height: 100%;
+  width: 67%;
+  cursor: pointer;
+}
+.main_parent{
+  width: 100%;
+  height: 100%;
+  position:fixed;
+  z-index:99;
+  
+  display: flex;
+  justify-content: space-between;
+}
+.sign-in-title{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 2vw;
+margin-bottom: 0;
+}
+.text-color-blue{
+  color: #00ADEF;
+}
+.sign-in-welcome-text{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 1.1vw;
+color: #969696;
+}
+.sign-in-google,.sign-in-fb,.sign-in-email{
+    border: none;
+height: 10%;
+margin-top: 1vh;
+margin-bottom: 2vh;
+  background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+display: flex;
+align-items: center;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 1vw;
+
+
+
+color: #CFCFCF;
+
+}
+.sign-in-google img,.sign-in-fb img,.sign-in-email img{
+  width: 1.4rem;
+  margin-right: 2%;
+}
+.sign-in-google img{
+  margin-left: 22%;
+}
+.sign-in-fb img{
+  margin-left: 22%;
+}
+.sign-in-email{
+  justify-content: center;
+}
+hr{
+  width: 46%;
+  display: inline-block;
+}
+.or-div{
+  display: flex;
+  align-items: center;
+}
+.or{
+  margin-left: 2%;
+  margin-right: 2%;
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 1.2vw;
+color: #818181;
+}
+.phone-no-input{
+  background: #FFFFFF;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+height: 10%;
+border: none;
+margin-top: 4%;
+margin-bottom: 4%;
+padding-left: 4%;
+}
+::placeholder
+{
+  font-style: normal;
+font-weight: 400;
+font-size: 1.2vw;
+line-height: 23px;
+
+color: #9C9C9C;
+}
+.sign-in-button{
+  background: #050F56;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+border: none;
+height: 10%;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 1.8vw;
+color: white;
+margin-bottom: 2%;
+}
+.create-account{
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+text-align: end;
+color: #00ADEF;
+cursor: pointer;
+}
+a{
+  text-decoration: none;
+}
+
+
+/* sign up */
+.signup-closing-arrow{
+  width: 2rem;
+  cursor: pointer;
+  margin-bottom: 6%;
+}
+
+
+.signup-parent{
+  background-color: rgba(128, 128, 128, 0.274);
+  position:fixed;
+  z-index:9999;
+  height: 100%;
+  width: 67%;
+  cursor: pointer;
+}
+.signup-main_parent{
+  width: 100%;
+  height: 100%;
+  position:fixed;
+  z-index:99;
+  
+  display: flex;
+  justify-content: space-between;
+}
+.signup-sign-in-title{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 2vw;
+margin-bottom: 6%;
+}
+.signup-text-color-blue{
+  color: #00ADEF;
+}
+.signup-sign-in-welcome-text{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 1.1vw;
+color: #969696;
+}
+.signup-sign-in-google,.signup-sign-in-fb,.signup-sign-in-email{
+    border: none;
+height: 10%;
+margin-top: 1vh;
+margin-bottom: 2vh;
+  background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+display: flex;
+align-items: center;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 1vw;
+
+
+
+color: #CFCFCF;
+
+}
+.signup-sign-in-google img,.signup-sign-in-fb img,.signup-sign-in-email img{
+  width: 1.4rem;
+  margin-right: 2%;
+}
+.signup-sign-in-google img{
+  margin-left: 22%;
+}
+.signup-sign-in-fb img{
+  margin-left: 22%;
+}
+.signup-sign-in-email{
+  justify-content: center;
+}
+.SinguplocationIcon{
+  height: 10%;
+  margin-bottom: 4%;
+  position: relative;
+
+}
+.Singup-location-Icon{
+  width: 1.2vw;
+  position: absolute;
+  z-index: 9;
+   top: 1vh; 
+   right: 25px;
+ transform: translate(50%,50%);
+}
+.SingupEyeIconDiv{
+  height: 9vh;
+  margin-bottom: 4%;
+  position: relative;
+}
+.Singup-eye-Icon{
+  width: 1.2vw;
+  position: absolute;
+  z-index: 9;
+   top: 1vh; 
+   right: 25px;
+ transform: translate(50%,50%);
+}
+@media screen and (min-width: 768px) {
+  /* .Singup-eye-Icon{
+    width: 1.2vw;
+    position: absolute;
+    z-index: 9;
+     top: 3vh; 
+     right: 25px;
+   transform: translate(50%,50%);
+  }
+  .Singup-location-Icon{
+    width: 1.2vw;
+    position: absolute;
+    z-index: 9;
+     top: 3vh; 
+     right: 25px;
+   transform: translate(50%,50%);
+  } */
+}
+.signup-location-input{
+  height: 100%;
+  width: 100%;
+  border: none;
+  background: #FFFFFF;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+padding-left: 4%;
+}
+.signup-phone-no-input{
+  background: #FFFFFF;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+height: 10%;
+border: none;
+margin-top: 0%;
+margin-bottom: 4%;
+padding-left: 4%;
+}
+::placeholder
+{
+  font-style: normal;
+font-weight: 400;
+font-size: 1vw;
+line-height: 23px;
+font-family: 'Poppins';
+color: #999999;
+}
+.signup-sign-in-button{
+  background: #050F56;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 10px;
+border: none;
+height: 10%;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 1.8vw;
+color: white;
+margin-bottom: 2%;
+margin-top: 4%;
+}
+.signup-create-account{
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+text-align: end;
+color: #00ADEF;
+cursor: pointer;
+}
+a{
+  text-decoration: none;
+}
+
+/* otp */
+.otp-main_parent{
+  width: 100%;
+  height: 100%;
+  position:fixed;
+  z-index:99;
+  display: flex;
+  justify-content: space-between;
+}
+.otp-parent{
+  background-color: rgba(128, 128, 128, 0.274);
+  position:fixed;
+  z-index:9999;
+  height: 100%;
+  width: 67%;
+  cursor: pointer;
+}
+.otp-closing-arrow{
+  width: 2rem;
+  cursor: pointer;
+  margin-bottom: 8%;
+}
+.otp-sign-in-title{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 2vw;
+margin-bottom: 0;
+}
+.otp-welcome-text{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 1.1vw;
+color: #969696;
+margin-bottom: 8%;
+}
+.otp-phone-no-text{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 1.1vw;
+color: #969696;
+margin-bottom: 1%;
+}
+.otp-phone-no-input{
+  background: #FFFFFF;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 6px;
+height: 10%;
+border: none;
+margin-top: 0%;
+margin-bottom: 4%;
+padding-left: 4%;
+}
+::placeholder
+{
+  font-style: normal;
+font-weight: 400;
+font-size: 1vw;
+line-height: 23px;
+font-family: 'Poppins';
+color: #999999;
+}
+.otp-create-account{
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 1vw;
+text-align: end;
+/* color: #00ADEF; */
+cursor: pointer;
+margin-top: -2%;
+}
+.otp-sign-in-button{
+  background: #050F56;
+box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+border-radius: 6px;
+border: none;
+height: 10%;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 1.8vw;
+color: white;
+margin-bottom: 2%;
+margin-top: 4%;
+}
+.timer{
+  color:#00ADEF;
+  font-weight:bold;
+  position: absolute;
+  z-index: 9;
+  top: 48vh; 
+  right: 12%;
+ transform: translate(50%,50%);
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 1vw;
+}
+@media screen and (min-width: 1367px) {
+  .timer{
+    color:#00ADEF;
+    font-weight:bold;
+    position: absolute;
+    z-index: 9;
+     top: 46vh; 
+     right: 12%;
+   transform: translate(50%,50%);
+    font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1vw;
+  }
+}
+.otp-text-color-blue{
+  color: #00ADEF;
+  font-weight: 600;
+  font-family: 'Roboto';
+font-style: normal;
+}
