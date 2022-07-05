@@ -2,10 +2,24 @@ import "./footer.style.css";
 
 import footerLogo from "../assets/footer-logo.png";
 import appIcons from "../assets/app-store-logos.png";
+import facebookIcon from "../assets/facebook.png";
+import twitterIcon from "../assets/twitter.png";
+import instagramIcon from "../assets/instagram.png";
 
 const Footer = () => {
   return (
     <footer className="footer-section">
+      <div className="social-container">
+        <div className="social-title">
+          <h5>Keep in Touch</h5>
+        </div>
+        <div className="social-links">
+          <img src={facebookIcon} alt="facebook" />
+          <img src={twitterIcon} alt="twitter" />
+          <img src={instagramIcon} alt="instagram" />
+        </div>
+      </div>
+
       <div className="footer-container">
         <div className="footer-top">
           <div className="logo-content">
@@ -149,6 +163,12 @@ const Footer = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="footer-copyright">
+        <p>
+          ®<a href="#gaddideals">2022 www.gaddideals.com</a> |{" "}
+          <a href="#carapace">Site By Carapace</a> | All rights reserved
+        </p>
       </div>
     </footer>
   );

@@ -134,7 +134,7 @@ const SellerHomePage = () => {
 
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Select the vehicle of your choice</h5>
+              <h5>Get the sellar details</h5>
             </div>
 
             <div className="how-card-img">
@@ -144,14 +144,14 @@ const SellerHomePage = () => {
             <div className="how-card-text">
               <p>
                 Once the buyer selects the vehicle of their choice, they will
-                get the seller details lorem ipsum
+                get the seller details
               </p>
             </div>
           </div>
 
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Select the vehicle of your choice</h5>
+              <h5>Directly negotiate with the seller of the vehicle</h5>
             </div>
 
             <div className="how-card-img">
@@ -161,7 +161,8 @@ const SellerHomePage = () => {
             <div className="how-card-text">
               <p>
                 The buyer can directly negotiate with the seller of the vehicle
-                and there will be NO COMMISSION charged.
+                and there will be NO COMMISSION charged to the buyer of the
+                vehicle
               </p>
             </div>
           </div>
@@ -173,36 +174,17 @@ const SellerHomePage = () => {
           <h1>Latest Vehicle</h1>
         </div>
 
-        <div className="latest-vehicles-container">
+        <div className="latest-vehicles-container container-fluid m-0 p-0">
           <Tabs
             selectedIndex={tabIndex}
+            selectedTabClassName="active-bar"
             onSelect={(index) => setTabIndex(index)}
           >
             <TabList className="tablist-container">
-              <Tab>Truck</Tab>
-              <span
-                className={tabIndex === 0 ? "active-bar" : "active-bar-close"}
-              ></span>
-              <Tab>Buses</Tab>
-              <span
-                className={
-                  tabIndex === 1 ? "active-bar buses" : "active-bar-close"
-                }
-              ></span>
-              <Tab>Tractors</Tab>
-              <span
-                className={
-                  tabIndex === 2 ? "active-bar tractors" : "active-bar-close"
-                }
-              ></span>
-              <Tab>Construction Equipments</Tab>
-              <span
-                className={
-                  tabIndex === 3
-                    ? "active-bar construction"
-                    : "active-bar-close"
-                }
-              ></span>
+              <Tab className="tab">Truck</Tab>
+              <Tab className="tab">Buses</Tab>
+              <Tab className="tab">Tractors</Tab>
+              <Tab className="tab">Construction Equipments</Tab>
             </TabList>
 
             <TabPanel className="tab-panel">
@@ -243,7 +225,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                        <button>Get Seller Details</button>
+                        <a href="vehicledetails">
+                          <button>Get Seller Details</button>
+                        </a>
                       </div>
                     </div>
                   </SwiperSlide>

@@ -1,16 +1,29 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import logoIcon from "../assets/logo.png";
-import busIcon from "../assets/bus-home.png";
-import cargoIcon from "../assets/cargo-truck-home.png";
-import tractorIcon from "../assets/tractor-home.png";
-import craneIcon from "../assets/crane-home.png";
 import searchIcon from "../assets/search-icon.png";
 import locationIcon from "../assets/location-home.png";
 import downArrow from "../assets/down-arrow.png";
 import userIcon from "../assets/user-icon.png";
+import hamburgerIcon from "../assets/hamburger-menu.png";
 
 import "./navbar.style.css";
 
 const Navbar = () => {
+  const [navIcons, setNavIcons] = useState([]);
+
+  const fetchIcons = async () => {
+    const response = await axios.get(
+      "https://gaddideals.brokerinvoice.co.in/api/category"
+    );
+    setNavIcons(response.data.category.docs);
+  };
+
+  useEffect(() => {
+    fetchIcons();
+  }, []);
+
   return (
     <header className="header-container">
       <div className="sell-buy-container">
@@ -22,7 +35,7 @@ const Navbar = () => {
         </a>
       </div>
 
-      <nav className="navbar navbar-expand-lgnav-container nav-container">
+      <nav className="navbar navbar-expand-lg nav-container">
         <div className="container-fluid">
           <div className="logo">
             <a href="/" className="navbar-brand">
@@ -31,18 +44,23 @@ const Navbar = () => {
           </div>
 
           <div className="brand-categories">
-            <div className="brand-category active">
-              <img src={cargoIcon} alt="cargo truck" />
-            </div>
-            <div className="brand-category">
-              <img src={busIcon} alt="bus" />
-            </div>
-            <div className="brand-category">
-              <img src={tractorIcon} alt="tractor" />
-            </div>
-            <div className="brand-category">
-              <img src={craneIcon} alt="crane" />
-            </div>
+            {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
+              <div
+                className={`${
+                  index === 0 ? "brand-category active" : "brand-category"
+                }`}
+                key={catgeoryIcon._id}
+              >
+                <img
+                  src={`https://gaddideals.brokerinvoice.co.in${catgeoryIcon.icon}`}
+                  alt={catgeoryIcon.title}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="hamburger-menu">
+            <img src={hamburgerIcon} alt="mobile menu" />
           </div>
 
           <div className="search-container">

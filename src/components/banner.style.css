@@ -1,3 +1,6 @@
+.carousel-container {
+  position: relative;
+}
 .carousel-container img {
   width: 100%;
   height: 85vh;
@@ -7,4 +10,28 @@
   width: 70px;
   height: 5px;
   border-radius: 5px;
+}
+
+.carousel-container .intro-left {
+  position: absolute;
+  top: 25%;
+  left: 20px;
+  z-index: 100;
+}
+.carousel-container .intro-left h1 {
+  font-family: "Poppins";
+  font-weight: bolder;
+  font-size: 64px;
+  color: #ffffff;
+}
+.carousel-container .intro-left p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #b5b5b5;
+  display: inline-block;
+  word-wrap: break-word;
+  width: 600px;
 }

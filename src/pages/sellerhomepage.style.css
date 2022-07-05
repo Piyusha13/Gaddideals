@@ -8,7 +8,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -30,6 +30,12 @@
   align-items: center;
   gap: 35px;
   padding: 0rem 0px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .how-cards-container {
+    flex-wrap: wrap;
+  }
 }
 
 .how-card {
@@ -42,9 +48,11 @@
   align-items: center;
   flex-direction: column;
   padding: 30px;
-  text-align: center;
 }
-
+.how-card .how-card-title {
+  width: 100%;
+  height: 100%;
+}
 .how-card .how-card-title h5 {
   font-family: "Poppins";
   font-weight: 500;
@@ -52,10 +60,18 @@
   color: #050f56;
   margin: 0;
 }
+.how-card .how-card-img {
+  width: 100%;
+  height: 100%;
+}
 .how-card .how-card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.how-card .how-card-text {
+  width: 100%;
+  height: 100%;
 }
 .how-card .how-card-text p {
   font-family: "Roboto";
@@ -82,7 +98,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -151,20 +167,49 @@
 }
 
 .swiper-latest {
+  width: 100%;
   margin-top: 40px;
-}
-
-.tab-panel {
   padding: 0px 40px;
 }
+.swiper-latest .swiper-button-prev {
+  background: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+}
+.swiper-latest .swiper-button-prev::after {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.swiper-latest .swiper-button-next {
+  background: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+}
+.swiper-latest .swiper-button-next::after {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
 .tablist-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 200px;
   list-style-type: none;
   cursor: pointer;
+  text-align: center;
   position: relative;
+  padding: 0px 40px;
 }
 .tablist-container::after {
   content: "";
@@ -173,14 +218,16 @@
   left: 0;
   width: 100%;
   height: 1px;
+  margin-top: 17px;
   background-color: #dddddd;
 }
 .tablist-container > li {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 30px;
+  font-size: 20px;
   color: #6b6b6b;
   position: relative;
+  border: none;
   margin: 0px 0px 0px 0px;
 }
 
@@ -188,48 +235,67 @@
   border: none;
 }
 
-.tablist-container .active-bar {
+.tab {
+  position: relative;
+}
+.react-tabs__tab-panel--selected:focus {
+  border: none;
+}
+.tab.active-bar::after {
+  content: "";
   position: absolute;
-  top: 43px;
-  left: 0;
+  top: 45px;
+  left: 0px;
   width: 260px;
-  height: 5px;
+  height: 3px;
   background-color: #fe620d;
   border-radius: 5px;
   color: #000000;
   z-index: 50;
 }
-.tablist-container .active-bar-close {
-  display: none;
-}
-.tablist-container .active-bar.buses {
+.tab.active-bar:nth-of-type(1)::after {
+  content: "";
   position: absolute;
-  top: 43px;
-  left: 230px;
+  top: 45px;
+  left: -100px;
   width: 260px;
-  height: 5px;
+  height: 3px;
   background-color: #fe620d;
   border-radius: 5px;
   color: #000000;
   z-index: 50;
 }
-.tablist-container .active-bar.tractors {
+.tab.active-bar:nth-of-type(2)::after {
+  content: "";
   position: absolute;
-  top: 43px;
-  left: 530px;
+  top: 45px;
+  left: -100px;
   width: 260px;
-  height: 5px;
+  height: 3px;
   background-color: #fe620d;
   border-radius: 5px;
   color: #000000;
   z-index: 50;
 }
-.tablist-container .active-bar.construction {
+.tab.active-bar:nth-of-type(3)::after {
+  content: "";
   position: absolute;
-  top: 43px;
-  left: 890px;
-  width: 450px;
-  height: 5px;
+  top: 45px;
+  left: -80px;
+  width: 260px;
+  height: 3px;
+  background-color: #fe620d;
+  border-radius: 5px;
+  color: #000000;
+  z-index: 50;
+}
+.tab.active-bar:nth-of-type(4)::after {
+  content: "";
+  position: absolute;
+  top: 45px;
+  left: -10px;
+  width: 280px;
+  height: 3px;
   background-color: #fe620d;
   border-radius: 5px;
   color: #000000;
@@ -247,7 +313,7 @@
 .our-categories-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -309,7 +375,7 @@
 .customer-review-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -429,7 +495,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -481,7 +547,7 @@
 .faq-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 48px;
+  font-size: 38px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -543,7 +609,7 @@
   object-fit: cover;
 }
 .faq .answer p {
-  width: 90%;
+  width: 95%;
   /* padding: 0px 40px; */
   font-family: "Roboto";
   font-weight: 400;

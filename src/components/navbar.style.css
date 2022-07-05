@@ -1,8 +1,3 @@
-.header-container {
-  width: 100%;
-  height: 100%;
-}
-
 .sell-buy-container {
   display: flex;
   justify-content: center;
@@ -25,16 +20,31 @@
   margin-left: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .sell-buy-container {
+    padding: 5px 30px;
+  }
+}
+
 /* NavBar */
 .nav-container {
   background: #f4f4f4;
-  min-height: 10vh;
 }
 
 .logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.hamburger-menu {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+  }
 }
 
 .brand-categories {
@@ -131,6 +141,12 @@
   object-fit: cover;
 }
 
+@media screen and (max-width: 768px) {
+  .location-container {
+    display: none;
+  }
+}
+
 /* languages */
 .languages-container {
   display: flex;
@@ -156,6 +172,13 @@
   height: 18px;
   object-fit: cover;
 }
+@media screen and (max-width: 768px) {
+  .languages-container {
+    display: none;
+  }
+}
+
+/* user */
 
 .user {
   background: #ffffff;
@@ -173,4 +196,9 @@
   width: 20px;
   height: 25px;
   object-fit: cover;
+}
+@media screen and (max-width: 768px) {
+  .user {
+    display: none;
+  }
 }

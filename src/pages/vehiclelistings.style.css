@@ -1,8 +1,9 @@
 .vehicles-container {
   padding: 10px 10px;
   display: grid;
+  margin-top: 20px;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 20px;
 }
 
 .vehicles-container .filter-sidebar {
@@ -77,20 +78,20 @@
 }
 
 .vehicles-container .filter-sidebar .filter-two .search-container {
-  padding: 20px;
+  padding: 20px 20px 0px 0px;
   position: relative;
 }
 .vehicles-container .filter-sidebar .filter-two .search-container img {
   position: absolute;
-  top: 38px;
-  left: 30px;
+  top: 35px;
+  left: 10px;
 }
 .vehicles-container .filter-sidebar .filter-two .search-container input {
   width: 100%;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   font-family: inherit;
   border: none;
 }
@@ -194,6 +195,7 @@
   .min-max-controls {
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   align-items: center;
   margin-top: 10px;
 }
@@ -229,15 +231,24 @@
   .min-max-controls
   .price-input
   input {
-  width: 90%;
+  width: 100%;
   margin-top: 10px;
-  padding: 1rem 1rem;
+  padding: 0.5rem 1.5rem;
   font-family: inherit;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   text-align: center;
   border: none;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .price-container
+  .min-max-controls
+  .price-input
+  input::placeholder {
+  font-size: 10px;
 }
 
 .vehicles-container
@@ -277,6 +288,16 @@
   line-height: 24px;
   color: #121212;
 }
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .vehicles-stats-container
+  .vehicle-stat
+  img {
+  width: 12px;
+  height: 12px;
+  object-fit: cover;
+}
 
 /* vehicles list */
 
@@ -286,7 +307,7 @@
   column-gap: 20px;
   row-gap: 30px; */
   grid-column: 2 / span 4;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 5;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -294,9 +315,12 @@
 }
 
 .vehicles-container .vehicles-list-container .vehicle-card {
+  width: 320px;
+  height: fit-content;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .vehicles-container .vehicles-list-container .vehicle-card .img-wrapper img {
@@ -340,7 +364,14 @@
   .name
   .location
   span {
+  display: inline-block;
   margin-left: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 15px;
+  color: #121212;
 }
 
 .vehicles-container
@@ -365,7 +396,7 @@
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .vehicles-container

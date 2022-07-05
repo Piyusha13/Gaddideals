@@ -45,11 +45,19 @@ const Banner = () => {
         }}
         modules={[Pagination, Autoplay]}
       >
-        {bannerData.slice(0, 3).map((bannerImg) => (
-          <SwiperSlide key={bannerImg._id}>
+        {bannerData.map((banner) => (
+          <SwiperSlide key={banner._id}>
+            <div className="intro-left">
+              <h1>{banner.title}</h1>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: banner.description,
+                }}
+              ></p>
+            </div>
             <img
-              src={`https://gaddideals.brokerinvoice.co.in${bannerImg.poster}`}
-              alt={bannerImg.title}
+              src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
+              alt={banner.title}
             />
           </SwiperSlide>
         ))}
