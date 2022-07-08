@@ -1,5 +1,5 @@
 const mainDomain = "https://gaddideals.brokerinvoice.co.in/";
-// const imgurl="https://gaddideals.brokerinvoice.co.in";
+const imgurl="https://gaddideals.brokerinvoice.co.in";
 
 const Constant = {
   getUrls: {
@@ -19,6 +19,7 @@ const Constant = {
     getAllModels: mainDomain + "api/model",
     getAllSubscriptions: mainDomain + "api/subscription",
     getAllLatestVehicles: mainDomain + "api/vehicle/latestVehicles",
+    getSingleUser:mainDomain +"api/user",
   },
   postUrls: {
     postAllAdmins: mainDomain + "api/user/admin_login",

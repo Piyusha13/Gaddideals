@@ -8,26 +8,73 @@ import ownerIcon from "../assets/owner.png";
 import calenderIcon from "../assets/calendar.png";
 import tyreIcon from "../assets/tyre.png";
 import racingIcon from "../assets/racing.png";
-import manualTransmissionIcon from "../assets/manual-transmission.png";
+import manualTransmissionIcon from "../assets/gas-station.png";
 import truckThumbSmall from "../assets/truck-thumb-small.png";
 import similarTruck from "../assets/trucks1.png";
 import similarTruckSmall from "../assets/similar-truck-small.png";
+import axios from "axios";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const vehicleDetails = () => {
+const VehicleDetails = () => {
+  let { id } = useParams();
+  const [getvehicledetails, setVehicleDetails] = useState("");
+  const [modelName, setmodelName] = useState("");
+  const [FuelType, setFuelType] = useState("");
+  // const [manufacturedYear,setmanufacturedYear]=useEffect("");
+
+  const getSingleVehicleDetails = () => {
+    axios.get(
+      "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" + id, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
+        },
+      }
+    )
+     .then((res) => {
+        // console.log(response._id);
+        // console.log(id);
+        setVehicleDetails(res.data.vehicle);
+        setmodelName(res.data.vehicle.model);
+
+        setFuelType(res.data.vehicle.fuelType);
+        // setmanufacturedYear(res.data.vehicle.years);
+        
+
+        // console.log(response.front_side_pic);
+      });
+  };
+
+  useEffect(() => {
+    getSingleVehicleDetails();
+  });
+
   return (
     <section className="vehicle-details-container">
       <div className="vehicle-detail">
         <div className="vehicle-thumbnail">
-          <img src={truckThumbnail} alt="truck" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.front_side_pic
+            }
+            alt="truck"
+          />
         </div>
         <div className="vehicle-info">
           <div className="vehicle-info-wrapper">
             <div className="heading-container">
               <div className="title">
-                <h3>Tata Intra V30</h3>
+                <h3>{modelName.name}</h3>
                 <div className="truck-location">
                   <img src={locationIcon} alt="location" />
-                  <span>Mumbai</span>
+                  <span>{getvehicledetails.city} </span>
                 </div>
               </div>
               <div className="wrapper">
@@ -47,33 +94,33 @@ const vehicleDetails = () => {
               <div className="row-one">
                 <div className="stat">
                   <img src={speedometerIcon} alt="speedometer icon" />
-                  <span>10,000</span>
+                  <span>{getvehicledetails.km_driven}</span>
                 </div>
                 <div className="stat">
                   <img src={ownerIcon} alt="owner icon" />
-                  <span>Second</span>
+                  <span>{getvehicledetails.no_of_owner}</span>
                 </div>
                 <div className="stat calender">
                   <img src={calenderIcon} alt="calender icon" />
-                  <span>2001</span>
+                  <span>{getvehicledetails.createdAt} </span>
                 </div>
               </div>
 
               <div className="row-two">
                 <div className="stat">
                   <img src={tyreIcon} alt="tyre icon" />
-                  <span>4</span>
+                  <span>{getvehicledetails.no_of_tyre}</span>
                 </div>
                 <div className="stat racing">
                   <img src={racingIcon} alt="racing icon" />
-                  <span>Good</span>
+                  <span>{getvehicledetails.tyre_cond} </span>
                 </div>
                 <div className="stat manual">
                   <img
                     src={manualTransmissionIcon}
                     alt="manual transmission icon"
                   />
-                  <span>Manual</span>
+                  <span>{FuelType.title} </span>
                 </div>
               </div>
             </div>
@@ -82,7 +129,7 @@ const vehicleDetails = () => {
 
             <div className="selling-price-container">
               <p>
-                Selling Price <span>₹4,65,000</span>
+                Selling Price <span>₹{getvehicledetails.selling_price} </span>
               </p>
             </div>
           </div>
@@ -109,19 +156,49 @@ const vehicleDetails = () => {
       </div>
       <div className="vehicle-gallery-container">
         <div className="thumb">
-          <img src={truckThumbSmall} alt="truck thumbnail" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.front_side_pic
+            }
+            alt="truck thumbnail"
+          />
         </div>
         <div className="thumb">
-          <img src={truckThumbSmall} alt="truck thumbnail" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.back_side_pic
+            }
+            alt="truck thumbnail"
+          />
         </div>
         <div className="thumb">
-          <img src={truckThumbSmall} alt="truck thumbnail" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.engine_pic
+            }
+            alt="truck thumbnail"
+          />
         </div>
         <div className="thumb">
-          <img src={truckThumbSmall} alt="truck thumbnail" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.front_tyre
+            }
+            alt="truck thumbnail"
+          />
         </div>
         <div className="thumb">
-          <img src={truckThumbSmall} alt="truck thumbnail" />
+          <img
+            src={
+              "https://gaddideals.brokerinvoice.co.in" +
+              getvehicledetails.side_pic_vehicle
+            }
+            alt="truck thumbnail"
+          />
         </div>
         <div className="thumb">
           <img src={truckThumbSmall} alt="truck thumbnail" />
@@ -137,15 +214,15 @@ const vehicleDetails = () => {
         <div className="row-one">
           <div className="row-content">
             <h6>Number of kilometers</h6>
-            <span>10,000 Km</span>
+            <span>{getvehicledetails.km_driven} Km</span>
           </div>
           <div className="row-content">
             <h6>Number of Owners</h6>
-            <span>Second</span>
+            <span>{getvehicledetails.no_of_owner}</span>
           </div>
           <div className="row-content">
             <h6>Manufacturing year</h6>
-            <span>2001</span>
+            <span>2013</span>
           </div>
         </div>
 
@@ -154,15 +231,15 @@ const vehicleDetails = () => {
         <div className="row-two">
           <div className="row-content">
             <h6>City</h6>
-            <span>Pune</span>
+            <span>{getvehicledetails.city}</span>
           </div>
           <div className="row-content">
             <h6>Insurance validity</h6>
-            <span>Yes</span>
+            <span>{getvehicledetails.insurance}</span>
           </div>
           <div className="row-content">
             <h6>Tyre condition</h6>
-            <span>Good</span>
+            <span>{getvehicledetails.tyre_cond}</span>
           </div>
         </div>
 
@@ -171,15 +248,15 @@ const vehicleDetails = () => {
         <div className="row-three">
           <div className="row-content">
             <h6>Transmission</h6>
-            <span>Manual</span>
+            <span>{FuelType.title}</span>
           </div>
           <div className="row-content">
             <h6>Vehicle number</h6>
-            <span>MH01ATXXXX</span>
+            <span>{getvehicledetails.reg_no}</span>
           </div>
           <div className="row-content">
             <h6>Tax validity up to</h6>
-            <span>2002</span>
+            <span>{getvehicledetails.tax_validity}</span>
           </div>
         </div>
 
@@ -188,11 +265,11 @@ const vehicleDetails = () => {
         <div className="row-four">
           <div className="row-content">
             <h6>Number of tyres</h6>
-            <span>4</span>
+            <span>{getvehicledetails.no_of_tyre}</span>
           </div>
           <div className="row-content">
             <h6>Fitness certificate</h6>
-            <span>No</span>
+            <span>{getvehicledetails.fitness_certificate}</span>
           </div>
           <div className="row-content"></div>
         </div>
@@ -315,4 +392,4 @@ const vehicleDetails = () => {
   );
 };
 
-export default vehicleDetails;
+export default VehicleDetails;

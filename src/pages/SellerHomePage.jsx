@@ -22,6 +22,13 @@ import truckHomeImage from "../assets/truck-home.png";
 
 import "./sellerhomepage.style.css";
 
+import Lottie from "react-lottie";
+import animationData1 from "../assets/step-1-lottie.json";
+import animationData3 from "../assets/mental-therapy-lottie.json";
+import animationData2 from "../assets/step-3rd-lottie.json";
+import VehicleDetails from "./VehicleDetails";
+import { Link } from "react-router-dom";
+
 const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -94,6 +101,8 @@ const SellerHomePage = () => {
     setLatestConstructionData(response.data.vehicle.docs);
   };
 
+ 
+
   useEffect(() => {
     fetchCategories();
     fetchTestimonials();
@@ -103,7 +112,33 @@ const SellerHomePage = () => {
     fetchLatestTractors();
     fetchLatestContruction();
     fetchFaqs();
+    
   }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData1,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const defaultOptions2 = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData2,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const defaultOptions3 = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData3,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
   return (
     <div>
@@ -120,8 +155,9 @@ const SellerHomePage = () => {
               <h5>Select the vehicle of your choice</h5>
             </div>
 
-            <div className="how-card-img">
-              <img src={girlImage} alt="girl" />
+            <div className="how-card-img1">
+              <Lottie options={defaultOptions} height="100%" width="100%" />
+              {/* <img src={girlImage} alt="girl" /> */}
             </div>
 
             <div className="how-card-text">
@@ -137,11 +173,12 @@ const SellerHomePage = () => {
               <h5>Get the sellar details</h5>
             </div>
 
-            <div className="how-card-img">
-              <img src={girlImage} alt="girl" />
+            <div className="how-card-img2">
+            <Lottie options={defaultOptions2} height="100%" width="100%" />
+              {/* <img src={girlImage} alt="girl" /> */}
             </div>
 
-            <div className="how-card-text">
+            <div className="how-card-text2">
               <p>
                 Once the buyer selects the vehicle of their choice, they will
                 get the seller details
@@ -155,7 +192,8 @@ const SellerHomePage = () => {
             </div>
 
             <div className="how-card-img">
-              <img src={girlImage} alt="girl" />
+            <Lottie options={defaultOptions3} height="100%" width="100%" />
+              {/* <img src={girlImage} alt="girl" /> */}
             </div>
 
             <div className="how-card-text">
@@ -225,9 +263,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                        <a href="vehicledetails">
+                          <Link to={`/vehicledetails/${latestTruck._id}`}>
                           <button>Get Seller Details</button>
-                        </a>
+                          </Link>
                       </div>
                     </div>
                   </SwiperSlide>

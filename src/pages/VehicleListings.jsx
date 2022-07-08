@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import "./vehiclelistings.style.css";
-import img1 from "../assets/img-1.jpg";
+// import img1 from "../assets/img-1.jpg";
 import searchIcon from "../assets/search.png";
 import locationIcon from "../assets/location.png";
 import truckIcon from "../assets/cargo-truck.png";

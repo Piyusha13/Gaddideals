@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import React from "react";
+import {Link} from 'react-router-dom'
 import logoIcon from "../assets/logo.png";
 import searchIcon from "../assets/search-icon.png";
 import locationIcon from "../assets/location-home.png";
@@ -16,9 +17,10 @@ import SingupClosedEyeIcon from "../assets/closed_eye_icon.png";
 
 import SingupEyeIcon from "../assets/eye_icon.png";
 
+import upArrowIcon from "../assets/up-arrow.png";
 import googleLogo from "../assets/google_logo.svg";
 import facebookLogo from "../assets/facebook_logo.svg";
-import gmailLogo from "../assets/gmail_logo.svg";
+import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 import { isVisible } from "@testing-library/user-event/dist/utils";
 
@@ -47,10 +49,14 @@ const Navbar = () => {
   const [password, setpassword] = useState("");
   const [confirm_password, setconfirm_password] = useState("");
   const [eye, seteye] = useState(false);
+  const [onclose, setonclose] = useState(false);
+  const [dropdown, setdropdown] = useState(false);
+  const [selectedLanguage, setselectedLanguage] = useState("English");
+  const [token,settoken]=useState(localStorage.getItem('Token'));
 
   function saveUser() {
     console.warn({ mob_no });
-    let payload = { mob_no };
+    let payload = { mob_no, hash:"ekxpmAB8m9v" };
     axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
       console.log("result", result);
       if (mob_no == "") {
@@ -60,9 +66,12 @@ const Navbar = () => {
       } else {
         if (result.data.status === "success") {
           alert(result.data.message);
-          setotp(result.data.otp);
+          //setotp(result.data.otp);
           setvisibleOTP(!visibleOTP);
           setvisible(false);
+          
+          setCounter(59);
+          
         }
       }
     });
@@ -73,8 +82,13 @@ const Navbar = () => {
     let payload = { mob_no, otp };
     axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
       console.log("res", res);
-
-      if (res.data.status == "Success") {
+      localStorage.setItem("Token", res.data.user.accessToken);
+      window.location.href='/loggeduser'
+      if (res.data.status=="failed")
+      {
+        alert("incorrect otp");
+      }
+      else if (res.data.status === "Success") {
         alert(res.data.message);
         setvisibleOTP(false);
       }
@@ -113,6 +127,26 @@ const Navbar = () => {
     });
   }
 
+  function resendotp() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash:"ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      console.log("result", result);
+      if (mob_no == "") {
+        alert("enter moile number");
+      } else if (result.data.status === "failed") {
+        alert(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          alert(result.data.message);
+          //setotp(result.data.otp);
+          setCounter(59);
+         
+        }
+      }
+    });
+  }
+
   const [counter, setCounter] = React.useState(59);
   React.useEffect(() => {
     const timer =
@@ -120,17 +154,17 @@ const Navbar = () => {
     return () => clearInterval(timer);
   }, [counter]);
 
-
-
-
   return (
     <header className="header-container">
       {visible && (
         <div className="main_parent">
           <div
-            className="parent"
+            // className="parent"
+            className={onclose ? "parent" : "slideBack"}
             onClick={() => {
-              setvisible(false);
+               setonclose(false); setTimeout(() => {
+                setvisible(false);
+              }, 300);
             }}
           ></div>
           <div
@@ -149,15 +183,20 @@ const Navbar = () => {
               flexDirection: "column",
               borderRadius: "30px 0px 0px 30px",
             }}
+            className={onclose ? "DivSignInWithOptions" : "slideBack"}
           >
             <img
               className="closing-arrow"
               onClick={() => {
-                setvisible(!visible);
+                setonclose(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
               }}
               src={closingArrow}
               alt=""
             />
+
             <p className="sign-in-title">
               Sign in to<span className="text-color-blue"> Gaddideals </span>
             </p>
@@ -221,8 +260,15 @@ const Navbar = () => {
         <div className="signup-main_parent">
           <div
             className="signup-parent"
+            className={onclose ? "parent" : "slideBack"}
             onClick={() => {
-              setvisibleSignUp(false);
+              setonclose(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
+                setTimeout(() => {
+                  setvisibleSignUp(false);
+                }, 300);
             }}
           ></div>
           <div
@@ -242,11 +288,19 @@ const Navbar = () => {
               flexDirection: "column",
               borderRadius: "30px 0px 0px 30px",
             }}
+            className={onclose ? "DivSignInWithOptions" : "slideBack"}
           >
             <img
               className="signup-closing-arrow"
               onClick={() => {
-                setvisibleSignUp(false);
+                setonclose(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
+                setTimeout(() => {
+                  setvisibleSignUp(false);
+                }, 300);
+                
               }}
               src={closingArrow}
               alt=""
@@ -352,8 +406,17 @@ const Navbar = () => {
         <div className="otp-main_parent">
           <div
             className="otp-parent"
+            className={onclose ? "parent" : "slideBack"}
             onClick={() => {
-              setvisibleOTP(false);
+              setonclose(false);
+              setvisibleSignUp(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
+                setTimeout(() => {
+                  setvisibleOTP(false);
+                }, 300);
+              
             }}
           ></div>
           <div
@@ -373,11 +436,19 @@ const Navbar = () => {
               flexDirection: "column",
               borderRadius: "30px 0px 0px 30px",
             }}
+            className={onclose ? "DivSignInWithOptions" : "slideBack"}
           >
             <img
               className="otp-closing-arrow"
               onClick={() => {
-                setvisibleOTP(false);
+                setonclose(false);
+                setvisibleSignUp(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
+                setTimeout(() => {
+                  setvisibleOTP(false);
+                }, 300);
               }}
               src={closingArrow}
               alt=""
@@ -401,6 +472,9 @@ const Navbar = () => {
               type="number"
               className="otp-phone-no-input"
               placeholder="Enter OTP"
+              onChange={(e) => {
+                setotp(e.target.value);
+              }}
             />
             <span className="timer"> 00:{counter}s</span>
             <p
@@ -411,7 +485,9 @@ const Navbar = () => {
               className="otp-create-account"
             >
               Didn’t recive the OTP?{" "}
-              <span  className="otp-text-color-blue">RESEND OTP</span>
+              <span className="otp-text-color-blue" onClick={() => {
+                resendotp();
+              }}  >RESEND OTP</span>
             </p>
             <button
               onClick={() => {
@@ -479,21 +555,59 @@ const Navbar = () => {
 
           <div className="languages-container">
             <div className="language">
-              <span>English</span>
+              <span className="SelectedLanguageDecoration">
+                {selectedLanguage}{" "}
+              </span>
             </div>
             <div className="language-arrow-icon">
-              <img src={downArrow} alt="down arrow" />
+              <img
+                onClick={() => {
+                  setdropdown(!dropdown);
+                }}
+                src={dropdown ? upArrowIcon : downArrow}
+                alt="down arrow"
+              />
             </div>
+            {dropdown && (
+              <div className="drop-down">
+                <p
+                  onClick={() => {
+                    setselectedLanguage("English");
+                  }}
+                  className="language-1"
+                >
+                  English
+                </p>
+                <p
+                  onClick={() => {
+                    setselectedLanguage("Hindi");
+                  }}
+                  className="language-2"
+                >
+                  Hindi
+                </p>
+              </div>
+            )}
           </div>
 
-          <div
-            onClick={() => {
-              setvisible(!visible);
-            }}
-            className="user"
-          >
-            <img src={userIcon} alt="user icon" />
-          </div>
+          {token?( 
+                <Link to='/loggeduser'>
+                  <div className="user">
+                    <img src={userIcon} alt="user icon" />
+                  </div>
+                </Link>):
+                (<div
+                  onClick={() => {
+                  setvisible(!visible);
+                  setonclose(!onclose);
+                  }}
+                  className="user"
+                  >
+                    <img src={userIcon} alt="user icon" />
+                </div>
+                )
+            }
+          
         </div>
       </nav>
     </header>

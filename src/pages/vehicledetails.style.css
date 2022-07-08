@@ -9,6 +9,7 @@
 
 .vehicle-details-container .vehicle-detail .vehicle-thumbnail {
   flex: 1 0 65%;
+  height: 35rem;
 }
 
 .vehicle-details-container .vehicle-detail .vehicle-thumbnail img {
@@ -177,6 +178,8 @@
   align-items: center;
 }
 
+
+
 .vehicle-details-container
   .vehicle-detail
   .vehicle-info
@@ -228,6 +231,24 @@
   .row-two
   .stat.racing {
   margin-left: 19px;
+  margin-right: 0;
+}
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .vehicle-statistics-container
+  .row-two
+  .stat.manual {
+  height: 2rem;
+}
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .vehicle-statistics-container
+  .row-two
+  .stat.manual img {
+  height: 1.5rem;
+  width: 2rem;
 }
 
 .vehicle-details-container
@@ -359,10 +380,18 @@
   gap: 20px;
   margin-top: 20px;
 }
+.vehicle-details-container .vehicle-gallery-container .thumb{
+  height: 10rem;
+  width: 20%;
+  background-color: #00adef;
+border-radius: 10px;
+}
 .vehicle-details-container .vehicle-gallery-container .thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  
+border-radius: 10px;
 }
 
 /* Overview Styles */
@@ -669,6 +698,8 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+
 
 .similar-vehicles-container
   .similar-vehicles-list
