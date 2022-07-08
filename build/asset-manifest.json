@@ -1,24 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.b326338b.css",
-    "main.js": "/static/js/main.7ff6b80f.js",
+    "main.css": "/static/css/main.51acb0a0.css",
+    "main.js": "/static/js/main.75d650b0.js",
     "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
     "static/media/truck-home.png": "/static/media/truck-home.d21e6cbe13c16b374e57.png",
-    "static/media/crane-home.png": "/static/media/crane-home.ceb69df303cde019f974.png",
+    "static/media/truck-thumbnail.png": "/static/media/truck-thumbnail.85b5a0e9c15d9bffad02.png",
+    "static/media/trucks1.png": "/static/media/trucks1.630a49118a64a49e60d2.png",
+    "static/media/gmail_logo.svg": "/static/media/gmail_logo.dc150a871c9f48eeb31daba84c8a63b1.svg",
+    "static/media/truck-thumb-small.png": "/static/media/truck-thumb-small.30c0492bfced412caaa4.png",
     "static/media/app-store-logos.png": "/static/media/app-store-logos.6bf3fcbb1f637927f775.png",
-    "static/media/tractor-home.png": "/static/media/tractor-home.3c6ffe44391b1c4ebcd0.png",
     "static/media/location-home.png": "/static/media/location-home.46ce9bc14baa6728126b.png",
     "static/media/girl_image.png": "/static/media/girl_image.c2d84d9c754ef415a44d.png",
-    "static/media/cargo-truck-home.png": "/static/media/cargo-truck-home.ec9437e48aa21e3c5e5b.png",
+    "static/media/google_logo.svg": "/static/media/google_logo.655924bd021d8ad03b359f6e76dde1fe.svg",
     "static/media/user-icon.png": "/static/media/user-icon.8bd9ff31c80ca190589d.png",
-    "static/media/bus-home.png": "/static/media/bus-home.d7fc65d9c259648ef671.png",
+    "static/media/facebook_logo.svg": "/static/media/facebook_logo.1729a1b1804b8e1ea35cf83b143a7056.svg",
+    "static/media/next_arrow.svg": "/static/media/next_arrow.8ac3280e3c97a0836445c4e823209bb0.svg",
     "index.html": "/index.html",
-    "main.b326338b.css.map": "/static/css/main.b326338b.css.map",
-    "main.7ff6b80f.js.map": "/static/js/main.7ff6b80f.js.map",
+    "static/media/footer-bg.svg": "/static/media/footer-bg.5d085100533921c8e8ce.svg",
+    "main.51acb0a0.css.map": "/static/css/main.51acb0a0.css.map",
+    "main.75d650b0.js.map": "/static/js/main.75d650b0.js.map",
     "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b326338b.css",
-    "static/js/main.7ff6b80f.js"
+    "static/css/main.51acb0a0.css",
+    "static/js/main.75d650b0.js"
   ]
 }
