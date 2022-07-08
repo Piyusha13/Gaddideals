@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import logoIcon from "../assets/logo.png";
 import searchIcon from "../assets/search-icon.png";
 import locationIcon from "../assets/location-home.png";
@@ -54,11 +54,11 @@ const Navbar = () => {
   const [onclose, setonclose] = useState(false);
   const [dropdown, setdropdown] = useState(false);
   const [selectedLanguage, setselectedLanguage] = useState("English");
-  const [token,settoken]=useState(localStorage.getItem('Token'));
+  const [token, settoken] = useState(localStorage.getItem("Token"));
 
   function saveUser() {
     console.warn({ mob_no });
-    let payload = { mob_no, hash:"ekxpmAB8m9v" };
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
     axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
       console.log("result", result);
       if (mob_no == "") {
@@ -71,9 +71,8 @@ const Navbar = () => {
           //setotp(result.data.otp);
           setvisibleOTP(!visibleOTP);
           setvisible(false);
-          
+
           setCounter(59);
-          
         }
       }
     });
@@ -85,12 +84,10 @@ const Navbar = () => {
     axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
       console.log("res", res);
       localStorage.setItem("Token", res.data.user.accessToken);
-      window.location.href='/loggeduser'
-      if (res.data.status=="failed")
-      {
+      window.location.href = "/loggeduser";
+      if (res.data.status == "failed") {
         alert("incorrect otp");
-      }
-      else if (res.data.status === "Success") {
+      } else if (res.data.status === "Success") {
         alert(res.data.message);
         setvisibleOTP(false);
       }
@@ -131,7 +128,7 @@ const Navbar = () => {
 
   function resendotp() {
     console.warn({ mob_no });
-    let payload = { mob_no, hash:"ekxpmAB8m9v" };
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
     axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
       console.log("result", result);
       if (mob_no == "") {
@@ -143,7 +140,6 @@ const Navbar = () => {
           alert(result.data.message);
           //setotp(result.data.otp);
           setCounter(59);
-         
         }
       }
     });
@@ -164,7 +160,8 @@ const Navbar = () => {
             // className="parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
-               setonclose(false); setTimeout(() => {
+              setonclose(false);
+              setTimeout(() => {
                 setvisible(false);
               }, 300);
             }}
@@ -265,12 +262,12 @@ const Navbar = () => {
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
               setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setvisibleSignUp(false);
-                }, 300);
+              setTimeout(() => {
+                setvisible(false);
+              }, 300);
+              setTimeout(() => {
+                setvisibleSignUp(false);
+              }, 300);
             }}
           ></div>
           <div
@@ -302,7 +299,6 @@ const Navbar = () => {
                 setTimeout(() => {
                   setvisibleSignUp(false);
                 }, 300);
-                
               }}
               src={closingArrow}
               alt=""
@@ -412,13 +408,12 @@ const Navbar = () => {
             onClick={() => {
               setonclose(false);
               setvisibleSignUp(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setvisibleOTP(false);
-                }, 300);
-              
+              setTimeout(() => {
+                setvisible(false);
+              }, 300);
+              setTimeout(() => {
+                setvisibleOTP(false);
+              }, 300);
             }}
           ></div>
           <div
@@ -487,10 +482,14 @@ const Navbar = () => {
               className="otp-create-account"
             >
               Didn’t recive the OTP?{" "}
-              <span className="otp-text-color-blue" onClick={() => {
-                resendotp();
-              }}  >RESEND OTP</span>
-              <span className="otp-text-color-blue">RESEND OTP</span>
+              <span
+                className="otp-text-color-blue"
+                onClick={() => {
+                  resendotp();
+                }}
+              >
+                RESEND OTP
+              </span>
             </p>
             <button
               onClick={() => {
@@ -593,24 +592,23 @@ const Navbar = () => {
             )}
           </div>
 
-          {token?( 
-                <Link to='/loggeduser'>
-                  <div className="user">
-                    <img src={userIcon} alt="user icon" />
-                  </div>
-                </Link>):
-                (<div
-                  onClick={() => {
-                  setvisible(!visible);
-                  setonclose(!onclose);
-                  }}
-                  className="user"
-                  >
-                    <img src={userIcon} alt="user icon" />
-                </div>
-                )
-            }
-          
+          {token ? (
+            <Link to="/loggeduser">
+              <div className="user">
+                <img src={userIcon} alt="user icon" />
+              </div>
+            </Link>
+          ) : (
+            <div
+              onClick={() => {
+                setvisible(!visible);
+                setonclose(!onclose);
+              }}
+              className="user"
+            >
+              <img src={userIcon} alt="user icon" />
+            </div>
+          )}
         </div>
       </nav>
     </header>

@@ -1,5 +1,5 @@
 const mainDomain = "https://gaddideals.brokerinvoice.co.in/";
-const imgurl="https://gaddideals.brokerinvoice.co.in";
+// const imgurl="https://gaddideals.brokerinvoice.co.in";
 export const imgurl = "https://gaddideals.brokerinvoice.co.in";
 
 const Constant = {
@@ -20,7 +20,7 @@ const Constant = {
     getAllModels: mainDomain + "api/model",
     getAllSubscriptions: mainDomain + "api/subscription",
     getAllLatestVehicles: mainDomain + "api/vehicle/latestVehicles",
-    getSingleUser:mainDomain +"api/user",
+    getSingleUser: mainDomain + "api/user",
     getAllBodyTypes: mainDomain + "api/bodyType",
   },
   postUrls: {

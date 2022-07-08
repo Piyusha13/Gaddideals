@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { imgurl } from "../constants";
 
@@ -554,52 +554,54 @@ const VehicleListings = () => {
         {/* Vehicles List */}
         <div className="vehicles-list-container container m-0 p-0">
           {vehiclesArray.map((vehicle) => (
-            <div className="vehicle-card" key={vehicle._id}>
-              <div className="img-wrapper">
-                <img
-                  src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
-                  alt={vehicle.category.title}
-                />
+            <Link to={`/vehicledetails/${vehicle._id}`}>
+              <div className="vehicle-card" key={vehicle._id}>
+                <div className="img-wrapper">
+                  <img
+                    src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
+                    alt={vehicle.category.title}
+                  />
+                </div>
+                <div className="vehicle-info">
+                  <div className="name">
+                    <h3>{vehicle.brand.title}</h3>
+                    <div className="location">
+                      <img src={locationIcon} alt="location-icon" />
+                      <span>{vehicle.city}</span>
+                    </div>
+                  </div>
+                  <div className="truck-stats">
+                    <div className="stat">
+                      <span>
+                        {vehicle.km_driven !== ""
+                          ? vehicle.km_driven
+                          : "95,075km"}
+                      </span>
+                    </div>
+                    <div className="stat">
+                      <span>
+                        {vehicle.no_of_owner !== ""
+                          ? vehicle.no_of_owner
+                          : "1st Owner"}
+                      </span>
+                    </div>
+                    <div className="stat">
+                      <span>
+                        {vehicle.horse_power !== ""
+                          ? vehicle.horse_power
+                          : "100 hp"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="selling-price">
+                    <p>
+                      Selling Price <span>₹{vehicle.selling_price}</span>
+                    </p>
+                  </div>
+                  <button>Get Seller Details</button>
+                </div>
               </div>
-              <div className="vehicle-info">
-                <div className="name">
-                  <h3>{vehicle.brand.title}</h3>
-                  <div className="location">
-                    <img src={locationIcon} alt="location-icon" />
-                    <span>{vehicle.city}</span>
-                  </div>
-                </div>
-                <div className="truck-stats">
-                  <div className="stat">
-                    <span>
-                      {vehicle.km_driven !== ""
-                        ? vehicle.km_driven
-                        : "95,075km"}
-                    </span>
-                  </div>
-                  <div className="stat">
-                    <span>
-                      {vehicle.no_of_owner !== ""
-                        ? vehicle.no_of_owner
-                        : "1st Owner"}
-                    </span>
-                  </div>
-                  <div className="stat">
-                    <span>
-                      {vehicle.horse_power !== ""
-                        ? vehicle.horse_power
-                        : "100 hp"}
-                    </span>
-                  </div>
-                </div>
-                <div className="selling-price">
-                  <p>
-                    Selling Price <span>₹{vehicle.selling_price}</span>
-                  </p>
-                </div>
-                <button>Get Seller Details</button>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

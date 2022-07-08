@@ -29,15 +29,18 @@ const VehicleDetails = () => {
   // const [manufacturedYear,setmanufacturedYear]=useEffect("");
 
   const getSingleVehicleDetails = () => {
-    axios.get(
-      "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" + id, {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
-        },
-      }
-    )
-     .then((res) => {
+    axios
+      .get(
+        "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" +
+          id,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
+          },
+        }
+      )
+      .then((res) => {
         // console.log(response._id);
         // console.log(id);
         setVehicleDetails(res.data.vehicle);
@@ -45,7 +48,6 @@ const VehicleDetails = () => {
 
         setFuelType(res.data.vehicle.fuelType);
         // setmanufacturedYear(res.data.vehicle.years);
-        
 
         // console.log(response.front_side_pic);
       });
@@ -102,7 +104,7 @@ const VehicleDetails = () => {
                 </div>
                 <div className="stat calender">
                   <img src={calenderIcon} alt="calender icon" />
-                  <span>{getvehicledetails.createdAt} </span>
+                  <span>2022</span>
                 </div>
               </div>
 
