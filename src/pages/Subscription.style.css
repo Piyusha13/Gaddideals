@@ -1,0 +1,219 @@
+.user-Subs-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  .user-Subs-header h1 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    color: #050f56;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .user-Subs-header h1::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 173px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: #fe620d;
+  }
+
+
+ 
+  .subscription_container{
+      display: flex;
+      justify-content: space-evenly;
+      /* background-color: #21fe0d; */
+  }
+   .subscription_box1,.subscription_box2,.subscription_box3,.subscription_box4{
+   
+    display: flex;
+    flex-direction: column;
+box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
+border-radius: 20px;
+width: 21%;
+height: 17rem;
+padding: 1.5rem;
+ /* justify-content: center; */
+ align-items: center;
+position: relative;
+  }
+
+  .subscription_box1{
+    background: #9973FF;
+  }
+  .subscription_box2{
+    background: #15DF99;
+  }
+  .subscription_box3{
+
+    background: #F1365E;
+  }
+  .subscription_box4{
+    background: #FF8542;
+  }
+
+  .group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #441dad; */
+  }
+  .credit_no{
+    color: white;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 0;
+  }
+  .credit_rupee{
+    color: #000000;
+    font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.4rem;
+  }
+  .credit_value{
+    color: white;
+    font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.32rem;
+  text-align: center;
+  margin: 0;
+  /* background-color: #fe620d; */
+  }
+  .credit_byu_now,.credit_byu_now2,.credit_byu_now3,.credit_byu_now4{
+    position: absolute;
+    z-index: 9;
+    width: 85%;
+    height: 4.5rem;
+    background-color: white;
+    border:none;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.56rem;
+  box-shadow: 0rem 0.06rem 0.24rem rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  margin: 0;
+  padding: 0;
+  top: 85%;
+  }
+  .credit_byu_now{
+    color: #9973ff;
+  }
+  .credit_byu_now2{
+    color: #15DF99;
+  }
+  .credit_byu_now3{
+    color: #F1365E;
+  }
+  .credit_byu_now4{
+    color: #FF8542;
+  }
+  /*
+  .subscription_box1{
+    background-color: #9973ff;
+   }
+   .subscription_box2{
+    background-color: #15DF99;
+   }
+   .subscription_box3{
+    background-color: #F1365E;
+   }
+   .subscription_box4{
+    background-color: #FF8542;
+   }
+  .credit_no{
+    color: white;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 0;
+  margin-top: 1.8rem;
+    
+  }
+  .credit_rupee{
+    color: #000000;
+    font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.4rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+  }
+  
+  .credit_byu_now{
+    width: 80%;
+    background-color: white;
+    color: #9973ff;
+    border:none;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.56rem;
+  margin: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0rem 0.06rem 0.24rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.9rem;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  }
+  .credit_byu_now2{
+    width: 80%;
+    background-color: white;
+    color: #15DF99;
+    border:none;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.56rem;
+  margin: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0rem 0.06rem 0.24rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.9rem;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  }
+  .credit_byu_now3{
+    width: 80%;
+    background-color: white;
+    color: #F1365E;
+    border:none;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.56rem;
+  margin: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0rem 0.06rem 0.24rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.9rem;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  }
+  .credit_byu_now4{
+    width: 80%;
+    background-color: white;
+    color: #FF8542;
+    border:none;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.56rem;
+  margin: 1.2rem;
+  padding: 1.5rem;
+  box-shadow: 0rem 0.06rem 0.24rem rgba(0, 0, 0, 0.25);
+  border-radius: 0.9rem;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  } */
