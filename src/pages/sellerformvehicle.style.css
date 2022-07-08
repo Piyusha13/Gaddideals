@@ -171,7 +171,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 40px;
+  padding: 5px 35px;
   cursor: pointer;
   transition: none;
   border: 1px solid transparent;
@@ -184,6 +184,9 @@
   color: #4a4a4a;
 }
 .form-controls .years .see-more img {
+  width: 17px;
+  height: 17px;
+  object-fit: cover;
   margin-left: 10px;
 }
 .form-controls .years .year.active {
@@ -260,6 +263,7 @@
   font-weight: bold;
   font-size: 15px;
   color: #616161;
+  text-transform: capitalize;
 }
 
 .btn-next {

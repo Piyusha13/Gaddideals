@@ -139,10 +139,21 @@
   .categories-container
   .category
   .icon-wrapper {
-  padding: 5px;
+  padding: 10px;
   background: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .categories-container
+  .category
+  .icon-wrapper
+  img {
+  width: 17px;
+  height: 17px;
+  object-fit: cover;
 }
 
 .vehicles-container
@@ -270,10 +281,51 @@
   .filter-two
   .vehicles-stats-container
   .vehicle-stat {
+  width: 100%;
+  position: relative;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .vehicles-stats-container
+  .vehicle-stat
+  .stat-label {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 15px 0rem 0rem 0rem;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .vehicles-stats-container
+  .vehicle-stat
+  .list {
+  display: flex;
+  justify-content: flex-start;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .vehicles-stats-container
+  .vehicle-stat
+  .list
+  .list-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.vehicles-container
+  .filter-sidebar
+  .filter-two
+  .vehicles-stats-container
+  .vehicle-stat
+  .list
+  .list-content
+  p {
+  margin: 0;
 }
 
 .vehicles-container
@@ -325,7 +377,7 @@
 
 .vehicles-container .vehicles-list-container .vehicle-card .img-wrapper img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -433,6 +485,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
+  text-align: center;
 }
 
 .vehicles-container
@@ -442,6 +495,7 @@
   .selling-price
   p
   span {
+  margin-left: 10px;
   font-size: 30px;
   display: inline-block;
   font-weight: bolder;

@@ -1,43 +1,83 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import Constant from "../constants";
+
 import { FiCheckCircle } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
 import "./sellerformvehicle.style.css";
 
 import arrowDown from "../assets/down-arrow.png";
 
-import ToggleActive from "../components/ToggleActive";
+let tagsArray = [];
 
-const tagsArray = [
+const ownersArray = [
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "First",
   },
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "Second",
   },
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "Third",
   },
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "Fourth",
   },
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "Fifth",
   },
   {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
+    owner: "Other",
   },
 ];
 
-const SellerFormVehicle = ({ nextStep }) => {
+const SellerFormVehicle = ({
+  nextStep,
+  formData,
+  handleOnChange,
+  setYear,
+  setFuel,
+  setOwner,
+}) => {
+  const [yearsArray, setYearsArray] = useState([]);
+  const [fuelTypesArray, setFuelTypesArray] = useState([]);
+
+  const [isYearActive, setIsYearActive] = useState();
+  const [isFuelActive, setIsFuelActive] = useState();
+  const [isOwnerActive, setIsOwnerActive] = useState();
+
+  // const [tagsArray, setTagsArray] = useState([]);
+
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
   };
+
+  const handleTagsArray = (idx) => {
+    const tagId = tagsArray.find((tag, index) => tag === idx);
+    if (tagId) {
+      const index = tagsArray.indexOf(tagId);
+      tagsArray.splice(index, 0);
+    }
+    console.log(tagId);
+  };
+
+  const fetchVehiclesArray = async () => {
+    const response = await axios.get(Constant.getUrls.getAllYears);
+    setYearsArray(response.data._yrs.docs);
+  };
+
+  const fetchFuelTypeArray = async () => {
+    const response = await axios.get(Constant.getUrls.getAllFuelTypes);
+    setFuelTypesArray(response.data._getFuel.docs);
+  };
+
+  useEffect(() => {
+    fetchVehiclesArray();
+    fetchFuelTypeArray();
+  }, []);
+
   return (
     <div className="seller-form-container">
       <div className="form-routes">
@@ -70,8 +110,8 @@ const SellerFormVehicle = ({ nextStep }) => {
         <div className="filter-tags">
           {tagsArray.map((tag, index) => (
             <div className="tag" key={index}>
-              <span>{tag.text}</span>
-              {tag.cancelIcon}
+              <span>{tag}</span>
+              <FaTimes onClick={() => handleTagsArray(index)} />
             </div>
           ))}
         </div>
@@ -81,49 +121,65 @@ const SellerFormVehicle = ({ nextStep }) => {
         <div className="form-details">
           <form>
             <div className="form-controls">
+              <label htmlFor="whichstate">Which State</label>
+              <input
+                type="text"
+                name="whichstate"
+                value={formData.whichstate}
+                placeholder="Maharashtra"
+                onChange={handleOnChange}
+              />
+            </div>
+
+            <div className="form-controls">
               <label htmlFor="whichcity">Which City</label>
-              <input type="text" name="whichcity" placeholder="Pune" />
+              <input
+                type="text"
+                name="whichcity"
+                value={formData.whichcity}
+                placeholder="Pune"
+                onChange={handleOnChange}
+              />
             </div>
 
             <div className="form-controls">
               <label htmlFor="vehiclebrand">Vehicle Brand</label>
-              <input type="text" name="vehiclebrand" placeholder="TATA" />
+              <input
+                type="text"
+                name="vehiclebrand"
+                value={formData.vehiclebrand}
+                placeholder="TATA"
+                onChange={handleOnChange}
+              />
             </div>
 
             <div className="form-controls">
-              <label htmlFor="vehiclebmodel">Vehicle Brand</label>
-              <input type="text" name="vehiclemodel" placeholder="Intra V30" />
+              <label htmlFor="vehiclemodel">Vehicle Model</label>
+              <input
+                type="text"
+                onChange={handleOnChange}
+                value={formData.vehiclemodel}
+                name="vehiclemodel"
+                placeholder="Intra V30"
+              />
             </div>
 
             <div className="form-controls">
               <label htmlFor="manufacturing">Manufacturing Year</label>
               <div className="years">
-                <ToggleActive>
-                  <span>2004</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>2005</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>2006</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>2007</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>2008</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>2009</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>2010</span>
-                </ToggleActive>
+                {yearsArray.map((years, index) => (
+                  <div
+                    className={isYearActive === index ? "year active" : "year"}
+                    onClick={() => {
+                      setYear(years.year);
+                      setIsYearActive(index);
+                      tagsArray.push(years.year);
+                    }}
+                    key={years._id}
+                  >
+                    <span>{years.year}</span>
+                  </div>
+                ))}
 
                 <div className="see-more">
                   <span>See More</span>
@@ -136,55 +192,63 @@ const SellerFormVehicle = ({ nextStep }) => {
               <label htmlFor="vehiclebnumber">Vehicle Number</label>
               <input
                 type="text"
-                name="vehiclebnumber"
+                name="vehiclenumber"
+                value={formData.vehiclebnumber}
+                onChange={handleOnChange}
                 placeholder="MH01BH3321"
               />
             </div>
 
             <div className="form-controls">
-              <label htmlFor="kilometers">Kilometers Driven</label>
-              <input type="text" name="kilometers" placeholder="10,00,00" />
+              <label htmlFor="kmsdriven">Kilometers Driven</label>
+              <input
+                type="text"
+                value={formData.kmsdriven}
+                onChange={handleOnChange}
+                name="kmsdriven"
+                placeholder="10,00,00"
+              />
             </div>
 
             <div className="form-controls">
               <label htmlFor="owners">Number of owners</label>
               <div className="owners">
-                <ToggleActive>
-                  <span>First</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Second</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Third</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Fourth</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Fifth</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Other</span>
-                </ToggleActive>
+                {ownersArray.map((owners, index) => (
+                  <div
+                    key={index}
+                    className={
+                      isOwnerActive === index ? "owner active" : "owner"
+                    }
+                    onClick={() => {
+                      setOwner("First");
+                      setIsOwnerActive(index);
+                    }}
+                  >
+                    <span>{owners.owner}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className="form-controls">
-              <label htmlFor="transmission">Transmission</label>
+              <label htmlFor="transmission">Fuel Type</label>
               <div className="transmission">
-                <ToggleActive>
-                  <span>Manual</span>
-                </ToggleActive>
-
-                <ToggleActive>
-                  <span>Automatic</span>
-                </ToggleActive>
+                {fuelTypesArray.map((fuelType, index) => (
+                  <div
+                    className={
+                      isFuelActive === index
+                        ? "transmission-type active"
+                        : "transmission-type"
+                    }
+                    onClick={() => {
+                      setFuel(fuelType.title);
+                      setIsFuelActive(index);
+                    }}
+                    key={fuelType._id}
+                  >
+                    <span>{fuelType.title}</span>
+                  </div>
+                ))}
               </div>
             </div>
 

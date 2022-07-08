@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { Link } from "react-router-dom";
+
 import React from "react";
 import logoIcon from "../assets/logo.png";
 import searchIcon from "../assets/search-icon.png";
@@ -119,9 +121,6 @@ const Navbar = () => {
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   }, [counter]);
-
-
-
 
   return (
     <header className="header-container">
@@ -411,7 +410,7 @@ const Navbar = () => {
               className="otp-create-account"
             >
               Didn’t recive the OTP?{" "}
-              <span  className="otp-text-color-blue">RESEND OTP</span>
+              <span className="otp-text-color-blue">RESEND OTP</span>
             </p>
             <button
               onClick={() => {
@@ -426,12 +425,12 @@ const Navbar = () => {
       )}
 
       <div className="sell-buy-container">
-        <a href="vehiclelistings">
+        <Link to="vehiclelistings">
           <button>Buy used commercial vehicle</button>
-        </a>
-        <a href="vehicledetails">
+        </Link>
+        <Link to="vehicledetails">
           <button className="sell-btn">Sell used commercial vehicle</button>
-        </a>
+        </Link>
       </div>
 
       <nav className="navbar navbar-expand-lg nav-container">

@@ -145,8 +145,33 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   padding: 20px;
+  justify-content: space-between;
+}
+.form-register-controls .scraps {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+}
+.form-register-controls .scraps .scrap {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 50px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .scraps .scrap.active {
+  border: 1px solid #00adef;
 }
 .form-register-controls .permits .permit {
   background: #ffffff;
@@ -155,7 +180,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px 30px;
+  padding: 10px 50px;
   cursor: pointer;
   transition: none;
   border: 1px solid transparent;
@@ -178,7 +203,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-between;
   padding: 20px;
 }
 .form-register-controls .conditions .condition {
@@ -188,10 +213,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px 30px;
+  padding: 10px 40px;
   cursor: pointer;
   transition: none;
   border: 1px solid transparent;
+}
+.form-register-controls .conditions .condition.active {
+  border: 1px solid #00adef;
 }
 .form-register-controls .conditions .condition span {
   display: inline-block;
