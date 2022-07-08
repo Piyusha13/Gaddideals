@@ -17,6 +17,7 @@ import Subscription from "./pages/Subscription";
 function App() {
   return (
     <Routes>
+      {/* all routes here */}
       <Route element={<SellerHomePage />} index />
       <Route element={<VehicleListings />} path="/vehiclelistings" />
       <Route element={<VehicleDetails />} path="/vehicledetails/:id" />
