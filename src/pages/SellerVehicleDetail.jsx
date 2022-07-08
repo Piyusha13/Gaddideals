@@ -1,18 +1,99 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./sellervehicledetail.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import cloudIcon from "../assets/cloud.png";
 
-const SellerVehicleDetail = ({ nextStep }) => {
+const SellerVehicleDetail = ({
+  nextStep,
+  documentRCImg,
+  setDocumentRCImg,
+  setRCImage,
+  rcImage,
+  documentEngImg,
+  setDocumentEngImg,
+  engImage,
+  setEngImage,
+  documentFrontSideImg,
+  setDocumentFrontSideImg,
+  frontSideImg,
+  setFrontSideImg,
+  documentBackSideImg,
+  setDocumentBackSideImg,
+  backSideImg,
+  setBackSideImg,
+  documentFronttyreLeft,
+  setDocumentFronttyreLeft,
+  fronttyreLeftImg,
+  setFronttyreLeftImg,
+  documentFronttyreRight,
+  setDocumentFronttyreRight,
+  fronttyreRightImg,
+  setFronttyreRightImg,
+}) => {
   const fileInput = useRef();
+  const engineInput = useRef();
+  const frontsideInput = useRef();
+  const backsideInput = useRef();
+  const fronttyreLeftInput = useRef();
+  const fronttyreRightInput = useRef();
 
   const handleFileInput = () => {
     fileInput.current.click();
   };
 
+  const handleEngineInput = () => {
+    engineInput.current.click();
+  };
+
+  const handleFrontsideInput = () => {
+    frontsideInput.current.click();
+  };
+
+  const handleBacksideInput = () => {
+    backsideInput.current.click();
+  };
+
+  const handleFrontTyreInput = () => {
+    fronttyreLeftInput.current.click();
+  };
+
+  const handleFrontTyreRightInput = () => {
+    fronttyreRightInput.current.click();
+  };
+
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
+  };
+
+  const handleImageChange = (e) => {
+    // console.log(e.target.name);
+    if (e.target.files[0]) {
+      if (e.target.name === "rc") {
+        setRCImage(e.target.files[0]);
+        setDocumentRCImg(true);
+      }
+      if (e.target.name === "engine") {
+        setEngImage(e.target.files[0]);
+        setDocumentEngImg(true);
+      }
+      if (e.target.name === "frontside") {
+        setFrontSideImg(e.target.files[0]);
+        setDocumentFrontSideImg(true);
+      }
+      if (e.target.name === "backside") {
+        setBackSideImg(e.target.files[0]);
+        setDocumentBackSideImg(true);
+      }
+      if (e.target.name === "fronttyreleft") {
+        setFronttyreLeftImg(e.target.files[0]);
+        setDocumentFronttyreLeft(true);
+      }
+      if (e.target.name === "fronttyreright") {
+        setFronttyreRightImg(e.target.files[0]);
+        setDocumentFronttyreRight(true);
+      }
+    }
   };
 
   return (
@@ -58,34 +139,95 @@ const SellerVehicleDetail = ({ nextStep }) => {
               <h6>RC Document</h6>
               <input
                 type="file"
+                name="rc"
                 ref={fileInput}
+                onChange={handleImageChange}
                 accept="image/*"
-                multiple
                 hidden
               />
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <div
+                className="document"
+                style={documentRCImg ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={documentRCImg ? URL.createObjectURL(rcImage) : cloudIcon}
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
-            <div className="vehicle-document" onClick={handleFileInput}>
+            <div className="vehicle-document" onClick={handleEngineInput}>
               <h6>Engine Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <input
+                ref={engineInput}
+                type="file"
+                name="engine"
+                onChange={handleImageChange}
+                accept="image/*"
+                hidden
+              />
+              <div
+                className="document"
+                style={
+                  documentEngImg ? { padding: "0px" } : { padding: "40px" }
+                }
+              >
+                <img
+                  src={
+                    documentEngImg ? URL.createObjectURL(engImage) : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
-            <div className="vehicle-document" onClick={handleFileInput}>
+            <div className="vehicle-document" onClick={handleFrontsideInput}>
               <h6>Front Side Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <input
+                ref={frontsideInput}
+                type="file"
+                name="frontside"
+                onChange={handleImageChange}
+                accept="image/*"
+                hidden
+              />
+              <div
+                className="document"
+                style={frontSideImg ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={
+                    documentFrontSideImg
+                      ? URL.createObjectURL(frontSideImg)
+                      : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
-            <div className="vehicle-document" onClick={handleFileInput}>
+            <div className="vehicle-document" onClick={handleBacksideInput}>
               <h6>Back Side Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <input
+                ref={backsideInput}
+                type="file"
+                name="backside"
+                onChange={handleImageChange}
+                accept="image/*"
+                hidden
+              />
+              <div
+                className="document"
+                style={backSideImg ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={
+                    documentBackSideImg
+                      ? URL.createObjectURL(backSideImg)
+                      : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
           </div>
@@ -93,12 +235,54 @@ const SellerVehicleDetail = ({ nextStep }) => {
           <div className="row-two">
             <h6>Pictures of front tyre from both the sides of the vehicle.</h6>
             <div className="vehicle-documents">
-              <div className="document" onClick={handleFileInput}>
-                <img src={cloudIcon} alt="cloud icon" />
+              <input
+                ref={fronttyreLeftInput}
+                type="file"
+                name="fronttyreleft"
+                onChange={handleImageChange}
+                accept="image/*"
+                hidden
+              />
+              <div
+                className="document"
+                style={
+                  fronttyreLeftImg ? { padding: "0px" } : { padding: "40px" }
+                }
+                onClick={handleFrontTyreInput}
+              >
+                <img
+                  src={
+                    documentFronttyreLeft
+                      ? URL.createObjectURL(fronttyreLeftImg)
+                      : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
 
-              <div className="document" onClick={handleFileInput}>
-                <img src={cloudIcon} alt="cloud icon" />
+              <input
+                ref={fronttyreRightInput}
+                type="file"
+                name="fronttyreright"
+                onChange={handleImageChange}
+                accept="image/*"
+                hidden
+              />
+              <div
+                className="document"
+                style={
+                  fronttyreRightImg ? { padding: "0px" } : { padding: "40px" }
+                }
+                onClick={handleFrontTyreRightInput}
+              >
+                <img
+                  src={
+                    documentFronttyreRight
+                      ? URL.createObjectURL(fronttyreRightImg)
+                      : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
           </div>

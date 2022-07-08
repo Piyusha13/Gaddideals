@@ -4,8 +4,8 @@ import VehicleListings from "./pages/VehicleListings";
 // import SellerFormVehicle from "./pages/SellerFormVehicle";
 // import VehicleCard from "./pages/VehicleCard";
 // import FAQ from "./pages/FAQ";
-// import SellerForm from "./pages/SellerForm";
-import UserLogin from './pages/UserLogin'
+import SellerForm from "./pages/SellerForm";
+import UserLogin from "./pages/UserLogin";
 import { Routes, Route } from "react-router-dom";
 import SellerHomePage from "./pages/SellerHomePage";
 import UserVehicles from "./pages/UserVehicles";
@@ -13,6 +13,7 @@ import LoggedUser from "./pages/LoggedUser";
 import UserOrder from "./pages/UserOrder";
 import UserFaq from "./pages/UserFaq";
 import Subscription from "./pages/Subscription";
+
 function App() {
   return (
     <Routes>
@@ -26,6 +27,10 @@ function App() {
       <Route element={<UserFaq />} path="/UserFaq" />
       <Route element={<Subscription />} path="/Subscription" />
       
+      <Route element={<VehicleListings />} path="vehiclelistings" />
+      <Route element={<VehicleDetails />} path="vehicledetails" />
+      <Route element={<UserLogin />} path="/UserLogin" />
+      <Route element={<SellerForm />} path="/sellerform" />
     </Routes>
   );
 }

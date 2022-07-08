@@ -1,11 +1,16 @@
 import "./sellerpreviewdetails.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import editIcon from "../assets/edit.png";
-// import { FaRegEdit } from "react-icons/fa";
 
 import cloudIcon from "../assets/cloud.png";
 
-const SellerPreviewDetails = () => {
+const SellerPreviewDetails = ({
+  formData,
+  rcImage,
+  engImage,
+  frontSideImg,
+  backSideImg,
+}) => {
   return (
     <div className="seller-preview-container">
       <div className="form-routes preview">
@@ -52,18 +57,18 @@ const SellerPreviewDetails = () => {
 
           <div className="row">
             <div className="detail">
+              <h6>State</h6>
+              <p>{formData.whichstate}</p>
+            </div>
+
+            <div className="detail">
               <h6>City</h6>
-              <p>Pune</p>
+              <p>{formData.whichcity}</p>
             </div>
 
             <div className="detail">
               <h6>Vehicle Model</h6>
-              <p>Tata V30</p>
-            </div>
-
-            <div className="detail">
-              <h6>Manufacturing Year</h6>
-              <p>2001</p>
+              <p>{formData.vehiclemodel}</p>
             </div>
           </div>
 
@@ -71,18 +76,17 @@ const SellerPreviewDetails = () => {
 
           <div className="row">
             <div className="detail">
+              <h6>Manufacturing Year</h6>
+              <p>{formData.year}</p>
+            </div>
+            <div className="detail">
               <h6>Vehicle Number</h6>
-              <p>MH01AT3321</p>
+              <p>{formData.vehiclenumber}</p>
             </div>
 
             <div className="detail">
               <h6>Kilometers Driven</h6>
-              <p>10,000</p>
-            </div>
-
-            <div className="detail">
-              <h6>Number of owners</h6>
-              <p>Second</p>
+              <p>{formData.kmsdriven}</p>
             </div>
           </div>
 
@@ -90,18 +94,18 @@ const SellerPreviewDetails = () => {
 
           <div className="row">
             <div className="detail">
-              <h6>Tyre Condition</h6>
-              <p>Good</p>
+              <h6>Number of owners</h6>
+              <p>{formData.owner}</p>
             </div>
 
             <div className="detail">
-              <h6>Transmission</h6>
-              <p>Manual</p>
+              <h6>Tyre Condition</h6>
+              <p>{formData.tyreCondition}</p>
             </div>
 
             <div className="detail">
               <h6>Fitness certificate</h6>
-              <p>No</p>
+              <p>{formData.fitnesscertificate}</p>
             </div>
           </div>
 
@@ -110,7 +114,7 @@ const SellerPreviewDetails = () => {
           <div className="row">
             <div className="detail">
               <h6>Tax Validity Up To</h6>
-              <p>2002</p>
+              <p>{formData.taxvalidity}</p>
             </div>
 
             <div className="detail">
@@ -120,7 +124,7 @@ const SellerPreviewDetails = () => {
 
             <div className="detail">
               <h6>Do you want to Scrap Vehicle?</h6>
-              <p>No</p>
+              <p>{formData.scrap}</p>
             </div>
           </div>
 
@@ -129,12 +133,12 @@ const SellerPreviewDetails = () => {
           <div className="row">
             <div className="detail">
               <h6>Number of tyres</h6>
-              <p>4</p>
+              <p>{formData.nooftyres}</p>
             </div>
 
             <div className="detail">
               <h6>Pricing of the vehicle</h6>
-              <p>15,00,00</p>
+              <p>{formData.pricingvehicle}</p>
             </div>
 
             <div className="detail"></div>
@@ -145,29 +149,57 @@ const SellerPreviewDetails = () => {
           <div className="preview-row-one">
             <div className="preview-vehicle-document">
               <h6>RC Document</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <div
+                className="document"
+                style={rcImage ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={rcImage ? URL.createObjectURL(rcImage) : cloudIcon}
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
             <div className="preview-vehicle-document">
               <h6>Engine Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <div
+                className="document"
+                style={engImage ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={engImage ? URL.createObjectURL(engImage) : cloudIcon}
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
             <div className="preview-vehicle-document">
               <h6>Front Side Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <div
+                className="document"
+                style={frontSideImg ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={
+                    frontSideImg ? URL.createObjectURL(frontSideImg) : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
 
             <div className="preview-vehicle-document">
               <h6>Back Side Picture</h6>
-              <div className="document">
-                <img src={cloudIcon} alt="cloud icon" />
+              <div
+                className="document"
+                style={backSideImg ? { padding: "0px" } : { padding: "40px" }}
+              >
+                <img
+                  src={
+                    backSideImg ? URL.createObjectURL(backSideImg) : cloudIcon
+                  }
+                  alt="cloud icon"
+                />
               </div>
             </div>
           </div>

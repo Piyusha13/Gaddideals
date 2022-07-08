@@ -1,9 +1,9 @@
+import { useState } from "react";
+
 import { FiCheckCircle } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
 
 import "./sellerformregister.style.css";
-
-import ToggleActive from "../components/ToggleActive";
 
 const tagsArray = [
   {
@@ -28,11 +28,56 @@ const tagsArray = [
   },
 ];
 
-const SellerFormRegistration = ({ nextStep }) => {
+const permitsArray = [
+  {
+    permit: "National",
+  },
+  {
+    permit: "State",
+  },
+  {
+    permit: "No",
+  },
+];
+
+const scrapArray = [
+  {
+    scrap: "Yes",
+  },
+  {
+    scrap: "No",
+  },
+];
+
+const tyreConditionArray = [
+  {
+    condition: "Excellant",
+  },
+  {
+    condition: "Good",
+  },
+  {
+    condition: "Average",
+  },
+];
+
+const SellerFormRegistration = ({
+  nextStep,
+  handleOnChange,
+  formData,
+  setPermit,
+  setScrap,
+  setTyreCondition,
+}) => {
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
   };
+
+  const [isPermitActive, setIsPermitActive] = useState();
+  const [isScrapActive, setIsScrapActive] = useState();
+  const [isTyreCondActive, setIsTyreCondActive] = useState();
+
   return (
     <div className="seller-form-container">
       <div className="form-routes">
@@ -80,34 +125,44 @@ const SellerFormRegistration = ({ nextStep }) => {
         <div className="form-register">
           <form>
             <div className="form-register-controls">
-              <label htmlFor="insurancepermit">Insurance Permit</label>
-              <div className="permits">
-                <ToggleActive>
-                  <span>Yes</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>No</span>
-                </ToggleActive>
-              </div>
+              <label htmlFor="insurancevalidity">Insurance Validity</label>
+              <input
+                type="date"
+                value={formData.insurancevalidity}
+                name="insurancevalidity"
+                onChange={handleOnChange}
+                placeholder="2002"
+              />
             </div>
 
             <div className="form-register-controls">
               <label htmlFor="taxvalidity">Tax Validity up to</label>
-              <input type="text" name="taxvalidity" placeholder="2002" />
+              <input
+                type="date"
+                value={formData.taxvalidity}
+                name="taxvalidity"
+                onChange={handleOnChange}
+                placeholder="2002"
+              />
             </div>
 
             <div className="form-register-controls">
-              <label htmlFor="vehiclecondition">Vehicle Condition</label>
-              <div className="conditions">
-                <ToggleActive>
-                  <span>Excellant</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>Good</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>Average</span>
-                </ToggleActive>
+              <label htmlFor="permits">Permits</label>
+              <div className="permits">
+                {permitsArray.map((permits, index) => (
+                  <div
+                    key={index}
+                    className={
+                      isPermitActive === index ? "permit active" : "permit"
+                    }
+                    onClick={() => {
+                      setPermit(permits.permit);
+                      setIsPermitActive(index);
+                    }}
+                  >
+                    <span>{permits.permit}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -115,51 +170,76 @@ const SellerFormRegistration = ({ nextStep }) => {
               <label htmlFor="scrapvehicle">
                 Do you want to Scrap Vehicle?
               </label>
-              <div className="permits">
-                <ToggleActive>
-                  <span>Yes</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>No</span>
-                </ToggleActive>
+              <div className="scraps">
+                {scrapArray.map((scraps, index) => (
+                  <div
+                    key={index}
+                    className={
+                      isScrapActive === index ? "scrap active" : "scrap"
+                    }
+                    onClick={() => {
+                      setScrap(scraps.scrap);
+                      setIsScrapActive(index);
+                    }}
+                  >
+                    <span>{scraps.scrap}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className="form-register-controls">
               <label htmlFor="nooftyres">Number of tyres</label>
-              <input type="text" name="nooftyres" placeholder="4" />
+              <input
+                type="text"
+                value={formData.nooftyres}
+                name="nooftyres"
+                onChange={handleOnChange}
+                placeholder="4"
+              />
             </div>
 
             <div className="form-register-controls">
-              <label htmlFor="tyrecondition">Tyre condition</label>
+              <label htmlFor="tyrecondition">Tyre Condition</label>
               <div className="conditions">
-                <ToggleActive>
-                  <span>Excellant</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>Good</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>Average</span>
-                </ToggleActive>
+                {tyreConditionArray.map((conditions, index) => (
+                  <div
+                    className={
+                      isTyreCondActive === index
+                        ? "condition active"
+                        : "condition"
+                    }
+                    key={index}
+                    onClick={() => {
+                      setTyreCondition(conditions.condition);
+                      setIsTyreCondActive(index);
+                    }}
+                  >
+                    <span>{conditions.condition}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className="form-register-controls">
               <label htmlFor="pricingvehicle">Pricing of the vehicle</label>
-              <input type="text" name="pricingvehicle" placeholder="₹5,00,00" />
+              <input
+                type="text"
+                value={formData.pricingvehicle}
+                name="pricingvehicle"
+                onChange={handleOnChange}
+                placeholder="₹5,00,00"
+              />
             </div>
 
             <div className="form-register-controls">
               <label htmlFor="fitnesscertificate">Fitness certificate</label>
-              <div className="permits">
-                <ToggleActive>
-                  <span>Yes</span>
-                </ToggleActive>
-                <ToggleActive>
-                  <span>No</span>
-                </ToggleActive>
-              </div>
+              <input
+                type="date"
+                value={formData.fitnesscertificate}
+                name="fitnesscertificate"
+                onChange={handleOnChange}
+              />
             </div>
 
             <div className="btn-next">
