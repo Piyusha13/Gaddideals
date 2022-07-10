@@ -130,8 +130,7 @@ const Navbar = () => {
           toast.success(res.data.message);
           setvisibleSignUp(false);
           setmob_no(res.data.mob_no);
-          // setotp(res.data.otp);
-          savePhoneOtp();
+          saveUser();
           setvisibleOTP(true);
         } else if (res.data.status === "failed") {
           toast.error(res.data.message);
@@ -527,7 +526,7 @@ const Navbar = () => {
       </div>
 
       <nav className="navbar navbar-expand-lg nav-container">
-        <div className="container-fluid navar_div" >
+        <div className="container-fluid">
           <div className="logo">
             <a href="/" className="navbar-brand">
               <img src={logoIcon} alt="logo" />

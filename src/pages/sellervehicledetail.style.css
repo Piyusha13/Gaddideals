@@ -1,5 +1,5 @@
 .seller-form-container {
-  width: 1000px;
+  width: 70% !important;
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -65,26 +65,32 @@
 
 /* Vehicle Detail Container */
 .vehicle-detail-container {
-  width: 100%;
+  width: 80%;
+  
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
 .vehicle-detail-container .container-wrapper {
+  
+  width: 100% !important;
   padding: 20px;
 }
 
 .row-one {
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .row-one .vehicle-document {
+ 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+  width: 25% !important;
 }
 .row-one .vehicle-document h6 {
   font-family: "Poppins";
@@ -101,16 +107,21 @@
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   padding: 40px;
+  
+  width: 85% !important;
+  height: 10%;
 }
 
 /* Row Two */
 .row-two {
+  
+  margin-left: 1.5%;
   margin-top: 20px;
 }
 .row-two .vehicle-documents {
   display: flex;
   align-items: flex-start;
-  gap: 47px;
+  gap: 25px;
 }
 .row-two h6 {
   font-family: "Poppins";
@@ -128,17 +139,20 @@
   border-radius: 10px;
   padding: 40px;
   cursor: pointer;
+  width: 21.5% !important;
+  height: 10%;
 }
 
 /* Row Three */
 
 .row-three {
   margin-top: 20px;
+  margin-left: 1.5%;
 }
 .row-three .vehicle-documents {
   display: flex;
   align-items: flex-start;
-  gap: 47px;
+  gap: 25px;
 }
 .row-three h6 {
   font-family: "Poppins";
@@ -156,6 +170,8 @@
   border-radius: 10px;
   padding: 40px;
   cursor: pointer;
+  width: 21.5% !important;
+  height: 10%;
 }
 
 .continue-btn {
@@ -166,12 +182,14 @@
 }
 .continue-btn button {
   border: none;
-  padding: 10px 50px;
+  padding: 10px 20px;
   background: #050f56;
   border: 1px solid #c4c4c4;
   border-radius: 10px;
   color: #ffffff;
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 90%;
   font-family: "Roboto";
+  width: 30%;
+  text-align:center;
 }

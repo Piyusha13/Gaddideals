@@ -1,3 +1,35 @@
+@media screen and (max-width: 768px) {
+  .header-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0px;
+    height: 70px !important;
+    
+  }
+  .header-title h1 {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px !important;
+    color: #050f56;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .header-title h1::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 98px !important;
+    height: 3px !important;
+    border-radius: 5px;
+    background-color: #fe620d;
+  }
+}
+
+
+
 .header-title {
   display: flex;
   justify-content: center;
@@ -35,6 +67,84 @@
 @media screen and (max-width: 768px) {
   .how-cards-container {
     flex-wrap: wrap;
+    padding: 15px;
+    
+  }
+  .how-card {
+    width: 170px !important;
+    height: 270px !important;
+    background: rgba(0, 173, 239, 0.17);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px !important;
+    transform: translateX(10px);
+  }
+  .how-card .how-card-title {
+    width: 100%;
+    height: 100%;
+    /* background-color: orange; */
+  }
+  .how-card-2{
+    transform: translateX(-10px);
+  }
+  .how-card-3{
+    transform: translateX(100px);
+  }
+  .how-card .how-card-title h5 {
+    font-family: "Poppins";
+    font-weight: 900 !important;
+    font-size: 10px !important;
+    color: #050f56;
+    margin: 0;
+  }
+  .how-card .how-card-img {
+    width: 100%;
+    height: 100%;
+    /* background-color: red; */
+    display: flex;
+  }
+  .how-card .how-card-img1 {
+    width: 100%;
+    height: 150px !important;
+    /* background-color: red; */
+    display: flex;
+    padding-bottom: 7%;
+
+  }
+  .how-card .how-card-text p {
+    font-family: "Roboto";
+    font-weight: 900 !important;
+    font-size: 11px !important;
+    color: #717171;
+    line-height: 10px !important;
+    margin: 0;
+  }
+  .how-card .how-card-text2 {
+    width: 100%;
+    height: 100%;
+    /* background-color: orange; */
+    /* margin-top: -28%; */
+  }
+  .how-card .how-card-text2 p {
+    font-family: "Roboto";
+    font-weight: 900 !important;
+    font-size: 11px !important;
+    color: #717171;
+    line-height: 10px !important;
+    margin: 0;
+  }
+  .how-card .how-card-img2 {
+    width: 100%;
+    height: 100%;
+    /* background-color: red; */
+    display: flex;
+    margin-bottom: 10px !important;
+    /* padding-bottom: 48%; */
+    /* padding-top: -20px; */
+  
   }
 }
 
@@ -427,7 +537,7 @@
   width: 100%;
   height: 578px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   background: #ffffff;
@@ -556,7 +666,7 @@
 .trusted-brands-container .brand-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .brands-swiper-slide {
   padding: 10px;

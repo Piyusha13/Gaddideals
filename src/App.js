@@ -11,8 +11,16 @@ import UserFaq from "./pages/UserFaq";
 import Subscription from "./pages/Subscription";
 import SellerHome from "./pages/SellerHome";
 
+import VehicleCard from "./pages/VehicleCard";
+
+import DirectSignup from "./components/DirectSignup";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
+    <>
     <Routes>
       {/* all routes here */}
       <Route element={<SellerHomePage />} index />
@@ -30,7 +38,14 @@ function App() {
       <Route element={<VehicleDetails />} path="vehicledetails" />
       <Route element={<UserLogin />} path="/UserLogin" />
       <Route element={<SellerForm />} path="/sellerform/:categoryId" />
+      {/* <Route element={<SellerForm />} path="/sellerform" /> */}
+      
+      <Route element={<VehicleCard />} path="/VehicleCard" />
+      <Route element={<DirectSignup />} path="/DirectSignup" />
+      
     </Routes>
+    <ToastContainer autoClose={3000}/>
+    </>
   );
 }
 

@@ -106,7 +106,7 @@ const SellerFormVehicle = ({
   return (
     <>
       <Navbar />
-      <div className="seller-form-container">
+      <div className="seller-form-container ">
         <div className="form-routes">
           <div className="route-nav">
             <div className="circle active">

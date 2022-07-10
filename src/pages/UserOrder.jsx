@@ -15,6 +15,10 @@ import { Link } from "react-router-dom";
 import Lottie from 'react-lottie';
 import animationData from '../assets/no-order-found.json';
 
+import axios from "axios";
+import {useEffect,useState} from 'react';
+import init from "../Helpers/WindowToken";
+
 function UserOrder() {
   const defaultOptions = {
     loop: true,
@@ -25,13 +29,36 @@ function UserOrder() {
     },
   };
 
+  const [name, setname] = useState("");
+
+  const getDetails = () => {
+    if (init() === "success") {
+      axios
+        .get("https://gaddideals.brokerinvoice.co.in/api/user")
+        .then((res) => {
+          
+          setname(res.data.user);
+          
+          
+          
+        });
+    }
+  };
+  function logoutAccount() {
+    localStorage.clear();
+  }
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
   return (
     <div className="outside-container">
       <div className="profile-container">
         <div className="left-profile-container">
           <div className="upper-div">
             <p className="hello-text">Hello</p>
-            <p className="user-name-left-div">James Ring</p>
+            <p className="user-name-left-div">{name.name}</p>
           </div>
           <div className="options-div">
           <div className="my-vehicle-div">
@@ -63,7 +90,18 @@ function UserOrder() {
           </div>
           <div className="sign-out-div">
             <img className="logout-img" src={logout} alt=""></img>
-            <span className="sign-out-text"> Sign out</span>
+            {/* <span className="sign-out-text"> Sign out</span> */}
+            <Link to="/">
+                <span
+                  className="sign-out-text"
+                  onClick={() => {
+                    logoutAccount();
+                  }}
+                >
+                  {" "}
+                  Sign out
+                </span>
+              </Link>
           </div>
         </div>
         </div>

@@ -42,6 +42,10 @@ const Constant = {
     postAllSignups: mainDomain + "api/user/auth/signup",
     postAllSignins: mainDomain + "api/user/auth/signin",
     postAllOtps: mainDomain + "api/user/auth/verifyOTP",
+    potsALLresendotps: mainDomain + "api/user/auth/resendOTP",
+  },
+  putAllUrls:{
+      putAllUsers: mainDomain+"api/user/update_profile",
   },
 };
 export default Constant;

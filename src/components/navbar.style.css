@@ -22,8 +22,70 @@
 
 @media screen and (max-width: 768px) {
   .sell-buy-container {
-    padding: 5px 30px;
+    padding: 5px 40px;
+    
   }
+
+  .sell-buy-container button {
+    padding: 5px 10px;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 10px;
+    color: #050f56;
+    background: #f9f9f9;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+    border: none;
+  }
+  .nav-container {
+    /* display: flex; */
+    /* flex-wrap: nowrap; */
+    /* flex-direction: row; */
+    background:#f4f4f4!important;
+    /* transform: translateX(10px) !important; */
+    height: 150px;
+    
+  }
+  .container-fluid{
+    
+     justify-content: flex-start !important;
+  }
+  .navar_div{
+    display: flex;
+  }
+  .logo {
+    /* background-color: #050f56; */
+    width: 26%;
+    margin-right: 10px;
+  }
+  .logo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    margin: 0;
+    /* background-color: olive; */
+  }
+  .brand-categories {
+    display: flex;
+    /* gap: 5px; */
+    height: 40px !important;
+    width: 49% !important;
+    /* margin-left: -100%; */
+    /* background-color: orangered; */
+  }
+  .brand-categories .brand-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px !important;
+    /* background: #c23131 !important; */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    cursor: pointer;
+    height: 100% !important;
+    width: 90px !important;
+  }
+
 }
 
 /* NavBar */
@@ -42,8 +104,37 @@
 }
 @media screen and (max-width: 768px) {
   .hamburger-menu {
+    width: 60px !important;
     display: block;
     cursor: pointer;
+    margin-left: 17px;
+    /* background-color: orchid; */
+  }
+  .hamburger-menu img{
+    width: 40px;
+  }
+  .brand-categories .brand-category img {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: cover;
+  }
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 0 40%;
+    margin-top: 20px;
+    margin-left: 0px !important;
+    /* background-color: olivedrab; */
+    /* width: 200px !important; */
+  }
+  .search-container input {
+    padding: 12px 50px;
+    width: 370px !important;
+    background: #ffffff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    border: none;
   }
 }
 

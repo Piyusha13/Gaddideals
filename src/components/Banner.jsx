@@ -118,7 +118,7 @@ const Banner = () => {
               <h1>{banner.title}</h1>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: banner.description,
+                  __html: banner.description.substring(0,100),
                 }}
               ></p>
             </div>

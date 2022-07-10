@@ -165,7 +165,7 @@ const SellerHomePage = () => {
             </div>
           </div>
 
-          <div className="how-card">
+          <div className="how-card how-card-2">
             <div className="how-card-title">
               <h5>Get the sellar details</h5>
             </div>
@@ -183,7 +183,7 @@ const SellerHomePage = () => {
             </div>
           </div>
 
-          <div className="how-card">
+          <div className="how-card how-card-3">
             <div className="how-card-title">
               <h5>Directly negotiate with the seller of the vehicle</h5>
             </div>
