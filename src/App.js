@@ -14,6 +14,7 @@ import SellerHome from "./pages/SellerHome";
 function App() {
   return (
     <Routes>
+      {/* all routes here */}
       <Route element={<SellerHomePage />} index />
       <Route element={<SellerHome />} path="sellerhome" />
       <Route element={<VehicleListings />} path="vehiclelistings" />
