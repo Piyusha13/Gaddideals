@@ -403,7 +403,7 @@ const Navbar = () => {
       {visibleOTP && (
         <div className="otp-main_parent">
           <div
-            className="otp-parent"
+            className="otp-parent "
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
               setonclose(false);
@@ -507,7 +507,7 @@ const Navbar = () => {
         <Link to="vehiclelistings">
           <button>Buy used commercial vehicle</button>
         </Link>
-        <Link to="vehicledetails">
+        <Link to="sellerhome">
           <button className="sell-btn">Sell used commercial vehicle</button>
         </Link>
       </div>

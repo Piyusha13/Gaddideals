@@ -26,7 +26,7 @@ import Lottie from "react-lottie";
 import animationData1 from "../assets/step-1-lottie.json";
 import animationData3 from "../assets/mental-therapy-lottie.json";
 import animationData2 from "../assets/step-3rd-lottie.json";
-import VehicleDetails from "./VehicleDetails";
+// import VehicleDetails from "./VehicleDetails";
 import { Link } from "react-router-dom";
 
 const SellerHomePage = () => {
@@ -101,8 +101,6 @@ const SellerHomePage = () => {
     setLatestConstructionData(response.data.vehicle.docs);
   };
 
- 
-
   useEffect(() => {
     fetchCategories();
     fetchTestimonials();
@@ -112,7 +110,6 @@ const SellerHomePage = () => {
     fetchLatestTractors();
     fetchLatestContruction();
     fetchFaqs();
-    
   }, []);
 
   const defaultOptions = {
@@ -120,24 +117,24 @@ const SellerHomePage = () => {
     autoplay: true,
     animationData: animationData1,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
   const defaultOptions2 = {
     loop: true,
     autoplay: true,
     animationData: animationData2,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
   const defaultOptions3 = {
     loop: true,
     autoplay: true,
     animationData: animationData3,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   return (
@@ -174,7 +171,7 @@ const SellerHomePage = () => {
             </div>
 
             <div className="how-card-img2">
-            <Lottie options={defaultOptions2} height="100%" width="100%" />
+              <Lottie options={defaultOptions2} height="100%" width="100%" />
               {/* <img src={girlImage} alt="girl" /> */}
             </div>
 
@@ -192,7 +189,7 @@ const SellerHomePage = () => {
             </div>
 
             <div className="how-card-img">
-            <Lottie options={defaultOptions3} height="100%" width="100%" />
+              <Lottie options={defaultOptions3} height="100%" width="100%" />
               {/* <img src={girlImage} alt="girl" /> */}
             </div>
 
@@ -263,9 +260,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                          <Link to={`/vehicledetails/${latestTruck._id}`}>
+                        <Link to={`/vehicledetails/${latestTruck._id}`}>
                           <button>Get Seller Details</button>
-                          </Link>
+                        </Link>
                       </div>
                     </div>
                   </SwiperSlide>
