@@ -1,35 +1,12 @@
 import { useState } from "react";
 
 import { FiCheckCircle } from "react-icons/fi";
-import { FaTimes } from "react-icons/fa";
 
 import "./sellerformregister.style.css";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-const tagsArray = [
-  {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
-  },
-  {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
-  },
-  {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
-  },
-  {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
-  },
-  {
-    text: "Lorem Ipsum",
-    cancelIcon: <FaTimes size={12} className="cancel-icon" />,
-  },
-];
+import FilterTags from "../components/FilterTags";
 
 const permitsArray = [
   {
@@ -69,8 +46,19 @@ const SellerFormRegistration = ({
   handleOnChange,
   formData,
   setPermit,
+  permit,
   setScrap,
+  scrap,
+  categoryTractorTitle,
+  caetgoryBusTitle,
   setTyreCondition,
+  tyreCondition,
+  yearTitle,
+  setYearTitle,
+  setOwner,
+  owner,
+  fuelTitle,
+  setFuelTitle,
 }) => {
   const continueNext = (e) => {
     e.preventDefault();
@@ -116,14 +104,23 @@ const SellerFormRegistration = ({
         </div>
 
         <div className="form-registration-container">
-          <div className="filter-tags">
-            {tagsArray.map((tag, index) => (
-              <div className="tag" key={index}>
-                <span>{tag.text}</span>
-                {tag.cancelIcon}
-              </div>
-            ))}
-          </div>
+          <FilterTags
+            yearTitle={yearTitle}
+            setYearTitle={setYearTitle}
+            owner={owner}
+            setOwner={setOwner}
+            fuelTitle={fuelTitle}
+            setFuelTitle={setFuelTitle}
+            permit={permit}
+            setPermit={setPermit}
+            scrap={scrap}
+            setScrap={setScrap}
+            tyreCondition={tyreCondition}
+            setTyreCondition={setTyreCondition}
+            setIsPermitActive={setIsPermitActive}
+            setIsScrapActive={setIsScrapActive}
+            setIsTyreCondActive={setIsTyreCondActive}
+          />
 
           <div className="line"></div>
 
@@ -193,16 +190,40 @@ const SellerFormRegistration = ({
                 </div>
               </div>
 
-              <div className="form-register-controls">
-                <label htmlFor="nooftyres">Number of tyres</label>
-                <input
-                  type="text"
-                  value={formData.nooftyres}
-                  name="nooftyres"
-                  onChange={handleOnChange}
-                  placeholder="4"
-                />
-              </div>
+              {categoryTractorTitle === "Tractors" ? (
+                <div className="form-register-controls">
+                  <label htmlFor="horsepower">Horse Power</label>
+                  <input
+                    type="text"
+                    value={formData.horsepower}
+                    name="horsepower"
+                    onChange={handleOnChange}
+                    placeholder="990Bhp"
+                  />
+                </div>
+              ) : caetgoryBusTitle === "Buses" ? (
+                <div className="form-register-controls">
+                  <label htmlFor="noofseats">Number of seats</label>
+                  <input
+                    type="text"
+                    value={formData.noofseats}
+                    name="noofseats"
+                    onChange={handleOnChange}
+                    placeholder="50"
+                  />
+                </div>
+              ) : (
+                <div className="form-register-controls">
+                  <label htmlFor="nooftyres">Number of tyres</label>
+                  <input
+                    type="number"
+                    value={formData.nooftyres}
+                    name="nooftyres"
+                    onChange={handleOnChange}
+                    placeholder="4"
+                  />
+                </div>
+              )}
 
               <div className="form-register-controls">
                 <label htmlFor="tyrecondition">Tyre Condition</label>
@@ -229,7 +250,7 @@ const SellerFormRegistration = ({
               <div className="form-register-controls">
                 <label htmlFor="pricingvehicle">Pricing of the vehicle</label>
                 <input
-                  type="text"
+                  type="number"
                   value={formData.pricingvehicle}
                   name="pricingvehicle"
                   onChange={handleOnChange}

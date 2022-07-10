@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import axios from "axios";
 
@@ -10,6 +11,11 @@ import SellerVehicleDetail from "./SellerVehicleDetail";
 import SellerPreviewDetails from "./SellerPreviewDetails";
 
 const SellerForm = () => {
+  const { categoryId } = useParams();
+
+  const [categoryTractorTitle, setCategoryTractorTitle] = useState("");
+  const [caetgoryBusTitle, setCategoryBusTitle] = useState("");
+
   const [brandsArray, setBrandsArray] = useState([]);
   const [brandId, setBrandId] = useState("");
   const [brandTitle, setBrandTitle] = useState("");
@@ -20,7 +26,7 @@ const SellerForm = () => {
 
   const [yearTitle, setYearTitle] = useState("");
 
-  const [vehivleId, setVehicleId] = useState("");
+  const [fuelTitle, setFuelTitle] = useState("");
 
   const [year, setYear] = useState("");
   const [fuel, setFuel] = useState("");
@@ -59,9 +65,12 @@ const SellerForm = () => {
     whichcity: "",
     vehiclenumber: "",
     kmsdriven: "",
+    noofhrs: "",
     insurancevalidity: "",
     taxvalidity: "",
     nooftyres: "",
+    horsepower: "",
+    noofseats: "",
     pricingvehicle: "",
     fitnesscertificate: "",
   });
@@ -83,9 +92,18 @@ const SellerForm = () => {
     sestModelsArray(response.data.model.docs);
   };
 
+  const fetchCatgory = async () => {
+    const response = await axios.get(
+      Constant.getUrls.getAllCategories + "/" + `${categoryId}`
+    );
+    setCategoryTractorTitle(response.data.category.title);
+    setCategoryBusTitle(response.data.category.title);
+  };
+
   useEffect(() => {
     fetchBrands();
     fetchModels();
+    fetchCatgory();
   }, []);
 
   const filterBrands = brandsArray.filter((brand) => {
@@ -118,7 +136,7 @@ const SellerForm = () => {
   const handlePostData = async () => {
     let fd = new FormData();
 
-    fd.append("category", "62a981c7a81db2038300ae60");
+    fd.append("category", categoryId);
     fd.append("state", formData.whichstate);
     fd.append("city", formData.whichcity);
     fd.append("brand", brandId);
@@ -126,6 +144,7 @@ const SellerForm = () => {
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
     fd.append("km_driven", formData.kmsdriven);
+    fd.append("no_of_hrs", formData.noofhrs);
     fd.append("no_of_owner", owner);
     fd.append("fuelType", fuel);
     fd.append("insurance", formData.insurancevalidity);
@@ -133,6 +152,8 @@ const SellerForm = () => {
     fd.append("vehicle_permit", permit);
     fd.append("scrap_vehicle", scrap);
     fd.append("no_of_tyre", formData.nooftyres);
+    fd.append("horse_power", formData.horsepower);
+    fd.append("no_of_seats", formData.noofseats);
     fd.append("tyre_cond", tyreCondition);
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);
@@ -142,35 +163,8 @@ const SellerForm = () => {
     fd.append("back_side_pic", backSideImg);
     fd.append("front_tyre", fronttyreLeftImg);
     fd.append("front_tyre", fronttyreRightImg);
-    fd.append("side_pic_vehicle", sidePicLeft, sidePicRight);
+    fd.append("side_pic_vehicle", sidePicLeft);
     fd.append("side_pic_vehicle", sidePicRight);
-
-    // let payload = {
-    //   category: "62a981c7a81db2038300ae60",
-    //   state: formData.whichstate,
-    //   city: formData.whichcity,
-    //   brand: formData.vehiclebrand,
-    //   model: formData.vehiclemodel,
-    //   years: year,
-    //   reg_no: formData.vehiclenumber,
-    //   km_driven: formData.kmsdriven,
-    //   no_of_owner: owner,
-    //   fuelType: fuel,
-    //   insurance: formData.insurancevalidity,
-    //   tax_validity: formData.taxvalidity,
-    //   vehicle_permit: permit,
-    //   scrap_vehicle: scrap,
-    //   no_of_tyre: formData.nooftyres,
-    //   tyre_cond: tyreCondition,
-    //   selling_price: formData.pricingvehicle,
-    //   fitness_certificate: formData.fitnesscertificate,
-    //   rc_document: rcImage,
-    //   engine_pic: engImage,
-    //   front_side_pic: frontSideImg,
-    //   back_side_pic: backSideImg,
-    //   front_tyre: fronttyreLeftImg,
-    //   side_pic_vehicle: sidePicLeft,
-    // };''
 
     const userToken = localStorage.getItem("Token");
     const response = await axios.post(Constant.postUrls.postAllVehicles, fd, {
@@ -178,9 +172,6 @@ const SellerForm = () => {
         Authorization: `Bearer ${userToken}`,
       },
     });
-
-    setVehicleId(response.data.vehicle._id);
-    console.log(response.data);
   };
 
   switch (step) {
@@ -191,17 +182,22 @@ const SellerForm = () => {
             nextStep={nextStep}
             filterBrands={filterBrands}
             filterModels={filterModels}
+            categoryTractorTitle={categoryTractorTitle}
             handleOnChange={handleOnChange}
             setYearTitle={setYearTitle}
             setYear={setYear}
+            yearTitle={yearTitle}
             setFuel={setFuel}
             setOwner={setOwner}
+            owner={owner}
             setBrandId={setBrandId}
             setBrandTitle={setBrandTitle}
             brandTitle={brandTitle}
             setModelId={setModelId}
             setModelTitle={setModelTitle}
             modelTitle={modelTitle}
+            fuelTitle={fuelTitle}
+            setFuelTitle={setFuelTitle}
             handleBrandChange={handleBrandChange}
             handleModelChange={handleModelChange}
             formData={formData}
@@ -215,7 +211,18 @@ const SellerForm = () => {
             handleOnChange={handleOnChange}
             formData={formData}
             setPermit={setPermit}
+            permit={permit}
+            yearTitle={yearTitle}
+            setYearTitle={setYearTitle}
+            owner={owner}
+            setOwner={setOwner}
+            fuelTitle={fuelTitle}
+            setFuelTitle={setFuelTitle}
+            categoryTractorTitle={categoryTractorTitle}
+            caetgoryBusTitle={caetgoryBusTitle}
+            scrap={scrap}
             setScrap={setScrap}
+            tyreCondition={tyreCondition}
             setTyreCondition={setTyreCondition}
             nextStep={nextStep}
           />

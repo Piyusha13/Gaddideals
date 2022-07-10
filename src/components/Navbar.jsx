@@ -518,10 +518,10 @@ const Navbar = () => {
       )}
 
       <div className="sell-buy-container">
-        <Link to="vehiclelistings">
+        <Link to="/vehiclelistings">
           <button>Buy used commercial vehicle</button>
         </Link>
-        <Link to="sellerhome">
+        <Link to="/sellerhome">
           <button className="sell-btn">Sell used commercial vehicle</button>
         </Link>
       </div>

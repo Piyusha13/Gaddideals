@@ -11,6 +11,7 @@ import {
   MdOutlineCheckBoxOutlineBlank,
   MdOutlineCheckBox,
 } from "react-icons/md";
+import { ImRadioUnchecked, ImRadioChecked } from "react-icons/im";
 
 import Constant from "../constants";
 
@@ -33,18 +34,76 @@ const VehicleListings = () => {
   const [modelYears, setModelYears] = useState([]);
   const [kmsDriven, setKmsDriven] = useState([]);
   const [fuelTypes, setFuelTypes] = useState([]);
+  const [lth, setLTH] = useState(location.kim_driven_sort);
+  const [cat, setCat] = useState(location.category);
+  const [lthPrice, setLTHPrice] = useState(location.price_sort);
+  const [recentlyAdded, setRecentlyAdded] = useState(location.sort);
+  const [searchInput, setSearchInput] = useState("");
+  const [minPrice, setMinPrice] = useState(location.min_price);
+  const [maxPrice, setMaxPrice] = useState(location.max_price);
 
   const navigate = useNavigate();
 
+  const handleSearchChange = async (e) => {
+    setSearchInput(e.target.value);
+
+    if (searchInput.length > 0) {
+      const res = await axios.get(
+        `${Constant.getUrls.getAllVehicles}?q=` + searchInput
+      );
+
+      setVehicesArray(res.data.vehicle.docs);
+    }
+  };
+
+  const handleSearchMin = (e) => {
+    setMinPrice(e.target.value);
+  };
+
+  const handleSearchMax = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
+  const handleMin = async (e) => {
+    setMinPrice(e.target.value);
+
+    // if (maxPrice > e.target.value) {
+    location["min_price"] = e.target.value;
+    // fetchVehiclesAPI(location);
+    // }
+
+    // const res = await axios.get(
+    //   `${Constant.getUrls.getAllVehicles}?min_price=${minPrice}&max_price=${maxPrice}`
+    // );
+    // console.log(res.data.vehicle.docs);
+  };
+
+  const handleMax = async (e) => {
+    setMaxPrice(e.target.value);
+
+    if (minPrice < e.target.value) {
+      location["max_price"] = e.target.value;
+      location["min_price"] = minPrice;
+      let prevUrl = queryString.stringify(location);
+      navigate("?" + prevUrl);
+      fetchVehiclesAPI(location);
+    }
+  };
+
   const fetchCategories = async () => {
     const response = await axios.get(`${Constant.getUrls.getAllCategories}`);
-
-    setCategories(response.data.category.docs);
+    if (response) {
+      setCategories(response.data.category.docs);
+      setCat(response.data.category.docs[0]._id);
+      location.category = response.data.category.docs[0]._id;
+      let prevUrl = queryString.stringify(location);
+      navigate("?" + prevUrl);
+      fetchVehiclesAPI(location);
+    }
   };
 
   const fetchVehiclesAPI = async (location) => {
     const apiUrl = queryString.stringify(location);
-
     const res = await axios.get(
       `${Constant.getUrls.getAllVehicles}?status=published&${apiUrl}`
     );
@@ -53,8 +112,9 @@ const VehicleListings = () => {
   };
 
   const fetchVehicles = async () => {
+    const url = queryString.stringify(location);
     const response = await axios.get(
-      `${Constant.getUrls.getAllVehicles}?status=published&sort=true`
+      `${Constant.getUrls.getAllVehicles}?status=published&sort=true&` + url
     );
 
     setVehicesArray(response.data.vehicle.docs);
@@ -88,6 +148,42 @@ const VehicleListings = () => {
   const fetchFuelTypes = async () => {
     const response = await axios.get(`${Constant.getUrls.getAllFuelTypes}`);
     setFuelTypes(response.data._getFuel.docs);
+  };
+
+  // category
+  const handleCat = (id) => {
+    setCat(id);
+    location["category"] = id;
+    let prevUrl = queryString.stringify(location);
+    navigate("?" + prevUrl);
+    fetchVehiclesAPI(location);
+  };
+
+  // Recently Added
+  const handleRecentlyAdded = (bool) => {
+    setRecentlyAdded(bool);
+    location["sort"] = bool;
+    let prevUrl = queryString.stringify(location);
+    navigate("?" + prevUrl);
+    fetchVehiclesAPI(location);
+  };
+
+  // Kms Driven
+  const handleLowToHighKms = (status) => {
+    setLTH(status);
+    location["kim_driven_sort"] = status;
+    let prevUrl = queryString.stringify(location);
+    navigate("?" + prevUrl);
+    fetchVehiclesAPI(location);
+  };
+
+  // price low to high
+  const handleLowToHighPrice = (priceStatus) => {
+    setLTHPrice(priceStatus);
+    location["price_sort"] = priceStatus;
+    let prevUrl = queryString.stringify(location);
+    navigate("?" + prevUrl);
+    fetchVehiclesAPI(location);
   };
 
   const isBtChecked = (id) => {
@@ -325,14 +421,13 @@ const VehicleListings = () => {
   };
 
   useEffect(() => {
-    fetchVehicles();
+    fetchCategories();
     fetchBodyTypes();
     fetchBrands();
     fetchModels();
     fetchModelYears();
     fetchKmsDriven();
     fetchFuelTypes();
-    fetchCategories();
   }, []);
 
   return (
@@ -344,32 +439,75 @@ const VehicleListings = () => {
           <div className="filter-one">
             <div className="filter-container">
               <h3>Sort By :</h3>
-              <div className="filter-controls">
-                <input type="radio" name="recentlyAdded" />
+              <div
+                className="filter-controls"
+                onClick={() => handleRecentlyAdded(!recentlyAdded)}
+              >
+                {recentlyAdded ? (
+                  <ImRadioChecked color="#050F56" size={25} />
+                ) : (
+                  <ImRadioUnchecked color="#050F56" size={25} />
+                )}
                 <span>Recently Added</span>
               </div>
             </div>
             <div className="line"></div>
             <div className="filter-container">
               <h3>Price</h3>
-              <div className="filter-controls">
-                <input type="radio" name="lowtohigh" />
+              <div
+                className="filter-controls"
+                onClick={() => {
+                  handleLowToHighPrice("low");
+                }}
+              >
+                {lthPrice === "low" ? (
+                  <ImRadioChecked color="#050F56" size={25} />
+                ) : (
+                  <ImRadioUnchecked color="#050F56" size={25} />
+                )}
                 <span>Low to High</span>
               </div>
-              <div className="filter-controls">
-                <input type="radio" name="hightolow" />
+              <div
+                className="filter-controls"
+                onClick={() => {
+                  handleLowToHighPrice("high");
+                }}
+              >
+                {lthPrice === "high" ? (
+                  <ImRadioChecked color="#050F56" size={25} />
+                ) : (
+                  <ImRadioUnchecked color="#050F56" size={25} />
+                )}
                 <span>High to Low</span>
               </div>
             </div>
             <div className="line"></div>
             <div className="filter-container">
               <h3>Kms Driven</h3>
-              <div className="filter-controls">
-                <input type="radio" name="lowtohigh" />
+              <div
+                className="filter-controls"
+                onClick={() => {
+                  handleLowToHighKms("low");
+                }}
+              >
+                {lth === "low" ? (
+                  <ImRadioChecked color="#050F56" size={25} />
+                ) : (
+                  <ImRadioUnchecked color="#050F56" size={25} />
+                )}
                 <span>Low to High</span>
               </div>
-              <div className="filter-controls">
-                <input type="radio" name="hightolow" />
+              <div
+                className="filter-controls"
+                onClick={() => {
+                  handleLowToHighKms("high");
+                }}
+              >
+                {lth === "high" ? (
+                  <ImRadioChecked color="#050F56" size={25} />
+                ) : (
+                  <ImRadioUnchecked color="#050F56" size={25} />
+                )}
                 <span>High to Low</span>
               </div>
             </div>
@@ -383,6 +521,8 @@ const VehicleListings = () => {
                 type="search"
                 name="search"
                 id="search"
+                value={searchInput}
+                onChange={handleSearchChange}
               />
             </div>
             <div className="categories-container">
@@ -390,10 +530,18 @@ const VehicleListings = () => {
 
               {categories.map((category) => (
                 <div className="category" key={category._id}>
-                  <div className="icon-wrapper">
+                  <div
+                    onClick={() => {
+                      handleCat(category._id);
+                    }}
+                    className="icon-wrapper"
+                    style={{
+                      border: cat === category._id ? "1px solid #000" : "none",
+                    }}
+                  >
                     <img src={imgurl + category.icon} alt={category.title} />
                   </div>
-                  <a href={category.title}>{category.title}</a>
+                  <a>{category.title}</a>
                 </div>
               ))}
             </div>
@@ -404,11 +552,23 @@ const VehicleListings = () => {
               <div className="min-max-controls">
                 <div className="price-input">
                   <span>Min Price</span>
-                  <input type="text" placeholder="₹0" name="minprice" />
+                  <input
+                    type="number"
+                    placeholder="₹0"
+                    name="minprice"
+                    value={minPrice}
+                    onChange={handleMin}
+                  />
                 </div>
                 <div className="price-input">
                   <span>Max Price</span>
-                  <input type="text" placeholder="₹15,00,000" name="maxprice" />
+                  <input
+                    type="number"
+                    placeholder="₹15,00,000"
+                    name="maxprice"
+                    value={maxPrice}
+                    onChange={handleMax}
+                  />
                 </div>
               </div>
             </div>

@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import init from "../Helpers/WindowToken";
 import { set } from "react-hook-form";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function LoggedUser() {
   const [name, setname] = useState("");
@@ -28,24 +29,21 @@ function LoggedUser() {
   );
   const [imgstate, setImgstate] = useState(false);
 
-  const[profileimgstate,setprofileimgstate]=useState("");
+  const [profileimgstate, setprofileimgstate] = useState("");
 
-  const [previousNum,setPriviousNum]=useState("");
+  const [previousNum, setPriviousNum] = useState("");
 
-  const [navigate,setnavigate]=useState(false);
-  
+  const [navigate, setnavigate] = useState(false);
 
   const profileInput = useRef();
 
   const handlerImg = () => {
     profileInput.current.click();
   };
-  
 
   function logoutAccount() {
     localStorage.clear();
     window.location.href = "/";
-
   }
   const getDetails = () => {
     if (init() === "success") {
@@ -94,8 +92,6 @@ function LoggedUser() {
     console.log(name);
   }
 
-  
-  
   function handleSumit(e) {
     e.preventDefault();
     let user_token = localStorage.getItem("Token");
@@ -107,72 +103,62 @@ function LoggedUser() {
     fdi.append("name", name.name);
     fdi.append("email", email.email);
     fdi.append("mob_no", mob_no.mob_no);
-    fdi.append("profile_pic_url",profileImg);
+    fdi.append("profile_pic_url", profileImg);
     // const updatedData = {
     //     name: name.name,
     //     email: email.email,
     //     mob_no: mob_no.mob_no,
     // }
-    axios.put(Constant.putAllUrls.putAllUsers, fdi, {
-      headers: {
-        Authorization: ` Bearer ${user_token} `
-      },
-    })
-    .then(res => console.log(res)
-    // res.data.status==='success'? setnavigate(true):setnavigate(false)
-    );
-    
-
-    
-    if(previousNum!== mob_no.mob_no)
-    {
-      
-      logoutAccount();
-    
-    }
-    
-}
-function setSignup() {
-  console.log("otp verified");
-  console.warn({ name, email, previousNum:mob_no });
-  let payload = { name, email, previousNum:mob_no};
-  axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
-    console.log("res", res);
-      
-    }
-  );
-}
-
-
-  function onHandleChange(e){
-  
-    if(e.target.name=== "name"){
-        setname((pre)=>{
-          return {[e.target.name] :e.target.value}
-        })
-        setTimeout(()=>{
-          console.log(name);
-        },1000)
-    }
-    if(e.target.name=== "email"){
-      setemail((pre)=>{
-        return {[e.target.name] :e.target.value}
+    axios
+      .put(Constant.putAllUrls.putAllUsers, fdi, {
+        headers: {
+          Authorization: ` Bearer ${user_token} `,
+        },
       })
-      setTimeout(()=>{
-        console.log(email);
-      },1000)
+      .then(
+        (res) => console.log(res)
+        // res.data.status==='success'? setnavigate(true):setnavigate(false)
+      );
+
+    if (previousNum !== mob_no.mob_no) {
+      logoutAccount();
+    }
   }
-  if(e.target.name=== "mob_no"){
-    console.log(previousNum+"&&&&&");
-    setmob_no((pre)=>{
-      return {[e.target.name] :e.target.value}
-    })
-    setTimeout(()=>{
-      console.log(mob_no);
-    },1000)
+  function setSignup() {
+    console.log("otp verified");
+    console.warn({ name, email, previousNum: mob_no });
+    let payload = { name, email, previousNum: mob_no };
+    axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+      console.log("res", res);
+    });
   }
 
-   
+  function onHandleChange(e) {
+    if (e.target.name === "name") {
+      setname((pre) => {
+        return { [e.target.name]: e.target.value };
+      });
+      setTimeout(() => {
+        console.log(name);
+      }, 1000);
+    }
+    if (e.target.name === "email") {
+      setemail((pre) => {
+        return { [e.target.name]: e.target.value };
+      });
+      setTimeout(() => {
+        console.log(email);
+      }, 1000);
+    }
+    if (e.target.name === "mob_no") {
+      console.log(previousNum + "&&&&&");
+      setmob_no((pre) => {
+        return { [e.target.name]: e.target.value };
+      });
+      setTimeout(() => {
+        console.log(mob_no);
+      }, 1000);
+    }
   }
 
   useEffect(() => {
@@ -182,25 +168,25 @@ function setSignup() {
 
   return (
     <>
-    {navigate && <Navbar/>}
-    <div className="outside-container">
-      <div className="profile-container">
-        <div className="left-profile-container">
-          <div className="upper-div">
-            <p className="hello-text">Hello</p>
-            <p className="user-name-left-div">{name.name} </p>
-          </div>
-          <div className="options-div">
-            <div className="my-vehicle-div">
-              <img className="shipping-img" src={shipping} alt=""></img>
-              <Link to="/UserVehicles" className="my-vehicle-text">
-                <span> My Vehicle</span>
-              </Link>
-              <Link to="/UserVehicles">
-                <img className="next-arrow-img" src={next_arrow} alt="" />
-              </Link>
+      <Navbar />
+      <div className="outside-container">
+        <div className="profile-container">
+          <div className="left-profile-container">
+            <div className="upper-div">
+              <p className="hello-text">Hello</p>
+              <p className="user-name-left-div">{name.name} </p>
             </div>
-            {/* <div className="my-order-div">
+            <div className="options-div">
+              <div className="my-vehicle-div">
+                <img className="shipping-img" src={shipping} alt=""></img>
+                <Link to="/UserVehicles" className="my-vehicle-text">
+                  <span> My Vehicle</span>
+                </Link>
+                <Link to="/UserVehicles">
+                  <img className="next-arrow-img" src={next_arrow} alt="" />
+                </Link>
+              </div>
+              {/* <div className="my-order-div">
               <img className="clipboard-img" src={clipboard} alt=""></img>
               <Link to="/Userorder" className="my-order-text">
                 <span> My Order</span>
@@ -209,155 +195,155 @@ function setSignup() {
                 <img className="next-arrow-img" src={next_arrow} alt=""></img>
               </Link>
             </div> */}
-            <div className="user-Faq-div">
-              <img className="help-img" src={help} alt=""></img>
-              <Link to="/UserFaq" className="user-Faq-text">
-                <span>FAQ</span>
-              </Link>
-              <Link to="/UserFaq">
-                <img className="next-arrow-img" src={next_arrow} alt=""></img>
-              </Link>
-            </div>
-            <div className="sign-out-div">
-              <img className="logout-img" src={logout} alt=""></img>
-              <Link to="/">
-                <span
-                  className="sign-out-text"
-                  onClick={() => {
-                    logoutAccount();
-                  }}
-                >
-                  {" "}
-                  Sign out
-                </span>
-              </Link>
+              <div className="user-Faq-div">
+                <img className="help-img" src={help} alt=""></img>
+                <Link to="/UserFaq" className="user-Faq-text">
+                  <span>FAQ</span>
+                </Link>
+                <Link to="/UserFaq">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
+              <div className="sign-out-div">
+                <img className="logout-img" src={logout} alt=""></img>
+                <Link to="/">
+                  <span
+                    className="sign-out-text"
+                    onClick={() => {
+                      logoutAccount();
+                    }}
+                  >
+                    {" "}
+                    Sign out
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="right-profile-container">
-          <div className="user-profile-header">
-            <h1>Profile</h1>
-          </div>
-          <div className="profile-pic-div">
-            <div className="profile-pic-circle">
-              {/* <p className="profile-initials">JR</p> */}
-              <img
-                className="userProfileImg"
-                src={
-                  profileimgstate.profile_pic_url
-                    ? "https://gaddideals.brokerinvoice.co.in" +
+          <div className="right-profile-container">
+            <div className="user-profile-header">
+              <h1>Profile</h1>
+            </div>
+            <div className="profile-pic-div">
+              <div className="profile-pic-circle">
+                {/* <p className="profile-initials">JR</p> */}
+                <img
+                  className="userProfileImg"
+                  src={
                     profileimgstate.profile_pic_url
-                    : profileImg
-                }
-                alt=""
-              ></img>
-              {/* console.log(profileImg); */}
+                      ? "https://gaddideals.brokerinvoice.co.in" +
+                        profileimgstate.profile_pic_url
+                      : profileImg
+                  }
+                  alt=""
+                ></img>
+                {/* console.log(profileImg); */}
+              </div>
+              <div>
+                <input
+                  type="file"
+                  name="image-upload"
+                  ref={profileInput}
+                  accept="image/png, image/jpeg"
+                  onChange={(e) => {
+                    handlefile(e);
+                  }}
+                  hidden
+                />
+                <button
+                  style={{ border: "none", backgroundColor: "transparent" }}
+                  onClick={handlerImg}
+                >
+                  <img className="edit-img" src={edit_pen} alt=""></img>
+                </button>
+              </div>
             </div>
-            <div>
-              <input
-                type="file"
-                name="image-upload"
-                ref={profileInput}
-                accept="image/png, image/jpeg" 
-                onChange={(e) => {
-                  handlefile(e);
-                }}
-                hidden
-              />
-              <button
-                style={{ border: "none", backgroundColor: "transparent" }}
-                onClick={handlerImg}
-              >
-                <img className="edit-img" src={edit_pen} alt=""></img>
-              </button>
-            </div>
-          </div>
 
+            <form onSubmit={handleSumit}>
+              <p className="name-lable">Name</p>
+              <div className="user-name-input-div">
+                <input
+                  readOnly={editablename}
+                  value={name.name}
+                  name="name"
+                  className="user-name-right-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                />
+                <span
+                  onClick={() => {
+                    seteditablename(false);
+                    setname("");
+                  }}
+                  onChange={(e) => {
+                    setname(e.target.value);
+                    console.log(name.name);
+                  }}
+                  className="user-name-edit"
+                >
+                  Edit
+                </span>
+              </div>
 
-          <form onSubmit={handleSumit} >
-          <p className="name-lable">Name</p>
-          <div className="user-name-input-div">
-            <input
-              readOnly={editablename}
-              value={name.name}
-              name="name"
-              className="user-name-right-input"
-              onChange={(e) => {
-                onHandleChange(e);
-              }}
-              
-            />
-            <span
-              onClick={() => {
-                seteditablename(false);
-                setname("");
-              }}
-              onChange={(e) => {
-                setname(e.target.value);
-                console.log(name.name);
-              }}
-              className="user-name-edit"
-            >
-              Edit
-            </span>
-          </div>
+              <p className="email-lable">Email</p>
+              <div className="user-email-input-div">
+                <input
+                  readOnly={editableEmail}
+                  value={email.email}
+                  name="email"
+                  className="user-email-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                ></input>
+                <span
+                  onClick={() => {
+                    seteditableEmail(false);
+                    setemail("");
+                  }}
+                  className="user-email-edit"
+                >
+                  Edit
+                </span>
+              </div>
 
-          <p className="email-lable">Email</p>
-          <div className="user-email-input-div">
-            <input
-              readOnly={editableEmail}
-              value={email.email}
-              name="email"
-              className="user-email-input"
-              onChange={(e) => {
-                onHandleChange(e);
-              }}
-            ></input>
-            <span
-              onClick={() => {
-                seteditableEmail(false);
-                setemail("");
-              }}
-              className="user-email-edit"
-            >
-              Edit
-            </span>
-          </div>
-
-          <p className="mobile-lable">Mobile Number</p>
-          <div className="user-mobile-input-div">
-            <input
-              type="number"
-              readOnly={editableMob}
-              value={mob_no.mob_no}
-              name="mob_no"
-              className="user-mobile-input"
-              onChange={(e) => {
-                onHandleChange(e);
-              }}
-            ></input>
-            <span
-              onClick={() => {
-                seteditableMob(false);
-                setmob_no("");
-              }}
-              className="user-mobile-edit"
-            >
-              Edit
-            </span>
-          </div>
-          {/* <p className="subs-lable">My Subscription</p>
+              <p className="mobile-lable">Mobile Number</p>
+              <div className="user-mobile-input-div">
+                <input
+                  type="number"
+                  readOnly={editableMob}
+                  value={mob_no.mob_no}
+                  name="mob_no"
+                  className="user-mobile-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                ></input>
+                <span
+                  onClick={() => {
+                    seteditableMob(false);
+                    setmob_no("");
+                  }}
+                  className="user-mobile-edit"
+                >
+                  Edit
+                </span>
+              </div>
+              {/* <p className="subs-lable">My Subscription</p>
           <div className="user-subs-input-div">
             <input readOnly={true} className="user-subs-input"></input>
             <span className="user-subs-edit">Edit</span>
           </div> */}
-          
-          <button className="save-changes-button"  type="submit" >SAVE CANGES</button>
-          
-          </form>
+
+              <button className="save-changes-button" type="submit">
+                SAVE CANGES
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
     </>
   );
 }

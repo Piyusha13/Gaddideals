@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Constant from "../constants";
+import FilterTags from "../components/FilterTags";
 
 import { FiCheckCircle } from "react-icons/fi";
-import { FaTimes } from "react-icons/fa";
 import "./sellerformvehicle.style.css";
 
 import arrowDown from "../assets/down-arrow.png";
@@ -42,8 +42,12 @@ const SellerFormVehicle = ({
   handleBrandChange,
   handleModelChange,
   setYear,
+  yearTitle,
   setFuel,
+  fuelTitle,
+  setFuelTitle,
   setOwner,
+  owner,
   filterBrands,
   setBrandId,
   setBrandTitle,
@@ -53,6 +57,7 @@ const SellerFormVehicle = ({
   setModelTitle,
   modelTitle,
   setYearTitle,
+  categoryTractorTitle,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
@@ -64,20 +69,9 @@ const SellerFormVehicle = ({
   const [suggestionBox, setSuggestionBox] = useState(false);
   const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
 
-  // const [tagsArray, setTagsArray] = useState([]);
-
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
-  };
-
-  const handleTagsArray = (idx) => {
-    const tagId = tagsArray.find((tag, index) => tag === idx);
-    if (tagId) {
-      const index = tagsArray.indexOf(tagId);
-      tagsArray.splice(index, 0);
-    }
-    console.log(tagId);
   };
 
   const fetchVehiclesArray = async () => {
@@ -134,14 +128,45 @@ const SellerFormVehicle = ({
         </div>
 
         <div className="form-details-container">
-          <div className="filter-tags">
-            {tagsArray.map((tag, index) => (
-              <div className="tag" key={index}>
-                <span>{tag}</span>
-                <FaTimes onClick={() => handleTagsArray(index)} />
+          {/* <div className="filter-tags">
+            {yearTitle && (
+              <div className="tag">
+                <span>{yearTitle}</span>
+                <FaTimes
+                  className="cancel-icon"
+                  onClick={() => setYearTitle("")}
+                />
               </div>
-            ))}
-          </div>
+            )}
+
+            {owner && (
+              <div className="tag">
+                <span>{owner}</span>
+                <FaTimes className="cancel-icon" onClick={() => setOwner("")} />
+              </div>
+            )}
+
+            {fuelTitle && (
+              <div className="tag">
+                <span>{fuelTitle}</span>
+                <FaTimes
+                  className="cancel-icon"
+                  onClick={() => setFuelTitle("")}
+                />
+              </div>
+            )}
+          </div> */}
+          <FilterTags
+            yearTitle={yearTitle}
+            setYearTitle={setYearTitle}
+            owner={owner}
+            setOwner={setOwner}
+            setFuelTitle={setFuelTitle}
+            fuelTitle={fuelTitle}
+            setIsYearActive={setIsYearActive}
+            setIsOwnerActive={setIsOwnerActive}
+            setIsFuelActive={setIsFuelActive}
+          />
 
           <div className="line"></div>
 
@@ -270,16 +295,28 @@ const SellerFormVehicle = ({
                 />
               </div>
 
-              <div className="form-controls">
-                <label htmlFor="kmsdriven">Kilometers Driven</label>
-                <input
-                  type="text"
-                  value={formData.kmsdriven}
-                  onChange={handleOnChange}
-                  name="kmsdriven"
-                  placeholder="10,00,00"
-                />
-              </div>
+              {categoryTractorTitle === "Tractors" ? (
+                <div className="form-controls">
+                  <label htmlFor="noofhrs">Number of Hours</label>
+                  <input
+                    type="time"
+                    value={formData.noofhrs}
+                    onChange={handleOnChange}
+                    name="noofhrs"
+                  />
+                </div>
+              ) : (
+                <div className="form-controls">
+                  <label htmlFor="kmsdriven">Kilometers Driven</label>
+                  <input
+                    type="number"
+                    value={formData.kmsdriven}
+                    onChange={handleOnChange}
+                    name="kmsdriven"
+                    placeholder="10,00,00"
+                  />
+                </div>
+              )}
 
               <div className="form-controls">
                 <label htmlFor="owners">Number of owners</label>
@@ -291,7 +328,7 @@ const SellerFormVehicle = ({
                         isOwnerActive === index ? "owner active" : "owner"
                       }
                       onClick={() => {
-                        setOwner("First");
+                        setOwner(owners.owner);
                         setIsOwnerActive(index);
                       }}
                     >
@@ -314,6 +351,7 @@ const SellerFormVehicle = ({
                       onClick={() => {
                         setFuel(fuelType._id);
                         setIsFuelActive(index);
+                        setFuelTitle(fuelType.title);
                       }}
                       key={fuelType._id}
                     >

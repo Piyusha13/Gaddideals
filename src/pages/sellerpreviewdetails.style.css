@@ -123,6 +123,7 @@
   font-family: "Roboto";
   font-weight: 500;
   font-size: 14px;
+  text-transform: capitalize;
   color: #929292;
 }
 
@@ -150,6 +151,8 @@
   color: #050f56;
 }
 .preview-row-one .preview-vehicle-document .document {
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,6 +164,11 @@
   height: 20%;
   width: 80%;
   
+}
+.preview-row-one .preview-vehicle-document .document img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .preview-row-two {
@@ -179,6 +187,8 @@
   color: #050f56;
 }
 .preview-row-two .vehicle-documents .document {
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,6 +201,11 @@
   height: 20%;
   width: 21%;
   
+}
+.preview-row-two .vehicle-documents .document img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .preview-row-three {
@@ -208,6 +223,8 @@
   color: #050f56;
 }
 .preview-row-three .vehicle-documents .document {
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -219,6 +236,11 @@
   cursor: pointer;
   height: 20%;
   width: 21%;
+}
+.preview-row-three .vehicle-documents .document img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .preview-btns {

@@ -137,6 +137,9 @@
   font-family: "Roboto";
   padding: 5px 20px;
 }
+.form-register-controls input:focus {
+  outline: 2px solid #00adef;
+}
 
 .form-register-controls .permits {
   background: #ffffff;
