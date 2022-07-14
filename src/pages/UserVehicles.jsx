@@ -2,7 +2,6 @@ import React from "react";
 import truckImg from "../assets/trucks1.png";
 import locationIcon from "../assets/location.png";
 import "./UserVehicles.style.css";
-
 import "./vehiclecard.styles.css";
 import "./LoggedUser.css";
 import shipping from "../assets/shipping.png";
@@ -15,14 +14,12 @@ import next_arrow from "../assets/next_arrow.svg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 import Lottie from "react-lottie";
 import animationData from "../assets/my-vehicles-lottie.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import init from "../Helpers/WindowToken";
 import VehicleCard from "../pages/VehicleCard";
-
 function UserVehicles() {
   const defaultOptions = {
     loop: true,
@@ -32,9 +29,7 @@ function UserVehicles() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
   const [name, setname] = useState("");
-
   // for get name
   const getDetails = () => {
     if (init() === "success") {
@@ -48,14 +43,11 @@ function UserVehicles() {
   function logoutAccount() {
     localStorage.clear();
   }
-
   const [dataAvailable, setdataAvailable] = useState(true);
   // const [array,setarray]=useState("");
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
-
   //for vehicle data
-
   const getMyVehicleDetails = () => {
     axios
       .get("https://gaddideals.brokerinvoice.co.in/api/vehicle/my_vehicles", {
@@ -73,12 +65,10 @@ function UserVehicles() {
         });
       });
   };
-
   useEffect(() => {
     getDetails();
     getMyVehicleDetails();
   }, []);
-
   return (
     <>
       <Navbar />
@@ -163,7 +153,6 @@ function UserVehicles() {
                             <span>{item.city}</span>
                           </div>
                         </div>
-
                         <div className="card-publish-review">
                           <div className="review">
                             <strong>Under Review</strong>
@@ -171,20 +160,16 @@ function UserVehicles() {
                           <span>(Uploaded on Jun 01,2022)</span>
                         </div>
                       </div>
-
                       <div className="card-price">
                         <h3>₹{item.selling_price} </h3>
                       </div>
-
                       <div className="card-stats">
                         <div className="stat">
                           <span>{item.km_driven} km</span>
                         </div>
-
                         <div className="stat">
                           <span>{item.no_of_owner} Owner</span>
                         </div>
-
                         <div className="stat">
                           <span>{item.no_of_tyre} tyres </span>
                         </div>
@@ -205,5 +190,4 @@ function UserVehicles() {
     </>
   );
 }
-
 export default UserVehicles;

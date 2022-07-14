@@ -255,13 +255,16 @@
   margin-left: 10px;
   gap: 17px;
   position: relative;
+  
 }
+
+
 .languages-container .language span {
   display: inline-block;
   font-family: "Poppins";
   font-weight: 500;
   font-size: 15px;
-  color: #505050;
+  color: transparent;
 }
 .languages-container .language-arrow-icon {
   cursor: pointer;

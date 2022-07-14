@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-
 import "./LoggedUser.css";
 import shipping from "../assets/shipping.png";
 // import clipboard from "../assets/clipboard.png";
@@ -16,7 +15,6 @@ import init from "../Helpers/WindowToken";
 import { set } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 function LoggedUser() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -28,19 +26,13 @@ function LoggedUser() {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
   const [imgstate, setImgstate] = useState(false);
-
   const [profileimgstate, setprofileimgstate] = useState("");
-
   const [previousNum, setPriviousNum] = useState("");
-
   const [navigate, setnavigate] = useState(false);
-
   const profileInput = useRef();
-
   const handlerImg = () => {
     profileInput.current.click();
   };
-
   function logoutAccount() {
     localStorage.clear();
     window.location.href = "/";
@@ -62,12 +54,10 @@ function LoggedUser() {
         });
     }
   };
-
   function handlefile(e) {
     if (e.target.files[0]) {
       let user_token = localStorage.getItem("Token");
       setprofileImg(e.target.files[0]);
-
       let fd = new FormData();
       fd.append("name", name.name);
       fd.append("email", email.email);
@@ -91,7 +81,6 @@ function LoggedUser() {
     console.log(e.target.files[0]);
     console.log(name);
   }
-
   function handleSumit(e) {
     e.preventDefault();
     let user_token = localStorage.getItem("Token");
@@ -119,7 +108,6 @@ function LoggedUser() {
         (res) => console.log(res)
         // res.data.status==='success'? setnavigate(true):setnavigate(false)
       );
-
     if (previousNum !== mob_no.mob_no) {
       logoutAccount();
     }
@@ -132,7 +120,6 @@ function LoggedUser() {
       console.log("res", res);
     });
   }
-
   function onHandleChange(e) {
     if (e.target.name === "name") {
       setname((pre) => {
@@ -160,12 +147,10 @@ function LoggedUser() {
       }, 1000);
     }
   }
-
   useEffect(() => {
     getDetails();
     setSignup();
   }, []);
-
   return (
     <>
       <Navbar />
@@ -258,7 +243,6 @@ function LoggedUser() {
                 </button>
               </div>
             </div>
-
             <form onSubmit={handleSumit}>
               <p className="name-lable">Name</p>
               <div className="user-name-input-div">
@@ -285,7 +269,6 @@ function LoggedUser() {
                   Edit
                 </span>
               </div>
-
               <p className="email-lable">Email</p>
               <div className="user-email-input-div">
                 <input
@@ -307,7 +290,6 @@ function LoggedUser() {
                   Edit
                 </span>
               </div>
-
               <p className="mobile-lable">Mobile Number</p>
               <div className="user-mobile-input-div">
                 <input
@@ -335,7 +317,6 @@ function LoggedUser() {
             <input readOnly={true} className="user-subs-input"></input>
             <span className="user-subs-edit">Edit</span>
           </div> */}
-
               <button className="save-changes-button" type="submit">
                 SAVE CANGES
               </button>
@@ -347,5 +328,4 @@ function LoggedUser() {
     </>
   );
 }
-
 export default LoggedUser;
