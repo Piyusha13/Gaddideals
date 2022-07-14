@@ -16,7 +16,7 @@ import "swiper/css/navigation";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import "react-tabs/style/react-tabs.css";
 
-import girlImage from "../assets/girl_image.png";
+// import girlImage from "../assets/girl_image.png";
 import locationIcon from "../assets/location-home.png";
 import truckHomeImage from "../assets/truck-home.png";
 
@@ -28,6 +28,16 @@ import animationData3 from "../assets/mental-therapy-lottie.json";
 import animationData2 from "../assets/step-3rd-lottie.json";
 // import VehicleDetails from "./VehicleDetails";
 import { Link } from "react-router-dom";
+// import "http://translate.googlr.com/translate_a/elemnt.js?cb=loadGoogleTranslate";
+import { FaGoogle } from "react-icons/fa";
+
+// import { useLazyTranslate } from 'react-google-translate';
+// const GCP_PRIVATE_KEY=["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"];
+// const GCP_CLIENT_EMAIL=["384857094071-ej4f1bi786jn698rkocn43vkhaebo157.apps.googleusercontent.com"];
+// const GCP_PROJECT_ID=["AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw"];
+
+// import { setConfig } from 'react-google-translate';
+
 
 const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -101,6 +111,12 @@ const SellerHomePage = () => {
     setLatestConstructionData(response.data.vehicle.docs);
   };
 
+  // function loadGoogleTranslate(){
+  //   FaGoogle.translate.TranslateElement("intro-title");
+  // }
+
+  
+
   useEffect(() => {
     fetchCategories();
     fetchTestimonials();
@@ -110,6 +126,7 @@ const SellerHomePage = () => {
     fetchLatestTractors();
     fetchLatestContruction();
     fetchFaqs();
+    // languageTranslation();
   }, []);
 
   const defaultOptions = {
@@ -143,7 +160,7 @@ const SellerHomePage = () => {
       <Banner />
       <div className="how-it-works-section">
         <div className="header-title">
-          <h1>How It Works</h1>
+          <h1 id="intro-title">How It Works</h1>
         </div>
 
         <div className="how-cards-container container">
@@ -229,8 +246,13 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
+                    
                   },
                   1368: {
                     slidesPerView: 4,
@@ -276,7 +298,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -321,7 +347,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -366,7 +396,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -442,8 +476,13 @@ const SellerHomePage = () => {
             slidesPerView={3}
             grabCursor={true}
             breakpoints={{
-              768: {
-                slidesPerView: 3,
+              50: {
+                slidesPerView: 1.8,
+                spaceBetween:10,
+              },
+              820:{
+                slidesPerView: 2.7,
+                spaceBetween:25,
               },
               1368: {
                 slidesPerView: 3,
@@ -507,7 +546,15 @@ const SellerHomePage = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              768: {
+              820:{
+                slidesPerView: 3.8,
+                spaceBetween:20,
+              },
+              50:{
+                slidesPerView: 3,
+                spaceBetween:10,
+              },
+              999: {
                 slidesPerView: 5,
               },
               1368: {

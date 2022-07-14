@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./UserFaq.style.css";
 import "./UserOrder.style.css";
 import "./UserVehicles.style.css";
@@ -11,9 +10,7 @@ import logout from "../assets/logout.png";
 import next_arrow from "../assets/next_arrow.svg";
 // import edit_box from "../assets/edit_box.jpg";
 // import edit_pen from "../assets/edit.png";
-
 import { Link } from "react-router-dom";
-
 import Lottie from "react-lottie";
 import animationData from "../assets/no-order-found.json";
 import axios from "axios";
@@ -21,19 +18,15 @@ import { useEffect, useState } from "react";
 import Constant from "../constants";
 import UserFaqToggle from "../components/UserFaqToggle";
 import init from "../Helpers/WindowToken";
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 function UserFaq() {
   const [faqs, setFAQS] = useState([]);
   const [name, setname] = useState("");
-
   const fetchFaqs = async () => {
     const response = await axios.get(Constant.getUrls.getAllFaqs);
     setFAQS(response.data.faq.docs);
   };
-
   const getDetails = () => {
     if (init() === "success") {
       axios
@@ -46,7 +39,6 @@ function UserFaq() {
   function logoutAccount() {
     localStorage.clear();
   }
-
   useEffect(() => {
     fetchFaqs();
     getDetails();
@@ -107,12 +99,26 @@ function UserFaq() {
                 </span>
               </Link>
             </div>
+
           </div>
+          <div className="right-Faq-container">
+         <div className="user-Faq-header">
+           <h1>FAQ</h1> 
+      </div>
+      <div className="user-faq-container">
+          {faqs.map((faq) => (
+            <UserFaqToggle key={faq._id} question={faq.question}>
+              <div className="user-answer">
+                <p dangerouslySetInnerHTML={{ __html: faq.answer }}></p>
+              </div>
+            </UserFaqToggle>
+          ))}
+        </div>
+        </div>
         </div>
       </div>
       <Footer />
     </>
   );
 }
-
 export default UserFaq;

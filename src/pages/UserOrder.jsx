@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./UserOrder.style.css";
 import "./UserVehicles.style.css";
 import "./LoggedUser.css";
@@ -13,14 +12,11 @@ import next_arrow from "../assets/next_arrow.svg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 import Lottie from "react-lottie";
 import animationData from "../assets/no-order-found.json";
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import init from "../Helpers/WindowToken";
-
 function UserOrder() {
   const defaultOptions = {
     loop: true,
@@ -30,9 +26,7 @@ function UserOrder() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
   const [name, setname] = useState("");
-
   const getDetails = () => {
     if (init() === "success") {
       axios
@@ -45,11 +39,9 @@ function UserOrder() {
   function logoutAccount() {
     localStorage.clear();
   }
-
   useEffect(() => {
     getDetails();
   }, []);
-
   return (
     <>
       <Navbar />
@@ -120,5 +112,4 @@ function UserOrder() {
     </>
   );
 }
-
 export default UserOrder;

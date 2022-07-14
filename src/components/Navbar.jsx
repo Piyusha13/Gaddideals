@@ -26,9 +26,8 @@ import facebookLogo from "../assets/facebook_logo.svg";
 import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 
-import { ToastContainer, toast } from 'react-toastify';
-  // import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const [navIcons, setNavIcons] = useState([]);
@@ -69,15 +68,11 @@ const Navbar = () => {
       console.log("result", result);
       if (mob_no === "") {
         // notify();
-        toast.error("enter moile number") ;
-      
-        
+        toast.error("enter moile number");
       } else if (result.data.status === "failed") {
-        toast.error(result.data.message) ;
-      
+        toast.error(result.data.message);
       } else {
         if (result.data.status === "success") {
-          
           toast.success(result.data.message);
           setotp(result.data.otp);
           setvisibleOTP(!visibleOTP);
@@ -383,7 +378,7 @@ const Navbar = () => {
                 placeholder="Confirm Password"
               />
               <img
-              alt=""
+                alt=""
                 onClick={() => {
                   seteye(!eye);
                 }}
@@ -527,7 +522,7 @@ const Navbar = () => {
       </div>
 
       <nav className="navbar navbar-expand-lg nav-container">
-        <div className="container-fluid navar_div" >
+        <div className="container-fluid navar_div">
           <div className="logo">
             <a href="/" className="navbar-brand">
               <img src={logoIcon} alt="logo" />
@@ -536,7 +531,8 @@ const Navbar = () => {
 
           <div className="brand-categories">
             {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
-              <div
+              <a
+                href={"/vehiclelistings?category=" + catgeoryIcon._id}
                 className={`${
                   index === 0 ? "brand-category active" : "brand-category"
                 }`}
@@ -546,7 +542,7 @@ const Navbar = () => {
                   src={`https://gaddideals.brokerinvoice.co.in${catgeoryIcon.icon}`}
                   alt={catgeoryIcon.title}
                 />
-              </div>
+              </a>
             ))}
           </div>
 
