@@ -9,14 +9,10 @@ import Footer from "../components/Footer";
 import Constant from "../constants";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper";
+import { Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-// import "react-tabs/style/react-tabs.css";
-
-import girlImage from "../assets/girl_image.png";
 import locationIcon from "../assets/location-home.png";
 import truckHomeImage from "../assets/truck-home.png";
 
@@ -34,10 +30,6 @@ const SellerHome = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [testimonialsData, setTestimonialsData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
-  const [latestTrucksData, setLatestTrucksData] = useState([]);
-  const [latestBusesData, setLatestBusesData] = useState([]);
-  const [latestTractorsData, setLatestTractorsData] = useState([]);
-  const [latestConstructionData, setLatestConstructionData] = useState([]);
   const [faqs, setFAQS] = useState([]);
 
   const fetchFaqs = async () => {
@@ -60,54 +52,11 @@ const SellerHome = () => {
     setBrandsData(response.data.brand.docs);
   };
 
-  const fetchLatestTrucks = async () => {
-    const response = await axios.get(
-      `${
-        Constant.getUrls.getAllLatestVehicles +
-        "?category=62a981c7a81db2038300ae60&sort=true&limit=10"
-      }`
-    );
-    setLatestTrucksData(response.data.vehicle.docs);
-  };
-
-  const fetchLatestBuses = async () => {
-    const response = await axios.get(
-      `${
-        Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9825aa81db2038300ae7e&sort=true&limit=10"
-      }`
-    );
-    setLatestBusesData(response.data.vehicle.docs);
-  };
-
-  const fetchLatestTractors = async () => {
-    const response = await axios.get(
-      `${
-        Constant.getUrls.getAllLatestVehicles +
-        "?category=62a98203a81db2038300ae73&sort=true&limit=10"
-      }`
-    );
-    setLatestTractorsData(response.data.vehicle.docs);
-  };
-
-  const fetchLatestContruction = async () => {
-    const response = await axios.get(
-      `${
-        Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9829ba81db2038300ae83&sort=true&limit=10"
-      }`
-    );
-    setLatestConstructionData(response.data.vehicle.docs);
-  };
-
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchCategories();
     fetchTestimonials();
     fetchBrands();
-    fetchLatestTrucks();
-    fetchLatestBuses();
-    fetchLatestTractors();
-    fetchLatestContruction();
     fetchFaqs();
   }, []);
 
@@ -200,210 +149,6 @@ const SellerHome = () => {
               </p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="latest-vehicle-section">
-        <div className="latest-vehicle-header">
-          <h1>Latest Vehicle</h1>
-        </div>
-
-        <div className="latest-vehicles-container container-fluid m-0 p-0">
-          <Tabs
-            selectedIndex={tabIndex}
-            selectedTabClassName="active-bar"
-            onSelect={(index) => setTabIndex(index)}
-          >
-            <TabList className="tablist-container">
-              <Tab className="tab">Truck</Tab>
-              <Tab className="tab">Buses</Tab>
-              <Tab className="tab">Tractors</Tab>
-              <Tab className="tab">Construction Equipments</Tab>
-            </TabList>
-
-            <TabPanel className="tab-panel">
-              <Swiper
-                className="swiper-latest"
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation={true}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 3,
-                  },
-                  1368: {
-                    slidesPerView: 4,
-                  },
-                }}
-                modules={[Navigation]}
-              >
-                {latestTrucksData.map((latestTruck) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestTruck._id}
-                  >
-                    <div key={latestTruck._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestTruck.front_side_pic}`}
-                          alt={latestTruck.brand.title}
-                        />
-                      </div>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <h5>{latestTruck.brand.title}</h5>
-
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestTruck.city}</span>
-                          </div>
-                        </div>
-
-                        <Link to={`/vehicledetails/${latestTruck._id}`}>
-                          <button>Get Seller Details</button>
-                        </Link>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </TabPanel>
-            <TabPanel className="tab-panel">
-              <Swiper
-                className="swiper-latest"
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation={true}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 3,
-                  },
-                  1368: {
-                    slidesPerView: 4,
-                  },
-                }}
-                modules={[Navigation]}
-              >
-                {latestBusesData.map((latestBuses) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestBuses._id}
-                  >
-                    <div key={latestBuses._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestBuses.front_side_pic}`}
-                          alt={latestBuses.brand.title}
-                        />
-                      </div>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <h5>{latestBuses.brand.title}</h5>
-
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestBuses.city}</span>
-                          </div>
-                        </div>
-
-                        <button>Get Seller Details</button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </TabPanel>
-            <TabPanel className="tab-panel">
-              <Swiper
-                className="swiper-latest"
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation={true}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 3,
-                  },
-                  1368: {
-                    slidesPerView: 4,
-                  },
-                }}
-                modules={[Navigation]}
-              >
-                {latestTractorsData.map((latestTractor) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestTractor._id}
-                  >
-                    <div key={latestTractor._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestTractor.front_side_pic}`}
-                          alt={latestTractor.brand.title}
-                        />
-                      </div>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <h5>{latestTractor.brand.title}</h5>
-
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestTractor.city}</span>
-                          </div>
-                        </div>
-
-                        <button>Get Seller Details</button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </TabPanel>
-            <TabPanel className="tab-panel">
-              <Swiper
-                className="swiper-latest"
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation={true}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 3,
-                  },
-                  1368: {
-                    slidesPerView: 4,
-                  },
-                }}
-                modules={[Navigation]}
-              >
-                {latestConstructionData.map((latestConstruction) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestConstruction._id}
-                  >
-                    <div key={latestConstruction._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestConstruction.front_side_pic}`}
-                          alt={latestConstruction.brand.title}
-                        />
-                      </div>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <h5>{latestConstruction.brand.title}</h5>
-
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestConstruction.city}</span>
-                          </div>
-                        </div>
-
-                        <button>Get Seller Details</button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </TabPanel>
-          </Tabs>
         </div>
       </div>
 

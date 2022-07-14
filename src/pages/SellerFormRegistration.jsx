@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FiCheckCircle } from "react-icons/fi";
 
@@ -31,7 +31,7 @@ const scrapArray = [
 
 const tyreConditionArray = [
   {
-    condition: "Excellant",
+    condition: "Excellent",
   },
   {
     condition: "Good",
@@ -59,15 +59,25 @@ const SellerFormRegistration = ({
   owner,
   fuelTitle,
   setFuelTitle,
+  prevStep,
 }) => {
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
   };
 
+  const previousStep = (e) => {
+    e.preventDefault();
+    prevStep();
+  };
+
   const [isPermitActive, setIsPermitActive] = useState();
   const [isScrapActive, setIsScrapActive] = useState();
   const [isTyreCondActive, setIsTyreCondActive] = useState();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -269,6 +279,7 @@ const SellerFormRegistration = ({
               </div>
 
               <div className="btn-next">
+                <button onClick={previousStep}>Previous</button>
                 <button type="submit" onClick={continueNext}>
                   Next
                 </button>

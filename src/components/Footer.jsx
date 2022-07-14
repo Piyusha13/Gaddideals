@@ -78,8 +78,9 @@ const Footer = () => {
           {/* download */}
           <div className="footer-download">
             <div className="footer-download-title">
-              <span>Gaddideals</span>
-              <h5>-Download from-</h5>
+              <h5>
+                Download <br /> Mobile App
+              </h5>
             </div>
             <div className="app-icons">
               <img src={appIcons} alt="app store" />

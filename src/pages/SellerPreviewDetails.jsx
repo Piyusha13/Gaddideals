@@ -1,8 +1,10 @@
+import { useEffect } from "react";
+
 import "./sellerpreviewdetails.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import editIcon from "../assets/edit.png";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import cloudIcon from "../assets/cloud.png";
 
@@ -10,6 +12,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const SellerPreviewDetails = ({
+  stateTitle,
+  cityTitle,
   formData,
   rcImage,
   engImage,
@@ -24,6 +28,11 @@ const SellerPreviewDetails = ({
   yearTitle,
 }) => {
   const navigate = useNavigate();
+  const { categoryId } = useParams();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -73,17 +82,17 @@ const SellerPreviewDetails = ({
               src={editIcon}
               alt="edit icon"
               className="edit-icon"
-              onClick={() => navigate("sellerform")}
+              onClick={() => navigate(`/vehicle/${categoryId}`)}
             />
             <div className="row">
               <div className="detail">
                 <h6>State</h6>
-                <p>{formData.whichstate}</p>
+                <p>{stateTitle}</p>
               </div>
 
               <div className="detail">
                 <h6>City</h6>
-                <p>{formData.whichcity}</p>
+                <p>{cityTitle}</p>
               </div>
 
               <div className="detail">
@@ -138,14 +147,11 @@ const SellerPreviewDetails = ({
               </div>
 
               <div className="detail">
-                <h6>Vehicle Condition</h6>
-                <p>Good</p>
-              </div>
-
-              <div className="detail">
                 <h6>Do you want to Scrap Vehicle?</h6>
                 <p>{formData.scrap}</p>
               </div>
+
+              <div className="detail"></div>
             </div>
 
             <div className="preview-line"></div>

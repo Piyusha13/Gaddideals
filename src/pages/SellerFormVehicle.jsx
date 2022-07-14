@@ -39,8 +39,14 @@ const SellerFormVehicle = ({
   nextStep,
   formData,
   handleOnChange,
+  handleCityChange,
+  handleStateChange,
   handleBrandChange,
   handleModelChange,
+  cityTitle,
+  setCityTitle,
+  setStateTitle,
+  stateTitle,
   setYear,
   yearTitle,
   setFuel,
@@ -48,6 +54,8 @@ const SellerFormVehicle = ({
   setFuelTitle,
   setOwner,
   owner,
+  filterCities,
+  filterStates,
   filterBrands,
   setBrandId,
   setBrandTitle,
@@ -68,6 +76,8 @@ const SellerFormVehicle = ({
 
   const [suggestionBox, setSuggestionBox] = useState(false);
   const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
+  const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
+  const [citySuggestionBox, setCitySuggestionBox] = useState(false);
 
   const continueNext = (e) => {
     e.preventDefault();
@@ -92,7 +102,16 @@ const SellerFormVehicle = ({
     setModelSuggestionBox(!modelSuggestionBox);
   };
 
+  const handleOnStateFocus = (e) => {
+    setStatesSuggestionBox(!statesSuggestionBox);
+  };
+
+  const handleOnCityFocus = (e) => {
+    setCitySuggestionBox(!citySuggestionBox);
+  };
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchVehiclesArray();
     fetchFuelTypeArray();
   }, []);
@@ -128,34 +147,6 @@ const SellerFormVehicle = ({
         </div>
 
         <div className="form-details-container">
-          {/* <div className="filter-tags">
-            {yearTitle && (
-              <div className="tag">
-                <span>{yearTitle}</span>
-                <FaTimes
-                  className="cancel-icon"
-                  onClick={() => setYearTitle("")}
-                />
-              </div>
-            )}
-
-            {owner && (
-              <div className="tag">
-                <span>{owner}</span>
-                <FaTimes className="cancel-icon" onClick={() => setOwner("")} />
-              </div>
-            )}
-
-            {fuelTitle && (
-              <div className="tag">
-                <span>{fuelTitle}</span>
-                <FaTimes
-                  className="cancel-icon"
-                  onClick={() => setFuelTitle("")}
-                />
-              </div>
-            )}
-          </div> */}
           <FilterTags
             yearTitle={yearTitle}
             setYearTitle={setYearTitle}
@@ -174,24 +165,64 @@ const SellerFormVehicle = ({
             <form>
               <div className="form-controls">
                 <label htmlFor="whichstate">Which State</label>
-                <input
-                  type="text"
-                  name="whichstate"
-                  value={formData.whichstate}
-                  placeholder="Maharashtra"
-                  onChange={handleOnChange}
-                />
+
+                <div className="state-input">
+                  <input
+                    type="text"
+                    name="whichstate"
+                    value={stateTitle && stateTitle}
+                    placeholder="Maharashtra"
+                    onChange={handleStateChange}
+                    onFocus={handleOnStateFocus}
+                  />
+
+                  {statesSuggestionBox && (
+                    <div className="suggestion">
+                      {filterStates.map((state, index) => (
+                        <p
+                          key={index}
+                          onClick={() => {
+                            setStateTitle(state);
+                            setStatesSuggestionBox(false);
+                          }}
+                        >
+                          {state}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="form-controls">
                 <label htmlFor="whichcity">Which City</label>
-                <input
-                  type="text"
-                  name="whichcity"
-                  value={formData.whichcity}
-                  placeholder="Pune"
-                  onChange={handleOnChange}
-                />
+
+                <div className="city-input">
+                  <input
+                    type="text"
+                    name="whichcity"
+                    value={cityTitle && cityTitle}
+                    placeholder="Pune"
+                    onChange={handleCityChange}
+                    onFocus={handleOnCityFocus}
+                  />
+
+                  {citySuggestionBox && (
+                    <div className="suggestion">
+                      {filterCities.map((city, index) => (
+                        <p
+                          key={index}
+                          onClick={() => {
+                            setCityTitle(city);
+                            setCitySuggestionBox(false);
+                          }}
+                        >
+                          {city}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="form-controls">

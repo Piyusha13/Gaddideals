@@ -12,8 +12,10 @@ import Subscription from "./pages/Subscription";
 import SellerHome from "./pages/SellerHome";
 import VehicleCard from "./pages/VehicleCard";
 import DirectSignup from "./components/DirectSignup";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <>
@@ -40,4 +42,3 @@ function App() {
   );
 }
 export default App;
-

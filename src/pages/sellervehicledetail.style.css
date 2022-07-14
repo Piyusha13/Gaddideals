@@ -19,7 +19,7 @@
   position: absolute;
   width: 5px;
   height: 50%;
-  background-color: #646464;
+  background-color: #050f56;
   top: 30%;
   left: 13%;
   transform: translate(-50%, -50%);
@@ -66,25 +66,22 @@
 /* Vehicle Detail Container */
 .vehicle-detail-container {
   width: 80%;
-  
+
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
 .vehicle-detail-container .container-wrapper {
-  
   width: 100% !important;
   padding: 20px;
 }
 
 .row-one {
-  
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .row-one .vehicle-document {
- 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +106,7 @@
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   padding: 40px;
-  
+
   width: 85% !important;
   height: 10%;
 }
@@ -121,7 +118,6 @@
 
 /* Row Two */
 .row-two {
-  
   margin-left: 1.5%;
   margin-top: 20px;
 }
@@ -201,6 +197,7 @@
   margin-top: 30px;
   display: flex;
   justify-content: center;
+  gap: 1rem;
   align-items: center;
 }
 .continue-btn button {
@@ -211,8 +208,8 @@
   border-radius: 10px;
   color: #ffffff;
   text-transform: uppercase;
-  font-size: 90%;
+  font-size: 18px;
   font-family: "Roboto";
   width: 30%;
-  text-align:center;
+  text-align: center;
 }

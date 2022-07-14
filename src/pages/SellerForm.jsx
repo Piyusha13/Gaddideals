@@ -10,11 +10,19 @@ import SellerFormRegistration from "./SellerFormRegistration";
 import SellerVehicleDetail from "./SellerVehicleDetail";
 import SellerPreviewDetails from "./SellerPreviewDetails";
 
+import statecities from "../state-cities.json";
+
 const SellerForm = () => {
   const { categoryId } = useParams();
 
   const [categoryTractorTitle, setCategoryTractorTitle] = useState("");
   const [caetgoryBusTitle, setCategoryBusTitle] = useState("");
+
+  const [statesArray, setStatesArray] = useState([]);
+  const [stateTitle, setStateTitle] = useState("");
+
+  const [citiesArray, setCitiesArray] = useState([]);
+  const [cityTitle, setCityTitle] = useState("");
 
   const [brandsArray, setBrandsArray] = useState([]);
   const [brandId, setBrandId] = useState("");
@@ -61,8 +69,6 @@ const SellerForm = () => {
   const [sidePicRight, setSidePicRight] = useState();
 
   const [formData, setFormData] = useState({
-    whichstate: "",
-    whichcity: "",
     vehiclenumber: "",
     kmsdriven: "",
     noofhrs: "",
@@ -100,19 +106,43 @@ const SellerForm = () => {
     setCategoryBusTitle(response.data.category.title);
   };
 
+  const fetchStates = () => {
+    let statesArr = [];
+
+    statecities.map((state) => {
+      if (statesArr.indexOf(state.State) === -1) {
+        statesArr.push(state.State);
+      }
+
+      return statesArr;
+    });
+
+    setStatesArray(statesArr);
+  };
+
+  const fetchCities = () => {
+    let citiesArr = [];
+
+    if (stateTitle.length > 0) {
+      statecities.filter((city) => {
+        if (city.State === stateTitle) {
+          citiesArr.push(city.City);
+        }
+        return citiesArr;
+      });
+    }
+
+    setCitiesArray(citiesArr);
+  };
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchBrands();
     fetchModels();
     fetchCatgory();
-  }, []);
-
-  const filterBrands = brandsArray.filter((brand) => {
-    return brand.title.toLowerCase().includes(brandTitle.toLowerCase());
-  });
-
-  const filterModels = modelsArray.filter((model) => {
-    return model.name.toLowerCase().includes(modelTitle.toLowerCase());
-  });
+    fetchStates();
+    fetchCities();
+  }, [stateTitle]);
 
   const handleBrandChange = (e) => {
     setBrandTitle(e.target.value);
@@ -122,8 +152,36 @@ const SellerForm = () => {
     setModelTitle(e.target.value);
   };
 
+  const handleStateChange = (e) => {
+    setStateTitle(e.target.value);
+  };
+
+  const handleCityChange = (e) => {
+    setCityTitle(e.target.value);
+  };
+
+  const filterStates = statesArray.filter((state) => {
+    return state.toLowerCase().includes(stateTitle.toLowerCase());
+  });
+
+  const filterCities = citiesArray.filter((city) => {
+    return city.toLowerCase().includes(cityTitle.toLowerCase());
+  });
+
+  const filterBrands = brandsArray.filter((brand) => {
+    return brand.title.toLowerCase().includes(brandTitle.toLowerCase());
+  });
+
+  const filterModels = modelsArray.filter((model) => {
+    return model.name.toLowerCase().includes(modelTitle.toLowerCase());
+  });
+
   const nextStep = () => {
     setStep(step + 1);
+  };
+
+  const prevStep = () => {
+    setStep(step - 1);
   };
 
   const handleOnChange = (e) => {
@@ -137,8 +195,8 @@ const SellerForm = () => {
     let fd = new FormData();
 
     fd.append("category", categoryId);
-    fd.append("state", formData.whichstate);
-    fd.append("city", formData.whichcity);
+    fd.append("state", stateTitle);
+    fd.append("city", cityTitle);
     fd.append("brand", brandId);
     fd.append("model", modelId);
     fd.append("years", year);
@@ -166,12 +224,15 @@ const SellerForm = () => {
     fd.append("side_pic_vehicle", sidePicLeft);
     fd.append("side_pic_vehicle", sidePicRight);
 
+    console.log(modelId);
     const userToken = localStorage.getItem("Token");
     const response = await axios.post(Constant.postUrls.postAllVehicles, fd, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
+
+    console.log(response.data);
   };
 
   switch (step) {
@@ -180,6 +241,8 @@ const SellerForm = () => {
         <>
           <SellerFormVehicle
             nextStep={nextStep}
+            filterCities={filterCities}
+            filterStates={filterStates}
             filterBrands={filterBrands}
             filterModels={filterModels}
             categoryTractorTitle={categoryTractorTitle}
@@ -190,6 +253,10 @@ const SellerForm = () => {
             setFuel={setFuel}
             setOwner={setOwner}
             owner={owner}
+            cityTitle={cityTitle}
+            setCityTitle={setCityTitle}
+            stateTitle={stateTitle}
+            setStateTitle={setStateTitle}
             setBrandId={setBrandId}
             setBrandTitle={setBrandTitle}
             brandTitle={brandTitle}
@@ -198,6 +265,8 @@ const SellerForm = () => {
             modelTitle={modelTitle}
             fuelTitle={fuelTitle}
             setFuelTitle={setFuelTitle}
+            handleCityChange={handleCityChange}
+            handleStateChange={handleStateChange}
             handleBrandChange={handleBrandChange}
             handleModelChange={handleModelChange}
             formData={formData}
@@ -225,6 +294,7 @@ const SellerForm = () => {
             tyreCondition={tyreCondition}
             setTyreCondition={setTyreCondition}
             nextStep={nextStep}
+            prevStep={prevStep}
           />
         </>
       );
@@ -265,6 +335,7 @@ const SellerForm = () => {
             sidePicRight={sidePicRight}
             setSidePicRight={setSidePicRight}
             nextStep={nextStep}
+            prevStep={prevStep}
           />
         </>
       );
@@ -285,6 +356,8 @@ const SellerForm = () => {
             modelTitle={modelTitle}
             formData={formData}
             yearTitle={yearTitle}
+            stateTitle={stateTitle}
+            cityTitle={cityTitle}
           />
         </>
       );

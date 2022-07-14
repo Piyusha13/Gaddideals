@@ -15,6 +15,9 @@ import { ImRadioUnchecked, ImRadioChecked } from "react-icons/im";
 
 import Constant from "../constants";
 
+import Lottie from "react-lottie";
+import lottieAnimation from "../assets/my-vehicles-lottie.json";
+
 import ToggleCategory from "../components/ToggleCategory";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -56,14 +59,6 @@ const VehicleListings = () => {
     }
   };
 
-  const handleSearchMin = (e) => {
-    setMinPrice(e.target.value);
-  };
-
-  const handleSearchMax = (e) => {
-    setMaxPrice(e.target.value);
-  };
-
   const handleMin = async (e) => {
     setMinPrice(e.target.value);
 
@@ -94,12 +89,24 @@ const VehicleListings = () => {
     const response = await axios.get(`${Constant.getUrls.getAllCategories}`);
     if (response) {
       setCategories(response.data.category.docs);
-      setCat(response.data.category.docs[0]._id);
-      location.category = response.data.category.docs[0]._id;
-      let prevUrl = queryString.stringify(location);
-      navigate("?" + prevUrl);
+      if (!location.category) {
+        setCat(response.data.category.docs[0]._id);
+        location.category = response.data.category.docs[0]._id;
+        let prevUrl = queryString.stringify(location);
+        navigate("?" + prevUrl);
+      }
       fetchVehiclesAPI(location);
     }
+  };
+
+  const rupee_format = (str) => {
+    var x = str;
+    x = x.toString();
+    var lastThree = x.substring(x.length - 3);
+    var otherNumbers = x.substring(0, x.length - 3);
+    if (otherNumbers != "") lastThree = "," + lastThree;
+    var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+    return res;
   };
 
   const fetchVehiclesAPI = async (location) => {
@@ -420,7 +427,17 @@ const VehicleListings = () => {
     }
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: lottieAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchCategories();
     fetchBodyTypes();
     fetchBrands();
@@ -444,9 +461,9 @@ const VehicleListings = () => {
                 onClick={() => handleRecentlyAdded(!recentlyAdded)}
               >
                 {recentlyAdded ? (
-                  <ImRadioChecked color="#050F56" size={25} />
+                  <ImRadioChecked color="#050F56" size={15} />
                 ) : (
-                  <ImRadioUnchecked color="#050F56" size={25} />
+                  <ImRadioUnchecked color="#050F56" size={15} />
                 )}
                 <span>Recently Added</span>
               </div>
@@ -461,9 +478,9 @@ const VehicleListings = () => {
                 }}
               >
                 {lthPrice === "low" ? (
-                  <ImRadioChecked color="#050F56" size={25} />
+                  <ImRadioChecked color="#050F56" size={15} />
                 ) : (
-                  <ImRadioUnchecked color="#050F56" size={25} />
+                  <ImRadioUnchecked color="#050F56" size={15} />
                 )}
                 <span>Low to High</span>
               </div>
@@ -474,9 +491,9 @@ const VehicleListings = () => {
                 }}
               >
                 {lthPrice === "high" ? (
-                  <ImRadioChecked color="#050F56" size={25} />
+                  <ImRadioChecked color="#050F56" size={15} />
                 ) : (
-                  <ImRadioUnchecked color="#050F56" size={25} />
+                  <ImRadioUnchecked color="#050F56" size={15} />
                 )}
                 <span>High to Low</span>
               </div>
@@ -491,9 +508,9 @@ const VehicleListings = () => {
                 }}
               >
                 {lth === "low" ? (
-                  <ImRadioChecked color="#050F56" size={25} />
+                  <ImRadioChecked color="#050F56" size={15} />
                 ) : (
-                  <ImRadioUnchecked color="#050F56" size={25} />
+                  <ImRadioUnchecked color="#050F56" size={15} />
                 )}
                 <span>Low to High</span>
               </div>
@@ -504,9 +521,9 @@ const VehicleListings = () => {
                 }}
               >
                 {lth === "high" ? (
-                  <ImRadioChecked color="#050F56" size={25} />
+                  <ImRadioChecked color="#050F56" size={15} />
                 ) : (
-                  <ImRadioUnchecked color="#050F56" size={25} />
+                  <ImRadioUnchecked color="#050F56" size={15} />
                 )}
                 <span>High to Low</span>
               </div>
@@ -536,12 +553,15 @@ const VehicleListings = () => {
                     }}
                     className="icon-wrapper"
                     style={{
-                      border: cat === category._id ? "1px solid #000" : "none",
+                      border:
+                        cat === category._id ? "1px solid #00adef" : "none",
                     }}
                   >
                     <img src={imgurl + category.icon} alt={category.title} />
                   </div>
-                  <a>{category.title}</a>
+                  <a rel="noreferrer" href="#dasd">
+                    {category.title}
+                  </a>
                 </div>
               ))}
             </div>
@@ -713,56 +733,67 @@ const VehicleListings = () => {
         </aside>
         {/* Vehicles List */}
         <div className="vehicles-list-container container m-0 p-0">
-          {vehiclesArray.map((vehicle) => (
-            <Link to={`/vehicledetails/${vehicle._id}`}>
-              <div className="vehicle-card" key={vehicle._id}>
-                <div className="img-wrapper">
-                  <img
-                    src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
-                    alt={vehicle.category.title}
-                  />
+          {vehiclesArray.length > 0 ? (
+            <>
+              {vehiclesArray.map((vehicle) => (
+                <div className="vehicle-card" key={vehicle._id}>
+                  <div className="img-wrapper">
+                    <img
+                      src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
+                      alt={vehicle.category.title}
+                    />
+                  </div>
+                  <div className="vehicle-info">
+                    <div className="name">
+                      <h3>{vehicle.brand.title}</h3>
+                      <div className="location">
+                        <img src={locationIcon} alt="location-icon" />
+                        <span>{vehicle.city}</span>
+                      </div>
+                    </div>
+                    <div className="truck-stats">
+                      <div className="stat">
+                        <span>
+                          {vehicle.km_driven !== ""
+                            ? vehicle.km_driven
+                            : "95,075km"}
+                        </span>
+                      </div>
+                      <div className="stat">
+                        <span>
+                          {vehicle.no_of_owner !== ""
+                            ? vehicle.no_of_owner
+                            : "1st Owner"}
+                        </span>
+                      </div>
+                      <div className="stat">
+                        <span>
+                          {vehicle.horse_power !== ""
+                            ? vehicle.horse_power
+                            : "100 hp"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="selling-price">
+                      <p>
+                        Selling Price{" "}
+                        <span>₹{rupee_format(vehicle.selling_price)}</span>
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => navigate(`/vehicledetails/${vehicle._id}`)}
+                    >
+                      Get Seller Details
+                    </button>
+                  </div>
                 </div>
-                <div className="vehicle-info">
-                  <div className="name">
-                    <h3>{vehicle.brand.title}</h3>
-                    <div className="location">
-                      <img src={locationIcon} alt="location-icon" />
-                      <span>{vehicle.city}</span>
-                    </div>
-                  </div>
-                  <div className="truck-stats">
-                    <div className="stat">
-                      <span>
-                        {vehicle.km_driven !== ""
-                          ? vehicle.km_driven
-                          : "95,075km"}
-                      </span>
-                    </div>
-                    <div className="stat">
-                      <span>
-                        {vehicle.no_of_owner !== ""
-                          ? vehicle.no_of_owner
-                          : "1st Owner"}
-                      </span>
-                    </div>
-                    <div className="stat">
-                      <span>
-                        {vehicle.horse_power !== ""
-                          ? vehicle.horse_power
-                          : "100 hp"}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="selling-price">
-                    <p>
-                      Selling Price <span>₹{vehicle.selling_price}</span>
-                    </p>
-                  </div>
-                  <button>Get Seller Details</button>
-                </div>
-              </div>
-            </Link>
-          ))}
+              ))}
+            </>
+          ) : (
+            <div className="no-data">
+              <Lottie options={defaultOptions} width="100%" height="500px" />
+            </div>
+          )}
         </div>
       </section>
       <Footer />

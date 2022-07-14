@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useEffect } from "react";
 import "./sellervehicledetail.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import cloudIcon from "../assets/cloud.png";
@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const SellerVehicleDetail = ({
+  prevStep,
   nextStep,
   documentRCImg,
   setDocumentRCImg,
@@ -86,6 +87,10 @@ const SellerVehicleDetail = ({
     nextStep();
   };
 
+  const previousStep = () => {
+    prevStep();
+  };
+
   const handleImageChange = (e) => {
     // console.log(e.target.name);
     if (e.target.files[0]) {
@@ -123,6 +128,10 @@ const SellerVehicleDetail = ({
       }
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -379,6 +388,7 @@ const SellerVehicleDetail = ({
             </div>
 
             <div className="continue-btn">
+              <button onClick={previousStep}>Previous</button>
               <button onClick={continueNext}>Continue</button>
             </div>
           </div>

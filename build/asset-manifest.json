@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6a1500ea.css",
-    "main.js": "/static/js/main.fb71ce93.js",
+    "main.css": "/static/css/main.75a1cc7f.css",
+    "main.js": "/static/js/main.e99ac2e1.js",
     "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
     "static/media/truck-home.png": "/static/media/truck-home.d21e6cbe13c16b374e57.png",
     "static/media/truck-thumbnail.png": "/static/media/truck-thumbnail.85b5a0e9c15d9bffad02.png",
@@ -17,12 +17,12 @@
     "static/media/next_arrow.svg": "/static/media/next_arrow.8ac3280e3c97a0836445c4e823209bb0.svg",
     "index.html": "/index.html",
     "static/media/footer-bg.svg": "/static/media/footer-bg.5d085100533921c8e8ce.svg",
-    "main.6a1500ea.css.map": "/static/css/main.6a1500ea.css.map",
-    "main.fb71ce93.js.map": "/static/js/main.fb71ce93.js.map",
+    "main.75a1cc7f.css.map": "/static/css/main.75a1cc7f.css.map",
+    "main.e99ac2e1.js.map": "/static/js/main.e99ac2e1.js.map",
     "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a1500ea.css",
-    "static/js/main.fb71ce93.js"
+    "static/css/main.75a1cc7f.css",
+    "static/js/main.e99ac2e1.js"
   ]
 }

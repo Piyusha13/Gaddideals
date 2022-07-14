@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-
-// import { Link } from "react-router-dom";
-
 import React from "react";
-import { Link } from "react-router-dom";
-// import {Link} from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import logoIcon from "../assets/logo.png";
 import searchIcon from "../assets/search-icon.png";
 import locationIcon from "../assets/location-home.png";
@@ -29,8 +25,14 @@ import "./navbar.style.css";
 import { ToastContainer, toast } from "react-toastify";
 // import 'react-toastify/dist/ReactToastify.css';
 
+const queryString = require("query-string");
+
 const Navbar = () => {
+  const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(location.category);
+
+  const navigate = useNavigate();
 
   const fetchIcons = async () => {
     const response = await axios.get(
@@ -534,8 +536,14 @@ const Navbar = () => {
               <a
                 href={"/vehiclelistings?category=" + catgeoryIcon._id}
                 className={`${
-                  index === 0 ? "brand-category active" : "brand-category"
+                  activeCategory === catgeoryIcon._id
+                    ? "brand-category active"
+                    : "brand-category"
                 }`}
+                onClick={() => {
+                  setActiveCategory(index);
+                  navigate("/vehiclelistings?category=" + catgeoryIcon._id);
+                }}
                 key={catgeoryIcon._id}
               >
                 <img

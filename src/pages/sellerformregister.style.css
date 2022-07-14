@@ -19,7 +19,7 @@
   position: absolute;
   width: 5px;
   height: 40%;
-  background-color: #646464;
+  background-color: #050f56;
   top: 20%;
   left: 13%;
   transform: translate(-50%, -50%);
@@ -240,6 +240,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .btn-next button {
@@ -250,6 +251,6 @@
   border-radius: 10px;
   color: #ffffff;
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 18px;
   font-family: "Roboto";
 }
