@@ -246,8 +246,13 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
+                    
                   },
                   1368: {
                     slidesPerView: 4,
@@ -293,7 +298,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -338,7 +347,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -383,7 +396,11 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  768: {
+                  50:{
+                    slidesPerView: 2,
+                    spaceBetween:15,
+                  },
+                  999: {
                     slidesPerView: 3,
                   },
                   1368: {
@@ -459,8 +476,13 @@ const SellerHomePage = () => {
             slidesPerView={3}
             grabCursor={true}
             breakpoints={{
-              768: {
-                slidesPerView: 3,
+              50: {
+                slidesPerView: 1.8,
+                spaceBetween:10,
+              },
+              820:{
+                slidesPerView: 2.7,
+                spaceBetween:25,
               },
               1368: {
                 slidesPerView: 3,
@@ -524,7 +546,15 @@ const SellerHomePage = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              768: {
+              820:{
+                slidesPerView: 3.8,
+                spaceBetween:20,
+              },
+              50:{
+                slidesPerView: 3,
+                spaceBetween:10,
+              },
+              999: {
                 slidesPerView: 5,
               },
               1368: {

@@ -62,7 +62,7 @@ font-size: 0px;
 .goog-te-gadget select{
 width: 105px;
 border: none;
-height: 48px;
+height: 48px; 
 background: #FFFFFF;
 border-radius: 8px;
 position: fixed;
@@ -82,10 +82,10 @@ right: 70px;
 @media screen and (max-width: 768px) {
   .goog-logo-link, .goog-logo-link:link, .goog-logo-link:visited, .goog-logo-link:hover, .goog-logo-link:active {
     
-    display: none;
+    /* display: none; */
   }
   .goog-te-gadget{
-    display: none;
+    /* display: none; */
   }
 
 }
