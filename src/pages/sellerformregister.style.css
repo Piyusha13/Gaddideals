@@ -199,6 +199,74 @@
   color: #4a4a4a;
 }
 
+.form-register-controls .rcs {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+}
+.form-register-controls .rcs .rc {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 50px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .rcs .rc.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .rcs .rc span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 15px;
+  color: #4a4a4a;
+  text-transform: capitalize;
+}
+
+.form-register-controls .bodys {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+}
+.form-register-controls .bodys .body {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 50px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .bodys .body.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .bodys .body span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 15px;
+  color: #4a4a4a;
+  text-transform: capitalize;
+}
+
 .form-register-controls .conditions {
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);

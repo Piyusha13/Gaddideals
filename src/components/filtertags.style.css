@@ -21,6 +21,7 @@
   font-weight: 500;
   font-size: 8px;
   color: #929292;
+  text-transform: capitalize;
 }
 
 .filter-tags .tag .cancel-icon {

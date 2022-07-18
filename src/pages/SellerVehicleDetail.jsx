@@ -174,7 +174,7 @@ const SellerVehicleDetail = ({
         <div className="vehicle-detail-container">
           <div className="container-wrapper">
             <div className="row-one">
-              <div className="vehicle-document" onClick={handleFileInput}>
+              {/* <div className="vehicle-document" onClick={handleFileInput}>
                 <h6>RC Document</h6>
                 <input
                   type="file"
@@ -197,7 +197,7 @@ const SellerVehicleDetail = ({
                     alt="cloud icon"
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="vehicle-document" onClick={handleEngineInput}>
                 <h6>Engine Picture</h6>

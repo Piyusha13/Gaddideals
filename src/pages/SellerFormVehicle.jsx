@@ -8,6 +8,7 @@ import { FiCheckCircle } from "react-icons/fi";
 import "./sellerformvehicle.style.css";
 
 import arrowDown from "../assets/down-arrow.png";
+import upArrow from "../assets/up-arrow.png";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -66,18 +67,22 @@ const SellerFormVehicle = ({
   modelTitle,
   setYearTitle,
   categoryTractorTitle,
+  isYearActive,
+  setIsYearActive,
+  isFuelActive,
+  setIsFuelActive,
+  isOwnerActive,
+  setIsOwnerActive,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
-
-  const [isYearActive, setIsYearActive] = useState();
-  const [isFuelActive, setIsFuelActive] = useState();
-  const [isOwnerActive, setIsOwnerActive] = useState();
 
   const [suggestionBox, setSuggestionBox] = useState(false);
   const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
   const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
   const [citySuggestionBox, setCitySuggestionBox] = useState(false);
+
+  const [seeMoreSuggestion, setSeeMoreSuggestion] = useState(false);
 
   const continueNext = (e) => {
     e.preventDefault();
@@ -308,9 +313,32 @@ const SellerFormVehicle = ({
                     </div>
                   ))}
 
-                  <div className="see-more">
+                  <div
+                    className="see-more"
+                    onClick={() => setSeeMoreSuggestion(!seeMoreSuggestion)}
+                  >
                     <span>See More</span>
-                    <img src={arrowDown} alt="down arrow icon" />
+                    <img
+                      src={seeMoreSuggestion ? upArrow : arrowDown}
+                      alt="down arrow icon"
+                    />
+                    {seeMoreSuggestion && (
+                      <div className="see-more-years">
+                        {yearsArray.map((years, index) => (
+                          <p
+                            key={years._id}
+                            onClick={() => {
+                              setYear(years._id);
+                              setYearTitle(years.year);
+                              setIsYearActive(index);
+                              tagsArray.push(years.year);
+                            }}
+                          >
+                            {years.year}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

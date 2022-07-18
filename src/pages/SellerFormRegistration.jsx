@@ -8,39 +8,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FilterTags from "../components/FilterTags";
 
-const permitsArray = [
-  {
-    permit: "National",
-  },
-  {
-    permit: "State",
-  },
-  {
-    permit: "No",
-  },
-];
-
-const scrapArray = [
-  {
-    scrap: "Yes",
-  },
-  {
-    scrap: "No",
-  },
-];
-
-const tyreConditionArray = [
-  {
-    condition: "Excellent",
-  },
-  {
-    condition: "Good",
-  },
-  {
-    condition: "Average",
-  },
-];
-
 const SellerFormRegistration = ({
   nextStep,
   handleOnChange,
@@ -60,6 +27,26 @@ const SellerFormRegistration = ({
   fuelTitle,
   setFuelTitle,
   prevStep,
+  isPermitActive,
+  setIsPermitActive,
+  isScrapActive,
+  setIsScrapActive,
+  isTyreCondActive,
+  setIsTyreCondActive,
+  permitsArray,
+  scrapArray,
+  tyreConditionArray,
+  RCArray,
+  isRCActive,
+  setIsRCActive,
+  setRC,
+  rc,
+  bodyTypeArray,
+  bodyTypeTitle,
+  setBodyTypeTitle,
+  isBodyTypeActive,
+  setIsBodyTypeActive,
+  setBodyTypeId,
 }) => {
   const continueNext = (e) => {
     e.preventDefault();
@@ -70,10 +57,6 @@ const SellerFormRegistration = ({
     e.preventDefault();
     prevStep();
   };
-
-  const [isPermitActive, setIsPermitActive] = useState();
-  const [isScrapActive, setIsScrapActive] = useState();
-  const [isTyreCondActive, setIsTyreCondActive] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -130,6 +113,12 @@ const SellerFormRegistration = ({
             setIsPermitActive={setIsPermitActive}
             setIsScrapActive={setIsScrapActive}
             setIsTyreCondActive={setIsTyreCondActive}
+            rc={rc}
+            setRC={setRC}
+            setIsRCActive={setIsRCActive}
+            bodyTypeTitle={bodyTypeTitle}
+            setBodyTypeTitle={setBodyTypeTitle}
+            setIsBodyTypeActive={setIsBodyTypeActive}
           />
 
           <div className="line"></div>
@@ -276,6 +265,45 @@ const SellerFormRegistration = ({
                   name="fitnesscertificate"
                   onChange={handleOnChange}
                 />
+              </div>
+
+              <div className="form-register-controls">
+                <label htmlFor="bodytype">Body Type</label>
+                <div className="bodys">
+                  {bodyTypeArray.map((types, index) => (
+                    <div
+                      key={index}
+                      className={
+                        isBodyTypeActive === index ? "body active" : "body"
+                      }
+                      onClick={() => {
+                        setBodyTypeTitle(types.title);
+                        setBodyTypeId(types._id);
+                        setIsBodyTypeActive(index);
+                      }}
+                    >
+                      <span>{types.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-register-controls">
+                <label htmlFor="rcdocument">RC</label>
+                <div className="rcs">
+                  {RCArray.map((rcs, index) => (
+                    <div
+                      key={index}
+                      className={isRCActive === index ? "rc active" : "rc"}
+                      onClick={() => {
+                        setRC(rcs.rc);
+                        setIsRCActive(index);
+                      }}
+                    >
+                      <span>{rcs.rc}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="btn-next">

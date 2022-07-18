@@ -860,7 +860,7 @@
   align-items: center;
   flex-direction: column;
   position: absolute;
-  top: 115px;
+  top: 75px;
   right: 20px;
 }
 .social-title h5 {
@@ -913,10 +913,9 @@
   width: 450px;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #ffffff;
-  margin: 0;
-  margin-top: 25px;
+  margin: 25px 0 0;
   word-break: break-all;
 }
 
@@ -934,7 +933,7 @@
   text-decoration: none;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
 }
 
@@ -952,13 +951,13 @@
   text-decoration: none;
   font-family: "Roboto";
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
 }
 
 /* footer-download */
 .footer-top .footer-download {
-  margin-top: 130px;
+  margin-top: 120px;
 }
 .footer-top .footer-download .app-icons {
   display: flex;
@@ -1000,7 +999,7 @@
   text-transform: uppercase;
   font-family: "Roboto";
   font-weight: 600;
-  font-size: 26px;
+  font-size: 18px;
   color: #ffffff;
   position: relative;
 }
@@ -1030,15 +1029,15 @@
   text-decoration: none;
   font-family: "Roboto";
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
   position: relative;
-  margin: 15px 0px 0px 0px;
+  margin: 7px 0 0;
 }
 
 .footer-bottom .top-cities .cities .cities-row .border {
   position: absolute;
-  top: 30px;
+  top: 19px;
   left: 125%;
   width: 2px;
   height: 20px;
@@ -1068,24 +1067,13 @@
   transform: translate(-50%, -50%);
   background-color: #ffffff;
 }
-.footer-bottom .top-cities .cities .cities-row .border:nth-of-type(4)::after {
-  content: "";
-  position: absolute;
-  top: 145px;
-  left: 125%;
-  width: 2px;
-  height: 20px;
-  border-radius: 5px;
-  transform: translate(-50%, -50%);
-  background-color: #ffffff;
-}
 
 /* top brands */
 .footer-bottom .top-brands h3 {
   text-transform: uppercase;
   font-family: "Roboto";
   font-weight: 600;
-  font-size: 26px;
+  font-size: 18px;
   color: #ffffff;
   position: relative;
 }
@@ -1115,15 +1103,15 @@
   text-decoration: none;
   font-family: "Roboto";
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
   position: relative;
-  margin: 15px 0px 0px 0px;
+  margin: 7px 0 0;
 }
 
 .footer-bottom .top-brands .brands .brands-row .border {
   position: absolute;
-  top: 30px;
+  top: 19px;
   left: 125%;
   width: 2px;
   height: 20px;
@@ -1146,17 +1134,6 @@
   content: "";
   position: absolute;
   top: 100px;
-  left: 125%;
-  width: 2px;
-  height: 20px;
-  border-radius: 5px;
-  transform: translate(-50%, -50%);
-  background-color: #ffffff;
-}
-.footer-bottom .top-brands .brands .brands-row .border:nth-of-type(4)::after {
-  content: "";
-  position: absolute;
-  top: 145px;
   left: 125%;
   width: 2px;
   height: 20px;

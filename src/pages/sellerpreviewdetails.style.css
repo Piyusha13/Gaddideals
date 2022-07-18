@@ -126,7 +126,7 @@
   display: flex;
   align-items: center;
   margin-top: 20px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-left: -10px;
 }
 .preview-row-one .preview-vehicle-document {

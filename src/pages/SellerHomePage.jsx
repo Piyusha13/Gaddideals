@@ -38,7 +38,6 @@ import { FaGoogle } from "react-icons/fa";
 
 // import { setConfig } from 'react-google-translate';
 
-
 const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -114,8 +113,6 @@ const SellerHomePage = () => {
   // function loadGoogleTranslate(){
   //   FaGoogle.translate.TranslateElement("intro-title");
   // }
-
-  
 
   useEffect(() => {
     fetchCategories();
@@ -246,13 +243,12 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  50:{
+                  50: {
                     slidesPerView: 2,
-                    spaceBetween:15,
+                    spaceBetween: 15,
                   },
                   999: {
                     slidesPerView: 3,
-                    
                   },
                   1368: {
                     slidesPerView: 4,
@@ -298,9 +294,9 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  50:{
+                  50: {
                     slidesPerView: 2,
-                    spaceBetween:15,
+                    spaceBetween: 15,
                   },
                   999: {
                     slidesPerView: 3,
@@ -333,7 +329,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                        <button>Get Seller Details</button>
+                        <Link to={`/vehicledetails/${latestBuses._id}`}>
+                          <button>Get Seller Details</button>
+                        </Link>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -347,9 +345,9 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  50:{
+                  50: {
                     slidesPerView: 2,
-                    spaceBetween:15,
+                    spaceBetween: 15,
                   },
                   999: {
                     slidesPerView: 3,
@@ -382,7 +380,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                        <button>Get Seller Details</button>
+                        <Link to={`/vehicledetails/${latestTractor._id}`}>
+                          <button>Get Seller Details</button>
+                        </Link>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -396,9 +396,9 @@ const SellerHomePage = () => {
                 slidesPerView={3}
                 navigation={true}
                 breakpoints={{
-                  50:{
+                  50: {
                     slidesPerView: 2,
-                    spaceBetween:15,
+                    spaceBetween: 15,
                   },
                   999: {
                     slidesPerView: 3,
@@ -431,7 +431,9 @@ const SellerHomePage = () => {
                           </div>
                         </div>
 
-                        <button>Get Seller Details</button>
+                        <Link to={`/vehicledetails/${latestConstruction._id}`}>
+                          <button>Get Seller Details</button>
+                        </Link>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -478,11 +480,11 @@ const SellerHomePage = () => {
             breakpoints={{
               50: {
                 slidesPerView: 1.8,
-                spaceBetween:10,
+                spaceBetween: 10,
               },
-              820:{
+              820: {
                 slidesPerView: 2.7,
-                spaceBetween:25,
+                spaceBetween: 25,
               },
               1368: {
                 slidesPerView: 3,
@@ -546,13 +548,13 @@ const SellerHomePage = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              820:{
+              820: {
                 slidesPerView: 3.8,
-                spaceBetween:20,
+                spaceBetween: 20,
               },
-              50:{
+              50: {
                 slidesPerView: 3,
-                spaceBetween:10,
+                spaceBetween: 10,
               },
               999: {
                 slidesPerView: 5,

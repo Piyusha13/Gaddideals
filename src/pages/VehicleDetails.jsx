@@ -34,25 +34,26 @@ const VehicleDetails = () => {
   const [imageArray, setImageArray] = useState([]);
   const [imageActive, setImageActive] = useState();
 
-  const getSingleVehicleDetails = async () => {
-    const res = await axios.get(
-      "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" + id,
-      {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
-        },
-      }
-    );
-
-    setVehicleDetails(res.data.vehicle);
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
-    getSingleVehicleDetails();
-  });
+    const getSingleVehicleDetails = async () => {
+      const res = await axios.get(
+        "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" +
+          id,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
+          },
+        }
+      );
 
-  useEffect(() => {
+      setVehicleDetails(res.data.vehicle);
+    };
+
     const pushfrontBackPic = () => {
       let frontBackArr = [];
 
@@ -65,10 +66,6 @@ const VehicleDetails = () => {
       setImageArray(frontBackArr);
     };
 
-    pushfrontBackPic();
-  }, [getvehicledetails]);
-
-  useEffect(() => {
     const pushImages = () => {
       let frontTyreArr = [];
       if (getvehicledetails?.front_tyre?.length > 0) {
@@ -79,10 +76,6 @@ const VehicleDetails = () => {
       setImageArray((prevState) => [...prevState, ...frontTyreArr]);
     };
 
-    pushImages();
-  }, [getvehicledetails]);
-
-  useEffect(() => {
     const pushSideImages = () => {
       let sidePicArr = [];
       if (getvehicledetails?.side_pic_vehicle?.length > 0) {
@@ -93,8 +86,11 @@ const VehicleDetails = () => {
       setImageArray((prevState) => [...prevState, ...sidePicArr]);
     };
 
+    getSingleVehicleDetails();
+    pushfrontBackPic();
+    pushImages();
     pushSideImages();
-  }, [getvehicledetails]);
+  }, [getvehicledetails, id]);
 
   const rupee_format = (str) => {
     if (str) {

@@ -21,6 +21,12 @@ const FilterTags = ({
   setIsPermitActive,
   setIsScrapActive,
   setIsTyreCondActive,
+  rc,
+  setRC,
+  setIsRCActive,
+  bodyTypeTitle,
+  setBodyTypeTitle,
+  setIsBodyTypeActive,
 }) => {
   return (
     <div className="filter-tags">
@@ -97,6 +103,32 @@ const FilterTags = ({
             onClick={() => {
               setTyreCondition("");
               setIsTyreCondActive(null);
+            }}
+          />
+        </div>
+      )}
+
+      {bodyTypeTitle && (
+        <div className="tag">
+          <span>{bodyTypeTitle}</span>
+          <FaTimes
+            className="cancel-icon"
+            onClick={() => {
+              setBodyTypeTitle("");
+              setIsBodyTypeActive(null);
+            }}
+          />
+        </div>
+      )}
+
+      {rc && (
+        <div className="tag">
+          <span>{rc}</span>
+          <FaTimes
+            className="cancel-icon"
+            onClick={() => {
+              setRC("");
+              setIsRCActive(null);
             }}
           />
         </div>

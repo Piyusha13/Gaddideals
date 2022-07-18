@@ -78,7 +78,6 @@
 
 .row-one {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 .row-one .vehicle-document {

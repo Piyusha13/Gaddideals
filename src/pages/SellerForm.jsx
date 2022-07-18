@@ -11,9 +11,20 @@ import SellerVehicleDetail from "./SellerVehicleDetail";
 import SellerPreviewDetails from "./SellerPreviewDetails";
 
 import statecities from "../state-cities.json";
+import { toast } from "react-toastify";
 
 const SellerForm = () => {
   const { categoryId } = useParams();
+
+  const [isYearActive, setIsYearActive] = useState();
+  const [isFuelActive, setIsFuelActive] = useState();
+  const [isOwnerActive, setIsOwnerActive] = useState();
+
+  const [isPermitActive, setIsPermitActive] = useState();
+  const [isScrapActive, setIsScrapActive] = useState();
+  const [isTyreCondActive, setIsTyreCondActive] = useState();
+  const [isBodyTypeActive, setIsBodyTypeActive] = useState();
+  const [isRCActive, setIsRCActive] = useState();
 
   const [categoryTractorTitle, setCategoryTractorTitle] = useState("");
   const [caetgoryBusTitle, setCategoryBusTitle] = useState("");
@@ -32,6 +43,10 @@ const SellerForm = () => {
   const [modelId, setModelId] = useState("");
   const [modelTitle, setModelTitle] = useState("");
 
+  const [bodyTypeArray, setBodyTypeArray] = useState([]);
+  const [bodyTypeId, setBodyTypeId] = useState("");
+  const [bodyTypeTitle, setBodyTypeTitle] = useState("");
+
   const [yearTitle, setYearTitle] = useState("");
 
   const [fuelTitle, setFuelTitle] = useState("");
@@ -42,10 +57,8 @@ const SellerForm = () => {
   const [owner, setOwner] = useState("");
   const [permit, setPermit] = useState("");
   const [scrap, setScrap] = useState("");
+  const [rc, setRC] = useState("");
   const [tyreCondition, setTyreCondition] = useState("");
-
-  const [documentRCImg, setDocumentRCImg] = useState(false);
-  const [rcImage, setRCImage] = useState();
 
   const [documentEngImg, setDocumentEngImg] = useState(false);
   const [engImage, setEngImage] = useState();
@@ -87,6 +100,7 @@ const SellerForm = () => {
   formData.permit = permit;
   formData.scrap = scrap;
   formData.tyreCondition = tyreCondition;
+  formData.rc = rc;
 
   const fetchBrands = async () => {
     const response = await axios.get(Constant.getUrls.getAllBrands);
@@ -100,10 +114,15 @@ const SellerForm = () => {
 
   const fetchCatgory = async () => {
     const response = await axios.get(
-      Constant.getUrls.getAllCategories + "/" + `${categoryId}`
+      Constant.getUrls.getAllCategories + `/${categoryId}`
     );
     setCategoryTractorTitle(response.data.category.title);
     setCategoryBusTitle(response.data.category.title);
+  };
+
+  const fetchBodyTypes = async () => {
+    const response = await axios.get(Constant.getUrls.getAllBodyTypes);
+    setBodyTypeArray(response.data._getBodyType.docs);
   };
 
   const fetchStates = () => {
@@ -142,6 +161,7 @@ const SellerForm = () => {
     fetchCatgory();
     fetchStates();
     fetchCities();
+    fetchBodyTypes();
   }, [stateTitle]);
 
   const handleBrandChange = (e) => {
@@ -176,8 +196,63 @@ const SellerForm = () => {
     return model.name.toLowerCase().includes(modelTitle.toLowerCase());
   });
 
+  const permitsArray = [
+    {
+      permit: "National",
+    },
+    {
+      permit: "State",
+    },
+    {
+      permit: "No",
+    },
+  ];
+
+  const RCArray = [
+    {
+      rc: "yes",
+    },
+    {
+      rc: "no",
+    },
+  ];
+
+  const scrapArray = [
+    {
+      scrap: "Yes",
+    },
+    {
+      scrap: "No",
+    },
+  ];
+
+  const tyreConditionArray = [
+    {
+      condition: "Excellent",
+    },
+    {
+      condition: "Good",
+    },
+    {
+      condition: "Average",
+    },
+  ];
+
   const nextStep = () => {
-    setStep(step + 1);
+    if (
+      stateTitle === "" ||
+      cityTitle === "" ||
+      brandId === "" ||
+      modelId === "" ||
+      yearTitle === "" ||
+      formData.vehiclenumber === ""
+    ) {
+      window.scrollTo(0, 0);
+      toast.error("These fields are madatory");
+      console.log("All fields are required");
+    } else {
+      setStep(step + 1);
+    }
   };
 
   const prevStep = () => {
@@ -201,7 +276,7 @@ const SellerForm = () => {
     fd.append("model", modelId);
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
-    fd.append("km_driven", formData.kmsdriven);
+    fd.append("km_driven", formData.kmsdriven || 0);
     fd.append("no_of_hrs", formData.noofhrs);
     fd.append("no_of_owner", owner);
     fd.append("fuelType", fuel);
@@ -215,7 +290,8 @@ const SellerForm = () => {
     fd.append("tyre_cond", tyreCondition);
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);
-    fd.append("rc_document", rcImage);
+    fd.append("bodyType", bodyTypeId);
+    fd.append("rc_document", rc);
     fd.append("engine_pic", engImage);
     fd.append("front_side_pic", frontSideImg);
     fd.append("back_side_pic", backSideImg);
@@ -224,7 +300,6 @@ const SellerForm = () => {
     fd.append("side_pic_vehicle", sidePicLeft);
     fd.append("side_pic_vehicle", sidePicRight);
 
-    console.log(modelId);
     const userToken = localStorage.getItem("Token");
     const response = await axios.post(Constant.postUrls.postAllVehicles, fd, {
       headers: {
@@ -232,7 +307,7 @@ const SellerForm = () => {
       },
     });
 
-    console.log(response.data);
+    console.log(response);
   };
 
   switch (step) {
@@ -252,6 +327,12 @@ const SellerForm = () => {
             yearTitle={yearTitle}
             setFuel={setFuel}
             setOwner={setOwner}
+            isYearActive={isYearActive}
+            setIsYearActive={setIsYearActive}
+            isFuelActive={isFuelActive}
+            setIsFuelActive={setIsFuelActive}
+            isOwnerActive={isOwnerActive}
+            setIsOwnerActive={setIsOwnerActive}
             owner={owner}
             cityTitle={cityTitle}
             setCityTitle={setCityTitle}
@@ -277,6 +358,9 @@ const SellerForm = () => {
       return (
         <>
           <SellerFormRegistration
+            permitsArray={permitsArray}
+            scrapArray={scrapArray}
+            tyreConditionArray={tyreConditionArray}
             handleOnChange={handleOnChange}
             formData={formData}
             setPermit={setPermit}
@@ -295,6 +379,23 @@ const SellerForm = () => {
             setTyreCondition={setTyreCondition}
             nextStep={nextStep}
             prevStep={prevStep}
+            isPermitActive={isPermitActive}
+            setIsPermitActive={setIsPermitActive}
+            isScrapActive={isScrapActive}
+            setIsScrapActive={setIsScrapActive}
+            isTyreCondActive={isTyreCondActive}
+            setIsTyreCondActive={setIsTyreCondActive}
+            rc={rc}
+            setRC={setRC}
+            RCArray={RCArray}
+            isRCActive={isRCActive}
+            setIsRCActive={setIsRCActive}
+            bodyTypeArray={bodyTypeArray}
+            isBodyTypeActive={isBodyTypeActive}
+            setIsBodyTypeActive={setIsBodyTypeActive}
+            bodyTypeTitle={bodyTypeTitle}
+            setBodyTypeTitle={setBodyTypeTitle}
+            setBodyTypeId={setBodyTypeId}
           />
         </>
       );
@@ -302,10 +403,6 @@ const SellerForm = () => {
       return (
         <>
           <SellerVehicleDetail
-            documentRCImg={documentRCImg}
-            setDocumentRCImg={setDocumentRCImg}
-            rcImage={rcImage}
-            setRCImage={setRCImage}
             documentEngImg={documentEngImg}
             setDocumentEngImg={setDocumentEngImg}
             engImage={engImage}
@@ -343,7 +440,6 @@ const SellerForm = () => {
       return (
         <>
           <SellerPreviewDetails
-            rcImage={rcImage}
             engImage={engImage}
             frontSideImg={frontSideImg}
             backSideImg={backSideImg}
@@ -358,6 +454,8 @@ const SellerForm = () => {
             yearTitle={yearTitle}
             stateTitle={stateTitle}
             cityTitle={cityTitle}
+            bodyTypeTitle={bodyTypeTitle}
+            setStep={setStep}
           />
         </>
       );

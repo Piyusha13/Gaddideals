@@ -22,6 +22,8 @@ import ToggleCategory from "../components/ToggleCategory";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+import InfiniteScroll from "react-infinite-scroll-component";
+
 import axios from "axios";
 
 const queryString = require("query-string");
@@ -30,7 +32,8 @@ const VehicleListings = () => {
   const location = queryString.parse(window.location.search);
 
   const [categories, setCategories] = useState([]);
-  const [vehiclesArray, setVehicesArray] = useState([]);
+  const [vehiclesArray, setVehiclesArray] = useState([]);
+  const [vehicleObj, setVehicleObj] = useState({});
   const [bodytypes, setBodyTypes] = useState([]);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
@@ -44,6 +47,7 @@ const VehicleListings = () => {
   const [searchInput, setSearchInput] = useState("");
   const [minPrice, setMinPrice] = useState(location.min_price);
   const [maxPrice, setMaxPrice] = useState(location.max_price);
+  const [pageNo, setPageNo] = useState(1);
 
   const navigate = useNavigate();
 
@@ -55,22 +59,14 @@ const VehicleListings = () => {
         `${Constant.getUrls.getAllVehicles}?q=` + searchInput
       );
 
-      setVehicesArray(res.data.vehicle.docs);
+      setVehiclesArray(res.data.vehicle.docs);
     }
   };
 
   const handleMin = async (e) => {
     setMinPrice(e.target.value);
 
-    // if (maxPrice > e.target.value) {
     location["min_price"] = e.target.value;
-    // fetchVehiclesAPI(location);
-    // }
-
-    // const res = await axios.get(
-    //   `${Constant.getUrls.getAllVehicles}?min_price=${minPrice}&max_price=${maxPrice}`
-    // );
-    // console.log(res.data.vehicle.docs);
   };
 
   const handleMax = async (e) => {
@@ -104,27 +100,25 @@ const VehicleListings = () => {
     x = x.toString();
     var lastThree = x.substring(x.length - 3);
     var otherNumbers = x.substring(0, x.length - 3);
-    if (otherNumbers != "") lastThree = "," + lastThree;
+    if (otherNumbers !== "") lastThree = "," + lastThree;
     var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
     return res;
   };
 
   const fetchVehiclesAPI = async (location) => {
     const apiUrl = queryString.stringify(location);
+
     const res = await axios.get(
       `${Constant.getUrls.getAllVehicles}?status=published&${apiUrl}`
     );
 
-    setVehicesArray(res.data.vehicle.docs);
-  };
+    setVehicleObj(res.data.vehicle);
+    setVehiclesArray(res.data.vehicle.docs);
 
-  const fetchVehicles = async () => {
-    const url = queryString.stringify(location);
-    const response = await axios.get(
-      `${Constant.getUrls.getAllVehicles}?status=published&sort=true&` + url
-    );
-
-    setVehicesArray(response.data.vehicle.docs);
+    // if (vehicleObj.hasNextPage) {
+    //   setPageNo(pageNo + 1);
+    //   setVehiclesArray([...vehiclesArray, ...res.data.vehicle.docs]);
+    // }
   };
 
   const fetchBodyTypes = async () => {
@@ -159,6 +153,7 @@ const VehicleListings = () => {
 
   // category
   const handleCat = (id) => {
+    window.scrollTo(0, 0);
     setCat(id);
     location["category"] = id;
     let prevUrl = queryString.stringify(location);
@@ -203,6 +198,7 @@ const VehicleListings = () => {
     }
   };
   const handleBodyType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["bodyType[]"]) {
@@ -242,6 +238,7 @@ const VehicleListings = () => {
     }
   };
   const handleBrandType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["brand[]"]) {
@@ -281,6 +278,7 @@ const VehicleListings = () => {
     }
   };
   const handleModelType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["model[]"]) {
@@ -320,6 +318,7 @@ const VehicleListings = () => {
     }
   };
   const handleManufacturingType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["years[]"]) {
@@ -359,6 +358,7 @@ const VehicleListings = () => {
     }
   };
   const handleKilometersType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["km_driven[]"]) {
@@ -398,6 +398,7 @@ const VehicleListings = () => {
     }
   };
   const handleFuelType = (id) => {
+    window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["fuelType[]"]) {
@@ -499,7 +500,7 @@ const VehicleListings = () => {
               </div>
             </div>
             <div className="line"></div>
-            <div className="filter-container">
+            <div className="filter-container kmsdriven">
               <h3>Kms Driven</h3>
               <div
                 className="filter-controls"
@@ -732,6 +733,17 @@ const VehicleListings = () => {
           </div>
         </aside>
         {/* Vehicles List */}
+        {/* <InfiniteScroll
+          dataLength={vehiclesArray.length}
+          next={fetchVehiclesAPI}
+          hasMore={vehicleObj.hasNextPage}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        > */}
         <div className="vehicles-list-container container m-0 p-0">
           {vehiclesArray.length > 0 ? (
             <>
@@ -795,6 +807,7 @@ const VehicleListings = () => {
             </div>
           )}
         </div>
+        {/* </InfiniteScroll> */}
       </section>
       <Footer />
     </>

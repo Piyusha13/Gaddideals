@@ -4,8 +4,6 @@ import "./sellerpreviewdetails.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import editIcon from "../assets/edit.png";
 
-import { useNavigate, useParams } from "react-router-dom";
-
 import cloudIcon from "../assets/cloud.png";
 
 import Navbar from "../components/Navbar";
@@ -15,7 +13,7 @@ const SellerPreviewDetails = ({
   stateTitle,
   cityTitle,
   formData,
-  rcImage,
+  rc,
   engImage,
   frontSideImg,
   backSideImg,
@@ -26,10 +24,9 @@ const SellerPreviewDetails = ({
   handlePostData,
   modelTitle,
   yearTitle,
+  setStep,
+  bodyTypeTitle,
 }) => {
-  const navigate = useNavigate();
-  const { categoryId } = useParams();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -82,7 +79,7 @@ const SellerPreviewDetails = ({
               src={editIcon}
               alt="edit icon"
               className="edit-icon"
-              onClick={() => navigate(`/vehicle/${categoryId}`)}
+              onClick={() => setStep(1)}
             />
             <div className="row">
               <div className="detail">
@@ -151,41 +148,34 @@ const SellerPreviewDetails = ({
                 <p>{formData.scrap}</p>
               </div>
 
-              <div className="detail"></div>
+              <div className="detail">
+                <h6>Number of tyres</h6>
+                <p>{formData.nooftyres}</p>
+              </div>
             </div>
 
             <div className="preview-line"></div>
 
             <div className="row">
               <div className="detail">
-                <h6>Number of tyres</h6>
-                <p>{formData.nooftyres}</p>
-              </div>
-
-              <div className="detail">
                 <h6>Pricing of the vehicle</h6>
                 <p>{formData.pricingvehicle}</p>
               </div>
 
-              <div className="detail"></div>
+              <div className="detail">
+                <h6>Body Type</h6>
+                <p>{bodyTypeTitle}</p>
+              </div>
+
+              <div className="detail">
+                <h6>RC</h6>
+                <p>{formData.rc}</p>
+              </div>
             </div>
 
             <div className="preview-line"></div>
 
             <div className="preview-row-one">
-              <div className="preview-vehicle-document">
-                <h6>RC Document</h6>
-                <div
-                  className="document"
-                  style={rcImage ? { padding: "0px" } : { padding: "40px" }}
-                >
-                  <img
-                    src={rcImage ? URL.createObjectURL(rcImage) : cloudIcon}
-                    alt="cloud icon"
-                  />
-                </div>
-              </div>
-
               <div className="preview-vehicle-document">
                 <h6>Engine Picture</h6>
                 <div
@@ -307,7 +297,9 @@ const SellerPreviewDetails = ({
             </div>
 
             <div className="preview-btns">
-              <button className="edit">Edit</button>
+              <button className="edit" onClick={() => setStep(1)}>
+                Edit
+              </button>
               <button onClick={handlePostData} className="save">
                 Save Now
               </button>
