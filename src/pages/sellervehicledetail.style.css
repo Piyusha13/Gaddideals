@@ -71,6 +71,20 @@
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
+
+.vehicle-detail-container .vehicle-detail-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 0;
+}
+.vehicle-detail-container .vehicle-detail-title h5 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px;
+  color: #050f56;
+}
+
 .vehicle-detail-container .container-wrapper {
   width: 100% !important;
   padding: 20px;

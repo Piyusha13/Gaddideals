@@ -1,3 +1,14 @@
+.detail-pages-navigation {
+  padding-left: 20px;
+}
+.detail-pages-navigation small {
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 12px;
+  color: #414141;
+}
+
 .vehicle-details-container {
   padding: 20px;
 }
@@ -195,18 +206,9 @@
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-one {
+  .row-one-detail {
   display: flex;
   justify-content: space-between;
-}
-
-.vehicle-details-container
-  .vehicle-detail
-  .vehicle-info
-  .vehicle-statistics-container
-  .row-one
-  .stat {
-  display: flex;
   align-items: center;
 }
 
@@ -214,16 +216,18 @@
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-one
-  .stat.calender {
-  margin-right: 12px;
+  .row-one-detail
+  .stat {
+  display: flex;
+  align-items: center;
+  width: 100px;
 }
 
 .vehicle-details-container
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-one
+  .row-one-detail
   .stat
   span {
   display: inline-block;
@@ -233,12 +237,23 @@
   color: #000000;
   margin-left: 10px;
 }
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .vehicle-statistics-container
+  .row-one-detail
+  .stat
+  img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
 
 .vehicle-details-container
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-two {
+  .row-two-detail {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -248,45 +263,17 @@
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-two
+  .row-two-detail
   .stat {
   display: flex;
   align-items: center;
-}
-
-.vehicle-details-container
-  .vehicle-detail
-  .vehicle-info
-  .vehicle-statistics-container
-  .row-two
-  .stat.racing {
-  margin-left: 19px;
-  margin-right: 0;
+  width: 100px;
 }
 .vehicle-details-container
   .vehicle-detail
   .vehicle-info
   .vehicle-statistics-container
-  .row-two
-  .stat.manual {
-  height: 2rem;
-}
-.vehicle-details-container
-  .vehicle-detail
-  .vehicle-info
-  .vehicle-statistics-container
-  .row-two
-  .stat.manual
-  img {
-  height: 1.5rem;
-  width: 2rem;
-}
-
-.vehicle-details-container
-  .vehicle-detail
-  .vehicle-info
-  .vehicle-statistics-container
-  .row-two
+  .row-two-detail
   .stat
   span {
   display: inline-block;
@@ -295,6 +282,17 @@
   font-size: 12px;
   color: #000000;
   margin-left: 10px;
+}
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .vehicle-statistics-container
+  .row-two-detail
+  .stat
+  img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
 }
 
 .vehicle-details-container

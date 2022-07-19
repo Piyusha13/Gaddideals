@@ -239,19 +239,44 @@ const SellerForm = () => {
   ];
 
   const nextStep = () => {
-    if (
-      stateTitle === "" ||
-      cityTitle === "" ||
-      brandId === "" ||
-      modelId === "" ||
-      yearTitle === "" ||
-      formData.vehiclenumber === ""
-    ) {
-      window.scrollTo(0, 0);
-      toast.error("These fields are madatory");
-      console.log("All fields are required");
-    } else {
-      setStep(step + 1);
+    if (step === 1) {
+      if (stateTitle === "") {
+        toast.error("State is required");
+      } else if (cityTitle === "") {
+        toast.error("City is required");
+      } else if (brandId === "") {
+        toast.error("Vehicle brand is required");
+      } else if (modelId === "") {
+        toast.error("Vehicle model is required");
+      } else if (yearTitle === "") {
+        toast.error("Year is required");
+      } else if (formData.vehiclenumber === "") {
+        toast.error("Vehicle number is required");
+      } else if (fuel === "") {
+        toast.error("Fuel type is required");
+      } else {
+        setStep(step + 1);
+      }
+    }
+
+    if (step === 2) {
+      if (tyreCondition === "") {
+        toast.error("Tyre condition is required");
+      } else if (formData.pricingvehicle === "") {
+        toast.error("Vehicle price is required");
+      } else if (rc === "") {
+        toast.error("RC is required");
+      } else {
+        setStep(step + 1);
+      }
+    }
+
+    if (step === 3) {
+      if (!documentFrontSideImg) {
+        toast.error("Forntside Image is required");
+      } else {
+        setStep(step + 1);
+      }
     }
   };
 

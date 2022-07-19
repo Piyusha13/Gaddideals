@@ -13,7 +13,7 @@ import similarTruckSmall from "../assets/similar-truck-small.png";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { imgurl } from "../constants";
@@ -34,6 +34,8 @@ const VehicleDetails = () => {
   const [imageArray, setImageArray] = useState([]);
   const [imageActive, setImageActive] = useState();
 
+  const [categoryTruck, setCategoryTruck] = useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -52,6 +54,7 @@ const VehicleDetails = () => {
       );
 
       setVehicleDetails(res.data.vehicle);
+      setCategoryTruck(res.data.vehicle.category.title);
     };
 
     const pushfrontBackPic = () => {
@@ -109,6 +112,17 @@ const VehicleDetails = () => {
   return (
     <>
       <Navbar />
+      <div className="detail-pages-navigation">
+        <Link to="/">
+          <small>Home</small>
+        </Link>
+        &nbsp; &#62; &nbsp;
+        <Link to="/vehiclelistings">
+          <small>Vehicle listing</small>
+        </Link>
+        &nbsp; &#62; &nbsp;
+        <small>Vehicle detail</small>
+      </div>
       <section className="vehicle-details-container">
         <div className="vehicle-detail">
           <div className="vehicle-thumbnail">
@@ -153,7 +167,7 @@ const VehicleDetails = () => {
               <div className="line"></div>
 
               <div className="vehicle-statistics-container">
-                <div className="row-one">
+                <div className="row-one-detail">
                   <div className="stat">
                     <img src={speedometerIcon} alt="speedometer icon" />
                     <span>{getvehicledetails.km_driven}</span>
@@ -168,7 +182,7 @@ const VehicleDetails = () => {
                   </div>
                 </div>
 
-                <div className="row-two">
+                <div className="row-two-detail">
                   <div className="stat">
                     <img src={tyreIcon} alt="tyre icon" />
                     <span>{getvehicledetails.no_of_tyre}</span>
@@ -279,9 +293,8 @@ const VehicleDetails = () => {
 
           <div className="row-three">
             <div className="row-content">
-              <h6>Transmission</h6>
+              <h6>Fuel Type</h6>
               <span>
-                {" "}
                 {getvehicledetails.fuelType
                   ? getvehicledetails.fuelType.title
                   : "No Title Found"}

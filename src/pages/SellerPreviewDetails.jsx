@@ -74,6 +74,9 @@ const SellerPreviewDetails = ({
         </div>
 
         <div className="preview-detail-container">
+          <div className="preview-title">
+            <h5>Preview</h5>
+          </div>
           <div className="preview-details-wrapper">
             <img
               src={editIcon}

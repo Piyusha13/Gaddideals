@@ -451,6 +451,13 @@ const VehicleListings = () => {
   return (
     <>
       <Navbar />
+      <div className="pages-navigation">
+        <Link to="/">
+          <small>Home</small>
+        </Link>
+        &nbsp; &#62; &nbsp;
+        <small>Vehicle listing</small>
+      </div>
       <section className="vehicles-container">
         <aside className="filter-sidebar">
           {/* Filter One */}

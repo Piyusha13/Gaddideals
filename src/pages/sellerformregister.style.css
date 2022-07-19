@@ -71,6 +71,19 @@
   border-radius: 10px;
 }
 
+.form-registration-container .wizard-register-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 0;
+}
+.form-registration-container .wizard-register-title h5 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px;
+  color: #050f56;
+}
+
 .form-registration-container .filter-tags {
   display: flex;
   gap: 20px;

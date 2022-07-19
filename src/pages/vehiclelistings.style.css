@@ -1,10 +1,19 @@
 .vehicles-container {
   padding: 10px 10px;
   display: flex;
-  margin-top: 20px;
   gap: 20px;
 }
 
+.pages-navigation {
+  padding-left: 10px;
+}
+.pages-navigation small {
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 12px;
+  color: #414141;
+}
 .vehicles-container .filter-sidebar {
   width: 300px;
 }

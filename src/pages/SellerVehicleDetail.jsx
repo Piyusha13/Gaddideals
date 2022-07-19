@@ -172,33 +172,11 @@ const SellerVehicleDetail = ({
         </div>
 
         <div className="vehicle-detail-container">
+          <div className="vehicle-detail-title">
+            <h5>Vehicle Detail</h5>
+          </div>
           <div className="container-wrapper">
             <div className="row-one">
-              {/* <div className="vehicle-document" onClick={handleFileInput}>
-                <h6>RC Document</h6>
-                <input
-                  type="file"
-                  name="rc"
-                  ref={fileInput}
-                  onChange={handleImageChange}
-                  accept="image/*"
-                  hidden
-                />
-                <div
-                  className="document"
-                  style={
-                    documentRCImg ? { padding: "0px" } : { padding: "40px" }
-                  }
-                >
-                  <img
-                    src={
-                      documentRCImg ? URL.createObjectURL(rcImage) : cloudIcon
-                    }
-                    alt="cloud icon"
-                  />
-                </div>
-              </div> */}
-
               <div className="vehicle-document" onClick={handleEngineInput}>
                 <h6>Engine Picture</h6>
                 <input

@@ -1,3 +1,12 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
 .seller-form-container {
   width: 70% !important;
   margin: 0 auto;
@@ -71,6 +80,20 @@
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  position: relative;
+}
+
+.form-details-container .wizard-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 0;
+}
+.form-details-container .wizard-title h5 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px;
+  color: #050f56;
 }
 
 .line {

@@ -97,29 +97,9 @@ const SellerFormRegistration = ({
         </div>
 
         <div className="form-registration-container">
-          <FilterTags
-            yearTitle={yearTitle}
-            setYearTitle={setYearTitle}
-            owner={owner}
-            setOwner={setOwner}
-            fuelTitle={fuelTitle}
-            setFuelTitle={setFuelTitle}
-            permit={permit}
-            setPermit={setPermit}
-            scrap={scrap}
-            setScrap={setScrap}
-            tyreCondition={tyreCondition}
-            setTyreCondition={setTyreCondition}
-            setIsPermitActive={setIsPermitActive}
-            setIsScrapActive={setIsScrapActive}
-            setIsTyreCondActive={setIsTyreCondActive}
-            rc={rc}
-            setRC={setRC}
-            setIsRCActive={setIsRCActive}
-            bodyTypeTitle={bodyTypeTitle}
-            setBodyTypeTitle={setBodyTypeTitle}
-            setIsBodyTypeActive={setIsBodyTypeActive}
-          />
+          <div className="wizard-register-title">
+            <h5>Registration Detail</h5>
+          </div>
 
           <div className="line"></div>
 

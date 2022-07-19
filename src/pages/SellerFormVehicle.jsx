@@ -84,6 +84,8 @@ const SellerFormVehicle = ({
 
   const [seeMoreSuggestion, setSeeMoreSuggestion] = useState(false);
 
+  const [overlayState, setOverlayState] = useState(false);
+
   const continueNext = (e) => {
     e.preventDefault();
     nextStep();
@@ -101,18 +103,22 @@ const SellerFormVehicle = ({
 
   const handleOnFocus = (e) => {
     setSuggestionBox(!suggestionBox);
+    setOverlayState(true);
   };
 
   const handleOnModelFocus = (e) => {
     setModelSuggestionBox(!modelSuggestionBox);
+    setOverlayState(true);
   };
 
   const handleOnStateFocus = (e) => {
     setStatesSuggestionBox(!statesSuggestionBox);
+    setOverlayState(true);
   };
 
   const handleOnCityFocus = (e) => {
     setCitySuggestionBox(!citySuggestionBox);
+    setOverlayState(true);
   };
 
   useEffect(() => {
@@ -152,17 +158,21 @@ const SellerFormVehicle = ({
         </div>
 
         <div className="form-details-container">
-          <FilterTags
-            yearTitle={yearTitle}
-            setYearTitle={setYearTitle}
-            owner={owner}
-            setOwner={setOwner}
-            setFuelTitle={setFuelTitle}
-            fuelTitle={fuelTitle}
-            setIsYearActive={setIsYearActive}
-            setIsOwnerActive={setIsOwnerActive}
-            setIsFuelActive={setIsFuelActive}
-          />
+          {overlayState && (
+            <div
+              className="overlay"
+              onClick={() => {
+                setStatesSuggestionBox(false);
+                setCitySuggestionBox(false);
+                setSuggestionBox(false);
+                setModelSuggestionBox(false);
+                setOverlayState(false);
+              }}
+            ></div>
+          )}
+          <div className="wizard-title">
+            <h5>Vehicle Information</h5>
+          </div>
 
           <div className="line"></div>
 
@@ -348,7 +358,7 @@ const SellerFormVehicle = ({
                 <input
                   type="text"
                   name="vehiclenumber"
-                  value={formData.vehiclebnumber}
+                  value={formData.vehiclenumber}
                   onChange={handleOnChange}
                   placeholder="MH01BH3321"
                 />
@@ -358,9 +368,10 @@ const SellerFormVehicle = ({
                 <div className="form-controls">
                   <label htmlFor="noofhrs">Number of Hours</label>
                   <input
-                    type="time"
+                    type="number"
                     value={formData.noofhrs}
                     onChange={handleOnChange}
+                    placeholder="75 hrs"
                     name="noofhrs"
                   />
                 </div>
