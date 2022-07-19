@@ -477,7 +477,7 @@ const VehicleListings = () => {
 
         {/* filter two in mobile */}
         {displayFilterTwo &&(
-          <div className="filter-two">
+          <div className="filter-two lg-devices">
           <div className="search-container">
             <img src={searchIcon} alt="search icon" />
             <input
@@ -682,7 +682,7 @@ const VehicleListings = () => {
         {displayFilterOne &&(
 
           //  {/* Filter One for mobile */}
-           <div className="filter-one">
+           <div className="filter-one lg-devices">
            <div className="filter-container">
              <h3 className="sort-by" >Sort By :</h3>
              <div

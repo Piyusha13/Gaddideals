@@ -85,7 +85,7 @@ color: #050F56;
     margin-left: 10px !important;
     width: 60%;
     position: absolute;
-    top: 10%;
+    top: 11% !important;
     left: 25%;
     z-index: 99;
   }
@@ -155,7 +155,7 @@ color: #050F56;
     width: 70%;
     position: absolute;
     z-index: 99;
-    top: 9%;
+    top: 10% !important;
     margin-left: 10px !important;
   }
   
@@ -641,7 +641,17 @@ color: #050F56;
   }
   
   
+
 }
+
+@media screen and (min-width:1000px) {
+  
+  .lg-devices{
+    display: none !important;
+  }
+
+}
+
 .filter-sort-button-div{
   display: none;
 }
