@@ -15,6 +15,8 @@ import init from "../Helpers/WindowToken";
 import { set } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { ToastContainer, toast } from "react-toastify";
+
 function LoggedUser() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -42,10 +44,7 @@ function LoggedUser() {
       axios
         .get("https://gaddideals.brokerinvoice.co.in/api/user")
         .then((res) => {
-          // console.log(res.data.user.name);
-          // const name=res.data.user.name;
-          // const email=res.data.user.email;
-          // const mob_no=res.data.user.mob_no;
+          
           setname(res.data.user);
           setemail(res.data.user);
           setmob_no(res.data.user);
@@ -72,6 +71,7 @@ function LoggedUser() {
         .then((res) => {
           console.log(res.data.message);
           if (res.data.message === "Updated Successfully") {
+          
             setImgstate(true);
             getDetails();
           }
@@ -105,7 +105,8 @@ function LoggedUser() {
         },
       })
       .then(
-        (res) => console.log(res)
+        toast.success("Saved successfully")
+        // (res) => console.log(res)
         // res.data.status==='success'? setnavigate(true):setnavigate(false)
       );
     if (previousNum !== mob_no.mob_no) {
@@ -207,8 +208,10 @@ function LoggedUser() {
             </div>
           </div>
           <div className="right-profile-container">
+            <img className="back-to-home-screen" src={next_arrow} alt="" onClick={()=>{window.location.href = "/"}} ></img>
             <div className="user-profile-header">
               <h1>Profile</h1>
+              <h2>My Profile</h2>
             </div>
             <div className="profile-pic-div">
               <div className="profile-pic-circle">

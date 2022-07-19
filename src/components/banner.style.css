@@ -1,4 +1,4 @@
-@media screen and (min-width: 820px) and (max-width: 820px) {
+@media screen and (min-width: 768px) and (max-width: 1000px) {
   .carousel-container {
     position: relative;
     height: 350px !important;
@@ -41,7 +41,7 @@
     /* text-overflow: ellipsis; */
   }
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 767px) {
   .carousel-container {
     position: relative;
     height: 200px !important;

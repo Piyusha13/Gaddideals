@@ -139,6 +139,26 @@ const VehicleDetails = () => {
               ))}
             </Swiper>
           </div>
+
+          {/* mob vehicle gallery */}
+          <div className="mob-vehicle-gallery-container">
+          <Swiper
+            navigation={true}
+            spaceBetween={10}
+            slidesPerView={4}
+            watchSlidesProgress={true}
+            modules={[Navigation, Thumbs]}
+            className="vehicles-thumbs-swiper"
+          >
+            {imageArray.map((thumb, index) => (
+              <SwiperSlide key={index}>
+                <div className="thumb">
+                  <img src={imgurl + thumb} alt="truck thumbnail" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
           <div className="vehicle-info">
             <div className="vehicle-info-wrapper">
               <div className="heading-container">
@@ -235,6 +255,91 @@ const VehicleDetails = () => {
             </div>
           </div>
         </div>
+        {/* mobile reps overview container */}
+        <div className="mob-overview-container">
+        <h3>Overview</h3>
+
+        <div className="row-one">
+          <div className="row-content">
+            <h6>Number of kilometers</h6>
+            <span>{getvehicledetails.km_driven} Km</span>
+          </div>
+          <div className="row-content">
+            <h6>Number of Owners</h6>
+            <span>{getvehicledetails.no_of_owner}</span>
+          </div>
+        </div>
+
+        <div className="line"></div>
+
+        <div className="row-two">
+        <div className="row-content">
+            <h6>Manufacturing year</h6>
+            <span>2013</span>
+          </div>
+          <div className="row-content">
+            <h6>City</h6>
+            <span>{getvehicledetails.city}</span>
+          </div>
+          
+        </div>
+
+        <div className="line"></div>
+
+        <div className="row-three">
+        <div className="row-content">
+            <h6>Insurance validity</h6>
+            <span>{getvehicledetails.insurance}</span>
+          </div>
+          <div className="row-content">
+            <h6>Tyre condition</h6>
+            <span>{getvehicledetails.tyre_cond}</span>
+          </div>
+          
+        </div>
+
+        <div className="line"></div>
+
+        <div className="row-four">
+        <div className="row-content">
+            <h6>Transmission</h6>
+            <span>
+              {" "}
+              {getvehicledetails.fuelType
+                ? getvehicledetails.fuelType.title
+                : "No Title Found"}
+            </span>
+          </div>
+          <div className="row-content">
+            <h6>Vehicle number</h6>
+            <span>{getvehicledetails.reg_no}</span>
+          </div>
+        </div>
+        
+        <div className="line"></div>
+
+        <div className="row-four">
+        <div className="row-content">
+            <h6>Tax validity up to</h6>
+            <span>{getvehicledetails.tax_validity}</span>
+          </div>
+          <div className="row-content">
+            <h6>Number of tyres</h6>
+            <span>{getvehicledetails.no_of_tyre}</span>
+          </div>
+          
+          
+          
+        </div>
+        <div className="line"></div>
+        <div className="row-four">
+        <div className="row-content">
+            <h6>Fitness certificate</h6>
+            <span>{getvehicledetails.fitness_certificate}</span>
+          </div>
+        </div>
+      </div>
+      
         <div className="vehicle-gallery-container">
           <Swiper
             navigation={true}
@@ -336,6 +441,7 @@ const VehicleDetails = () => {
               <div className="img-wrapper">
                 <img src={similarTruck} alt="truck" />
               </div>
+              
               <div className="vehicle-info">
                 <div className="title">
                   <h5>Tata Intra V30</h5>

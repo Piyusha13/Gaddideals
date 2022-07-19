@@ -26,6 +26,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import axios from "axios";
 
+import downArrow from '../assets/down-arrow.png';
+import upArrow from '../assets/up-arrow.png';
+
 const queryString = require("query-string");
 
 const VehicleListings = () => {
@@ -48,6 +51,8 @@ const VehicleListings = () => {
   const [minPrice, setMinPrice] = useState(location.min_price);
   const [maxPrice, setMaxPrice] = useState(location.max_price);
   const [pageNo, setPageNo] = useState(1);
+  const [displayFilterTwo,setdisplayFilterTwo]=useState(false);
+  const [displayFilterOne,setdisplayFilterOne]=useState(false);
 
   const navigate = useNavigate();
 
@@ -458,7 +463,305 @@ const VehicleListings = () => {
         &nbsp; &#62; &nbsp;
         <small>Vehicle listing</small>
       </div>
+      <div className="filter-sort-button-div">
+          <div className="filter-button" onClick={()=>{setdisplayFilterTwo(!displayFilterTwo);}} >
+            <button>Filter</button>
+
+            <img src={displayFilterTwo ? upArrow :downArrow} alt=""></img>
+          </div>
+          <div className="sortBy-button" onClick={()=>{setdisplayFilterOne(!displayFilterOne);}}>
+            <button>Sort By</button>
+            <img src={displayFilterOne ? upArrow :downArrow}  alt=""></img>
+          </div>
+        </div>
+
+        {/* filter two in mobile */}
+        {displayFilterTwo &&(
+          <div className="filter-two">
+          <div className="search-container">
+            <img src={searchIcon} alt="search icon" />
+            <input
+              placeholder="search"
+              type="search"
+              name="search"
+              id="search"
+              value={searchInput}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <div className="categories-container">
+            <h3>Category</h3>
+            <div className="four-category-container">
+            {categories.map((category) => (
+              <div className="category" key={category._id}>
+                <div
+                  onClick={() => {
+                    handleCat(category._id);
+                  }}
+                  className="icon-wrapper"
+                  style={{
+                    border:
+                      cat === category._id ? "1px solid #00adef" : "none",
+                  }}
+                >
+                  <img src={imgurl + category.icon} alt={category.title} />
+                </div>
+                <a rel="noreferrer" href="#dasd">
+                  {category.title}
+                </a>
+              </div>
+            ))}
+            </div>
+          </div>
+          <div className="line"></div>
+
+          <div className="price-container">
+            <h3>Price</h3>
+            <div className="min-max-controls">
+              <div className="price-input">
+                <span>Min Price</span>
+                <input
+                  type="number"
+                  placeholder="₹0"
+                  name="minprice"
+                  value={minPrice}
+                  onChange={handleMin}
+                />
+              </div>
+              <div className="price-input">
+                <span>Max Price</span>
+                <input
+                  type="number"
+                  placeholder="₹15,00,000"
+                  name="maxprice"
+                  value={maxPrice}
+                  onChange={handleMax}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="line"></div>
+
+          <div className="vehicles-stats-container">
+            <ToggleCategory categoryTitle="Body Type">
+              {bodytypes.map((type) => (
+                <div key={type._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleBodyType(type._id)}
+                  >
+                    {isBtChecked(type._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+
+                    <p>{type.title}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+
+            <ToggleCategory categoryTitle="Brand">
+              {brands.map((brand) => (
+                <div key={brand._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleBrandType(brand._id)}
+                  >
+                    {isBrandChecked(brand._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+                    <p>{brand.title}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+
+            <ToggleCategory categoryTitle="Model">
+              {models.map((model) => (
+                <div key={model._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleModelType(model._id)}
+                  >
+                    {isModelChecked(model._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+                    <p>{model.name}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+
+            <ToggleCategory categoryTitle="Manufacturing Year">
+              {modelYears.map((modelYear) => (
+                <div key={modelYear._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleManufacturingType(modelYear._id)}
+                  >
+                    {isManufacturingChecked(modelYear._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+                    <p>{modelYear.year}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+
+            <ToggleCategory categoryTitle="Kilometers Driven">
+              {kmsDriven.map((kms) => (
+                <div key={kms._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleKilometersType(kms._id)}
+                  >
+                    {isKmsChecked(kms._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+                    <p>{kms.km_range}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+
+            {/* <div className="vehicle-stat">
+              <div className="stat-label">
+                <a href="#brand">Number of Owners</a>
+                <img src={downArrow} alt="down arrow icon" />
+              </div>
+            </div> */}
+
+            <ToggleCategory categoryTitle="Fuel Type">
+              {fuelTypes.map((fuelType) => (
+                <div key={fuelType._id} className="list">
+                  <div
+                    className="list-content"
+                    onClick={() => handleFuelType(fuelType._id)}
+                  >
+                    {isFuelChecked(fuelType._id) ? (
+                      <MdOutlineCheckBox color="#050F56" size={25} />
+                    ) : (
+                      <MdOutlineCheckBoxOutlineBlank
+                        color="#050F56"
+                        size={25}
+                      />
+                    )}
+                    <p>{fuelType.title}</p>
+                  </div>
+                </div>
+              ))}
+            </ToggleCategory>
+          </div>
+        </div>
+        )}
+        {displayFilterOne &&(
+
+          //  {/* Filter One for mobile */}
+           <div className="filter-one">
+           <div className="filter-container">
+             <h3 className="sort-by" >Sort By :</h3>
+             <div
+               className="filter-controls"
+               onClick={() => handleRecentlyAdded(!recentlyAdded)}
+             >
+               {recentlyAdded ? (
+                 <ImRadioChecked color="#050F56" size={15} />
+               ) : (
+                 <ImRadioUnchecked color="#050F56" size={15} />
+               )}
+               <span>Recently Added</span>
+             </div>
+           </div>
+           <div className="line"></div>
+           <div className="filter-container">
+             <h3>Price</h3>
+             <div
+               className="filter-controls"
+               onClick={() => {
+                 handleLowToHighPrice("low");
+               }}
+             >
+               {lthPrice === "low" ? (
+                 <ImRadioChecked color="#050F56" size={15} />
+               ) : (
+                 <ImRadioUnchecked color="#050F56" size={15} />
+               )}
+               <span>Low to High</span>
+             </div>
+             <div
+               className="filter-controls"
+               onClick={() => {
+                 handleLowToHighPrice("high");
+               }}
+             >
+               {lthPrice === "high" ? (
+                 <ImRadioChecked color="#050F56" size={15} />
+               ) : (
+                 <ImRadioUnchecked color="#050F56" size={15} />
+               )}
+               <span>High to Low</span>
+             </div>
+           </div>
+           <div className="line"></div>
+           <div className="filter-container kmsdriven">
+             <h3>Kms Driven</h3>
+             <div
+               className="filter-controls"
+               onClick={() => {
+                 handleLowToHighKms("low");
+               }}
+             >
+               {lth === "low" ? (
+                 <ImRadioChecked color="#050F56" size={15} />
+               ) : (
+                 <ImRadioUnchecked color="#050F56" size={15} />
+               )}
+               <span>Low to High</span>
+             </div>
+             <div
+               className="filter-controls"
+               onClick={() => {
+                 handleLowToHighKms("high");
+               }}
+             >
+               {lth === "high" ? (
+                 <ImRadioChecked color="#050F56" size={15} />
+               ) : (
+                 <ImRadioUnchecked color="#050F56" size={15} />
+               )}
+               <span>High to Low</span>
+             </div>
+           </div>
+         </div>
+
+        )}
       <section className="vehicles-container">
+        
         <aside className="filter-sidebar">
           {/* Filter One */}
           <div className="filter-one">
@@ -755,7 +1058,7 @@ const VehicleListings = () => {
           {vehiclesArray.length > 0 ? (
             <>
               {vehiclesArray.map((vehicle) => (
-                <div className="vehicle-card" key={vehicle._id}>
+                <div className="vehicle-card " key={vehicle._id}>
                   <div className="img-wrapper">
                     <img
                       src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}

@@ -1,0 +1,166 @@
+
+.mob-signin-resp{
+background: #FFFFFF;
+border-radius: 10px;
+padding: 20px;
+}
+.mob-resp-closing-arrow{
+    width: 8%;
+    margin-bottom: 10px;
+}
+.mob-resp-signin-text{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 25px;
+color: #323232;
+padding-top: 10px;
+}
+.text-color-blue{
+    color: #00ADEF;
+}
+.mob-resp-welcome-text{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+color: #969696;
+padding-top: 0;
+margin-top: -12px;
+padding-bottom: 20px;
+}
+.mob-resp-moile-input{
+    background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+border: none;
+padding: 15px;
+padding-left: 20px;
+width: 100%;
+}
+
+.mob-resp-moile-input::placeholder{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+}
+
+.mob-resp-not-a-member-text{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+color: #c1c1c1;
+float: right;
+padding-top: 10px;
+}
+.mob-resp-next-button{
+    border: none;
+    background: #050F56;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+color: #FFFFFF;
+padding: 15px;
+width: 100%;
+margin-top: 20px;
+margin-bottom: 30px;
+}
+.mob-resp-multiple-signin{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.mob-resp-fb-signin,.mob-resp-gmail-signin,.mob-resp-mail-signin{
+    width: 20%;
+    height: 20%;
+}
+
+
+/* OPT page CSS */
+
+.mob-resp-enterOtp-text{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    color: #323232;
+    padding-top: 10px;
+}
+.mob-resp-otpSent-text{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+color: #969696;
+padding-top: 0;
+margin-top: -12px;
+padding-bottom: 20px;
+}
+
+.mob-resp-phone-num-text{
+    
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+margin-bottom: 0px;
+}
+.mob-resp-otp-text{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+margin-bottom: 0px;
+padding-top: 30px;
+}
+
+/* sign up page css */
+
+.mob-resp-name-input{
+    background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+border: none;
+padding: 15px;
+padding-left: 20px;
+margin-bottom: 20px;
+width: 100%;
+}
+
+.mob-resp-name-input::placeholder{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+}
+
+.mob-resp-already-a-member-text{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+color: #c1c1c1;
+float: right;
+margin-top: -25px;
+}
+
+/* logged user haburger menue */
+.mob-LoggedUser-middle-div{
+    border-bottom: 1px solid #E9E9E9;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 0%;
+}

@@ -1,3 +1,179 @@
+@media screen and (max-width: 1000px) {
+
+  .outside-container{
+    /* background-color: #fe620d; */
+    padding: 0% !important;
+    margin: 0% !important;
+  }
+  .profile-container{
+    /* background-color: #00adef !important; */
+    width: 95% !important;
+    padding-top: 20px !important;
+    /* padding: 0% !important; */
+    margin: 0% !important;
+  }
+
+  .vehicle-card-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px !important;
+  }
+  .card{
+    width: 100%;
+    height: 15% !important;
+  }
+  
+  .vehicle-card-container .card {
+    display: flex;
+    flex-direction: row;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem !important;
+    align-items: center;
+    height: 20% !important;
+    /* background-color: #fe620d !important; */
+  }
+  .card .card-img-wrapper{
+    /* background-color: #fe620d; */
+  }
+  .card .card-img-wrapper img {
+    /* background-color: aqua; */
+    width: 100%;
+    height: auto !important;
+    object-fit: contain;
+    align-self: center;
+
+  
+  }
+  
+  .card .card-info {
+    padding: 20px 20px;
+    margin-bottom: 0px;
+    width:95% !important;
+    /* position: absolute; */
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .card .card-info .card-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card .card-info .card-info-header .card-info-title {
+    display: flex;
+    flex-direction: column;
+  }
+  .card .card-info .card-info-header .card-info-title .location {
+    display: flex;
+    align-items: center;
+  }
+  .card .card-info .card-info-header .card-info-title h1 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px !important;
+    color: #050f56;
+    margin: 0;
+    padding: 0;
+  }
+  .card .card-info .card-info-header .card-info-title .location img{
+  /* background-color: #fe620d !important; */
+  height: 12px !important;
+  width: 12px !important;
+  }
+  .card .card-info .card-info-header .card-info-title .location span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    margin-left: 2px !important;
+    color: #121212;
+  }
+  
+  .card .card-info .card-info-header .card-publish-review {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .card .card-info .card-info-header .card-publish-review .review {
+    background: rgba(254, 98, 13, 0.15);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card .card-info .card-info-header .card-publish-review .review strong {
+    display: inline-block;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    color: #fe620d;
+    margin: 0;
+  }
+  .card .card-info .card-info-header .card-publish-review span {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    color: #000000;
+  }
+  
+  .card .card-info .card-price {
+    margin-top: 5px !important;
+    margin-bottom: 0% !important;
+  }
+  .card .card-info .card-price h3 {
+    margin: 0;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px !important;
+    color: #00adef;
+  }
+  
+  .card .card-info .card-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px !important; 
+    padding: 0% !important;
+    /* background-color: #00adef !important; */
+
+  }
+  .card .card-info .card-stats .stat {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 5px 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.3rem;
+    /* background-color: #fe620d !important; */
+    width: 30% !important;
+  }
+  .card .card-info .card-stats .stat span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    color: #121212;
+  }
+  
+
+}
+
 .vehicle-card-container {
   width: 100%;
   margin: 0 auto;

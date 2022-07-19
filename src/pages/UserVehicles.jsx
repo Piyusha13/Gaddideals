@@ -43,7 +43,7 @@ function UserVehicles() {
   function logoutAccount() {
     localStorage.clear();
   }
-  const [dataAvailable, setdataAvailable] = useState(true);
+  const [dataAvailable, setdataAvailable] = useState(false);
   // const [array,setarray]=useState("");
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
@@ -61,6 +61,7 @@ function UserVehicles() {
         console.log(res.data.getMyVehicle);
         res.data.getMyVehicle.forEach((item, index) => {
           setvehicleName(item.model);
+          setdataAvailable(true);
           console.log(item.model);
         });
       });

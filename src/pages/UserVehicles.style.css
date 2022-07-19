@@ -1,3 +1,32 @@
+@media screen and (max-width: 1000px) {
+  
+  .user-vehicle-header {
+    display: none !important;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .lottie-div{
+    width: 80%;
+  }
+  .right-vehicle-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+    padding: 0px !important;
+    /* background-color: #fe620d !important; */
+  }
+  .right-vehicle-container{
+    background: #FFFFFF;
+  box-shadow:none !important;
+  border-radius: 20px;
+  width: 55%;
+  padding: 0px !important;
+  display: flex;
+  flex-direction: column;
+  }
+}
 .user-vehicle-header {
     display: flex;
     justify-content: center;

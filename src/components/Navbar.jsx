@@ -9,11 +9,11 @@ import userIcon from "../assets/user-icon.png";
 import hamburgerIcon from "../assets/hamburger-menu.png";
 import axios from "axios";
 import Constant from "../constants";
-// import Modal from "react-modal";
+import Modal from "react-awesome-modal";
 import closingArrow from "../assets/closing_arrow.png";
 import SinguplocationIcon from "../assets/SignUpLocation.png";
 import SingupClosedEyeIcon from "../assets/closed_eye_icon.png";
-
+import "../pages/MobileRespSignInPage.style.css";
 import SingupEyeIcon from "../assets/eye_icon.png";
 
 import upArrowIcon from "../assets/up-arrow.png";
@@ -23,7 +23,19 @@ import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 
 import { ToastContainer, toast } from "react-toastify";
+// import MobileRespHamburgerMune from "../pages/MobileRespHamburgerMune";
+
+import '../pages/MobileRespHamburgerMenue.style.css';
 // import 'react-toastify/dist/ReactToastify.css';
+
+import mobFbIcon from "../assets/mob-fb-icon.png"
+
+import mobGmailIcon from "../assets/mob-gmail-icon.png"
+
+import mobMailIcon from "../assets/mob-mail-icon.png"
+
+import { useRef } from "react";
+
 
 const queryString = require("query-string");
 
@@ -31,6 +43,7 @@ const Navbar = () => {
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
+  const [hamburgervisile,sethamburgervisile]=useState(false);
 
   const navigate = useNavigate();
 
@@ -40,10 +53,22 @@ const Navbar = () => {
     );
     setNavIcons(response.data.category.docs);
   };
+  //  let timeout = null;
+ 
+  // function onScroll() {
+  //  setsellBuyContainerOnScroll(true);
 
+  //   clearTimeout(timeout);
+
+  //   timeout = setTimeout(() => {
+  //     setsellBuyContainerOnScroll(false);
+  //   }, 200);
+  // };
   useEffect(() => {
     fetchIcons();
+    // window.removeEventListener("scroll", onScroll);
   }, []);
+
   // const [modalIsOpen, setModalIsOpen] = useState(false);
   const [visible, setvisible] = useState(false);
   const [visibleSignUp, setvisibleSignUp] = useState(false);
@@ -63,6 +88,7 @@ const Navbar = () => {
 
   // const notify = () =>toast("Enter mobile number")  ;
 
+  //desktop login section 
   function saveUser() {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
@@ -149,7 +175,7 @@ const Navbar = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          //setotp(result.data.otp);
+          setotp(result.data.otp);
           setCounter(59);
         }
       }
@@ -163,8 +189,147 @@ const Navbar = () => {
     return () => clearInterval(timer);
   }, [counter]);
 
+
+  //moile login section
+
+  const [showOtp,setshowOtp]=useState(false);
+  const [showSignIn,setshowSignIn]=useState(false);
+  const [loginsuccess,setloginsuccess]=useState(false);
+  const [LoggedUserHamburgerMenue,setLoggedUserHamburgerMenue]=useState(false);
+  const [sellBuyContainerOnScroll,setsellBuyContainerOnScroll]=useState(true);
+
+  function saveMobileUser() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      console.log("result", result);
+      if (mob_no === "") {
+        // notify();
+        toast.error("enter moile number");
+      } else if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          setotp(result.data.otp);
+          setshowOtp(!showOtp);
+          setshowsignup(!showsignup);
+          setCounter(59);
+        }
+      }
+    });
+  }
+
+  function setMobileSignup() {
+    console.log("otp verified");
+    console.warn({ name, email, mob_no, city, password, confirm_password });
+    let payload = { name, email, mob_no, city, password, confirm_password };
+    axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+      console.log("res", res);
+      if (
+        name === "" ||
+        email === "" ||
+        mob_no === "" ||
+        city === "" ||
+        password === "" ||
+        confirm_password === ""
+      ) {
+        toast.error("required feilds are empty");
+      } else if (!email.match("@gmail.com")) {
+        toast.error("enter valid mail id");
+      } else if (password !== confirm_password) {
+        toast.error("password and confirm password don't match");
+      } else {
+        if (res.data.status === "success") {
+          toast.success(res.data.message);
+          
+          setmob_no(res.data.mob_no);
+          setshowSignIn(!showSignIn);
+          saveMoilePhoneOtp();
+          setshowOtp(!showOtp);
+        } else if (res.data.status === "failed") {
+          toast.error(res.data.message);
+        }
+      }
+    });
+  }
+
+  function saveMoilePhoneOtp(){
+    console.log("otp verified");
+    console.warn({ mob_no, otp });
+    let payload = { mob_no, otp };
+    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+      console.log(res);
+      localStorage.setItem("Token", res.data.user.accessToken);
+      window.location.href = "/loggeduser";
+      // if (res.data.status == "failed") {
+      if (res.data.status === "failed") {
+        toast.error("incorrect otp");
+      } else if (res.data.status === "Success") {
+        setloginsuccess(!loginsuccess);
+        toast.success(res.data.message);
+        // setvisibleOTP(false);
+        setshowOtp(!showOtp);
+      }
+    });
+  }
+  function Openmenu(){
+    if(localStorage.Token){
+      setLoggedUserHamburgerMenue(!LoggedUserHamburgerMenue);
+
+    }
+    else{
+    sethamburgervisile(!hamburgervisile);
+    }
+  }
+
+  const [showsignup,setshowsignup]=useState(false);
+
+  
+
+  function closeModal(){
+    setshowsignup(!showsignup);
+  }
+  function closeOtp(){
+    setshowOtp(!showOtp);
+  }
+  function closeSignIn(){
+    setshowSignIn(!showSignIn);
+  }
+  
+  const prevScrollY = useRef(0);
+
+  const [goingUp, setGoingUp] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (prevScrollY.current < currentScrollY && goingUp) {
+        setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
+        setGoingUp(false);
+      }
+      if (prevScrollY.current > currentScrollY && !goingUp) {
+        setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
+        setGoingUp(true);
+      }
+
+      prevScrollY.current = currentScrollY;
+      console.log(goingUp, currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [goingUp]);
+
+  function logoutAccount() {
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
   return (
     <header className="header-container">
+      {/* sign IN */}
       {visible && (
         <div className="main_parent">
           <div
@@ -514,7 +679,194 @@ const Navbar = () => {
         </div>
       )}
 
-      <div className="sell-buy-container">
+      {/* open hamurger menue */}
+      {hamburgervisile &&(
+              <div className='mob-menue-container'>
+              <div className='mob-top-div'>
+                  <input placeholder='Location' className='mob-location-input'/>
+                  <img className='mob-arrow-img' src={downArrow} alt="down arrow" />
+                </div>
+              
+              <div className='mob-middle-div'>
+                  <button className='mob-login-button' onClick={()=>{setshowsignup(!showsignup)} } > Login</button>
+                  <button className='mob-register-button'>Register</button>
+              </div>
+              <div className='mob-lower-div'>
+                  <p className='mob-lower-div-text'>EMI Calculator</p>
+                  <p className='mob-lower-div-text'>FAQ</p>
+                  <p className='mob-lower-div-text'>Privacy Settings</p>
+                  <p className='mob-lower-div-text'>Terms and Condition</p>
+                  <p className='mob-lower-div-text mob-contact-us'>Contact Us</p>
+              </div>
+          </div>
+      )}
+
+      {LoggedUserHamburgerMenue && (
+        <div className='mob-menue-container'>
+        <div className='mob-top-div'>
+            <input placeholder='Location' className='mob-location-input'/>
+            <img className='mob-arrow-img' src={downArrow} alt="down arrow" />
+          </div>
+        
+        <div className='mob-LoggedUser-middle-div'>
+            <p className='mob-lower-div-text' onClick={()=>{window.location.href = "/loggeduser"}} >My Profile</p>
+            <p className='mob-lower-div-text'onClick={()=>{window.location.href = "/UserVehicles"}} >My Product</p>
+            <p className='mob-lower-div-text'>My Order</p>
+        </div>
+        <div className='mob-lower-div'>
+            <p className='mob-lower-div-text'>EMI Calculator</p>
+            <p className='mob-lower-div-text' onClick={()=>{window.location.href = "/UserFaq"}}>FAQ</p>
+            <p className='mob-lower-div-text'>Privacy Settings</p>
+            <p className='mob-lower-div-text'>Terms and Condition</p>
+            <p className='mob-lower-div-text mob-contact-us'>Contact Us</p>
+            <p className='mob-lower-div-text mob-contact-us' onClick={logoutAccount} >Sign out</p>
+        </div>
+    </div>
+      )}
+
+      {/* open mobile responsive sign up */}
+      {showsignup &&(
+
+        <div >
+          <Modal width="90%" effect="fadeInRight" className="modal" visible={showsignup} onClickAway={closeModal}> 
+          {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+                <img className="mob-resp-closing-arrow" onClick={closeModal} src={closingArrow} alt=""></img>
+                <p className="mob-resp-signin-text">Sign in to<span className="text-color-blue"> Gaddideals </span></p>
+                <p className="mob-resp-welcome-text">Welcome back! Sign in with your data that you entered during registration</p>
+                <input className="mob-resp-moile-input" placeholder="Phone Number" name="mob_no"
+              value={mob_no}
+              onChange={(e) => {
+                setmob_no(e.target.value);
+              }}/>
+                <p className="mob-resp-not-a-member-text" onClick={() => {
+                setshowSignIn(!showSignIn); //opening signup page 
+                setshowsignup(!showsignup); //closing signin page
+                
+              }} >Not a member? <span className="text-color-blue">Create Account</span></p>
+                <button className="mob-resp-next-button"
+                onClick={() => {
+                  saveMobileUser();
+                }}
+                 >
+                  NEXT</button>
+                <div className="mob-resp-multiple-signin">
+                  <img className="mob-resp-fb-signin" src={mobFbIcon} alt=""></img>
+                  <img className="mob-resp-gmail-signin" src={mobGmailIcon} alt=""></img>
+                  <img className="mob-resp-mail-signin" src={mobMailIcon} alt=""></img>
+                </div>
+            </div>
+          </Modal>
+        </div>
+      )}
+
+      {showSignIn &&(
+        <div >
+        <Modal width="90%" effect="fadeInRight" className="modal" visible={showSignIn} onClickAway={closeSignIn}> 
+        {/* for CSS check  MobileRespSignInPage.style.css */}
+          <div className="mob-signin-resp">
+              <img className="mob-resp-closing-arrow" onClick={closeSignIn} src={closingArrow} alt=""></img>
+              <p className="mob-resp-signin-text">Sign up to<span className="text-color-blue"> Gaddideals </span></p>
+              <input className="mob-resp-name-input"  onChange={(e) => {
+                setname(e.target.value);
+              }}
+              value={name}
+              type="text"
+              placeholder="Name "/>
+            <input className="mob-resp-name-input" onChange={(e) => {
+                setmob_no(e.target.value);
+              }}
+              value={mob_no}
+              maxLength={10}
+              placeholder="Mobile number "/>
+            <input className="mob-resp-name-input"onChange={(e) => {
+                setemail(e.target.value);
+              }}
+              value={email}
+              type="email"
+              placeholder="Email "/>
+            <input className="mob-resp-name-input"onChange={(e) => {
+                  setcity(e.target.value);
+                }}
+                value={city}
+                type="text"
+                placeholder="Location "/>
+            <input className="mob-resp-name-input"onChange={(e) => {
+                setpassword(e.target.value);
+              }}
+              value={password}
+              type="password"
+              placeholder="Password "/>
+            <input className="mob-resp-name-input" onChange={(e) => {
+                  setconfirm_password(e.target.value);
+                }}
+                value={confirm_password}
+                type={eye ? "text" : "password"}
+                placeholder="Confirm Password"/>
+              
+              <button className="mob-resp-next-button"
+              onClick={() => {
+                setMobileSignup();
+              }}
+               >
+                SIGN UP</button>
+                <p className="mob-resp-already-a-member-text" onClick={() => {
+              
+                setshowSignIn(!showSignIn); //closing signup page 
+                setshowsignup(!showsignup); //opening signin page
+              
+            }} ><span className="text-color-blue">Already a user? SIGN IN</span></p>
+             
+          </div>
+        </Modal>
+      </div>
+      )}
+
+      {/* open mobile responsive otp page */}
+      {showOtp &&(
+        <div >
+        <Modal width="90%" effect="fadeInRight" className="modal" visible={showOtp} onClickAway={closeOtp}> 
+        {/* for CSS check  MobileRespSignInPage.style.css */}
+          <div className="mob-signin-resp">
+              <img className="mob-resp-closing-arrow" onClick={closeOtp} src={closingArrow} alt=""></img>
+              <p className="mob-resp-enterOtp-text">Enter<span className="text-color-blue"> OTP </span></p>
+              <p className="mob-resp-otpSent-text">We’ve sent an OTP to your phone number.</p>
+              <p className="mob-resp-phone-num-text">Phone Number</p>
+              <input className="mob-resp-moile-input" placeholder="Phone Number" name="mob_no"
+            value={mob_no}
+            onChange={(e) => {
+              setmob_no(e.target.value);
+            }}/>
+            <p className="mob-resp-otp-text">One time password</p>
+            <div>
+              <input  value={otp}
+              type="number"
+              
+              placeholder="Enter OTP"
+              onChange={(e) => {
+                setotp(e.target.value);
+              }} className="mob-resp-moile-input" placeholder="Enter OTP" name="mob_no"
+            />
+            <span></span>
+            </div>
+              <p className="mob-resp-not-a-member-text" onClick={() => {
+                  resendotp();
+                }} >Didn’t recive the OTP? <span className="text-color-blue">RESEND OTP</span></p>
+              <button className="mob-resp-next-button"
+              onClick={() => {
+                saveMoilePhoneOtp();
+              }}
+               >
+                VERIFY OTP</button>
+              
+          </div>
+        </Modal>
+      </div>
+
+      )}
+
+      {sellBuyContainerOnScroll &&(
+        <div className="sell-buy-container-moile" onscroll={()=>{setsellBuyContainerOnScroll(false)}}>
         <Link to="/vehiclelistings">
           <button>Buy used commercial vehicle</button>
         </Link>
@@ -522,6 +874,16 @@ const Navbar = () => {
           <button className="sell-btn">Sell used commercial vehicle</button>
         </Link>
       </div>
+      )}
+      <div className="sell-buy-container-desktop" onscroll={()=>{setsellBuyContainerOnScroll(false)}}>
+        <Link to="/vehiclelistings">
+          <button>Buy used commercial vehicle</button>
+        </Link>
+        <Link to="/sellerhome">
+          <button className="sell-btn">Sell used commercial vehicle</button>
+        </Link>
+      </div>
+      
 
       <nav className="navbar navbar-expand-lg nav-container">
         <div className="container-fluid navar_div">
@@ -552,9 +914,10 @@ const Navbar = () => {
                 />
               </a>
             ))}
+            
           </div>
 
-          <div className="hamburger-menu">
+          <div onClick={Openmenu} className="hamburger-menu ">
             <img src={hamburgerIcon} alt="mobile menu" />
           </div>
 

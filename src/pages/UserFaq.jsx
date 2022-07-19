@@ -75,21 +75,21 @@ function UserFaq() {
             <img className="next-arrow-img" src={next_arrow} alt=""></img>
             </Link>
           </div> */}
-            <div className="user-Faq-div">
-              <img className="help-img" src={help} alt=""></img>
-              <Link to="/UserFaq" className="user-Faq-text">
+            <div className="user-faq-Faq-div">
+              <img className="faq-help-img" src={help} alt=""></img>
+              <Link to="/UserFaq" className="user-faq-Faq-text">
                 <span>FAQ</span>
               </Link>
               <Link to="/UserFaq">
                 <img className="next-arrow-img" src={next_arrow} alt=""></img>
               </Link>
             </div>
-            <div className="sign-out-div">
-              <img className="logout-img" src={logout} alt=""></img>
+            <div className="sign-out-faq-div">
+              <img className="logout-faq-img" src={logout} alt=""></img>
               {/* <span className="sign-out-text"> Sign out</span> */}
               <Link to="/">
                 <span
-                  className="sign-out-text"
+                  className="sign-out-faq-text"
                   onClick={() => {
                     logoutAccount();
                   }}
@@ -102,7 +102,9 @@ function UserFaq() {
 
           </div>
           <div className="right-Faq-container">
+            
          <div className="user-Faq-header">
+         <img className="back-to-home" src={next_arrow} alt=""></img>
            <h1>FAQ</h1> 
       </div>
       <div className="user-faq-container">

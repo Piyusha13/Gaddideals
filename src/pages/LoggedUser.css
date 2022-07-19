@@ -1,3 +1,277 @@
+@media screen and (max-width : 1000px) {
+
+  .left-profile-container{
+    display: none !important;
+  }
+  
+  .right-profile-container{
+    padding: 15px !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+  .back-to-home-screen{
+    display: inline-block !important;
+    transform: rotate(180deg);
+    height: 2.5%;   
+    position: absolute;
+    top:3.5%;
+  }
+  .user-profile-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px !important;
+  }
+  .user-profile-header h1 {
+    padding-top: 0% !important;
+    margin-top: -10px !important;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px !important;
+    color: #050f56;
+    margin-bottom: 30px;
+    position: relative;
+    display: none !important;
+  }
+  .user-profile-header h2 {
+    display: inline-block !important;
+    padding-top: 0% !important;
+    margin-top: -10px !important;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px !important;
+    color: #050f56;
+    margin-bottom: 20px !important;
+    position: relative;
+  }
+  .user-profile-header h2::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 55px !important;
+    height: 3px !important;
+    border-radius: 5px;
+    background-color: #fe620d;
+  }
+  .profile-pic-div{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  .profile-pic-circle{
+    background: #ECECEC;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  height: 5rem !important;
+  width: 5rem !important;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  }
+  .userProfileImg{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+  }
+  
+  .profile-initials{
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  color: #000000;
+  }
+  .edit-img{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 5px !important;
+    left: 52.5% !important;
+  }
+  .name-lable{
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px !important;
+  line-height: 0px !important;
+  color: #050F56;
+  margin-bottom: 20px !important;
+  }
+  .user-name-input-div{
+    width: 100%;
+    height: 3.5rem !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px !important;
+    
+  }
+  .user-name-right-input{
+    background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px !important;
+
+  }
+  .user-name-edit{
+    position: absolute;
+    right: 10px;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #00ADEF;
+  cursor: pointer;
+  }
+  
+  .email-lable{
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px !important;
+  line-height: 0px !important;
+  color: #050F56;
+  margin-bottom: 20px !important;
+  }
+  .user-email-input-div{
+    width: 100%;
+    height: 3.5rem !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px !important;
+  }
+  .user-email-input{
+    background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px !important;
+  }
+  .user-email-edit{
+    position: absolute;
+    right: 10px;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #00ADEF;
+  cursor: pointer;
+  }
+  
+  
+  .mobile-lable{
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px !important;
+  line-height: 0px !important;
+  color: #050F56;
+  margin-bottom: 20px !important;
+  }
+  .user-mobile-input-div{
+    width: 100%;
+    height: 3.5rem !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin-bottom: 40px !important;
+  }
+  .user-mobile-input{
+    background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px !important;
+  }
+  .user-mobile-edit{
+    position: absolute;
+    right: 10px;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #00ADEF;
+  cursor: pointer;
+  }
+  
+  
+  .subs-lable{
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #050F56;
+  margin-bottom: 2%;
+  }
+  .user-subs-input-div{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin-bottom: 8%;
+  }
+  .user-subs-input{
+    background: #FFFFFF;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  }
+  .user-subs-edit{
+    position: absolute;
+    right: 10px;
+    font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #00ADEF;
+  cursor: pointer;
+  }
+  
+  .save-changes-button{
+    border: none;
+    background: #050F56;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px !important;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px !important;
+  color: #FFFFFF;
+  height: 3.5rem !important;
+  width: 100%;
+  margin-bottom: 20px !important;
+  }
+  .input_img{
+    position: absolute;
+    top: 1rem;
+    right: 13.2rem;
+    background-color: #00ADEF;
+    width: 0.7rem;
+    height: 0.7rem;
+    z-index: 99999;
+  }
+}
 .outside-container{
   display: flex;
   justify-content: center;
@@ -134,6 +408,9 @@ height: 1.9rem;
   /* display: inline-block; */
 }
 /* right side contaner */
+.back-to-home-screen{
+  display: none;
+}
 .right-profile-container{
   background: #FFFFFF;
 box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
@@ -156,6 +433,9 @@ flex-direction: column;
   color: #050f56;
   margin-bottom: 30px;
   position: relative;
+}
+.user-profile-header h2{
+  display: none;
 }
 .user-profile-header h1::after {
   content: "";
