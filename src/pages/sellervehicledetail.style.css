@@ -74,15 +74,16 @@
 
 .vehicle-detail-container .vehicle-detail-title {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 10px 0 0;
+  padding: 20px 30px 0;
 }
 .vehicle-detail-container .vehicle-detail-title h5 {
   font-family: "Poppins";
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
   color: #050f56;
+  margin: 0;
 }
 
 .vehicle-detail-container .container-wrapper {

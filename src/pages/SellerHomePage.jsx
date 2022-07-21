@@ -270,12 +270,14 @@ const SellerHomePage = () => {
                       </div>
                       <div className="latest-info">
                         <div className="latest-header">
-                          <h5>{latestTruck.brand.title}</h5>
-
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestTruck.city}</span>
+                          <div className="latest-title">
+                            <h5>{latestTruck.brand.title}</h5>
+                            <div className="latest-location">
+                              <img src={locationIcon} alt="location icon" />
+                              <span>{latestTruck.city}</span>
+                            </div>
                           </div>
+                          <p>₹ {latestTruck.selling_price}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestTruck._id}`}>
@@ -321,12 +323,15 @@ const SellerHomePage = () => {
                       </div>
                       <div className="latest-info">
                         <div className="latest-header">
-                          <h5>{latestBuses.brand.title}</h5>
+                          <div className="latest-title">
+                            <h5>{latestBuses.brand.title}</h5>
 
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestBuses.city}</span>
+                            <div className="latest-location">
+                              <img src={locationIcon} alt="location icon" />
+                              <span>{latestBuses.city}</span>
+                            </div>
                           </div>
+                          <p>₹ {latestBuses.selling_price}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestBuses._id}`}>
@@ -372,12 +377,15 @@ const SellerHomePage = () => {
                       </div>
                       <div className="latest-info">
                         <div className="latest-header">
-                          <h5>{latestTractor.brand.title}</h5>
+                          <div className="latest-title">
+                            <h5>{latestTractor.brand.title}</h5>
 
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestTractor.city}</span>
+                            <div className="latest-location">
+                              <img src={locationIcon} alt="location icon" />
+                              <span>{latestTractor.city}</span>
+                            </div>
                           </div>
+                          <p>₹ {latestTractor.selling_price}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestTractor._id}`}>
@@ -423,12 +431,15 @@ const SellerHomePage = () => {
                       </div>
                       <div className="latest-info">
                         <div className="latest-header">
-                          <h5>{latestConstruction.brand.title}</h5>
+                          <div className="latest-title">
+                            <h5>{latestConstruction.brand.title}</h5>
 
-                          <div className="latest-location">
-                            <img src={locationIcon} alt="location icon" />
-                            <span>{latestConstruction.city}</span>
+                            <div className="latest-location">
+                              <img src={locationIcon} alt="location icon" />
+                              <span>{latestConstruction.city}</span>
+                            </div>
                           </div>
+                          <p>₹ {latestConstruction.selling_price}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestConstruction._id}`}>

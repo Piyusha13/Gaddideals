@@ -1,4 +1,3 @@
-
 import React from "react";
 // import {setConfig} from 'react-google-translate'
 
@@ -15,8 +14,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 // })
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-
 
 root.render(
   <React.StrictMode>

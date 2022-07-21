@@ -170,6 +170,7 @@ const SellerFormVehicle = ({
               }}
             ></div>
           )}
+
           <div className="wizard-title">
             <h5>Vehicle Information</h5>
           </div>

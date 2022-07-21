@@ -13,7 +13,6 @@ const SellerPreviewDetails = ({
   stateTitle,
   cityTitle,
   formData,
-  rc,
   engImage,
   frontSideImg,
   backSideImg,
@@ -26,6 +25,9 @@ const SellerPreviewDetails = ({
   yearTitle,
   setStep,
   bodyTypeTitle,
+  categoryTractorTitle,
+  caetgoryBusTitle,
+  saveLoading,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -113,10 +115,17 @@ const SellerPreviewDetails = ({
                 <p>{formData.vehiclenumber}</p>
               </div>
 
-              <div className="detail">
-                <h6>Kilometers Driven</h6>
-                <p>{formData.kmsdriven}</p>
-              </div>
+              {categoryTractorTitle === "Tractors" ? (
+                <div className="detail">
+                  <h6>Number of Hours</h6>
+                  <p>{formData.noofhrs}</p>
+                </div>
+              ) : (
+                <div className="detail">
+                  <h6>Kilometers Driven</h6>
+                  <p>{formData.kmsdriven}</p>
+                </div>
+              )}
             </div>
 
             <div className="preview-line"></div>
@@ -151,10 +160,22 @@ const SellerPreviewDetails = ({
                 <p>{formData.scrap}</p>
               </div>
 
-              <div className="detail">
-                <h6>Number of tyres</h6>
-                <p>{formData.nooftyres}</p>
-              </div>
+              {categoryTractorTitle === "Tractors" ? (
+                <div className="detail">
+                  <h6>Horse Power</h6>
+                  <p>{formData.horsepower}</p>
+                </div>
+              ) : caetgoryBusTitle === "Buses" ? (
+                <div className="detail">
+                  <h6>Number of Seats</h6>
+                  <p>{formData.noofseats}</p>
+                </div>
+              ) : (
+                <div className="detail">
+                  <h6>Number of tyres</h6>
+                  <p>{formData.nooftyres}</p>
+                </div>
+              )}
             </div>
 
             <div className="preview-line"></div>
@@ -304,7 +325,7 @@ const SellerPreviewDetails = ({
                 Edit
               </button>
               <button onClick={handlePostData} className="save">
-                Save Now
+                {saveLoading ? "Saving..." : "Save Now"}
               </button>
               <button>Publish</button>
             </div>

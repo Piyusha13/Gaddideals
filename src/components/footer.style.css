@@ -849,18 +849,18 @@
 
 .footer-section {
   margin-top: 100px;
-  background: url("../assets/footer-bg.svg") no-repeat center/cover;
+  background: url("../assets/footer-bg.svg") no-repeat top/cover;
   position: relative;
 }
 
 /* Footer social */
 .social-container {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: absolute;
-  top: 75px;
+  float: right;
+  position: relative;
+  top: 100px;
   right: 20px;
 }
 .social-title h5 {

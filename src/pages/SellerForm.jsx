@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 const SellerForm = () => {
   const { categoryId } = useParams();
 
+  const [saveLoading, setSaveLoading] = useState(false);
+
   const [isYearActive, setIsYearActive] = useState();
   const [isFuelActive, setIsFuelActive] = useState();
   const [isOwnerActive, setIsOwnerActive] = useState();
@@ -292,6 +294,7 @@ const SellerForm = () => {
   };
 
   const handlePostData = async () => {
+    setSaveLoading(true);
     let fd = new FormData();
 
     fd.append("category", categoryId);
@@ -332,7 +335,12 @@ const SellerForm = () => {
       },
     });
 
-    console.log(response);
+    if (response.data.status === "success") {
+      toast.success(response.data.message);
+      setSaveLoading(false);
+    }
+
+    console.log(response.data);
   };
 
   switch (step) {
@@ -481,6 +489,9 @@ const SellerForm = () => {
             cityTitle={cityTitle}
             bodyTypeTitle={bodyTypeTitle}
             setStep={setStep}
+            categoryTractorTitle={categoryTractorTitle}
+            caetgoryBusTitle={caetgoryBusTitle}
+            saveLoading={saveLoading}
           />
         </>
       );

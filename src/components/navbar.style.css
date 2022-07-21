@@ -1,9 +1,8 @@
 @media screen and (min-width: 768px) and (max-width: 1000px) {
-  .sell-buy-container-desktop{
+  .sell-buy-container-desktop {
     display: none !important;
   }
   .sell-buy-container-moile {
-  
     display: flex !important;
     justify-content: center;
     align-items: center;
@@ -14,7 +13,7 @@
     padding: 5px 10px;
     font-family: "Roboto";
     font-weight: 500;
-    font-size:10px !important;
+    font-size: 10px !important;
     color: #050f56;
     background: #f9f9f9;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.22);
@@ -24,7 +23,7 @@
   .sell-buy-container-moile .sell-btn {
     margin-left: 15px;
   }
-  
+
   .nav-container {
     /* display: flex; */
     /* flex-wrap: nowrap; */
@@ -119,7 +118,7 @@
   .user {
     display: none !important;
   }
-  .languages-container{
+  .languages-container {
     display: none !important;
   }
 }
@@ -129,7 +128,7 @@
   left: 0;
   z-index: 1000;
 }
-.sell-buy-container-moile{
+.sell-buy-container-moile {
   display: none;
 }
 
@@ -156,8 +155,7 @@
 }
 
 @media screen and (max-width: 767px) {
-
-  .sell-buy-container-desktop{
+  .sell-buy-container-desktop {
     display: none !important;
   }
   .sell-buy-container-moile {
@@ -171,7 +169,7 @@
     padding: 5px 10px;
     font-family: "Roboto";
     font-weight: 500;
-    font-size:8px;
+    font-size: 8px;
     color: #050f56;
     background: #f9f9f9;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.22);
@@ -181,7 +179,7 @@
   .sell-buy-container-moile .sell-btn {
     margin-left: 15px;
   }
-  
+
   .nav-container {
     /* display: flex; */
     /* flex-wrap: nowrap; */
@@ -349,6 +347,28 @@
   left: 30px;
   transform: translate(-50%, -50%);
 }
+.search-nav-suggestion {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow: scroll;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+}
+.search-nav-suggestion p {
+  cursor: pointer;
+  padding: 0px 20px 0;
+}
+/* .search-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #818181;
+} */
 
 /* location */
 .location-container {
@@ -411,7 +431,7 @@
   font-family: "Poppins";
   font-weight: 500;
   font-size: 15px;
-  color:#505050;
+  color: #505050;
 }
 .languages-container .language-arrow-icon {
   cursor: pointer;

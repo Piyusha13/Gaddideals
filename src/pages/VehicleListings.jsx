@@ -26,8 +26,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import axios from "axios";
 
-import downArrow from '../assets/down-arrow.png';
-import upArrow from '../assets/up-arrow.png';
+import downArrow from "../assets/down-arrow.png";
+import upArrow from "../assets/up-arrow.png";
 
 const queryString = require("query-string");
 
@@ -51,8 +51,8 @@ const VehicleListings = () => {
   const [minPrice, setMinPrice] = useState(location.min_price);
   const [maxPrice, setMaxPrice] = useState(location.max_price);
   const [pageNo, setPageNo] = useState(1);
-  const [displayFilterTwo,setdisplayFilterTwo]=useState(false);
-  const [displayFilterOne,setdisplayFilterOne]=useState(false);
+  const [displayFilterTwo, setdisplayFilterTwo] = useState(false);
+  const [displayFilterOne, setdisplayFilterOne] = useState(false);
 
   const navigate = useNavigate();
 
@@ -464,20 +464,30 @@ const VehicleListings = () => {
         <small>Vehicle listing</small>
       </div>
       <div className="filter-sort-button-div">
-          <div className="filter-button" onClick={()=>{setdisplayFilterTwo(!displayFilterTwo);}} >
-            <button>Filter</button>
+        <div
+          className="filter-button"
+          onClick={() => {
+            setdisplayFilterTwo(!displayFilterTwo);
+          }}
+        >
+          <button>Filter</button>
 
-            <img src={displayFilterTwo ? upArrow :downArrow} alt=""></img>
-          </div>
-          <div className="sortBy-button" onClick={()=>{setdisplayFilterOne(!displayFilterOne);}}>
-            <button>Sort By</button>
-            <img src={displayFilterOne ? upArrow :downArrow}  alt=""></img>
-          </div>
+          <img src={displayFilterTwo ? upArrow : downArrow} alt=""></img>
         </div>
+        <div
+          className="sortBy-button"
+          onClick={() => {
+            setdisplayFilterOne(!displayFilterOne);
+          }}
+        >
+          <button>Sort By</button>
+          <img src={displayFilterOne ? upArrow : downArrow} alt=""></img>
+        </div>
+      </div>
 
-        {/* filter two in mobile */}
-        {displayFilterTwo &&(
-          <div className="filter-two lg-devices">
+      {/* filter two in mobile */}
+      {displayFilterTwo && (
+        <div className="filter-two lg-devices">
           <div className="search-container">
             <img src={searchIcon} alt="search icon" />
             <input
@@ -492,25 +502,25 @@ const VehicleListings = () => {
           <div className="categories-container">
             <h3>Category</h3>
             <div className="four-category-container">
-            {categories.map((category) => (
-              <div className="category" key={category._id}>
-                <div
-                  onClick={() => {
-                    handleCat(category._id);
-                  }}
-                  className="icon-wrapper"
-                  style={{
-                    border:
-                      cat === category._id ? "1px solid #00adef" : "none",
-                  }}
-                >
-                  <img src={imgurl + category.icon} alt={category.title} />
+              {categories.map((category) => (
+                <div className="category" key={category._id}>
+                  <div
+                    onClick={() => {
+                      handleCat(category._id);
+                    }}
+                    className="icon-wrapper"
+                    style={{
+                      border:
+                        cat === category._id ? "1px solid #00adef" : "none",
+                    }}
+                  >
+                    <img src={imgurl + category.icon} alt={category.title} />
+                  </div>
+                  <a rel="noreferrer" href="#dasd">
+                    {category.title}
+                  </a>
                 </div>
-                <a rel="noreferrer" href="#dasd">
-                  {category.title}
-                </a>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
           <div className="line"></div>
@@ -678,90 +688,87 @@ const VehicleListings = () => {
             </ToggleCategory>
           </div>
         </div>
-        )}
-        {displayFilterOne &&(
-
-          //  {/* Filter One for mobile */}
-           <div className="filter-one lg-devices">
-           <div className="filter-container">
-             <h3 className="sort-by" >Sort By :</h3>
-             <div
-               className="filter-controls"
-               onClick={() => handleRecentlyAdded(!recentlyAdded)}
-             >
-               {recentlyAdded ? (
-                 <ImRadioChecked color="#050F56" size={15} />
-               ) : (
-                 <ImRadioUnchecked color="#050F56" size={15} />
-               )}
-               <span>Recently Added</span>
-             </div>
-           </div>
-           <div className="line"></div>
-           <div className="filter-container">
-             <h3>Price</h3>
-             <div
-               className="filter-controls"
-               onClick={() => {
-                 handleLowToHighPrice("low");
-               }}
-             >
-               {lthPrice === "low" ? (
-                 <ImRadioChecked color="#050F56" size={15} />
-               ) : (
-                 <ImRadioUnchecked color="#050F56" size={15} />
-               )}
-               <span>Low to High</span>
-             </div>
-             <div
-               className="filter-controls"
-               onClick={() => {
-                 handleLowToHighPrice("high");
-               }}
-             >
-               {lthPrice === "high" ? (
-                 <ImRadioChecked color="#050F56" size={15} />
-               ) : (
-                 <ImRadioUnchecked color="#050F56" size={15} />
-               )}
-               <span>High to Low</span>
-             </div>
-           </div>
-           <div className="line"></div>
-           <div className="filter-container kmsdriven">
-             <h3>Kms Driven</h3>
-             <div
-               className="filter-controls"
-               onClick={() => {
-                 handleLowToHighKms("low");
-               }}
-             >
-               {lth === "low" ? (
-                 <ImRadioChecked color="#050F56" size={15} />
-               ) : (
-                 <ImRadioUnchecked color="#050F56" size={15} />
-               )}
-               <span>Low to High</span>
-             </div>
-             <div
-               className="filter-controls"
-               onClick={() => {
-                 handleLowToHighKms("high");
-               }}
-             >
-               {lth === "high" ? (
-                 <ImRadioChecked color="#050F56" size={15} />
-               ) : (
-                 <ImRadioUnchecked color="#050F56" size={15} />
-               )}
-               <span>High to Low</span>
-             </div>
-           </div>
-         </div>
-
-        )}
+      )}
+      {displayFilterOne && (
+        //  {/* Filter One for mobile */}
+        <div className="filter-one lg-devices">
+          <div className="filter-container">
+            <h3 className="sort-by">Sort By :</h3>
+            <div
+              className="filter-controls"
+              onClick={() => handleRecentlyAdded(!recentlyAdded)}
+            >
+              {recentlyAdded ? (
+                <ImRadioChecked color="#050F56" size={15} />
+              ) : (
+                <ImRadioUnchecked color="#050F56" size={15} />
+              )}
+              <span>Recently Added</span>
+            </div>
+          </div>
+          <div className="line"></div>
+          <div className="filter-container">
+            <h3>Price</h3>
+            <div
+              className="filter-controls"
+              onClick={() => {
+                handleLowToHighPrice("low");
+              }}
+            >
+              {lthPrice === "low" ? (
+                <ImRadioChecked color="#050F56" size={15} />
+              ) : (
+                <ImRadioUnchecked color="#050F56" size={15} />
+              )}
+              <span>Low to High</span>
+            </div>
+            <div
+              className="filter-controls"
+              onClick={() => {
+                handleLowToHighPrice("high");
+              }}
+            >
+              {lthPrice === "high" ? (
+                <ImRadioChecked color="#050F56" size={15} />
+              ) : (
+                <ImRadioUnchecked color="#050F56" size={15} />
+              )}
+              <span>High to Low</span>
+            </div>
+          </div>
+          <div className="line"></div>
+          <div className="filter-container kmsdriven">
+            <h3>Kms Driven</h3>
+            <div
+              className="filter-controls"
+              onClick={() => {
+                handleLowToHighKms("low");
+              }}
+            >
+              {lth === "low" ? (
+                <ImRadioChecked color="#050F56" size={15} />
+              ) : (
+                <ImRadioUnchecked color="#050F56" size={15} />
+              )}
+              <span>Low to High</span>
+            </div>
+            <div
+              className="filter-controls"
+              onClick={() => {
+                handleLowToHighKms("high");
+              }}
+            >
+              {lth === "high" ? (
+                <ImRadioChecked color="#050F56" size={15} />
+              ) : (
+                <ImRadioUnchecked color="#050F56" size={15} />
+              )}
+              <span>High to Low</span>
+            </div>
+          </div>
+        </div>
+      )}
       <section className="vehicles-container">
-        
         <aside className="filter-sidebar">
           {/* Filter One */}
           <div className="filter-one">
@@ -1059,12 +1066,14 @@ const VehicleListings = () => {
             <>
               {vehiclesArray.map((vehicle) => (
                 <div className="vehicle-card " key={vehicle._id}>
-                  <div className="img-wrapper">
-                    <img
-                      src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
-                      alt={vehicle.category.title}
-                    />
-                  </div>
+                  <Link to={`/vehicledetails/${vehicle._id}`}>
+                    <div className="img-wrapper">
+                      <img
+                        src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
+                        alt={vehicle.category.title}
+                      />
+                    </div>
+                  </Link>
                   <div className="vehicle-info">
                     <div className="name">
                       <h3>{vehicle.brand.title}</h3>
@@ -1077,14 +1086,14 @@ const VehicleListings = () => {
                       <div className="stat">
                         <span>
                           {vehicle.km_driven !== ""
-                            ? vehicle.km_driven
+                            ? vehicle.km_driven + " km"
                             : "95,075km"}
                         </span>
                       </div>
                       <div className="stat">
                         <span>
                           {vehicle.no_of_owner !== ""
-                            ? vehicle.no_of_owner
+                            ? vehicle.no_of_owner + " owner"
                             : "1st Owner"}
                         </span>
                       </div>
@@ -1098,7 +1107,7 @@ const VehicleListings = () => {
                     </div>
                     <div className="selling-price">
                       <p>
-                        Selling Price{" "}
+                        Selling Price
                         <span>₹{rupee_format(vehicle.selling_price)}</span>
                       </p>
                     </div>

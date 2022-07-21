@@ -22,6 +22,7 @@ const Constant = {
     getAllLatestVehicles: mainDomain + "api/vehicle/latestVehicles",
     getSingleUser: mainDomain + "api/user",
     getAllBodyTypes: mainDomain + "api/bodyType",
+    getAllSearchSuggestions: mainDomain + "api/vehicle/searchSuggestion",
   },
   postUrls: {
     postAllAdmins: mainDomain + "api/user/admin_login",
@@ -44,8 +45,8 @@ const Constant = {
     postAllOtps: mainDomain + "api/user/auth/verifyOTP",
     potsALLresendotps: mainDomain + "api/user/auth/resendOTP",
   },
-  putAllUrls:{
-      putAllUsers: mainDomain+"api/user/update_profile",
+  putAllUrls: {
+    putAllUsers: mainDomain + "api/user/update_profile",
   },
 };
 export default Constant;

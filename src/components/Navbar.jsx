@@ -22,20 +22,19 @@ import facebookLogo from "../assets/facebook_logo.svg";
 import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 // import MobileRespHamburgerMune from "../pages/MobileRespHamburgerMune";
 
-import '../pages/MobileRespHamburgerMenue.style.css';
+import "../pages/MobileRespHamburgerMenue.style.css";
 // import 'react-toastify/dist/ReactToastify.css';
 
-import mobFbIcon from "../assets/mob-fb-icon.png"
+import mobFbIcon from "../assets/mob-fb-icon.png";
 
-import mobGmailIcon from "../assets/mob-gmail-icon.png"
+import mobGmailIcon from "../assets/mob-gmail-icon.png";
 
-import mobMailIcon from "../assets/mob-mail-icon.png"
+import mobMailIcon from "../assets/mob-mail-icon.png";
 
 import { useRef } from "react";
-
 
 const queryString = require("query-string");
 
@@ -43,31 +42,55 @@ const Navbar = () => {
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
-  const [hamburgervisile,sethamburgervisile]=useState(false);
+  const [hamburgervisile, sethamburgervisile] = useState(false);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [searchArray, setSearchArray] = useState([]);
+  const [searchSuggestion, setSearchSuggestion] = useState(false);
+  const [searchOverlay, setSearchOverlay] = useState(false);
 
   const navigate = useNavigate();
 
   const fetchIcons = async () => {
-    const response = await axios.get(
-      "https://gaddideals.brokerinvoice.co.in/api/category"
-    );
+    const response = await axios.get(Constant.getUrls.getAllCategories);
     setNavIcons(response.data.category.docs);
   };
-  //  let timeout = null;
- 
-  // function onScroll() {
-  //  setsellBuyContainerOnScroll(true);
 
-  //   clearTimeout(timeout);
+  const fetchSearchBrandsArray = async () => {
+    const response = await axios.get(Constant.getUrls.getAllSearchSuggestions);
+    setSearchArray(response.data.search.brand);
+  };
 
-  //   timeout = setTimeout(() => {
-  //     setsellBuyContainerOnScroll(false);
-  //   }, 200);
-  // };
+  const fetchSearchModelsArray = async () => {
+    let modelArray = [];
+    const response = await axios.get(Constant.getUrls.getAllSearchSuggestions);
+    modelArray.push(response.data.search.model);
+    setSearchArray((prevState) => [...prevState, ...modelArray[0]]);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setSearchSuggestion(true);
+    } else {
+      setSearchSuggestion(false);
+    }
+  };
+
   useEffect(() => {
     fetchIcons();
-    // window.removeEventListener("scroll", onScroll);
+
+    fetchSearchBrandsArray();
+    fetchSearchModelsArray();
   }, []);
+
+  const filterBrandsModel = searchArray.filter((modbrd) => {
+    return (
+      modbrd?.title?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      modbrd?.name?.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  });
 
   // const [modalIsOpen, setModalIsOpen] = useState(false);
   const [visible, setvisible] = useState(false);
@@ -88,7 +111,7 @@ const Navbar = () => {
 
   // const notify = () =>toast("Enter mobile number")  ;
 
-  //desktop login section 
+  //desktop login section
   function saveUser() {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
@@ -189,14 +212,15 @@ const Navbar = () => {
     return () => clearInterval(timer);
   }, [counter]);
 
-
   //moile login section
 
-  const [showOtp,setshowOtp]=useState(false);
-  const [showSignIn,setshowSignIn]=useState(false);
-  const [loginsuccess,setloginsuccess]=useState(false);
-  const [LoggedUserHamburgerMenue,setLoggedUserHamburgerMenue]=useState(false);
-  const [sellBuyContainerOnScroll,setsellBuyContainerOnScroll]=useState(true);
+  const [showOtp, setshowOtp] = useState(false);
+  const [showSignIn, setshowSignIn] = useState(false);
+  const [loginsuccess, setloginsuccess] = useState(false);
+  const [LoggedUserHamburgerMenue, setLoggedUserHamburgerMenue] =
+    useState(false);
+  const [sellBuyContainerOnScroll, setsellBuyContainerOnScroll] =
+    useState(true);
 
   function saveMobileUser() {
     console.warn({ mob_no });
@@ -242,7 +266,7 @@ const Navbar = () => {
       } else {
         if (res.data.status === "success") {
           toast.success(res.data.message);
-          
+
           setmob_no(res.data.mob_no);
           setshowSignIn(!showSignIn);
           saveMoilePhoneOtp();
@@ -254,7 +278,7 @@ const Navbar = () => {
     });
   }
 
-  function saveMoilePhoneOtp(){
+  function saveMoilePhoneOtp() {
     console.log("otp verified");
     console.warn({ mob_no, otp });
     let payload = { mob_no, otp };
@@ -273,30 +297,26 @@ const Navbar = () => {
       }
     });
   }
-  function Openmenu(){
-    if(localStorage.Token){
+  function Openmenu() {
+    if (localStorage.Token) {
       setLoggedUserHamburgerMenue(!LoggedUserHamburgerMenue);
-
-    }
-    else{
-    sethamburgervisile(!hamburgervisile);
+    } else {
+      sethamburgervisile(!hamburgervisile);
     }
   }
 
-  const [showsignup,setshowsignup]=useState(false);
+  const [showsignup, setshowsignup] = useState(false);
 
-  
-
-  function closeModal(){
+  function closeModal() {
     setshowsignup(!showsignup);
   }
-  function closeOtp(){
+  function closeOtp() {
     setshowOtp(!showOtp);
   }
-  function closeSignIn(){
+  function closeSignIn() {
     setshowSignIn(!showSignIn);
   }
-  
+
   const prevScrollY = useRef(0);
 
   const [goingUp, setGoingUp] = useState(true);
@@ -579,7 +599,7 @@ const Navbar = () => {
       {visibleOTP && (
         <div className="otp-main_parent">
           <div
-            className="otp-parent "
+            className="otp-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
               setonclose(false);
@@ -680,193 +700,354 @@ const Navbar = () => {
       )}
 
       {/* open hamurger menue */}
-      {hamburgervisile &&(
-              <div className='mob-menue-container'>
-              <div className='mob-top-div'>
-                  <input placeholder='Location' className='mob-location-input'/>
-                  <img className='mob-arrow-img' src={downArrow} alt="down arrow" />
-                </div>
-              
-              <div className='mob-middle-div'>
-                  <button className='mob-login-button' onClick={()=>{setshowsignup(!showsignup)} } > Login</button>
-                  <button className='mob-register-button'>Register</button>
-              </div>
-              <div className='mob-lower-div'>
-                  <p className='mob-lower-div-text'>EMI Calculator</p>
-                  <p className='mob-lower-div-text'>FAQ</p>
-                  <p className='mob-lower-div-text'>Privacy Settings</p>
-                  <p className='mob-lower-div-text'>Terms and Condition</p>
-                  <p className='mob-lower-div-text mob-contact-us'>Contact Us</p>
-              </div>
+      {hamburgervisile && (
+        <div className="mob-menue-container">
+          <div className="mob-top-div">
+            <input placeholder="Location" className="mob-location-input" />
+            <img className="mob-arrow-img" src={downArrow} alt="down arrow" />
           </div>
+
+          <div className="mob-middle-div">
+            <button
+              className="mob-login-button"
+              onClick={() => {
+                setshowsignup(!showsignup);
+              }}
+            >
+              {" "}
+              Login
+            </button>
+            <button
+              className="mob-register-button"
+              onClick={() => {
+                setshowSignIn(!showSignIn);
+              }}
+            >
+              Register
+            </button>
+          </div>
+          <div className="mob-lower-div">
+            <p className="mob-lower-div-text">EMI Calculator</p>
+            <p className="mob-lower-div-text">FAQ</p>
+            <p className="mob-lower-div-text">Privacy Settings</p>
+            <p className="mob-lower-div-text">Terms and Condition</p>
+            <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
+          </div>
+        </div>
       )}
 
       {LoggedUserHamburgerMenue && (
-        <div className='mob-menue-container'>
-        <div className='mob-top-div'>
-            <input placeholder='Location' className='mob-location-input'/>
-            <img className='mob-arrow-img' src={downArrow} alt="down arrow" />
+        <div className="mob-menue-container">
+          <div className="mob-top-div">
+            <input placeholder="Location" className="mob-location-input" />
+            <img className="mob-arrow-img" src={downArrow} alt="down arrow" />
           </div>
-        
-        <div className='mob-LoggedUser-middle-div'>
-            <p className='mob-lower-div-text' onClick={()=>{window.location.href = "/loggeduser"}} >My Profile</p>
-            <p className='mob-lower-div-text'onClick={()=>{window.location.href = "/UserVehicles"}} >My Product</p>
-            <p className='mob-lower-div-text'>My Order</p>
+
+          <div className="mob-LoggedUser-middle-div">
+            <p
+              className="mob-lower-div-text"
+              onClick={() => {
+                window.location.href = "/loggeduser";
+              }}
+            >
+              My Profile
+            </p>
+            <p
+              className="mob-lower-div-text"
+              onClick={() => {
+                window.location.href = "/UserVehicles";
+              }}
+            >
+              My Product
+            </p>
+            <p className="mob-lower-div-text">My Order</p>
+          </div>
+          <div className="mob-lower-div">
+            <p className="mob-lower-div-text">EMI Calculator</p>
+            <p
+              className="mob-lower-div-text"
+              onClick={() => {
+                window.location.href = "/UserFaq";
+              }}
+            >
+              FAQ
+            </p>
+            <p className="mob-lower-div-text">Privacy Settings</p>
+            <p className="mob-lower-div-text">Terms and Condition</p>
+            <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
+            <p
+              className="mob-lower-div-text mob-contact-us"
+              onClick={logoutAccount}
+            >
+              Sign out
+            </p>
+          </div>
         </div>
-        <div className='mob-lower-div'>
-            <p className='mob-lower-div-text'>EMI Calculator</p>
-            <p className='mob-lower-div-text' onClick={()=>{window.location.href = "/UserFaq"}}>FAQ</p>
-            <p className='mob-lower-div-text'>Privacy Settings</p>
-            <p className='mob-lower-div-text'>Terms and Condition</p>
-            <p className='mob-lower-div-text mob-contact-us'>Contact Us</p>
-            <p className='mob-lower-div-text mob-contact-us' onClick={logoutAccount} >Sign out</p>
-        </div>
-    </div>
       )}
 
       {/* open mobile responsive sign up */}
-      {showsignup &&(
-
-        <div >
-          <Modal width="90%" effect="fadeInRight" className="modal" visible={showsignup} onClickAway={closeModal}> 
-          {/* for CSS check  MobileRespSignInPage.style.css */}
+      {showsignup && (
+        <div>
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={showsignup}
+            onClickAway={closeModal}
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
             <div className="mob-signin-resp">
-                <img className="mob-resp-closing-arrow" onClick={closeModal} src={closingArrow} alt=""></img>
-                <p className="mob-resp-signin-text">Sign in to<span className="text-color-blue"> Gaddideals </span></p>
-                <p className="mob-resp-welcome-text">Welcome back! Sign in with your data that you entered during registration</p>
-                <input className="mob-resp-moile-input" placeholder="Phone Number" name="mob_no"
-              value={mob_no}
-              onChange={(e) => {
-                setmob_no(e.target.value);
-              }}/>
-                <p className="mob-resp-not-a-member-text" onClick={() => {
-                setshowSignIn(!showSignIn); //opening signup page 
-                setshowsignup(!showsignup); //closing signin page
-                
-              }} >Not a member? <span className="text-color-blue">Create Account</span></p>
-                <button className="mob-resp-next-button"
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={closeModal}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-signin-text">
+                Sign in to<span className="text-color-blue"> Gaddideals </span>
+              </p>
+              <p className="mob-resp-welcome-text">
+                Welcome back! Sign in with your data that you entered during
+                registration
+              </p>
+              <input
+                className="mob-resp-moile-input"
+                placeholder="Phone Number"
+                name="mob_no"
+                value={mob_no}
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+              />
+              <p
+                className="mob-resp-not-a-member-text"
+                onClick={() => {
+                  setshowSignIn(!showSignIn); //opening signup page
+                  setshowsignup(!showsignup); //closing signin page
+                }}
+              >
+                Not a member?{" "}
+                <span className="text-color-blue">Create Account</span>
+              </p>
+              <button
+                className="mob-resp-next-button"
                 onClick={() => {
                   saveMobileUser();
                 }}
-                 >
-                  NEXT</button>
-                <div className="mob-resp-multiple-signin">
-                  <img className="mob-resp-fb-signin" src={mobFbIcon} alt=""></img>
-                  <img className="mob-resp-gmail-signin" src={mobGmailIcon} alt=""></img>
-                  <img className="mob-resp-mail-signin" src={mobMailIcon} alt=""></img>
-                </div>
+              >
+                NEXT
+              </button>
+              <div className="mob-resp-multiple-signin">
+                <img
+                  className="mob-resp-fb-signin"
+                  src={mobFbIcon}
+                  alt=""
+                ></img>
+                <img
+                  className="mob-resp-gmail-signin"
+                  src={mobGmailIcon}
+                  alt=""
+                ></img>
+                <img
+                  className="mob-resp-mail-signin"
+                  src={mobMailIcon}
+                  alt=""
+                ></img>
+              </div>
             </div>
           </Modal>
         </div>
       )}
 
-      {showSignIn &&(
-        <div >
-        <Modal width="90%" effect="fadeInRight" className="modal" visible={showSignIn} onClickAway={closeSignIn}> 
-        {/* for CSS check  MobileRespSignInPage.style.css */}
-          <div className="mob-signin-resp">
-              <img className="mob-resp-closing-arrow" onClick={closeSignIn} src={closingArrow} alt=""></img>
-              <p className="mob-resp-signin-text">Sign up to<span className="text-color-blue"> Gaddideals </span></p>
-              <input className="mob-resp-name-input"  onChange={(e) => {
-                setname(e.target.value);
-              }}
-              value={name}
-              type="text"
-              placeholder="Name "/>
-            <input className="mob-resp-name-input" onChange={(e) => {
-                setmob_no(e.target.value);
-              }}
-              value={mob_no}
-              maxLength={10}
-              placeholder="Mobile number "/>
-            <input className="mob-resp-name-input"onChange={(e) => {
-                setemail(e.target.value);
-              }}
-              value={email}
-              type="email"
-              placeholder="Email "/>
-            <input className="mob-resp-name-input"onChange={(e) => {
+      {showSignIn && (
+        <div>
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={showSignIn}
+            onClickAway={closeSignIn}
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={closeSignIn}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-signin-text">
+                Sign up to<span className="text-color-blue"> Gaddideals </span>
+              </p>
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setname(e.target.value);
+                }}
+                value={name}
+                type="text"
+                placeholder="Name "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+                value={mob_no}
+                maxLength={10}
+                placeholder="Mobile number "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+                value={email}
+                type="email"
+                placeholder="Email "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
                   setcity(e.target.value);
                 }}
                 value={city}
                 type="text"
-                placeholder="Location "/>
-            <input className="mob-resp-name-input"onChange={(e) => {
-                setpassword(e.target.value);
-              }}
-              value={password}
-              type="password"
-              placeholder="Password "/>
-            <input className="mob-resp-name-input" onChange={(e) => {
+                placeholder="Location "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setpassword(e.target.value);
+                }}
+                value={password}
+                type="password"
+                placeholder="Password "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
                   setconfirm_password(e.target.value);
                 }}
                 value={confirm_password}
                 type={eye ? "text" : "password"}
-                placeholder="Confirm Password"/>
-              
-              <button className="mob-resp-next-button"
-              onClick={() => {
-                setMobileSignup();
-              }}
-               >
-                SIGN UP</button>
-                <p className="mob-resp-already-a-member-text" onClick={() => {
-              
-                setshowSignIn(!showSignIn); //closing signup page 
-                setshowsignup(!showsignup); //opening signin page
-              
-            }} ><span className="text-color-blue">Already a user? SIGN IN</span></p>
-             
-          </div>
-        </Modal>
-      </div>
+                placeholder="Confirm Password"
+              />
+
+              <button
+                className="mob-resp-next-button"
+                onClick={() => {
+                  setMobileSignup();
+                }}
+              >
+                SIGN UP
+              </button>
+              <p
+                className="mob-resp-already-a-member-text"
+                onClick={() => {
+                  setshowSignIn(!showSignIn); //closing signup page
+                  setshowsignup(!showsignup); //opening signin page
+                }}
+              >
+                <span className="text-color-blue">Already a user? SIGN IN</span>
+              </p>
+            </div>
+          </Modal>
+        </div>
       )}
 
       {/* open mobile responsive otp page */}
-      {showOtp &&(
-        <div >
-        <Modal width="90%" effect="fadeInRight" className="modal" visible={showOtp} onClickAway={closeOtp}> 
-        {/* for CSS check  MobileRespSignInPage.style.css */}
-          <div className="mob-signin-resp">
-              <img className="mob-resp-closing-arrow" onClick={closeOtp} src={closingArrow} alt=""></img>
-              <p className="mob-resp-enterOtp-text">Enter<span className="text-color-blue"> OTP </span></p>
-              <p className="mob-resp-otpSent-text">We’ve sent an OTP to your phone number.</p>
+      {showOtp && (
+        <div>
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={showOtp}
+            onClickAway={closeOtp}
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={closeOtp}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-enterOtp-text">
+                Enter<span className="text-color-blue"> OTP </span>
+              </p>
+              <p className="mob-resp-otpSent-text">
+                We’ve sent an OTP to your phone number.
+              </p>
               <p className="mob-resp-phone-num-text">Phone Number</p>
-              <input className="mob-resp-moile-input" placeholder="Phone Number" name="mob_no"
-            value={mob_no}
-            onChange={(e) => {
-              setmob_no(e.target.value);
-            }}/>
-            <p className="mob-resp-otp-text">One time password</p>
-            <div>
-              <input  value={otp}
-              type="number"
-              
-              placeholder="Enter OTP"
-              onChange={(e) => {
-                setotp(e.target.value);
-              }} className="mob-resp-moile-input" placeholder="Enter OTP" name="mob_no"
-            />
-            <span></span>
-            </div>
-              <p className="mob-resp-not-a-member-text" onClick={() => {
+              <input
+                className="mob-resp-moile-input"
+                placeholder="Phone Number"
+                name="mob_no"
+                value={mob_no}
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+              />
+              <p className="mob-resp-otp-text">One time password</p>
+              <div>
+                <input
+                  value={otp}
+                  type="number"
+                  placeholder="Enter OTP"
+                  onChange={(e) => {
+                    setotp(e.target.value);
+                  }}
+                  className="mob-resp-moile-input"
+                  placeholder="Enter OTP"
+                  name="mob_no"
+                />
+                <span></span>
+              </div>
+              <p
+                className="mob-resp-not-a-member-text"
+                onClick={() => {
                   resendotp();
-                }} >Didn’t recive the OTP? <span className="text-color-blue">RESEND OTP</span></p>
-              <button className="mob-resp-next-button"
-              onClick={() => {
-                saveMoilePhoneOtp();
-              }}
-               >
-                VERIFY OTP</button>
-              
-          </div>
-        </Modal>
-      </div>
-
+                }}
+              >
+                Didn’t recive the OTP?{" "}
+                <span className="text-color-blue">RESEND OTP</span>
+              </p>
+              <button
+                className="mob-resp-next-button"
+                onClick={() => {
+                  saveMoilePhoneOtp();
+                }}
+              >
+                VERIFY OTP
+              </button>
+            </div>
+          </Modal>
+        </div>
       )}
 
-      {sellBuyContainerOnScroll &&(
-        <div className="sell-buy-container-moile" onscroll={()=>{setsellBuyContainerOnScroll(false)}}>
+      {sellBuyContainerOnScroll && (
+        <div
+          className="sell-buy-container-moile"
+          onscroll={() => {
+            setsellBuyContainerOnScroll(false);
+          }}
+        >
+          <Link to="/vehiclelistings">
+            <button>Buy used commercial vehicle</button>
+          </Link>
+          <Link to="/sellerhome">
+            <button className="sell-btn">Sell used commercial vehicle</button>
+          </Link>
+        </div>
+      )}
+      <div
+        className="sell-buy-container-desktop"
+        onscroll={() => {
+          setsellBuyContainerOnScroll(false);
+        }}
+      >
         <Link to="/vehiclelistings">
           <button>Buy used commercial vehicle</button>
         </Link>
@@ -874,16 +1055,6 @@ const Navbar = () => {
           <button className="sell-btn">Sell used commercial vehicle</button>
         </Link>
       </div>
-      )}
-      <div className="sell-buy-container-desktop" onscroll={()=>{setsellBuyContainerOnScroll(false)}}>
-        <Link to="/vehiclelistings">
-          <button>Buy used commercial vehicle</button>
-        </Link>
-        <Link to="/sellerhome">
-          <button className="sell-btn">Sell used commercial vehicle</button>
-        </Link>
-      </div>
-      
 
       <nav className="navbar navbar-expand-lg nav-container">
         <div className="container-fluid navar_div">
@@ -914,7 +1085,6 @@ const Navbar = () => {
                 />
               </a>
             ))}
-            
           </div>
 
           <div onClick={Openmenu} className="hamburger-menu ">
@@ -923,7 +1093,28 @@ const Navbar = () => {
 
           <div className="search-container">
             <img src={searchIcon} alt="search icon" className="search-icon" />
-            <input type="search" placeholder="Search" />
+            <input
+              type="search"
+              placeholder="Search"
+              value={searchValue}
+              onChange={handleSearchChange}
+            />
+
+            {searchSuggestion && (
+              <div className="search-nav-suggestion">
+                {filterBrandsModel.map((modelbrand) => (
+                  <p
+                    key={modelbrand._id}
+                    onClick={() => {
+                      setSearchValue(modelbrand.title || modelbrand.name);
+                      setSearchSuggestion(!searchSuggestion);
+                    }}
+                  >
+                    {modelbrand.title || modelbrand.name}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="location-container">
