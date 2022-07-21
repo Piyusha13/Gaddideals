@@ -1,7 +1,5 @@
-
-@media screen and (max-width:1000px) {
-
-  .filter-sort-button-div{
+@media screen and (max-width: 1000px) {
+  .filter-sort-button-div {
     display: flex !important;
     flex-direction: row;
     gap: 5%;
@@ -11,52 +9,53 @@
     /* background-color: #fe620d; */
     width: 100%;
   }
-  .filter-button,.sortBy-button{
+  .filter-button,
+  .sortBy-button {
     position: relative;
   }
-  .filter-button img{
+  .filter-button img {
     position: absolute;
     z-index: 99;
     width: 15%;
     top: 30%;
     right: 10%;
   }
-  .sortBy-button img{
+  .sortBy-button img {
     position: absolute;
     z-index: 99;
     width: 15%;
     top: 30%;
     right: 10%;
   }
-  .filter-button button{
-    background: #FFFFFF;
+  .filter-button button {
+    background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
     border-radius: 2px;
     border: none;
-    font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-color: #050F56;
-padding-left: 10px;
-padding-right: 50px;
-padding-top: 5px;
-padding-bottom: 5px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #050f56;
+    padding-left: 10px;
+    padding-right: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
-  .sortBy-button button{
-    background: #FFFFFF;
+  .sortBy-button button {
+    background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
     border-radius: 2px;
     border: none;
-    font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 14px;
-padding-left: 10px;
-padding-right: 40px;
-padding-top: 5px;
-padding-bottom: 5px;
-color: #050F56;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #050f56;
   }
   .vehicles-container {
     padding: 10px 10px;
@@ -65,20 +64,18 @@ color: #050F56;
     gap: 20px;
     justify-content: center;
   }
-  
+
   .vehicles-container .filter-sidebar {
     width: 300px;
     display: none !important;
   }
-  
-  .filter-sidebar .container{
+
+  .filter-sidebar .container {
     /* width: 30% !important; */
     /* background-color: #fe620d !important; */
-    
-
   }
-  
-   .filter-one {
+
+  .filter-one {
     background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -89,20 +86,20 @@ color: #050F56;
     left: 25%;
     z-index: 99;
   }
-  
+
   .filter-one .line {
     width: 100%;
     height: 0.1px;
     background-color: #d4d4d4;
   }
-  
+
   .filter-one .filter-container {
     padding: 20px 20px 0;
   }
- .filter-one .filter-container.kmsdriven {
+  .filter-one .filter-container.kmsdriven {
     padding: 20px 20px 20px;
   }
-  .filter-one .filter-container .sort-by{
+  .filter-one .filter-container .sort-by {
     display: none;
   }
   .filter-one .filter-container h3 {
@@ -114,7 +111,7 @@ color: #050F56;
     color: #050f56;
     position: relative;
   }
-   .filter-one .filter-container h3:after {
+  .filter-one .filter-container h3:after {
     content: "";
     position: absolute;
     top: 100%;
@@ -124,30 +121,23 @@ color: #050F56;
     height: 3px;
     background-color: #fe620d;
   }
-  
-  
-    .filter-one
-    .filter-container
-    .filter-controls {
+
+  .filter-one .filter-container .filter-controls {
     display: flex;
     align-items: center;
     margin-top: 10px;
   }
-  
 
-    .filter-one
-    .filter-container
-    .filter-controls
-    span {
+  .filter-one .filter-container .filter-controls span {
     display: inline-block;
     font-family: "Poppins";
     font-style: normal;
     font-size: 14px;
     margin-left: 20px;
   }
-  
+
   /* Filter Two */
-   .filter-two {
+  .filter-two {
     background: #ffffff !important;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
     border-radius: 10px !important;
@@ -158,11 +148,11 @@ color: #050F56;
     top: 10% !important;
     margin-left: 10px !important;
   }
-  
+
   .filter-two .search-container {
     display: none !important;
   }
-   .filter-two .search-container img {
+  .filter-two .search-container img {
     position: absolute;
     top: 35px;
     left: 10px;
@@ -179,12 +169,12 @@ color: #050F56;
   .filter-two .search-container input:focus {
     outline: none;
   }
-  
-   .filter-two .categories-container {
+
+  .filter-two .categories-container {
     padding: 20px;
     padding-bottom: 0px !important;
   }
-  
+
   .filter-two .categories-container h3 {
     font-family: "Poppins";
     font-style: normal;
@@ -193,7 +183,7 @@ color: #050F56;
     color: #050f56;
     position: relative;
   }
-   .filter-two .categories-container h3:after {
+  .filter-two .categories-container h3:after {
     content: "";
     position: absolute;
     top: 100%;
@@ -203,27 +193,24 @@ color: #050F56;
     height: 3px;
     background-color: #fe620d;
   }
-  
-  .filter-two
-    .categories-container{
-      /* background-color: #fe620d; */
-    }
- 
-    .four-category-container{
-      margin-left: 0% !important;
-      /* background-color: #fe620d; */
-      display: flex !important;
-      flex-direction: row !important;
-      justify-content: space-between !important;
-      width:95% !important;
-      gap: 15px !important;
-    }
-    .filter-two
-    .categories-container
-    .category {
+
+  .filter-two .categories-container {
+    /* background-color: #fe620d; */
+  }
+
+  .four-category-container {
+    margin-left: 0% !important;
+    /* background-color: #fe620d; */
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    width: 95% !important;
+    gap: 15px !important;
+  }
+  .filter-two .categories-container .category {
     display: flex;
     justify-content: flex-start;
-    align-items:center;
+    align-items: center;
     flex-direction: column !important;
     margin-top: 20px;
     height: 70px !important;
@@ -233,12 +220,7 @@ color: #050F56;
     /* background-color: #fe620d; */
   }
 
-  
- 
-    .filter-two
-    .categories-container
-    .category
-    .icon-wrapper {
+  .filter-two .categories-container .category .icon-wrapper {
     padding: 10px;
     /* background: #ffffff; */
     /* background-color: #fe620d; */
@@ -249,46 +231,38 @@ color: #050F56;
     height: 40px !important;
     width: 40px !important;
   }
-  
-    .filter-two
-    .categories-container
-    .category
-    .icon-wrapper
-    img {
+
+  .filter-two .categories-container .category .icon-wrapper img {
     width: 20px !important;
     height: 20px !important;
     object-fit: cover;
   }
-  
-  
-    .filter-two
-    .categories-container
-    .category
-    a {
-      width: 60% !important;
-      text-align: center;
-      /* background-color: #fe620d; */
+
+  .filter-two .categories-container .category a {
+    width: 60% !important;
+    text-align: center;
+    /* background-color: #fe620d; */
     /* margin-left: 20px; */
     text-decoration: none;
     font-family: "Poppins";
     font-weight: bold;
-    font-size:8px !important;
+    font-size: 8px !important;
     color: #121212;
     margin-top: 3px !important;
   }
-  
-   .filter-two .line {
+
+  .filter-two .line {
     width: 100%;
     height: 0.1px;
     /* background-color: #d4d4d4; */
     /* background-color: #fe620d; */
   }
-  
+
   .filter-two .price-container {
     padding: 20px;
     padding-bottom: 0%;
   }
-  
+
   .filter-two .price-container h3 {
     font-family: "Poppins";
     font-style: normal;
@@ -309,46 +283,30 @@ color: #050F56;
     height: 3px;
     background-color: #fe620d;
   }
-  
-  
-    .filter-two
-    .price-container
-    .min-max-controls {
+
+  .filter-two .price-container .min-max-controls {
     display: flex;
     justify-content: space-between;
     gap: 20px;
     align-items: center;
     margin-top: 0px;
   }
-  
- 
-    .filter-two
-    .price-container
-    .min-max-controls
-    .price-input {
+
+  .filter-two .price-container .min-max-controls .price-input {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
   }
 
-    .filter-two
-    .price-container
-    .min-max-controls
-    .price-input
-    span {
+  .filter-two .price-container .min-max-controls .price-input span {
     font-family: "Poppins";
     font-weight: 500;
     font-size: 8px;
     color: #757575;
   }
-  
-  
-    .filter-two
-    .price-container
-    .min-max-controls
-    .price-input
-    input {
+
+  .filter-two .price-container .min-max-controls .price-input input {
     width: 100%;
     margin-top: 0px;
     padding: 0.5rem 1rem;
@@ -359,79 +317,53 @@ color: #050F56;
     text-align: center;
     border: none;
   }
-  
-    .filter-two
+
+  .filter-two
     .price-container
     .min-max-controls
     .price-input
     input::placeholder {
     font-size: 10px;
   }
-  
- 
-    .filter-two
-    .price-container
-    .min-max-controls
-    .price-input
-    input:focus {
+
+  .filter-two .price-container .min-max-controls .price-input input:focus {
     outline: none;
   }
-  
-   .filter-two .vehicles-stats-container {
+
+  .filter-two .vehicles-stats-container {
     padding: 20px;
   }
 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat {
+  .filter-two .vehicles-stats-container .vehicle-stat {
     width: 100%;
     position: relative;
   }
 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    .stat-label {
+  .filter-two .vehicles-stats-container .vehicle-stat .stat-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 15px 0rem 0rem 0rem;
   }
- 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    .list {
+
+  .filter-two .vehicles-stats-container .vehicle-stat .list {
     display: flex;
     justify-content: flex-start;
   }
 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    .list
-    .list-content {
+  .filter-two .vehicles-stats-container .vehicle-stat .list .list-content {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
   }
- 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    .list
-    .list-content
-    p {
+
+  .filter-two .vehicles-stats-container .vehicle-stat .list .list-content p {
     margin: 0;
   }
-  
 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    a {
+  .filter-two .vehicles-stats-container .vehicle-stat a {
     text-decoration: none;
     font-family: "Poppins";
     font-size: 16px;
@@ -439,26 +371,23 @@ color: #050F56;
     color: #121212;
   }
 
-    .filter-two
-    .vehicles-stats-container
-    .vehicle-stat
-    img {
+  .filter-two .vehicles-stats-container .vehicle-stat img {
     width: 12px;
     height: 12px;
     object-fit: cover;
   }
-  
+
   /* vehicles list */
-  
-   .vehicles-container .vehicles-list-container {
+
+  .vehicles-container .vehicles-list-container {
     display: grid;
-    grid-template-columns: repeat(2,1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     column-gap: 1rem !important;
     row-gap: 1rem !important;
     width: 100% !important;
     /* background-color: #fe620d !important; */
-  } 
-  
+  }
+
   .vehicles-container .vehicles-list-container .vehicle-card {
     height: fit-content;
     background: #ffffff;
@@ -470,17 +399,17 @@ color: #050F56;
   .vehicles-container .vehicles-list-container .vehicle-card a {
     text-decoration: none;
   }
-  
+
   .vehicles-container .vehicles-list-container .vehicle-card .img-wrapper img {
     width: 100%;
     height: 100px !important;
     object-fit: cover;
   }
-  
+
   .vehicles-container .vehicles-list-container .vehicle-card .vehicle-info {
     padding: 0.5rem 0.5rem !important;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -494,7 +423,7 @@ color: #050F56;
     font-size: 12px !important;
     margin-bottom: 0% !important;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -511,11 +440,11 @@ color: #050F56;
     .vehicle-info
     .name
     .location
-    img{
-      height: 10px !important;
-      width: 10px !important;
-      /* background-color: #fe620d !important; */
-    }
+    img {
+    height: 10px !important;
+    width: 10px !important;
+    /* background-color: #fe620d !important; */
+  }
 
   .vehicles-container
     .vehicles-list-container
@@ -533,7 +462,7 @@ color: #050F56;
     font-size: 10px !important;
     color: #121212;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -543,10 +472,10 @@ color: #050F56;
     justify-content: space-between;
     margin-top: 10px !important;
     padding-bottom: 10px !important;
-    border-bottom: 1px solid #E1E1E1;
+    border-bottom: 1px solid #e1e1e1;
     /* background-color: #fe620d !important; */
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -562,7 +491,7 @@ color: #050F56;
     width: 30% !important;
     padding: 2px 5px !important;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -575,7 +504,7 @@ color: #050F56;
     font-weight: 500;
     font-size: 10px;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -586,7 +515,7 @@ color: #050F56;
     align-items: center;
     margin-top: 8px !important;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -600,7 +529,7 @@ color: #050F56;
     text-align: center;
     margin-bottom: 0% !important;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -614,7 +543,7 @@ color: #050F56;
     font-weight: bolder;
     color: #00adef;
   }
-  
+
   .vehicles-container
     .vehicles-list-container
     .vehicle-card
@@ -633,26 +562,21 @@ color: #050F56;
     font-size: 10px !important;
     padding: 5px 20px !important;
   }
-  
+
   .no-data {
     width: 100% !important;
     margin: 0 auto;
     object-fit: cover;
   }
-  
-  
-
 }
 
-@media screen and (min-width:1000px) {
-  
-  .lg-devices{
+@media screen and (min-width: 1000px) {
+  .lg-devices {
     display: none !important;
   }
-
 }
 
-.filter-sort-button-div{
+.filter-sort-button-div {
   display: none;
 }
 
@@ -675,9 +599,6 @@ color: #050F56;
 .vehicles-container .filter-sidebar {
   width: 300px;
 }
-
-
-
 
 .vehicles-container .filter-sidebar .filter-one {
   background: #ffffff;
@@ -772,7 +693,6 @@ color: #050F56;
 
 .vehicles-container .filter-sidebar .filter-two .categories-container {
   padding: 20px;
-  
 }
 
 .vehicles-container .filter-sidebar .filter-two .categories-container h3 {
@@ -1066,6 +986,7 @@ color: #050F56;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
+  margin: 0;
 }
 
 .vehicles-container
@@ -1103,7 +1024,7 @@ color: #050F56;
   .truck-stats {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .vehicles-container
@@ -1132,6 +1053,7 @@ color: #050F56;
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
+  text-transform: capitalize;
 }
 
 .vehicles-container
@@ -1142,7 +1064,7 @@ color: #050F56;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .vehicles-container
@@ -1156,6 +1078,7 @@ color: #050F56;
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  margin: 0;
 }
 
 .vehicles-container
@@ -1177,7 +1100,7 @@ color: #050F56;
   .vehicle-card
   .vehicle-info
   button {
-  margin-top: 20px;
+  margin-top: 10px;
   border: none;
   background: #050f56;
   border-radius: 7px;
