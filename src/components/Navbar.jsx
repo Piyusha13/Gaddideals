@@ -372,6 +372,7 @@ const Navbar = () => {
               float: "right",
               height: "100%",
               position: "fixed",
+              top:0,
               zIndex: 99999999999999999999,
               right: 0,
               display: "flex",

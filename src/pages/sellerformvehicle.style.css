@@ -1,3 +1,2364 @@
+@media screen and (max-width:482px){
+  
+  .seller-form-container {
+    width: 100% !important;
+    margin: 0px !important ;
+    padding: 10px !important;
+    display: flex;
+    gap: 20px;
+    flex-direction: column !important;
+    /* background-color: orange !important; */
+  }
+  
+  .form-routes {
+    /* background-color: #050f56; */
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px !important;
+    position: relative;
+    top: 0% !important;
+    z-index: 50;
+    flex: 1 0 25%;
+    width: 150% !important;
+    height: 100px !important;
+    /* flex:none !important; */
+    /* background-color: orange !important; */
+  }
+  .form-routes::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 330px !important;
+    background-color: #050f56;
+    top: -120% !important;
+    left: 50% !important;
+    /* transform: translate(-50%, -50%); */
+    transform: rotate(90deg) !important;
+    z-index: -1;
+  }
+  
+  .form-routes .route-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    flex-direction: column !important;
+    /* background-color: orange; */
+    width: 30% !important;
+    text-align: center !important;
+  }
+  
+  .form-routes .route-nav a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #929292;
+  }
+  
+  .form-routes .route-nav a.active {
+    text-decoration: underline;
+    color: #00adef;
+  }
+  
+  .form-routes .route-nav .circle {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border: 0.5px solid #ebebeb;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .form-routes .route-nav .circle.active {
+    border: 2px solid #00adef;
+  }
+  
+  /* Form Register */
+  .form-registration-container {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  
+  .form-registration-container .wizard-register-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+  .form-registration-container .wizard-register-title h5 {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px;
+    color: #050f56;
+  }
+  
+  .form-registration-container .filter-tags {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+  }
+  
+  .form-registration-container .filter-tags .tag {
+    background: #ffffff;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .form-registration-container .filter-tags .tag span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 8px;
+    color: #929292;
+  }
+  
+  .form-registration-container .filter-tags .tag .cancel-icon {
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 100%;
+    height: 0.1px;
+    background-color: #d4d4d4;
+    margin-top: 20px;
+  }
+  
+  .form-register {
+    padding: 20px;
+  }
+  
+  .form-register-controls {
+    display: flex;
+    align-content: center;
+    margin: 20px 0px 0px 0px;
+    gap: 20px;
+  }
+  
+  .form-register-controls label {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    color: #050f56;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .form-register-controls input {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-family: "Roboto";
+    padding: 5px 20px;
+  }
+  .form-register-controls input:focus {
+    outline: 2px solid #00adef;
+  }
+  
+  .form-register-controls .permits {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .form-register-controls .scraps {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .scraps .scrap {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .scraps .scrap.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .permits .permit.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  
+  .form-register-controls .rcs {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .rcs .rc {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .rcs .rc.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .rcs .rc span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .bodys {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .bodys .body {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .bodys .body.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .bodys .body span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .conditions {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .form-register-controls .conditions .condition {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .conditions .condition span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  
+  .btn-next {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .btn-next button {
+    border: none;
+    padding: 10px 50px;
+    background: #050f56;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Roboto";
+  }
+  
+}
+@media screen and (min-width: 483px) and (max-width: 600px){
+  
+  .seller-form-container {
+    width: 100% !important;
+    margin: 0px !important ;
+    padding: 10px !important;
+    display: flex;
+    gap: 20px;
+    flex-direction: column !important;
+    /* background-color: orange !important; */
+  }
+  
+  .form-routes {
+    /* background-color: #050f56; */
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px !important;
+    position: relative;
+    top: 0% !important;
+    z-index: 50;
+    flex: 1 0 25%;
+    width: 150% !important;
+    height: 100px !important;
+    /* flex:none !important; */
+    /* background-color: orange !important; */
+  }
+  .form-routes::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 450% !important;
+    background-color: #050f56;
+    top: -190% !important;
+    left: 50% !important;
+    /* transform: translate(-50%, -50%); */
+    transform: rotate(90deg) !important;
+    z-index: -1;
+  }
+  
+  .form-routes .route-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    flex-direction: column !important;
+    /* background-color: orange; */
+    width: 30% !important;
+    text-align: center !important;
+  }
+  
+  .form-routes .route-nav a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #929292;
+  }
+  
+  .form-routes .route-nav a.active {
+    text-decoration: underline;
+    color: #00adef;
+  }
+  
+  .form-routes .route-nav .circle {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border: 0.5px solid #ebebeb;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .form-routes .route-nav .circle.active {
+    border: 2px solid #00adef;
+  }
+  
+  /* Form Register */
+  .form-registration-container {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  
+  .form-registration-container .wizard-register-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+  .form-registration-container .wizard-register-title h5 {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px;
+    color: #050f56;
+  }
+  
+  .form-registration-container .filter-tags {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+  }
+  
+  .form-registration-container .filter-tags .tag {
+    background: #ffffff;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .form-registration-container .filter-tags .tag span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 8px;
+    color: #929292;
+  }
+  
+  .form-registration-container .filter-tags .tag .cancel-icon {
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 100%;
+    height: 0.1px;
+    background-color: #d4d4d4;
+    margin-top: 20px;
+  }
+  
+  .form-register {
+    padding: 20px;
+  }
+  
+  .form-register-controls {
+    display: flex;
+    align-content: center;
+    margin: 20px 0px 0px 0px;
+    gap: 20px;
+  }
+  
+  .form-register-controls label {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    color: #050f56;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .form-register-controls input {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-family: "Roboto";
+    padding: 5px 20px;
+  }
+  .form-register-controls input:focus {
+    outline: 2px solid #00adef;
+  }
+  
+  .form-register-controls .permits {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .form-register-controls .scraps {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .scraps .scrap {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .scraps .scrap.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .permits .permit.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  
+  .form-register-controls .rcs {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .rcs .rc {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .rcs .rc.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .rcs .rc span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .bodys {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .bodys .body {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .bodys .body.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .bodys .body span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .conditions {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .form-register-controls .conditions .condition {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .conditions .condition span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  
+  .btn-next {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .btn-next button {
+    border: none;
+    padding: 10px 50px;
+    background: #050f56;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Roboto";
+  }
+  
+}
+@media screen and (min-width: 601px) and (max-width: 767px){
+  
+  .seller-form-container {
+    width: 100% !important;
+    margin: 0px !important ;
+    padding: 10px !important;
+    display: flex;
+    gap: 20px;
+    flex-direction: column !important;
+    /* background-color: orange !important; */
+  }
+  
+  .form-routes {
+    /* background-color: #050f56; */
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px !important;
+    position: relative;
+    top: 0% !important;
+    z-index: 50;
+    flex: 1 0 25%;
+    width: 150% !important;
+    height: 100px !important;
+    /* flex:none !important; */
+    /* background-color: orange !important; */
+  }
+  .form-routes::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 580% !important;
+    background-color: #050f56;
+    top: -250% !important;
+    left: 50% !important;
+    /* transform: translate(-50%, -50%); */
+    transform: rotate(90deg) !important;
+    z-index: -1;
+  }
+  
+  .form-routes .route-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    flex-direction: column !important;
+    /* background-color: orange; */
+    width: 30% !important;
+    text-align: center !important;
+  }
+  
+  .form-routes .route-nav a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #929292;
+  }
+  
+  .form-routes .route-nav a.active {
+    text-decoration: underline;
+    color: #00adef;
+  }
+  
+  .form-routes .route-nav .circle {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border: 0.5px solid #ebebeb;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .form-routes .route-nav .circle.active {
+    border: 2px solid #00adef;
+  }
+  
+  /* Form Register */
+  .form-registration-container {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  
+  .form-registration-container .wizard-register-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+  .form-registration-container .wizard-register-title h5 {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px;
+    color: #050f56;
+  }
+  
+  .form-registration-container .filter-tags {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+  }
+  
+  .form-registration-container .filter-tags .tag {
+    background: #ffffff;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .form-registration-container .filter-tags .tag span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 8px;
+    color: #929292;
+  }
+  
+  .form-registration-container .filter-tags .tag .cancel-icon {
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 100%;
+    height: 0.1px;
+    background-color: #d4d4d4;
+    margin-top: 20px;
+  }
+  
+  .form-register {
+    padding: 20px;
+  }
+  
+  .form-register-controls {
+    display: flex;
+    align-content: center;
+    margin: 20px 0px 0px 0px;
+    gap: 20px;
+  }
+  
+  .form-register-controls label {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    color: #050f56;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .form-register-controls input {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-family: "Roboto";
+    padding: 5px 20px;
+  }
+  .form-register-controls input:focus {
+    outline: 2px solid #00adef;
+  }
+  
+  .form-register-controls .permits {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .form-register-controls .scraps {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .scraps .scrap {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .scraps .scrap.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .permits .permit.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  
+  .form-register-controls .rcs {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .rcs .rc {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .rcs .rc.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .rcs .rc span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .bodys {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .bodys .body {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .bodys .body.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .bodys .body span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .conditions {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .form-register-controls .conditions .condition {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .conditions .condition span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  
+  .btn-next {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .btn-next button {
+    border: none;
+    padding: 10px 50px;
+    background: #050f56;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Roboto";
+  }
+  
+}
+@media screen and (min-width: 768px) and (max-width: 927px){
+  
+  .seller-form-container {
+    width: 100% !important;
+    margin: 0px !important ;
+    padding: 10px !important;
+    display: flex;
+    gap: 20px;
+    flex-direction: column !important;
+    /* background-color: orange !important; */
+  }
+  
+  .form-routes {
+    /* background-color: #050f56; */
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px !important;
+    position: relative;
+    top: 0% !important;
+    z-index: 50;
+    flex: 1 0 25%;
+    width: 150% !important;
+    height: 100px !important;
+    /* flex:none !important; */
+    /* background-color: orange !important; */
+  }
+  .form-routes::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 713% !important;
+    background-color: #050f56;
+    top: -320% !important;
+    left: 50% !important;
+    /* transform: translate(-50%, -50%); */
+    transform: rotate(90deg) !important;
+    z-index: -1;
+  }
+  
+  .form-routes .route-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    flex-direction: column !important;
+    /* background-color: orange; */
+    width: 30% !important;
+    text-align: center !important;
+  }
+  
+  .form-routes .route-nav a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #929292;
+  }
+  
+  .form-routes .route-nav a.active {
+    text-decoration: underline;
+    color: #00adef;
+  }
+  
+  .form-routes .route-nav .circle {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border: 0.5px solid #ebebeb;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .form-routes .route-nav .circle.active {
+    border: 2px solid #00adef;
+  }
+  
+  /* Form Register */
+  .form-registration-container {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  
+  .form-registration-container .wizard-register-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+  .form-registration-container .wizard-register-title h5 {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px;
+    color: #050f56;
+  }
+  
+  .form-registration-container .filter-tags {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+  }
+  
+  .form-registration-container .filter-tags .tag {
+    background: #ffffff;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .form-registration-container .filter-tags .tag span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 8px;
+    color: #929292;
+  }
+  
+  .form-registration-container .filter-tags .tag .cancel-icon {
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 100%;
+    height: 0.1px;
+    background-color: #d4d4d4;
+    margin-top: 20px;
+  }
+  
+  .form-register {
+    padding: 20px;
+  }
+  
+  .form-register-controls {
+    display: flex;
+    align-content: center;
+    margin: 20px 0px 0px 0px;
+    gap: 20px;
+  }
+  
+  .form-register-controls label {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    color: #050f56;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .form-register-controls input {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-family: "Roboto";
+    padding: 5px 20px;
+  }
+  .form-register-controls input:focus {
+    outline: 2px solid #00adef;
+  }
+  
+  .form-register-controls .permits {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .form-register-controls .scraps {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .scraps .scrap {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .scraps .scrap.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .permits .permit.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  
+  .form-register-controls .rcs {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .rcs .rc {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .rcs .rc.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .rcs .rc span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .bodys {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .bodys .body {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .bodys .body.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .bodys .body span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .conditions {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .form-register-controls .conditions .condition {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .conditions .condition span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  
+  .btn-next {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .btn-next button {
+    border: none;
+    padding: 10px 50px;
+    background: #050f56;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Roboto";
+  }
+  
+}
+@media screen and (min-width: 928px) and (max-width: 1000px){
+  
+  .seller-form-container {
+    width: 100% !important;
+    margin: 0px !important ;
+    padding: 10px !important;
+    display: flex;
+    gap: 20px;
+    flex-direction: column !important;
+    /* background-color: orange !important; */
+  }
+  
+  .form-routes {
+    /* background-color: #050f56; */
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px !important;
+    position: relative;
+    top: 0% !important;
+    z-index: 50;
+    flex: 1 0 25%;
+    width: 150% !important;
+    height: 100px !important;
+    /* flex:none !important; */
+    /* background-color: orange !important; */
+  }
+  .form-routes::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 820% !important;
+    background-color: #050f56;
+    top: -370% !important;
+    left: 50% !important;
+    /* transform: translate(-50%, -50%); */
+    transform: rotate(90deg) !important;
+    z-index: -1;
+  }
+  
+  .form-routes .route-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    flex-direction: column !important;
+    /* background-color: orange; */
+    width: 30% !important;
+    text-align: center !important;
+  }
+  
+  .form-routes .route-nav a {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #929292;
+  }
+  
+  .form-routes .route-nav a.active {
+    text-decoration: underline;
+    color: #00adef;
+  }
+  
+  .form-routes .route-nav .circle {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    border: 0.5px solid #ebebeb;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .form-routes .route-nav .circle.active {
+    border: 2px solid #00adef;
+  }
+  
+  /* Form Register */
+  .form-registration-container {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  
+  .form-registration-container .wizard-register-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+  .form-registration-container .wizard-register-title h5 {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 20px;
+    color: #050f56;
+  }
+  
+  .form-registration-container .filter-tags {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+  }
+  
+  .form-registration-container .filter-tags .tag {
+    background: #ffffff;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .form-registration-container .filter-tags .tag span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 8px;
+    color: #929292;
+  }
+  
+  .form-registration-container .filter-tags .tag .cancel-icon {
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 100%;
+    height: 0.1px;
+    background-color: #d4d4d4;
+    margin-top: 20px;
+  }
+  
+  .form-register {
+    padding: 20px;
+  }
+  
+  .form-register-controls {
+    display: flex;
+    align-content: center;
+    margin: 20px 0px 0px 0px;
+    gap: 20px;
+  }
+  
+  .form-register-controls label {
+    font-family: "Poppins";
+    font-weight: bold;
+    font-size: 15px;
+    color: #050f56;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .form-register-controls input {
+    width: 100%;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    font-family: "Roboto";
+    padding: 5px 20px;
+  }
+  .form-register-controls input:focus {
+    outline: 2px solid #00adef;
+  }
+  
+  .form-register-controls .permits {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-between;
+  }
+  .form-register-controls .scraps {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .scraps .scrap {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .scraps .scrap.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .permits .permit.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .permits .permit span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  
+  .form-register-controls .rcs {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .rcs .rc {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .rcs .rc.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .rcs .rc span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .bodys {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+  }
+  .form-register-controls .bodys .body {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 50px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .bodys .body.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .bodys .body span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: capitalize;
+  }
+  
+  .form-register-controls .conditions {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .form-register-controls .conditions .condition {
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: none;
+    border: 1px solid transparent;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  .form-register-controls .conditions .condition span {
+    display: inline-block;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a4a4a;
+  }
+  .form-register-controls .conditions .condition.active {
+    border: 1px solid #00adef;
+  }
+  
+  .btn-next {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .btn-next button {
+    border: none;
+    padding: 10px 50px;
+    background: #050f56;
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: "Roboto";
+  }
+  
+}
+@media screen and (max-width:1000px){
+
+  /* Form Details */
+.form-details-container {
+  width: 140% !important;
+  /* background: #ffffff; */
+  /* background-color: orange !important; */
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  position: relative;
+  margin-left: 3% !important;
+}
+
+.form-details-container .wizard-title {
+  
+  display: none !important;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 0;
+}
+.form-details-container .wizard-title h5 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px;
+  color: #050f56;
+}
+
+.line {
+  display: none !important;
+  width: 100%;
+  height: 0.1px;
+  background-color: #d4d4d4;
+  margin-top: 20px;
+}
+
+/* Form Detail styles */
+.form-details {
+  padding: 20px;
+}
+
+.form-controls {
+  display: flex;
+  align-content: center;
+  margin: 20px 0px 0px 0px;
+  gap: 0px !important;
+  flex-direction: column;
+  /* background-color: orange !important; */
+}
+.form-controls .state-input {
+  position: relative;
+  width: 100%;
+  /* background-color: orange !important; */
+  height: 45px !important;
+}
+.form-controls .state-input input{
+ height: 100%; 
+
+}
+.form-controls .city-input {
+  position: relative;
+  width: 100%;
+  height: 45px !important;
+
+}
+.form-controls .city-input input{
+  height: 100%; 
+}
+.form-controls .brand-input {
+  position: relative;
+  width: 100%;
+  height: 45px !important;
+}
+.form-controls .brand-input input{
+  height: 100%;
+}
+.form-controls .model-input {
+  position: relative;
+  width: 100%;
+  height: 45px !important;
+}
+.form-controls .model-input input{
+  height: 100%;
+}
+.form-controls .suggestion {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow: scroll;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  z-index: 500;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+.form-controls label {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 12px !important;
+  color: #050f56;
+  display: inline-block;
+  width: 150px;
+  /* background-color: #00adef !important; */
+}
+
+.form-controls input {
+  width: 100%;
+  height: 45px !important;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  font-family: "Roboto";
+  padding: 5px 20px;
+  /* background-color: orange !important; */
+}
+.form-controls input::placeholder{
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+color: #A2A2A2;
+}
+.form-controls input.error-input {
+  border: 1px solid red;
+}
+.form-controls input:focus {
+  outline: 2px solid #00adef;
+}
+.form-controls .years {
+  background: #ffffff;
+  /* background-color: orange !important; */
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  
+}
+.form-controls .years.error-input {
+  border: 1px solid red;
+}
+.form-controls .years .year {
+  background: #ffffff;
+  /* background-color: orange !important; */
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 17px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-controls .years .see-more {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 5px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+  position: relative;
+}
+.form-controls .years .see-more span {
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 6px !important;
+  color: #4a4a4a;
+}
+.form-controls .years .see-more img {
+  width: 10px !important;
+  height: 10px !important;
+  object-fit: cover;
+  margin-left: 8px !important;
+}
+.form-controls .years .see-more .see-more-years {
+  padding: 10px 10px !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  overflow: scroll;
+  background-color: #ffffff;
+  /* background-color: orange !important; */
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+}
+.form-controls .years .see-more .see-more-years p {
+  cursor: pointer;
+  margin: 2px 0 0 0;
+  text-align: center;
+}
+
+.form-controls .years .year.active {
+  border: 1px solid #00adef;
+}
+.form-controls .years .year span {
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 10px;
+  color: #4a4a4a;
+}
+.form-controls .owners {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.form-controls .owners .owner {
+  width: 28% !important;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap !important;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-controls .owners .owner.active {
+  border: 1px solid #00adef;
+}
+.form-controls .owners .owner span {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 10px !important;
+  color: #4a4a4a;
+}
+
+.form-controls .transmission {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.form-controls .transmission .transmission-type {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28% !important;
+  padding: 5px 20px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-controls .transmission .transmission-type.active {
+  border: 1px solid #00adef;
+}
+
+.form-controls .transmission .transmission-type span {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 10px !important;
+  color: #616161;
+  text-transform: capitalize;
+}
+
+.btn-next {
+  margin-top: 40px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-next button {
+  border: none;
+  padding: 8px 40px !important;
+  background: #050f56;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px !important;
+  font-family: "Roboto";
+}
+
+/* Form Register */
+.form-registration-container {
+  width: 140% !important;
+  /* background-color: #00adef !important; */
+  /* background: #ffffff; */
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  margin-left: 3% !important;
+}
+
+.form-registration-container .wizard-register-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 0;
+  display: none !important;
+}
+.form-registration-container .wizard-register-title h5 {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 20px;
+  color: #050f56;
+}
+
+.form-registration-container .filter-tags {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 50px;
+  /* background-color: orange !important; */
+}
+
+.form-registration-container .filter-tags .tag {
+  background: #ffffff;
+  border: 1px solid #f5f5f5;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-registration-container .filter-tags .tag span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 8px;
+  color: #929292;
+}
+
+.form-registration-container .filter-tags .tag .cancel-icon {
+  cursor: pointer;
+}
+
+.line {
+  width: 100%;
+  height: 0.1px;
+  background-color: #d4d4d4;
+  margin-top: 20px;
+}
+
+.form-register {
+  padding: 20px;
+}
+
+.form-register-controls {
+  display: flex;
+  align-content: center;
+  margin: 20px 0px 0px 0px;
+  gap: 0px !important;
+  flex-direction: column !important;
+  /* background-color: orange !important; */
+}
+
+.form-register-controls label {
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 12px !important;
+  color: #050f56;
+  display: inline-block;
+  width: 150px;
+}
+
+.form-register-controls input {
+  width: 100%;
+  height: 45px !important;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  font-family: "Roboto";
+  padding: 5px 20px;
+}
+.form-register-controls input::placeholder{
+
+  font-size: 10px !important;
+}
+.form-register-controls input:focus {
+  outline: 2px solid #00adef;
+}
+
+.form-register-controls .permits {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  justify-content: flex-start !important;
+  gap: 20px !important;
+}
+.form-register-controls .scraps {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px !important;
+  font-size: 12px !important;
+}
+.form-register-controls .scraps .scrap {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 50px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .scraps .scrap.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .permits .permit {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 20px !important;
+  cursor: pointer;
+  width: 28% !important;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .permits .permit.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .permits .permit span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 12px !important;
+  color: #4a4a4a;
+}
+
+.form-register-controls .rcs {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+}
+.form-register-controls .rcs .rc {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 50px;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+}
+.form-register-controls .rcs .rc.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .rcs .rc span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 12px !important;
+  color: #4a4a4a;
+  text-transform: capitalize;
+}
+
+.form-register-controls .bodys {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px !important;
+  padding: 20px;
+}
+.form-register-controls .bodys .body {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+  width: 28% !important;
+}
+.form-register-controls .bodys .body.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .bodys .body span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 12px !important;
+  color: #4a4a4a;
+  text-transform: capitalize;
+}
+
+.form-register-controls .conditions {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  gap: 20px !important;
+  padding: 20px;
+}
+.form-register-controls .conditions .condition {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 40px !important;
+  cursor: pointer;
+  transition: none;
+  border: 1px solid transparent;
+  width: 28% !important;
+}
+.form-register-controls .conditions .condition.active {
+  border: 1px solid #00adef;
+}
+.form-register-controls .conditions .condition span {
+  display: inline-block;
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 12px !important;
+  color: #4a4a4a;
+}
+.form-register-controls .conditions .condition.active {
+  border: 1px solid #00adef;
+}
+
+.btn-next {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-next button {
+  border: none;
+  padding: 8px 30px !important;
+  background: #050f56;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 15px !important;
+  font-family: "Roboto";
+}
+
+
+}
 .overlay {
   position: absolute;
   top: 0;
@@ -28,10 +2389,10 @@
   content: "";
   position: absolute;
   width: 5px !important;
-  height: 310px !important;
+  height: 310px ;
   background-color: #050f56;
-  top: 200px !important;
-  left: 32px !important;
+  top: 200px ;
+  left: 32px ;
   align-self: center;
   transform: translate(-50%, -50%);
   z-index: -1;
@@ -76,7 +2437,7 @@
 
 /* Form Details */
 .form-details-container {
-  width: 80% !important;
+  width: 80% ;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;

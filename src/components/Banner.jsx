@@ -50,7 +50,8 @@ const Banner = () => {
 
   const RightIntro = () => {
     return (
-      <div className="intro-right">
+     
+      <div className="intro-right mob-intro-right">
         <h2>What vehicle do you want to sell?</h2>
         <div className="categories">
           <div className="row-one">
@@ -97,6 +98,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
+    
     );
   };
 

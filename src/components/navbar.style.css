@@ -519,6 +519,7 @@
 .parent {
   background-color: rgba(128, 128, 128, 0.274);
   position: fixed;
+  top:0;
   z-index: 9999;
   height: 100%;
   width: 67%;
@@ -668,6 +669,7 @@ a {
 .signup-parent {
   background-color: rgba(128, 128, 128, 0.274);
   position: fixed;
+ 
   z-index: 9999;
   height: 100%;
   width: 67%;
@@ -678,7 +680,7 @@ a {
   height: 100%;
   position: fixed;
   z-index: 99;
-
+  top:0;
   display: flex;
   justify-content: space-between;
 }
@@ -837,6 +839,7 @@ a {
   height: 100%;
   position: fixed;
   z-index: 99;
+  top:0;
   display: flex;
   justify-content: space-between;
 }

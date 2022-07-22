@@ -23,6 +23,7 @@ import animationData1 from "../assets/step-1-lottie.json";
 import animationData3 from "../assets/mental-therapy-lottie.json";
 import animationData2 from "../assets/step-3rd-lottie.json";
 import { Link } from "react-router-dom";
+import { imgurl } from "../constants";
 
 const SellerHome = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -31,6 +32,21 @@ const SellerHome = () => {
   const [testimonialsData, setTestimonialsData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
   const [faqs, setFAQS] = useState([]);
+  const [isCategoryActive, setIsCategoryActive] = useState();
+  const [isCategoryActiveTwo, setIsCategoryActiveTwo] = useState();
+
+  
+
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(max-width: 1000px)").matches
+  )
+
+  useEffect(() => {
+    window
+    .matchMedia("(max-width: 1000px)")
+    .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   const fetchFaqs = async () => {
     const response = await axios.get(Constant.getUrls.getAllFaqs);
@@ -89,6 +105,56 @@ const SellerHome = () => {
     <div>
       <Navbar />
       <Banner />
+      {/* quick four options */}
+      {matches && (
+        <div className="intro-right">
+        <h2>What Vehicle do you want to sell?</h2>
+        <div className="categories">
+          <div className="row-one">
+            {categoriesData.slice(0, 2).map((category, index) => (
+              <div className="category-item" key={category._id}>
+                <Link to={`/sellerform/${category._id}`}>
+                  <div
+                    className={
+                      isCategoryActive === index
+                        ? "category active"
+                        : "category"
+                    }
+                    onClick={() => {
+                      setIsCategoryActive(index);
+                    }}
+                  >
+                    <img src={imgurl + category.icon} alt={category.title} />
+                  </div>
+                </Link>
+                <span>{category.title}</span>
+              </div>
+            ))}
+          </div>
+          <div className="row-two">
+            {categoriesData.slice(2, 4).map((category, index) => (
+              <div className="category-item" key={category._id}>
+                <Link to={`/sellerform/${category._id}`}>
+                  <div
+                    className={
+                      isCategoryActiveTwo === index
+                        ? "category active"
+                        : "category"
+                    }
+                    onClick={() => {
+                      setIsCategoryActiveTwo(index);
+                    }}
+                  >
+                    <img src={imgurl + category.icon} alt={category.title} />
+                  </div>
+                </Link>
+                <span>{category.title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      )}
       <div className="how-it-works-section">
         <div className="header-title">
           <h1>How It Works</h1>
@@ -186,8 +252,13 @@ const SellerHome = () => {
             slidesPerView={3}
             grabCursor={true}
             breakpoints={{
-              768: {
-                slidesPerView: 3,
+              50: {
+                slidesPerView: 1.8,
+                spaceBetween: 10,
+              },
+              820: {
+                slidesPerView: 2.7,
+                spaceBetween: 25,
               },
               1368: {
                 slidesPerView: 3,
@@ -251,7 +322,15 @@ const SellerHome = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              768: {
+              820: {
+                slidesPerView: 3.8,
+                spaceBetween: 20,
+              },
+              50: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              999: {
                 slidesPerView: 5,
               },
               1368: {

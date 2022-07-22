@@ -63,7 +63,7 @@ const SellerFormRegistration = ({
   }, []);
 
   return (
-    <>
+    <> 
       <Navbar />
       <div className="seller-form-container">
         <div className="form-routes">

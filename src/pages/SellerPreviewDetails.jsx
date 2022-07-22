@@ -38,7 +38,7 @@ const SellerPreviewDetails = ({
       <Navbar />
       <div className="seller-preview-container">
         <div className="form-routes preview">
-          <div className="route-nav">
+          <div className="route-nav route-nav-mob">
             <div className="circle active">
               <FiCheckCircle color="#050F56" />
             </div>
@@ -47,7 +47,7 @@ const SellerPreviewDetails = ({
             </a>
           </div>
 
-          <div className="route-nav">
+          <div className="route-nav route-nav-mob">
             <div className="circle active">
               <FiCheckCircle color="#050F56" />
             </div>
@@ -56,7 +56,7 @@ const SellerPreviewDetails = ({
             </a>
           </div>
 
-          <div className="route-nav">
+          <div className="route-nav route-nav-mob">
             <div className="circle active">
               <FiCheckCircle color="#050F56" />
             </div>
@@ -65,7 +65,7 @@ const SellerPreviewDetails = ({
             </a>
           </div>
 
-          <div className="route-nav">
+          <div className="route-nav route-nav-mob">
             <div className="circle active">
               <FiCheckCircle color="#050F56" />
             </div>
