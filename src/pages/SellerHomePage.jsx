@@ -74,7 +74,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a981c7a81db2038300ae60&sort=true&limit=10"
+        "?category=62a981c7a81db2038300ae60&status=approved&sort=true&limit=10"
       }`
     );
     setLatestTrucksData(response.data.vehicle.docs);
@@ -84,7 +84,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9825aa81db2038300ae7e&sort=true&limit=10"
+        "?category=62a9825aa81db2038300ae7e&status=approved&sort=true&limit=10"
       }`
     );
     setLatestBusesData(response.data.vehicle.docs);
@@ -94,7 +94,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a98203a81db2038300ae73&sort=true&limit=10"
+        "?category=62a98203a81db2038300ae73&status=approved&sort=true&limit=10"
       }`
     );
     setLatestTractorsData(response.data.vehicle.docs);
@@ -104,10 +104,24 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9829ba81db2038300ae83&sort=true&limit=10"
+        "?category=62a9829ba81db2038300ae83&status=approved&sort=true&limit=10"
       }`
     );
     setLatestConstructionData(response.data.vehicle.docs);
+  };
+
+  const rupee_format = (str) => {
+    if (str) {
+      var x = str;
+      x = x.toString();
+      var lastThree = x.substring(x.length - 3);
+      var otherNumbers = x.substring(0, x.length - 3);
+      if (otherNumbers !== "") lastThree = "," + lastThree;
+      var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+      return res;
+    } else {
+      return;
+    }
   };
 
   // function loadGoogleTranslate(){
@@ -277,7 +291,7 @@ const SellerHomePage = () => {
                               <span>{latestTruck.city}</span>
                             </div>
                           </div>
-                          <p>₹ {latestTruck.selling_price}</p>
+                          <p>₹ {rupee_format(latestTruck.selling_price)}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestTruck._id}`}>
@@ -331,7 +345,7 @@ const SellerHomePage = () => {
                               <span>{latestBuses.city}</span>
                             </div>
                           </div>
-                          <p>₹ {latestBuses.selling_price}</p>
+                          <p>₹ {rupee_format(latestBuses.selling_price)}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestBuses._id}`}>
@@ -385,7 +399,7 @@ const SellerHomePage = () => {
                               <span>{latestTractor.city}</span>
                             </div>
                           </div>
-                          <p>₹ {latestTractor.selling_price}</p>
+                          <p>₹ {rupee_format(latestTractor.selling_price)}</p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestTractor._id}`}>
@@ -439,7 +453,9 @@ const SellerHomePage = () => {
                               <span>{latestConstruction.city}</span>
                             </div>
                           </div>
-                          <p>₹ {latestConstruction.selling_price}</p>
+                          <p>
+                            ₹ {rupee_format(latestConstruction.selling_price)}
+                          </p>
                         </div>
 
                         <Link to={`/vehicledetails/${latestConstruction._id}`}>

@@ -114,7 +114,7 @@ const VehicleListings = () => {
     const apiUrl = queryString.stringify(location);
 
     const res = await axios.get(
-      `${Constant.getUrls.getAllVehicles}?status=published&${apiUrl}`
+      `${Constant.getUrls.getAllVehicles}?status=approved&${apiUrl}`
     );
 
     setVehicleObj(res.data.vehicle);
@@ -456,13 +456,6 @@ const VehicleListings = () => {
   return (
     <>
       <Navbar />
-      <div className="pages-navigation">
-        <Link to="/">
-          <small>Home</small>
-        </Link>
-        &nbsp; &#62; &nbsp;
-        <small>Vehicle listing</small>
-      </div>
       <div className="filter-sort-button-div">
         <div
           className="filter-button"
@@ -768,6 +761,13 @@ const VehicleListings = () => {
           </div>
         </div>
       )}
+      <div className="pages-navigation">
+        <Link to="/">
+          <small>Home</small>
+        </Link>
+        &nbsp; &#62; &nbsp;
+        <small>Vehicle listing</small>
+      </div>
       <section className="vehicles-container">
         <aside className="filter-sidebar">
           {/* Filter One */}

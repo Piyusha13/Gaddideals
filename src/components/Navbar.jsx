@@ -47,26 +47,8 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchArray, setSearchArray] = useState([]);
   const [searchSuggestion, setSearchSuggestion] = useState(false);
-  const [searchOverlay, setSearchOverlay] = useState(false);
 
   const navigate = useNavigate();
-
-  const fetchIcons = async () => {
-    const response = await axios.get(Constant.getUrls.getAllCategories);
-    setNavIcons(response.data.category.docs);
-  };
-
-  const fetchSearchBrandsArray = async () => {
-    const response = await axios.get(Constant.getUrls.getAllSearchSuggestions);
-    setSearchArray(response.data.search.brand);
-  };
-
-  const fetchSearchModelsArray = async () => {
-    let modelArray = [];
-    const response = await axios.get(Constant.getUrls.getAllSearchSuggestions);
-    modelArray.push(response.data.search.model);
-    setSearchArray((prevState) => [...prevState, ...modelArray[0]]);
-  };
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -79,10 +61,25 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const fetchIcons = async () => {
+      const response = await axios.get(Constant.getUrls.getAllCategories);
+      setNavIcons(response.data.category.docs);
+    };
+
+    const fetchSearchBrandsModelArray = async () => {
+      const response = await axios.get(
+        Constant.getUrls.getAllSearchSuggestions
+      );
+      setSearchArray(response.data.search.brand);
+
+      let modelArray = [];
+      modelArray.push(response.data.search.model);
+      setSearchArray((prevState) => [...prevState, ...modelArray[0]]);
+    };
+
     fetchIcons();
 
-    fetchSearchBrandsArray();
-    fetchSearchModelsArray();
+    fetchSearchBrandsModelArray();
   }, []);
 
   const filterBrandsModel = searchArray.filter((modbrd) => {
@@ -1104,15 +1101,26 @@ const Navbar = () => {
             {searchSuggestion && (
               <div className="search-nav-suggestion">
                 {filterBrandsModel.map((modelbrand) => (
-                  <p
+                  <a
                     key={modelbrand._id}
-                    onClick={() => {
-                      setSearchValue(modelbrand.title || modelbrand.name);
-                      setSearchSuggestion(!searchSuggestion);
-                    }}
+                    href={
+                      "category" in modelbrand
+                        ? `/vehiclelistings?category=${modelbrand.category}&brand[]=${modelbrand.brand}`
+                        : modelbrand.category
+                        ? `/vehiclelistings?category=${modelbrand.category}`
+                        : ""
+                    }
                   >
-                    {modelbrand.title || modelbrand.name}
-                  </p>
+                    <p
+                      onClick={() => {
+                        setSearchValue(modelbrand.title || modelbrand.name);
+                        setSearchSuggestion(!searchSuggestion);
+                        console.log(modelbrand.brand);
+                      }}
+                    >
+                      {modelbrand.title || modelbrand.name}
+                    </p>
+                  </a>
                 ))}
               </div>
             )}
