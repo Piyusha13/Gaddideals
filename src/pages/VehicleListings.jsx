@@ -48,8 +48,8 @@ const VehicleListings = () => {
   const [lthPrice, setLTHPrice] = useState(location.price_sort);
   const [recentlyAdded, setRecentlyAdded] = useState(location.sort);
   const [searchInput, setSearchInput] = useState("");
-  const [minPrice, setMinPrice] = useState(location.min_price);
-  const [maxPrice, setMaxPrice] = useState(location.max_price);
+  const [minPrice, setMinPrice] = useState(location.min_price || 0);
+  const [maxPrice, setMaxPrice] = useState(location.max_price || 0);
   const [pageNo, setPageNo] = useState(1);
   const [displayFilterTwo, setdisplayFilterTwo] = useState(false);
   const [displayFilterOne, setdisplayFilterOne] = useState(false);
@@ -68,13 +68,13 @@ const VehicleListings = () => {
     }
   };
 
-  const handleMin = async (e) => {
+  const handleMin = (e) => {
     setMinPrice(e.target.value);
 
     location["min_price"] = e.target.value;
   };
 
-  const handleMax = async (e) => {
+  const handleMax = (e) => {
     setMaxPrice(e.target.value);
 
     if (minPrice < e.target.value) {
@@ -529,6 +529,7 @@ const VehicleListings = () => {
                   name="minprice"
                   value={minPrice}
                   onChange={handleMin}
+                  min="0"
                 />
               </div>
               <div className="price-input">
@@ -539,6 +540,7 @@ const VehicleListings = () => {
                   name="maxprice"
                   value={maxPrice}
                   onChange={handleMax}
+                  max="1500000"
                 />
               </div>
             </div>
@@ -1111,18 +1113,14 @@ const VehicleListings = () => {
                         <span>₹{rupee_format(vehicle.selling_price)}</span>
                       </p>
                     </div>
-                    <button
-                      onClick={() => navigate(`/vehicledetails/${vehicle._id}`)}
-                    >
-                      Get Seller Details
-                    </button>
+                    <button>Get Seller Details</button>
                   </div>
                 </div>
               ))}
             </>
           ) : (
             <div className="no-data">
-              <Lottie options={defaultOptions} width="100%" height="500px" />
+              <Lottie options={defaultOptions} width="100%" height="100%" />
             </div>
           )}
         </div>

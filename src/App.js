@@ -16,7 +16,39 @@ import DirectSignup from "./components/DirectSignup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Geocode from "react-geocode";
+
 function App() {
+  Geocode.setApiKey("AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw");
+  Geocode.setLanguage("en");
+  Geocode.setRegion("in");
+  Geocode.setLocationType("ROOFTOP");
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    Geocode.fromLatLng(latitude, longitude).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        console.log(address);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    console.log(latitude, longitude);
+  }
+
+  function error() {
+    console.log("Unable to retrieve location");
+  }
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
   return (
     <>
       <Routes>

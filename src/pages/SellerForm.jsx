@@ -338,6 +338,7 @@ const SellerForm = () => {
     if (response.data.status === "success") {
       toast.success(response.data.message);
       setSaveLoading(false);
+      setStep(1);
     }
 
     console.log(response.data);
