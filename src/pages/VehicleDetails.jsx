@@ -10,7 +10,7 @@ import racingIcon from "../assets/racing.png";
 import horsePowerIcon from "../assets/horse-power-icon.png";
 import seatIcon from "../assets/seat-icon.png";
 import CloseTab from "../assets/close-tab.png";
-import downArrow from "../assets/down-arrow.png"
+import downArrow from "../assets/down-arrow.png";
 import Edit from "../assets/edit.png";
 import manualTransmissionIcon from "../assets/gas-station.png";
 import similarTruck from "../assets/trucks1.png";
@@ -23,7 +23,6 @@ import { useEffect, useState } from "react";
 import Constant from "../constants";
 
 import { toast } from "react-toastify";
-
 
 import moment from "moment";
 
@@ -57,14 +56,16 @@ const VehicleDetails = () => {
   const [otp, setOtp] = useState("");
   const [SellerDetails, setSellerDetails] = useState("");
 
+  const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [mob_no, setmob_no] = useState("");
-  const [city,setcity]=useState("");
-  const [user_type,setuser_type]=useState("");
-  const [isTypeActive,setIsTypeActive]=useState();
-  const [seller_id,setseller_id]=useState("");
-  const [seller,setSeller]=useState("");
+  const [city, setcity] = useState("");
+  const [user_type, setuser_type] = useState("");
+  const [isTypeActive, setIsTypeActive] = useState();
+  const [seller_id, setseller_id] = useState("");
+  const [seller, setSeller] = useState("");
 
   const dealerType = [
     {
@@ -88,12 +89,12 @@ const VehicleDetails = () => {
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
-  )
+  );
 
   useEffect(() => {
     window
-    .matchMedia("(max-width: 1000px)")
-    .addEventListener('change', e => setMatches( e.matches ));
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
 
   useEffect(() => {
@@ -104,12 +105,11 @@ const VehicleDetails = () => {
           id,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjk1ZTIzOTAyMzkzMDVjYjUzODUzOCIsImlhdCI6MTY1NzEwNjQ0NCwiZXhwIjoxNzQzNTA2NDQ0fQ.Vbw-CK15E1z5LseHM1fR2FGvH5IDU8zXiP08ZPKjSqo",
+            Authorization: `Bearer ${userToken}`,
           },
         }
       );
-        // console.log(res.data.vehicle.user._id);
+      // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
       setCheckCategory(res.data.vehicle.category.title);
       setseller_id(res.data.vehicle.user._id);
@@ -152,37 +152,34 @@ const VehicleDetails = () => {
     }
   };
 
-  function saveBuyer(){
-    let payload = { name,email,mob_no,seller_id,user_type,city};
-    axios.post(Constant.postUrls.postAllEnquiries, payload,
-      {
+  function saveBuyer() {
+    let payload = { name, email, mob_no, seller_id, user_type, city };
+    axios
+      .post(Constant.postUrls.postAllEnquiries, payload, {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyY2E4ZDNiYTA2MmQ2NTVhYzBmYmY1OCIsImlhdCI6MTY1ODQwODg1MywiZXhwIjoxNzQ0ODA4ODUzfQ.bWK3B73hJgDpxMdofj7zWMXonsV9B6-D97Oa9X8qSsk",
+          Authorization: `Bearer ${userToken}`,
         },
-      }).then((result) => {
-      console.log("result", result);
-       if (result.data.status === "failed") {
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
-          toast.success(result.data.message);
-          // setvisibleOTP(!visibleOTP);
-          setmob_no(mob_no);
-          // setOtp(otp);
-          setBuyerOtp(!BuyerOtp);
-          // setCounter(59);
+      })
+      .then((result) => {
+        if (result.data.status === "failed") {
+          toast.error(result.data.message);
+        } else {
+          if (result.data.status === "success") {
+            toast.success(result.data.message);
+            // setvisibleOTP(!visibleOTP);
+            setmob_no(mob_no);
+            // setOtp(otp);
+            setBuyerOtp(!BuyerOtp);
+            // setCounter(59);
+          }
         }
-      }
-    });
+      });
   }
 
-  function handleChange(o){ 
+  function handleChange(o) {
     setOtp(o);
     console.log(otp);
   }
-
-  
 
   function savePhoneOtp() {
     console.log("otp verified");
@@ -190,7 +187,7 @@ const VehicleDetails = () => {
     let payload = { mob_no, otp };
     axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
       console.log(res);
-      
+
       if (res.data.status === "failed") {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
@@ -221,14 +218,13 @@ const VehicleDetails = () => {
     });
   }
 
-
   const formatDate = (date) => {
     return moment(date).utc().format("YYYY-MM-DD");
   };
 
   if (loadingDetails) {
     return "Loading...";
-   }
+  }
 
   return (
     <>
@@ -236,9 +232,8 @@ const VehicleDetails = () => {
       {BuyerInput && (
         <div>
           <Modal
-          
             visible={BuyerInput}
-            width={ matches? "85%":"35%"}
+            width={matches ? "85%" : "35%"}
             effect="fadeInUp"
             onClickAway={() => {
               setBuyerInput(!BuyerInput);
@@ -280,20 +275,21 @@ const VehicleDetails = () => {
                 className="buyer-email"
                 placeholder="Email"
               ></input>
-              
-                <div className="buyer-location">
-                  <input
+
+              <div className="buyer-location">
+                <input
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={city} placeholder="Location"></input>
-                  <img src={downArrow} alt=""></img>
-                </div>
-                
-                <div className="dealerType">
-                  <div className="dealer-que">What type of user are you?</div>
-                  <div className="dealerTypeOption">
-                    
+                  value={city}
+                  placeholder="Location"
+                ></input>
+                <img src={downArrow} alt=""></img>
+              </div>
+
+              <div className="dealerType">
+                <div className="dealer-que">What type of user are you?</div>
+                <div className="dealerTypeOption">
                   {dealerType.map((user_types, index) => (
                     <div
                       key={index}
@@ -308,12 +304,10 @@ const VehicleDetails = () => {
                       <span>{user_types.user_type}</span>
                     </div>
                   ))}
-                  
-                  </div>
+                </div>
               </div>
-              
+
               <button
-                
                 onClick={() => {
                   // saveBuyer();
                   setBuyerInput(!BuyerInput);
@@ -330,7 +324,7 @@ const VehicleDetails = () => {
         <div>
           <Modal
             visible={BuyerOtp}
-            width={ matches? "85%":"35%"}
+            width={matches ? "85%" : "35%"}
             effect="fadeInUp"
             onClickAway={() => {
               setBuyerOtp(!BuyerOtp);
@@ -348,11 +342,12 @@ const VehicleDetails = () => {
                 6 digit code sent to mobile number
               </div>
               <div className="buyer-phone-number-input">
-                <input placeholder="Enter Phone Number"
-                 onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
+                <input
+                  placeholder="Enter Phone Number"
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                  value={mob_no}
                 ></input>
                 <img src={Edit} alt=""></img>
               </div>
@@ -364,15 +359,19 @@ const VehicleDetails = () => {
                 separator={<span></span>}
                 value={otp}
                 type="number"
-                onChange={(e)=>{
-                  handleChange(e)}
-                }
+                onChange={(e) => {
+                  handleChange(e);
+                }}
               ></OtpInput>
-              <div className="new-otp-text"
-              onClick={()=>{resendotp(); }}
-              >Get new OTP in 25 sec</div>
+              <div
+                className="new-otp-text"
+                onClick={() => {
+                  resendotp();
+                }}
+              >
+                Get new OTP in 25 sec
+              </div>
               <button
-               
                 onClick={() => {
                   savePhoneOtp();
                   saveBuyer();
@@ -388,7 +387,7 @@ const VehicleDetails = () => {
         <div>
           <Modal
             visible={SellerDetails}
-            width={ matches? "85%":"35%"}
+            width={matches ? "85%" : "35%"}
             effect="fadeInUp"
             onClickAway={() => {
               setSellerDetails(!SellerDetails);
@@ -403,23 +402,24 @@ const VehicleDetails = () => {
                 }}
               ></img>
               <div className="userProfilePic">
-                <img src={"https://gaddideals.brokerinvoice.co.in"+seller.profile_pic_url}></img>
+                <img
+                  src={
+                    "https://gaddideals.brokerinvoice.co.in" +
+                    seller.profile_pic_url
+                  }
+                ></img>
               </div>
               <div className="userName">{seller.name}</div>
               <hr></hr>
               <input value={seller.name} placeholder="Name"></input>
               <input value={seller.mob_no} placeholder="Phone Numer"></input>
               <input value={seller.email} placeholder="Email"></input>
-            </div> 
+            </div>
           </Modal>
         </div>
       )}
 
-
-        
-          
-
-{!loadingDetails && (
+      {!loadingDetails && (
         <section className="vehicle-details-container">
           <div className="detail-pages-navigation">
             <Link to="/">
@@ -539,9 +539,15 @@ const VehicleDetails = () => {
                         <span>{getvehicledetails.no_of_seats}</span>
                       </div>
                     )}
+                    {checkCategory === "Construction Equipments" && (
+                      <div className="stat">
+                        <img src={tyreIcon} alt="tyre icon" />
+                        <span>{getvehicledetails.no_of_tyre}</span>
+                      </div>
+                    )}
                     <div className="stat racing">
                       <img src={racingIcon} alt="racing icon" />
-                      <span>{getvehicledetails.tyre_cond} </span>
+                      <span>{getvehicledetails.tyre_cond}</span>
                     </div>
                     <div className="stat manual">
                       <img
@@ -571,8 +577,12 @@ const VehicleDetails = () => {
 
               <div className="selling-detail-container">
                 <button
-                onClick={()=>{setBuyerInput(!BuyerInput);}}
-                >Get Seller Details</button>
+                  onClick={() => {
+                    setBuyerInput(!BuyerInput);
+                  }}
+                >
+                  Get Seller Details
+                </button>
 
                 <div className="seller-transaction">
                   <span>Secured Transaction</span>

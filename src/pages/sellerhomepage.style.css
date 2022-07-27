@@ -902,6 +902,7 @@
 
 .tablist-container li:focus {
   border: none;
+  outline: none;
 }
 
 .tab {

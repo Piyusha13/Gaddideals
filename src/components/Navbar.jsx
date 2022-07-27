@@ -22,6 +22,8 @@ import facebookLogo from "../assets/facebook_logo.svg";
 import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 
+import statecities from "../state-cities.json";
+
 import { toast } from "react-toastify";
 // import MobileRespHamburgerMune from "../pages/MobileRespHamburgerMune";
 
@@ -53,6 +55,10 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchArray, setSearchArray] = useState([]);
   const [searchSuggestion, setSearchSuggestion] = useState(false);
+  const [langDropdown, setLangDropdown] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [citySearch, setCitySearch] = useState("");
+  const [langSuggestion, setLangSuggestion] = useState(false);
 
   // const googleTranslate = require("google-translate")("AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw");
 
@@ -67,6 +73,31 @@ const Navbar = () => {
     } else {
       setSearchSuggestion(false);
     }
+  };
+
+  const handleCityChange = (e) => {
+    setCitySearch(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setLangSuggestion(true);
+    } else {
+      setLangSuggestion(false);
+    }
+  };
+
+  // const handleLangFocus = () => {
+  //   setLangSuggestion((prevSuggestion) => !prevSuggestion);
+  // };
+
+  const fetchCities = () => {
+    let citiesArr = [];
+    statecities.map((city) => {
+      if (city) {
+        citiesArr.push(city.City);
+      }
+      return citiesArr;
+    });
+    setCities(citiesArr);
   };
 
   useEffect(() => {
@@ -87,9 +118,13 @@ const Navbar = () => {
     };
 
     fetchIcons();
-
     fetchSearchBrandsModelArray();
+    fetchCities();
   }, []);
+
+  const filterCities = cities.filter((city) =>
+    city.toLowerCase().includes(citySearch.toLowerCase())
+  );
 
   const filterBrandsModel = searchArray.filter((modbrd) => {
     return (
@@ -349,7 +384,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [goingUp]);
+  }, [goingUp, sellBuyContainerOnScroll]);
 
   function logoutAccount() {
     localStorage.clear();
@@ -1269,13 +1304,45 @@ const Navbar = () => {
           </div>
 
           <div className="location-container">
-            <div className="location">
+            <div
+              className="location"
+              onClick={() => setLangDropdown(!langDropdown)}
+            >
               <img src={locationIcon} alt="location" />
               <span>Location</span>
+              <div className="arrow-icon">
+                <img src={downArrow} alt="down arrow" />
+              </div>
             </div>
-            <div className="arrow-icon">
-              <img src={downArrow} alt="down arrow" />
-            </div>
+
+            {langDropdown && (
+              <div className="lang-dropdown">
+                <div className="lang-input">
+                  <input
+                    type="text"
+                    placeholder="Enter City here..."
+                    onChange={handleCityChange}
+                    value={citySearch}
+                  />
+
+                  {langSuggestion && (
+                    <div className="lang-suggetion">
+                      {filterCities.slice(0, 7).map((city, index) => (
+                        <p
+                          key={index}
+                          onClick={() => {
+                            setCitySearch(city);
+                            setLangDropdown(false);
+                          }}
+                        >
+                          {city}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="languages-container">

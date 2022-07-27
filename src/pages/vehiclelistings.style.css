@@ -1127,7 +1127,9 @@
 }
 
 .no-data {
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   object-fit: cover;
 }
 

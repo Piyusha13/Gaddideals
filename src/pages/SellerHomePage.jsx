@@ -30,6 +30,7 @@ import animationData2 from "../assets/step-3rd-lottie.json";
 import { Link } from "react-router-dom";
 // import "http://translate.googlr.com/translate_a/elemnt.js?cb=loadGoogleTranslate";
 import { FaGoogle } from "react-icons/fa";
+import { log } from "util";
 
 // import { useLazyTranslate } from 'react-google-translate';
 // const GCP_PRIVATE_KEY=["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"];
@@ -42,6 +43,10 @@ const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [categoriesData, setCategoriesData] = useState([]);
+  const [truckCategoryId, setTruckCategoryId] = useState("");
+  const [tractorsCategoryId, setTractorsCategoryId] = useState("");
+  const [busesCategoryId, setBusesCategoryId] = useState("");
+  const [constructionCategoryId, setConstructionCategoryId] = useState("");
   const [testimonialsData, setTestimonialsData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
   const [latestTrucksData, setLatestTrucksData] = useState([]);
@@ -74,7 +79,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a981c7a81db2038300ae60&status=approved&sort=true&limit=10"
+        `?category=62de7bb69291101d08b10762&status=approved&sort=true&limit=10`
       }`
     );
     setLatestTrucksData(response.data.vehicle.docs);
@@ -84,7 +89,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9825aa81db2038300ae7e&status=approved&sort=true&limit=10"
+        `?category=62de8b709291101d08b15fb6&status=approved&sort=true&limit=10`
       }`
     );
     setLatestBusesData(response.data.vehicle.docs);
@@ -94,7 +99,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a98203a81db2038300ae73&status=approved&sort=true&limit=10"
+        `?category=62de8b589291101d08b15f44&status=approved&sort=true&limit=10`
       }`
     );
     setLatestTractorsData(response.data.vehicle.docs);
@@ -104,7 +109,7 @@ const SellerHomePage = () => {
     const response = await axios.get(
       `${
         Constant.getUrls.getAllLatestVehicles +
-        "?category=62a9829ba81db2038300ae83&status=approved&sort=true&limit=10"
+        `?category=62de8ba09291101d08b15ff5&status=approved&sort=true&limit=10`
       }`
     );
     setLatestConstructionData(response.data.vehicle.docs);
@@ -138,6 +143,13 @@ const SellerHomePage = () => {
     fetchLatestContruction();
     fetchFaqs();
     // languageTranslation();
+
+    // const converted = Object.assign(
+    //   {},
+    //   ...categoriesData.map((category) => ({ [category.title]: category }))
+    // );
+
+    // setTruckCategoryId(converted.Trucks._id);
   }, []);
 
   const defaultOptions = {
@@ -276,12 +288,14 @@ const SellerHomePage = () => {
                     key={latestTruck._id}
                   >
                     <div key={latestTruck._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestTruck.front_side_pic}`}
-                          alt={latestTruck.brand.title}
-                        />
-                      </div>
+                      <Link to={`/vehicledetails/${latestTruck._id}`}>
+                        <div className="latest-img-wrapper">
+                          <img
+                            src={`https://gaddideals.brokerinvoice.co.in${latestTruck.front_side_pic}`}
+                            alt={latestTruck.brand.title}
+                          />
+                        </div>
+                      </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
@@ -294,9 +308,7 @@ const SellerHomePage = () => {
                           <p>₹ {rupee_format(latestTruck.selling_price)}</p>
                         </div>
 
-                        <Link to={`/vehicledetails/${latestTruck._id}`}>
-                          <button>Get Seller Details</button>
-                        </Link>
+                        <button>Get Seller Details</button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -329,12 +341,14 @@ const SellerHomePage = () => {
                     key={latestBuses._id}
                   >
                     <div key={latestBuses._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestBuses.front_side_pic}`}
-                          alt={latestBuses.brand.title}
-                        />
-                      </div>
+                      <Link to={`/vehicledetails/${latestBuses._id}`}>
+                        <div className="latest-img-wrapper">
+                          <img
+                            src={`https://gaddideals.brokerinvoice.co.in${latestBuses.front_side_pic}`}
+                            alt={latestBuses.brand.title}
+                          />
+                        </div>
+                      </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
@@ -348,9 +362,7 @@ const SellerHomePage = () => {
                           <p>₹ {rupee_format(latestBuses.selling_price)}</p>
                         </div>
 
-                        <Link to={`/vehicledetails/${latestBuses._id}`}>
-                          <button>Get Seller Details</button>
-                        </Link>
+                        <button>Get Seller Details</button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -383,12 +395,14 @@ const SellerHomePage = () => {
                     key={latestTractor._id}
                   >
                     <div key={latestTractor._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestTractor.front_side_pic}`}
-                          alt={latestTractor.brand.title}
-                        />
-                      </div>
+                      <Link to={`/vehicledetails/${latestTractor._id}`}>
+                        <div className="latest-img-wrapper">
+                          <img
+                            src={`https://gaddideals.brokerinvoice.co.in${latestTractor.front_side_pic}`}
+                            alt={latestTractor.brand.title}
+                          />
+                        </div>
+                      </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
@@ -402,9 +416,7 @@ const SellerHomePage = () => {
                           <p>₹ {rupee_format(latestTractor.selling_price)}</p>
                         </div>
 
-                        <Link to={`/vehicledetails/${latestTractor._id}`}>
-                          <button>Get Seller Details</button>
-                        </Link>
+                        <button>Get Seller Details</button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -437,12 +449,14 @@ const SellerHomePage = () => {
                     key={latestConstruction._id}
                   >
                     <div key={latestConstruction._id} className="latest-card">
-                      <div className="latest-img-wrapper">
-                        <img
-                          src={`https://gaddideals.brokerinvoice.co.in${latestConstruction.front_side_pic}`}
-                          alt={latestConstruction.brand.title}
-                        />
-                      </div>
+                      <Link to={`/vehicledetails/${latestConstruction._id}`}>
+                        <div className="latest-img-wrapper">
+                          <img
+                            src={`https://gaddideals.brokerinvoice.co.in${latestConstruction.front_side_pic}`}
+                            alt={latestConstruction.brand.title}
+                          />
+                        </div>
+                      </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
@@ -458,9 +472,7 @@ const SellerHomePage = () => {
                           </p>
                         </div>
 
-                        <Link to={`/vehicledetails/${latestConstruction._id}`}>
-                          <button>Get Seller Details</button>
-                        </Link>
+                        <button>Get Seller Details</button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -477,18 +489,21 @@ const SellerHomePage = () => {
         </div>
 
         <div className="our-categories-container">
-          {categoriesData.slice(0, 4).map((category) => (
-            <div className="our-category" key={category._id}>
-              <img
-                src={`https://gaddideals.brokerinvoice.co.in${category.image}`}
-                alt={category.title}
-              />
-
-              <div className="our-category-title">
-                <h6>{category.title}</h6>
+          {categoriesData.map((category) => {
+            return (
+              <div className="our-category" key={category._id}>
+                <a href={"/vehiclelistings?category=" + category._id}>
+                  <img
+                    src={`https://gaddideals.brokerinvoice.co.in${category.image}`}
+                    alt={category.title}
+                  />
+                </a>
+                <div className="our-category-title">
+                  <h6>{category.title}</h6>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
