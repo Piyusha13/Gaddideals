@@ -73,14 +73,17 @@ const SellerFormVehicle = ({
   setIsFuelActive,
   isOwnerActive,
   setIsOwnerActive,
+  suggestionBox,
+  setSuggestionBox,
+  statesSuggestionBox,
+  setStatesSuggestionBox,
+  citySuggestionBox,
+  setCitySuggestionBox,
+  modelSuggestionBox,
+  setModelSuggestionBox,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
-
-  const [suggestionBox, setSuggestionBox] = useState(false);
-  const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
-  const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
-  const [citySuggestionBox, setCitySuggestionBox] = useState(false);
 
   const [seeMoreSuggestion, setSeeMoreSuggestion] = useState(false);
 
@@ -102,22 +105,18 @@ const SellerFormVehicle = ({
   };
 
   const handleOnFocus = (e) => {
-    setSuggestionBox(!suggestionBox);
     setOverlayState(true);
   };
 
   const handleOnModelFocus = (e) => {
-    setModelSuggestionBox(!modelSuggestionBox);
     setOverlayState(true);
   };
 
   const handleOnStateFocus = (e) => {
-    setStatesSuggestionBox(!statesSuggestionBox);
     setOverlayState(true);
   };
 
   const handleOnCityFocus = (e) => {
-    setCitySuggestionBox(!citySuggestionBox);
     setOverlayState(true);
   };
 

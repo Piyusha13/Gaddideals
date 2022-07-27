@@ -66,22 +66,27 @@ const SellerForm = () => {
   const [engImage, setEngImage] = useState();
 
   const [documentFrontSideImg, setDocumentFrontSideImg] = useState(false);
-  const [frontSideImg, setFrontSideImg] = useState();
+  const [frontSideImg, setFrontSideImg] = useState("");
 
   const [documentBackSideImg, setDocumentBackSideImg] = useState(false);
-  const [backSideImg, setBackSideImg] = useState();
+  const [backSideImg, setBackSideImg] = useState("");
 
   const [documentFronttyreLeft, setDocumentFronttyreLeft] = useState(false);
-  const [fronttyreLeftImg, setFronttyreLeftImg] = useState();
+  const [fronttyreLeftImg, setFronttyreLeftImg] = useState("");
 
   const [documentFronttyreRight, setDocumentFronttyreRight] = useState(false);
-  const [fronttyreRightImg, setFronttyreRightImg] = useState();
+  const [fronttyreRightImg, setFronttyreRightImg] = useState("");
 
   const [documentSidePicLeft, setDocumentSidePicLeft] = useState(false);
-  const [sidePicLeft, setSidePicLeft] = useState();
+  const [sidePicLeft, setSidePicLeft] = useState("");
 
   const [documentSidePicRight, setDocumentSidePicRight] = useState(false);
-  const [sidePicRight, setSidePicRight] = useState();
+  const [sidePicRight, setSidePicRight] = useState("");
+
+  const [suggestionBox, setSuggestionBox] = useState(false);
+  const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
+  const [citySuggestionBox, setCitySuggestionBox] = useState(false);
+  const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
 
   const [formData, setFormData] = useState({
     vehiclenumber: "",
@@ -168,18 +173,42 @@ const SellerForm = () => {
 
   const handleBrandChange = (e) => {
     setBrandTitle(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setSuggestionBox(true);
+    } else {
+      setSuggestionBox(false);
+    }
   };
 
   const handleModelChange = (e) => {
     setModelTitle(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setModelSuggestionBox(true);
+    } else {
+      setModelSuggestionBox(false);
+    }
   };
 
   const handleStateChange = (e) => {
     setStateTitle(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setStatesSuggestionBox(true);
+    } else {
+      setStatesSuggestionBox(false);
+    }
   };
 
   const handleCityChange = (e) => {
     setCityTitle(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setCitySuggestionBox(true);
+    } else {
+      setCitySuggestionBox(false);
+    }
   };
 
   const filterStates = statesArray.filter((state) => {
@@ -311,7 +340,6 @@ const SellerForm = () => {
     fd.append("insurance", formData.insurancevalidity);
     fd.append("tax_validity", formData.taxvalidity);
     fd.append("vehicle_permit", permit);
-    fd.append("scrap_vehicle", scrap);
     fd.append("no_of_tyre", formData.nooftyres);
     fd.append("horse_power", formData.horsepower);
     fd.append("no_of_seats", formData.noofseats);
@@ -341,7 +369,7 @@ const SellerForm = () => {
       setStep(1);
     }
 
-    console.log(response.data);
+    console.log(response);
   };
 
   switch (step) {
@@ -385,6 +413,14 @@ const SellerForm = () => {
             handleBrandChange={handleBrandChange}
             handleModelChange={handleModelChange}
             formData={formData}
+            suggestionBox={suggestionBox}
+            setSuggestionBox={setSuggestionBox}
+            statesSuggestionBox={statesSuggestionBox}
+            setStatesSuggestionBox={setStatesSuggestionBox}
+            citySuggestionBox={citySuggestionBox}
+            setCitySuggestionBox={setCitySuggestionBox}
+            modelSuggestionBox={modelSuggestionBox}
+            setModelSuggestionBox={setModelSuggestionBox}
           />
         </>
       );

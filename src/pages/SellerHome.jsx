@@ -35,17 +35,14 @@ const SellerHome = () => {
   const [isCategoryActive, setIsCategoryActive] = useState();
   const [isCategoryActiveTwo, setIsCategoryActiveTwo] = useState();
 
-  
-
-
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
-  )
+  );
 
   useEffect(() => {
     window
-    .matchMedia("(max-width: 1000px)")
-    .addEventListener('change', e => setMatches( e.matches ));
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
 
   const fetchFaqs = async () => {
@@ -108,52 +105,52 @@ const SellerHome = () => {
       {/* quick four options */}
       {matches && (
         <div className="intro-right">
-        <h2>What Vehicle do you want to sell?</h2>
-        <div className="categories">
-          <div className="row-one">
-            {categoriesData.slice(0, 2).map((category, index) => (
-              <div className="category-item" key={category._id}>
-                <Link to={`/sellerform/${category._id}`}>
-                  <div
-                    className={
-                      isCategoryActive === index
-                        ? "category active"
-                        : "category"
-                    }
-                    onClick={() => {
-                      setIsCategoryActive(index);
-                    }}
-                  >
-                    <img src={imgurl + category.icon} alt={category.title} />
-                  </div>
-                </Link>
-                <span>{category.title}</span>
-              </div>
-            ))}
-          </div>
-          <div className="row-two">
-            {categoriesData.slice(2, 4).map((category, index) => (
-              <div className="category-item" key={category._id}>
-                <Link to={`/sellerform/${category._id}`}>
-                  <div
-                    className={
-                      isCategoryActiveTwo === index
-                        ? "category active"
-                        : "category"
-                    }
-                    onClick={() => {
-                      setIsCategoryActiveTwo(index);
-                    }}
-                  >
-                    <img src={imgurl + category.icon} alt={category.title} />
-                  </div>
-                </Link>
-                <span>{category.title}</span>
-              </div>
-            ))}
+          <h2>What Vehicle do you want to sell?</h2>
+          <div className="categories">
+            <div className="row-one">
+              {categoriesData.slice(0, 2).map((category, index) => (
+                <div className="category-item" key={category._id}>
+                  <Link to={`/sellerform/${category._id}`}>
+                    <div
+                      className={
+                        isCategoryActive === index
+                          ? "category active"
+                          : "category"
+                      }
+                      onClick={() => {
+                        setIsCategoryActive(index);
+                      }}
+                    >
+                      <img src={imgurl + category.icon} alt={category.title} />
+                    </div>
+                  </Link>
+                  <span>{category.title}</span>
+                </div>
+              ))}
+            </div>
+            <div className="row-two">
+              {categoriesData.slice(2, 4).map((category, index) => (
+                <div className="category-item" key={category._id}>
+                  <Link to={`/sellerform/${category._id}`}>
+                    <div
+                      className={
+                        isCategoryActiveTwo === index
+                          ? "category active"
+                          : "category"
+                      }
+                      onClick={() => {
+                        setIsCategoryActiveTwo(index);
+                      }}
+                    >
+                      <img src={imgurl + category.icon} alt={category.title} />
+                    </div>
+                  </Link>
+                  <span>{category.title}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       )}
       <div className="how-it-works-section">
         <div className="header-title">
@@ -181,7 +178,7 @@ const SellerHome = () => {
 
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Get the sellar details</h5>
+              <h5>Get the seller details</h5>
             </div>
 
             <div className="how-card-img2">

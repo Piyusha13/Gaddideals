@@ -47,13 +47,13 @@ function UserVehicles() {
   // const [array,setarray]=useState("");
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
+  const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   //for vehicle data
   const getMyVehicleDetails = () => {
     axios
       .get("https://gaddideals.brokerinvoice.co.in/api/vehicle/my_vehicles", {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZGU3ZTk1OTI5MTEwMWQwOGIxMGE2OCIsImlhdCI6MTY1ODc0ODYwNywiZXhwIjoxNzQ1MTQ4NjA3fQ.0SmeSm7d-aC2QGoUAzpPdgIsIyZsd2sDNLqJAsv3N9w",
+          Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {

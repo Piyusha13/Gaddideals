@@ -29,6 +29,7 @@ import axios from "axios";
 
 import downArrow from "../assets/down-arrow.png";
 import upArrow from "../assets/up-arrow.png";
+import { log } from "util";
 
 const queryString = require("query-string");
 
@@ -93,6 +94,8 @@ const VehicleListings = () => {
       setCategories(response.data.category.docs);
       if (!location.category) {
         setCat(response.data.category.docs[0]._id);
+        location.category_name =
+          response.data.category.docs[0].title.toLowerCase();
         location.category = response.data.category.docs[0]._id;
         let prevUrl = queryString.stringify(location);
         navigate("?" + prevUrl);
@@ -203,17 +206,21 @@ const VehicleListings = () => {
       }
     }
   };
-  const handleBodyType = (id) => {
+  const handleBodyType = (id, typeTitle) => {
     window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["bodyType[]"]) {
       location["bodyType[]"] = id;
-      navigate("?" + prevUrl + "&bodyType[]=" + id);
+      location["body_type_title"] = typeTitle;
+      navigate(
+        "?" + prevUrl + "&bodyType[]=" + id + "&body_type_title=" + typeTitle
+      );
     } else {
       if (typeof location["bodyType[]"] === "string") {
         if (location["bodyType[]"] === id) {
           delete location["bodyType[]"];
+          delete location["body_type_title"];
         } else {
           location["bodyType[]"] = [location["bodyType[]"], id];
         }
@@ -243,17 +250,20 @@ const VehicleListings = () => {
       }
     }
   };
-  const handleBrandType = (id) => {
+  const handleBrandType = (id, brandTitle) => {
     window.scrollTo(0, 0);
+
     const prevUrl = queryString.stringify(location);
 
     if (!location["brand[]"]) {
       location["brand[]"] = id;
-      navigate("?" + prevUrl + "&brand[]=" + id);
+      location["brand_name"] = brandTitle;
+      navigate("?" + prevUrl + "&brand[]=" + id + "&brand_name=" + brandTitle);
     } else {
       if (typeof location["brand[]"] === "string") {
         if (location["brand[]"] === id) {
           delete location["brand[]"];
+          delete location["brand_name"];
         } else {
           location["brand[]"] = [location["brand[]"], id];
         }
@@ -283,17 +293,19 @@ const VehicleListings = () => {
       }
     }
   };
-  const handleModelType = (id) => {
+  const handleModelType = (id, modelName) => {
     window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["model[]"]) {
       location["model[]"] = id;
-      navigate("?" + prevUrl + "&model[]=" + id);
+      location["model_name"] = modelName;
+      navigate("?" + prevUrl + "&model[]=" + id + "&model_name=" + modelName);
     } else {
       if (typeof location["model[]"] === "string") {
         if (location["model[]"] === id) {
           delete location["model[]"];
+          delete location["model_name"];
         } else {
           location["model[]"] = [location["model[]"], id];
         }
@@ -323,17 +335,19 @@ const VehicleListings = () => {
       }
     }
   };
-  const handleManufacturingType = (id) => {
+  const handleManufacturingType = (id, yearTitle) => {
     window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["years[]"]) {
       location["years[]"] = id;
-      navigate("?" + prevUrl + "&years[]=" + id);
+      location["year_title"] = yearTitle;
+      navigate("?" + prevUrl + "&years[]=" + id + "&year_title=" + yearTitle);
     } else {
       if (typeof location["years[]"] === "string") {
         if (location["years[]"] === id) {
           delete location["years[]"];
+          delete location["year_title"];
         } else {
           location["years[]"] = [location["years[]"], id];
         }
@@ -403,17 +417,21 @@ const VehicleListings = () => {
       }
     }
   };
-  const handleFuelType = (id) => {
+  const handleFuelType = (id, fuelTitle) => {
     window.scrollTo(0, 0);
     const prevUrl = queryString.stringify(location);
 
     if (!location["fuelType[]"]) {
       location["fuelType[]"] = id;
-      navigate("?" + prevUrl + "&fuelType[]=" + id);
+      location["fuel_title"] = fuelTitle;
+      navigate(
+        "?" + prevUrl + "&fuelType[]=" + id + "&fuel_title=" + fuelTitle
+      );
     } else {
       if (typeof location["fuelType[]"] === "string") {
         if (location["fuelType[]"] === id) {
           delete location["fuelType[]"];
+          delete location["fuel_title"];
         } else {
           location["fuelType[]"] = [location["fuelType[]"], id];
         }
@@ -554,7 +572,7 @@ const VehicleListings = () => {
                 <div key={type._id} className="list">
                   <div
                     className="list-content"
-                    onClick={() => handleBodyType(type._id)}
+                    onClick={() => handleBodyType(type._id, type.title)}
                   >
                     {isBtChecked(type._id) ? (
                       <MdOutlineCheckBox color="#050F56" size={25} />
@@ -576,7 +594,7 @@ const VehicleListings = () => {
                 <div key={brand._id} className="list">
                   <div
                     className="list-content"
-                    onClick={() => handleBrandType(brand._id)}
+                    onClick={() => handleBrandType(brand._id, brand.title)}
                   >
                     {isBrandChecked(brand._id) ? (
                       <MdOutlineCheckBox color="#050F56" size={25} />
@@ -597,7 +615,7 @@ const VehicleListings = () => {
                 <div key={model._id} className="list">
                   <div
                     className="list-content"
-                    onClick={() => handleModelType(model._id)}
+                    onClick={() => handleModelType(model._id, model.name)}
                   >
                     {isModelChecked(model._id) ? (
                       <MdOutlineCheckBox color="#050F56" size={25} />
@@ -618,7 +636,9 @@ const VehicleListings = () => {
                 <div key={modelYear._id} className="list">
                   <div
                     className="list-content"
-                    onClick={() => handleManufacturingType(modelYear._id)}
+                    onClick={() =>
+                      handleManufacturingType(modelYear._id, modelYear.year)
+                    }
                   >
                     {isManufacturingChecked(modelYear._id) ? (
                       <MdOutlineCheckBox color="#050F56" size={25} />
@@ -649,8 +669,8 @@ const VehicleListings = () => {
                         size={25}
                       />
                     )}
-                    <p>{kms.km_range}</p>
                   </div>
+                  <p>{kms._id}</p>
                 </div>
               ))}
             </ToggleCategory>
@@ -667,7 +687,7 @@ const VehicleListings = () => {
                 <div key={fuelType._id} className="list">
                   <div
                     className="list-content"
-                    onClick={() => handleFuelType(fuelType._id)}
+                    onClick={() => handleFuelType(fuelType._id, fuelType.title)}
                   >
                     {isFuelChecked(fuelType._id) ? (
                       <MdOutlineCheckBox color="#050F56" size={25} />
@@ -868,21 +888,23 @@ const VehicleListings = () => {
 
               {categories.map((category) => (
                 <div className="category" key={category._id}>
-                  <div
-                    onClick={() => {
-                      handleCat(category._id);
-                    }}
-                    className="icon-wrapper"
-                    style={{
-                      border:
-                        cat === category._id ? "1px solid #00adef" : "none",
-                    }}
-                  >
-                    <img src={imgurl + category.icon} alt={category.title} />
-                  </div>
-                  <a rel="noreferrer" href="#dasd">
-                    {category.title}
+                  <a href={"/vehiclelistings?category=" + category._id}>
+                    <div
+                      onClick={() => {
+                        handleCat(category._id);
+                      }}
+                      className="icon-wrapper"
+                      style={{
+                        border:
+                          cat === category._id ? "1px solid #00adef" : "none",
+                      }}
+                    >
+                      <img src={imgurl + category.icon} alt={category.title} />
+                    </div>
                   </a>
+                  <p rel="noreferrer" href="#dasd">
+                    {category.title}
+                  </p>
                 </div>
               ))}
             </div>
@@ -921,7 +943,7 @@ const VehicleListings = () => {
                   <div key={type._id} className="list">
                     <div
                       className="list-content"
-                      onClick={() => handleBodyType(type._id)}
+                      onClick={() => handleBodyType(type._id, type.title)}
                     >
                       {isBtChecked(type._id) ? (
                         <MdOutlineCheckBox color="#050F56" size={25} />
@@ -943,7 +965,7 @@ const VehicleListings = () => {
                   <div key={brand._id} className="list">
                     <div
                       className="list-content"
-                      onClick={() => handleBrandType(brand._id)}
+                      onClick={() => handleBrandType(brand._id, brand.title)}
                     >
                       {isBrandChecked(brand._id) ? (
                         <MdOutlineCheckBox color="#050F56" size={25} />
@@ -964,7 +986,7 @@ const VehicleListings = () => {
                   <div key={model._id} className="list">
                     <div
                       className="list-content"
-                      onClick={() => handleModelType(model._id)}
+                      onClick={() => handleModelType(model._id, model.name)}
                     >
                       {isModelChecked(model._id) ? (
                         <MdOutlineCheckBox color="#050F56" size={25} />
@@ -985,7 +1007,9 @@ const VehicleListings = () => {
                   <div key={modelYear._id} className="list">
                     <div
                       className="list-content"
-                      onClick={() => handleManufacturingType(modelYear._id)}
+                      onClick={() =>
+                        handleManufacturingType(modelYear._id, modelYear.year)
+                      }
                     >
                       {isManufacturingChecked(modelYear._id) ? (
                         <MdOutlineCheckBox color="#050F56" size={25} />
@@ -1016,7 +1040,9 @@ const VehicleListings = () => {
                           size={25}
                         />
                       )}
-                      <p>{kms.km_range}</p>
+                      <p>
+                        {kms.lower_range} - {kms.upper_range}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -1034,7 +1060,9 @@ const VehicleListings = () => {
                   <div key={fuelType._id} className="list">
                     <div
                       className="list-content"
-                      onClick={() => handleFuelType(fuelType._id)}
+                      onClick={() =>
+                        handleFuelType(fuelType._id, fuelType.title)
+                      }
                     >
                       {isFuelChecked(fuelType._id) ? (
                         <MdOutlineCheckBox color="#050F56" size={25} />

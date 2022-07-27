@@ -63,7 +63,7 @@ const SellerFormRegistration = ({
   }, []);
 
   return (
-    <> 
+    <>
       <Navbar />
       <div className="seller-form-container">
         <div className="form-routes">
@@ -147,7 +147,7 @@ const SellerFormRegistration = ({
                 </div>
               </div>
 
-              <div className="form-register-controls">
+              {/* <div className="form-register-controls">
                 <label htmlFor="scrapvehicle">
                   Do you want to Scrap Vehicle?
                 </label>
@@ -167,7 +167,7 @@ const SellerFormRegistration = ({
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {categoryTractorTitle === "Tractors" ? (
                 <div className="form-register-controls">

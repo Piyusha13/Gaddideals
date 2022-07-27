@@ -207,7 +207,7 @@ const SellerHomePage = () => {
 
           <div className="how-card how-card-2">
             <div className="how-card-title">
-              <h5>Get the sellar details</h5>
+              <h5>Get the seller details</h5>
             </div>
 
             <div className="how-card-img2">
@@ -246,7 +246,7 @@ const SellerHomePage = () => {
 
       <div className="latest-vehicle-section">
         <div className="latest-vehicle-header">
-          <h1>Latest Vehicle</h1>
+          <h1>Latest Vehicles</h1>
         </div>
 
         <div className="latest-vehicles-container container-fluid m-0 p-0">
@@ -256,7 +256,7 @@ const SellerHomePage = () => {
             onSelect={(index) => setTabIndex(index)}
           >
             <TabList className="tablist-container">
-              <Tab className="tab">Truck</Tab>
+              <Tab className="tab">Trucks</Tab>
               <Tab className="tab">Buses</Tab>
               <Tab className="tab">Tractors</Tab>
               <Tab className="tab">Construction Equipments</Tab>
@@ -510,7 +510,7 @@ const SellerHomePage = () => {
       {/* Customer Review */}
       <div className="customer-review-section">
         <div className="customer-review-header">
-          <h1>Customer Review</h1>
+          <h1>Customer Reviews</h1>
         </div>
 
         <div className="customer-review-container">
@@ -624,7 +624,7 @@ const SellerHomePage = () => {
       {/* FAQ Section */}
       <div className="faq-section">
         <div className="faq-header">
-          <h1>Frequently Asked Question's</h1>
+          <h1>Frequently Asked Questions</h1>
         </div>
 
         <div className="faq-container">
