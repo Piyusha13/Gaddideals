@@ -12,6 +12,7 @@ import Subscription from "./pages/Subscription";
 import SellerHome from "./pages/SellerHome";
 import VehicleCard from "./pages/VehicleCard";
 import DirectSignup from "./components/DirectSignup";
+import "../src/App.css";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

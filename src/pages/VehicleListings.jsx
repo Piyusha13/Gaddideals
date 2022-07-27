@@ -12,6 +12,7 @@ import {
   MdOutlineCheckBox,
 } from "react-icons/md";
 import { ImRadioUnchecked, ImRadioChecked } from "react-icons/im";
+import truckHomeImage from "../assets/truck-home.png";
 
 import Constant from "../constants";
 
@@ -684,7 +685,7 @@ const VehicleListings = () => {
       )}
       {displayFilterOne && (
         //  {/* Filter One for mobile */}
-        <div className="filter-one lg-devices">
+        <div className="filter-one lg-devices"> 
           <div className="filter-container">
             <h3 className="sort-by">Sort By :</h3>
             <div
@@ -1127,7 +1128,25 @@ const VehicleListings = () => {
           )}
         </div>
         {/* </InfiniteScroll> */}
+        {displayFilterOne &&
+      <div  className="mob-menue-overlay" 
+        onClick={()=>{setdisplayFilterOne(false);
+          }}
+         ></div>
+        }
+        {displayFilterTwo &&
+      <div  className="mob-menue-overlay" 
+        onClick={()=>{
+          setdisplayFilterTwo(false);}}
+         ></div>
+        }
       </section>
+        {/*Truck Image  */}
+        <div className="truck-section">
+        <div className="image-wrapper">
+          <img src={truckHomeImage} alt="truck" />
+        </div>
+      </div>
       <Footer />
     </>
   );

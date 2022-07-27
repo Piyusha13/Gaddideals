@@ -5,7 +5,7 @@
         background: #FFFFFF;
         top: 55%;
         right: 0%;
-        z-index: 99;
+        z-index: 999999;
         box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
         border-radius: 5px;
         width: 30% !important;

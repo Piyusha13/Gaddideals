@@ -38,6 +38,9 @@ padding: 15px;
 padding-left: 20px;
 width: 100%;
 }
+.mob-resp-moile-input:focus{
+    outline: 1px solid #00ADEF;
+}
 
 .mob-resp-moile-input::placeholder{
     font-family: 'Roboto';
@@ -135,6 +138,73 @@ padding: 15px;
 padding-left: 20px;
 margin-bottom: 20px;
 width: 100%;
+}
+.mob-resp-location-div{
+    position: relative;
+}
+.mob-resp-location-div img{
+    width: 5% !important;
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    opacity: 0.3;
+}
+.mob-resp-location-input{
+background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+border: none;
+padding: 15px;
+padding-left: 20px;
+margin-bottom: 20px;
+width: 100%;
+}
+.mob-resp-location-input::placeholder{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+}
+.mob-resp-location-input:focus{
+    outline:1px solid #00ADEF;
+}
+
+.mob-resp-confirmPassword-div{
+    position: relative;
+}
+.mob-resp-confirmPassword-div img{
+    width: 5% !important;
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    opacity: 0.3;
+}
+.mob-resp-confirmPassword-input{
+background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+border: none;
+padding: 15px;
+padding-left: 20px;
+margin-bottom: 20px;
+width: 100%;
+}
+.mob-resp-confirmPassword-input::placeholder{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+color: #9C9C9C;
+}
+.mob-resp-confirmPassword-input:focus{
+    outline:1px solid #00ADEF;
+}
+
+
+
+.mob-resp-name-input:focus{
+    outline:1px solid #00ADEF;
 }
 
 .mob-resp-name-input::placeholder{

@@ -1,4 +1,11 @@
-@media screen and (min-width: 768px) and (max-width: 1000px) {
+@media screen and (min-width: 768px) and (max-width: 990px) {
+  .mob-menue-overlay{
+    background-color: transparent !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute !important;
+  }
+
   .sell-buy-container-desktop {
     display: none !important;
   }
@@ -121,6 +128,146 @@
   .languages-container {
     display: none !important;
   }
+  
+}
+@media screen and (min-width: 991px) and (max-width: 1000px) {
+  .mob-menue-overlay{
+    background-color: transparent !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute !important;
+  }
+
+  .sell-buy-container-desktop {
+    display: none !important;
+  }
+  .sell-buy-container-moile {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 40px;
+    background: #050f56;
+  }
+  .sell-buy-container-moile button {
+    padding: 5px 10px;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 10px !important;
+    color: #050f56;
+    background: #f9f9f9;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+    border: none;
+  }
+  .sell-buy-container-moile .sell-btn {
+    margin-left: 15px;
+  }
+
+  .nav-container {
+    /* display: flex; */
+    /* flex-wrap: nowrap; */
+    /* flex-direction: row; */
+    background: #f4f4f4 !important;
+    height: auto !important;
+    display: flex;
+  }
+  .container-fluid {
+    justify-content: center !important;
+  }
+  .navar_div {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    /* padding-left: 10px; */
+    /* background-color: red; */
+  }
+  .logo {
+    /* background-color: #050f56; */
+    width: 23%;
+    margin-right: 10px;
+  }
+  .logo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    margin: 0;
+    /* padding: 0% !important; */
+    /* background-color: olive; */
+  }
+  .brand-categories {
+    display: flex;
+    gap: 10px !important;
+    height: 50px !important;
+    width: 250px !important;
+    margin-right: 0px;
+    /* margin-left: 10px !important; */
+    /* margin-left: -100%; */
+    /* background-color: orangered; */
+  }
+  .brand-categories .brand-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 5px !important;
+    /* background: #c23131 !important; */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    cursor: pointer;
+    height: 100% !important;
+    width: 90px !important;
+  }
+
+  .hamburger-menu {
+    width: 50px !important;
+    display: block !important;
+    cursor: pointer;
+    margin-left: 130px !important;
+    /* background-color: orchid; */
+  }
+  .hamburger-menu img {
+    width: 40px;
+  }
+  .brand-categories .brand-category img {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: cover;
+  }
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 0 40%;
+    margin-top: 10px !important;
+    width: 100% !important;
+    margin-left: 0px !important;
+    /* background-color: olivedrab; */
+    /* width: 200px !important; */
+  }
+  .search-container input {
+    padding: 12px 50px;
+    width: 100% !important;
+    background: #ffffff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.14);
+    border-radius: 8px;
+    border: none;
+  }
+  .location-container {
+    display: none !important;
+  }
+  .user {
+    display: none !important;
+  }
+  .languages-container {
+    display: none !important;
+  }
+  
+}
+@media screen and (min-width: 1001px) and (max-width: 1236px) {
+  .logo {
+    /* background-color: #050f56; */
+    width: 23%;
+    margin-right: 10px;
+  }
 }
 .header-container {
   position: sticky;
@@ -155,6 +302,16 @@
 }
 
 @media screen and (max-width: 767px) {
+
+  .mob-menue-overlay{
+    background-color: transparent !important;
+    top: 0px !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute !important;
+
+  }
+
   .sell-buy-container-desktop {
     display: none !important;
   }
@@ -564,6 +721,26 @@
   font-size: 1.1vw;
   color: #969696;
 }
+.google-sign-in-button{
+  border: none !important;
+  background-color: transparent !important;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1vw;
+
+  color: #cfcfcf;
+}
+.my-facebook-button-class{
+  border: none;
+  background-color: transparent;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1vw;
+
+  color: #cfcfcf;
+}
 .sign-in-google,
 .sign-in-fb,
 .sign-in-email {
@@ -761,24 +938,7 @@ a {
   right: 25px;
   transform: translate(50%, 50%);
 }
-@media screen and (min-width: 767px) {
-  /* .Singup-eye-Icon{
-    width: 1.2vw;
-    position: absolute;
-    z-index: 9;
-     top: 3vh; 
-     right: 25px;
-   transform: translate(50%,50%);
-  }
-  .Singup-location-Icon{
-    width: 1.2vw;
-    position: absolute;
-    z-index: 9;
-     top: 3vh; 
-     right: 25px;
-   transform: translate(50%,50%);
-  } */
-}
+
 .signup-location-input {
   height: 100%;
   width: 100%;

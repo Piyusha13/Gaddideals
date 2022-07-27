@@ -134,7 +134,7 @@ const SellerFormVehicle = ({
         <div className="form-routes">
           <div className="route-nav">
             <div className="circle active">
-              <FiCheckCircle color="#050F56" />
+              <FiCheckCircle size={200} className="checkCir" color="#050F56" />
             </div>
             <a href="#vehicleinfo" className="active">
               Vehicle Information
@@ -159,7 +159,7 @@ const SellerFormVehicle = ({
 
         <div className="form-details-container">
           {overlayState && (
-            <div
+            <div 
               className="overlay"
               onClick={() => {
                 setStatesSuggestionBox(false);

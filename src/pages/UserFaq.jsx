@@ -104,7 +104,9 @@ function UserFaq() {
           <div className="right-Faq-container">
             
          <div className="user-Faq-header">
-         <img className="back-to-home" src={next_arrow} alt=""></img>
+         <img className="back-to-home" onClick={() => {
+                window.location.href = "/";
+              }} src={next_arrow} alt=""></img>
            <h1>FAQ</h1> 
       </div>
       <div className="user-faq-container">

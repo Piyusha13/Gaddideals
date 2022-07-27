@@ -1,4 +1,11 @@
 @media screen and (max-width: 1000px) {
+  .mob-menue-overlay{
+    background-color: transparent !important;
+    top: 0% !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute !important;
+  }
   .filter-sort-button-div {
     display: flex !important;
     flex-direction: row;
@@ -82,7 +89,7 @@
     margin-left: 10px !important;
     width: 60%;
     position: absolute;
-    top: 11% !important;
+    top: 15% !important;
     left: 25%;
     z-index: 99;
   }
@@ -145,7 +152,7 @@
     width: 70%;
     position: absolute;
     z-index: 99;
-    top: 10% !important;
+    top: 13.5% !important;
     margin-left: 10px !important;
   }
 
@@ -1121,5 +1128,56 @@
 
 .no-data {
   margin: 0 auto;
+  object-fit: cover;
+}
+
+
+/* truck section */
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+  .truck-section {
+    padding: 20px !important;
+    margin-top: 25px !important;
+  }
+
+  .truck-section .image-wrapper {
+    border-radius: 5px !important;
+    overflow: hidden;
+  }
+  .truck-section .image-wrapper img {
+    width: 100%;
+    height: 250px !important;
+    object-fit: cover;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .truck-section {
+    padding: 10px !important;
+    margin-top: 15px !important;
+  }
+
+  .truck-section .image-wrapper {
+    border-radius: 5px !important;
+    overflow: hidden;
+  }
+  .truck-section .image-wrapper img {
+    width: 100%;
+    height: 10% !important;
+    object-fit: cover;
+  }
+}
+
+.truck-section {
+  padding: 0rem 2rem;
+  margin-top: 40px;
+}
+
+.truck-section .image-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.truck-section .image-wrapper img {
+  width: 100%;
+  height: 400px;
   object-fit: cover;
 }

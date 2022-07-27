@@ -430,7 +430,18 @@
   }
   .form-routes .route-nav .circle.active {
     border: 2px solid #00adef;
+    /* width: 45% !important; */
   }
+  /* .form-routes .route-nav .circle.active svg{
+    width: 200px !important;
+    background-color: orange !important;
+
+  } */
+  /* .checkCir{
+    width: 100% !important;
+    height: 100% !important;
+    background-color: orange !important;
+  } */
   
   /* Form Register */
   .form-registration-container {
@@ -2359,7 +2370,7 @@ color: #A2A2A2;
 
 
 }
-.overlay {
+.overlay { 
   position: absolute;
   top: 0;
   left: 0;
