@@ -84,7 +84,6 @@ const VehicleDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    saveBuyer();
   }, []);
 
   const [matches, setMatches] = useState(
@@ -102,18 +101,13 @@ const VehicleDetails = () => {
       setLoadingDetails(true);
       const res = await axios.get(
         "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" +
-          id,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
+          id
       );
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
-      setCheckCategory(res.data.vehicle.category.title);
-      setseller_id(res.data.vehicle.user._id);
-      setSeller(res.data.vehicle.user);
+      setCheckCategory(res.data?.vehicle?.category?.title);
+      setseller_id(res.data?.vehicle?.user?._id);
+      setSeller(res.data?.vehicle?.user);
 
       let frontBackArr = [];
       frontBackArr.push(
@@ -577,9 +571,7 @@ const VehicleDetails = () => {
 
               <div className="selling-detail-container">
                 <button
-                  onClick={() => {
-                    setBuyerInput(!BuyerInput);
-                  }}
+                  onClick={()=>{userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)} }
                 >
                   Get Seller Details
                 </button>

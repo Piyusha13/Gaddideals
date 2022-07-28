@@ -85,6 +85,10 @@ font-size: 0px;
   .goog-te-banner-frame{
   }
    */
+
+   body{
+    top:0 !important;
+}
    .goog-te-banner-frame {
     display: none;
     height: 0 !important;
@@ -92,7 +96,7 @@ font-size: 0px;
 }
 
 #google_translate_element {
-    /* display: none; */
+    display: none;
 }
 /* .website{
   display: inline-block !important;

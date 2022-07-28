@@ -31,6 +31,14 @@ import downArrow from "../assets/down-arrow.png";
 import upArrow from "../assets/up-arrow.png";
 import { log } from "util";
 
+import { toast } from "react-toastify";
+
+import Modal from "react-awesome-modal";
+import OtpInput from "react-otp-input";
+import CloseTab from "../assets/close-tab.png";
+// import downArrow from "../assets/down-arrow.png";
+import Edit from "../assets/edit.png";
+
 const queryString = require("query-string");
 
 const VehicleListings = () => {
@@ -55,6 +63,111 @@ const VehicleListings = () => {
   const [pageNo, setPageNo] = useState(1);
   const [displayFilterTwo, setdisplayFilterTwo] = useState(false);
   const [displayFilterOne, setdisplayFilterOne] = useState(false);
+
+
+// for get seller details
+  const [userObj,setUserObj]=useState();
+  const [BuyerInput, setBuyerInput] = useState(false);
+  const [BuyerOtp, setBuyerOtp] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [SellerDetails, setSellerDetails] = useState(false);
+
+  const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [mob_no, setmob_no] = useState("");
+  const [city, setcity] = useState("");
+  const [user_type, setuser_type] = useState("");
+  const [isTypeActive, setIsTypeActive] = useState();
+  const [seller_id, setseller_id] = useState("");
+  const [seller, setSeller] = useState("");
+
+  const dealerType = [
+    {
+      user_type: "Company",
+    },
+    {
+      user_type: "Sole Proprietor",
+    },
+    {
+      user_type: "Agent/Broker/Dealer",
+    },
+    {
+      user_type: "Other",
+    },
+  ];
+
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(max-width: 1000px)").matches
+  );
+
+  function saveBuyer() {
+    let payload = { name, email, mob_no, seller_id, user_type, city };
+    axios
+      .post(Constant.postUrls.postAllEnquiries, payload, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((result) => {
+        if (result.data.status === "failed") {
+          toast.error(result.data.message);
+        } else {
+          if (result.data.status === "success") {
+            toast.success(result.data.message);
+            // setvisibleOTP(!visibleOTP);
+            setmob_no(mob_no);
+            // setOtp(otp);
+            setBuyerOtp(!BuyerOtp);
+            // setCounter(59);
+          }
+        }
+      });
+  }
+
+  function handleChange(o) {
+    setOtp(o);
+    // console.log(otp);
+  }
+
+  function savePhoneOtp() {
+    // console.log("otp verified");
+    console.warn({ mob_no, otp });
+    let payload = { mob_no, otp };
+    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+      // console.log(res);
+
+      if (res.data.status === "failed") {
+        toast.error("incorrect otp");
+      } else if (res.data.status === "Success") {
+        toast.success(res.data.message);
+        setSellerDetails(!SellerDetails);
+        setBuyerOtp(!BuyerOtp);
+      }
+    });
+  }
+
+  function resendotp() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      // console.log("result", result);
+      if (mob_no === "") {
+        toast.error("enter moile number");
+      } else if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          setOtp(result.data.otp);
+
+          // setCounter(59);
+        }
+      }
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -470,11 +583,204 @@ const VehicleListings = () => {
     fetchModelYears();
     fetchKmsDriven();
     fetchFuelTypes();
+
+    window
+    .matchMedia("(max-width: 1000px)")
+    .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
 
   return (
     <>
       <Navbar />
+      {BuyerInput && (
+        <div>
+          <Modal
+            visible={BuyerInput}
+            width={matches ? "85%" : "35%"}
+            effect="fadeInUp"
+            onClickAway={() => {
+              setBuyerInput(!BuyerInput);
+            }}
+          >
+            <div className="buyer-dtails-container">
+              <img
+                src={CloseTab}
+                alt=""
+                onClick={() => {
+                  setBuyerInput(!BuyerInput);
+                }}
+              ></img>
+              <h1>Please share your contact</h1>
+              <input
+                className="buyer-name"
+                onChange={(e) => {
+                  setname(e.target.value);
+                }}
+                value={name}
+                type="text"
+                placeholder="Name "
+              ></input>
+              <input
+                className="buyer-number"
+                placeholder="Phone Number "
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+                value={mob_no}
+                maxLength={10}
+              ></input>
+              <input
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+                value={email}
+                type="email"
+                className="buyer-email"
+                placeholder="Email"
+              ></input>
+
+              <div className="buyer-location">
+                <input
+                  onChange={(e) => {
+                    setcity(e.target.value);
+                  }}
+                  value={city}
+                  placeholder="Location"
+                ></input>
+                <img src={downArrow} alt=""></img>
+              </div>
+
+              <div className="dealerType">
+                <div className="dealer-que">What type of user are you?</div>
+                <div className="dealerTypeOption">
+                  {dealerType.map((user_types, index) => (
+                    <div
+                      key={index}
+                      className={
+                        isTypeActive === index ? "dealer active" : "dealer"
+                      }
+                      onClick={() => {
+                        setuser_type(user_types.user_type);
+                        setIsTypeActive(index);
+                      }}
+                    >
+                      <span>{user_types.user_type}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  // saveBuyer();
+                  setBuyerInput(!BuyerInput);
+                  setBuyerOtp(!BuyerOtp);
+                }}
+              >
+                Get Contact Details
+              </button>
+            </div>
+          </Modal>
+        </div>
+      )}
+      {BuyerOtp && (
+        <div>
+          <Modal
+            visible={BuyerOtp}
+            width={matches ? "85%" : "35%"}
+            effect="fadeInUp"
+            onClickAway={() => {
+              setBuyerOtp(!BuyerOtp);
+            }}
+          >
+            <div className="buyer-otp-container">
+              <img
+                src={CloseTab}
+                alt=""
+                onClick={() => {
+                  setBuyerOtp(!BuyerOtp);
+                }}
+              ></img>
+              <div className="instruction-text">
+                6 digit code sent to mobile number
+              </div>
+              <div className="buyer-phone-number-input">
+                <input
+                  placeholder="Enter Phone Number"
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                  value={mob_no}
+                ></input>
+                <img src={Edit} alt=""></img>
+              </div>
+              <div className="enter-otp-text">Enter OTP to verify</div>
+              <OtpInput
+                containerStyle="otpStyle"
+                inputStyle="otBoxStyle"
+                numInputs={6}
+                separator={<span></span>}
+                value={otp}
+                type="number"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              ></OtpInput>
+              <div
+                className="new-otp-text"
+                onClick={() => {
+                  resendotp();
+                }}
+              >
+                Get new OTP in 25 sec
+              </div>
+              <button
+                onClick={() => {
+                  savePhoneOtp();
+                  saveBuyer();
+                }}
+              >
+                Verify
+              </button>
+            </div>
+          </Modal>
+        </div>
+      )}
+      {SellerDetails  && (
+        <div>
+          <Modal
+            visible={SellerDetails}
+            width={matches ? "85%" : "35%"}
+            effect="fadeInUp"
+            onClickAway={() => {
+              setSellerDetails(!SellerDetails);
+            }}
+          >
+            <div className="sellerDetailsContainer">
+              <img
+                src={CloseTab}
+                alt=""
+                onClick={() => {
+                  setSellerDetails(!SellerDetails);
+                }}
+              ></img>
+              <div className="userProfilePic">
+                <img
+                  src={
+                    "https://gaddideals.brokerinvoice.co.in" +
+                    userObj?.profile_pic_url
+                  }
+                ></img>
+              </div>
+              <div className="userName">{userObj?.name}</div>
+              <hr></hr>
+              <input value={userObj?.name} placeholder="Name"></input>
+              <input value={userObj?.mob_no} placeholder="Phone Numer"></input>
+              <input value={userObj?.email} placeholder="Email"></input>
+            </div>
+          </Modal>
+        </div> 
+      )}
       <div className="filter-sort-button-div">
         <div
           className="filter-button"
@@ -1142,7 +1448,18 @@ const VehicleListings = () => {
                         <span>₹{rupee_format(vehicle.selling_price)}</span>
                       </p>
                     </div>
-                    <button>Get Seller Details</button>
+                    <button
+                     onClick={() => {
+                     
+                      setUserObj(vehicle.user);
+                      if(userToken){
+                        setSellerDetails(!SellerDetails)
+                      }else{
+                        setBuyerInput(!BuyerInput)
+                      }
+                      
+                     }}
+                    >Get Seller Details</button>
                   </div>
                 </div>
               ))}

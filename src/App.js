@@ -52,6 +52,7 @@ function App() {
 
   return (
     <>
+    <div id='google_translate_element'></div>
       <Routes>
         {/* all routes here */}
         <Route element={<SellerHomePage />} index />

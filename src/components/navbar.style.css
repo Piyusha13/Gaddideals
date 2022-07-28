@@ -1,4 +1,25 @@
 @media screen and (min-width: 768px) and (max-width: 990px) {
+
+  .mob-resp-mail-signin{
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .my-google-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-gmail-icon.png") !important;
+    background-size: cover !important;
+  }
+  .my-facebook-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-fb-icon.png") !important;
+    background-size: cover !important;
+  }
   .mob-menue-overlay{
     background-color: transparent !important;
     width: 100vw !important;
@@ -131,6 +152,27 @@
   
 }
 @media screen and (min-width: 991px) and (max-width: 1000px) {
+  
+  .mob-resp-mail-signin{
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .my-google-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-gmail-icon.png") !important;
+    background-size: cover !important;
+  }
+  .my-facebook-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-fb-icon.png") !important;
+    background-size: cover !important;
+  }
   .mob-menue-overlay{
     background-color: transparent !important;
     width: 100vw !important;
@@ -263,6 +305,27 @@
   
 }
 @media screen and (min-width: 1001px) and (max-width: 1236px) {
+
+  .mob-resp-mail-signin{
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .my-google-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-gmail-icon.png") !important;
+    background-size: cover !important;
+  }
+  .my-facebook-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-fb-icon.png") !important;
+    background-size: cover !important;
+  }
   .logo {
     /* background-color: #050f56; */
     width: 23%;
@@ -303,6 +366,27 @@
 
 @media screen and (max-width: 767px) {
 
+  .mob-resp-mail-signin{
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .my-google-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-gmail-icon.png") !important;
+    background-size: cover !important;
+  }
+  .my-facebook-button-class{
+    font-size: 0px !important;
+    /* background-color: #050f56; */
+    width: 70px !important;
+    height: 70px !important;
+    background-image: url("../assets/mob-fb-icon.png") !important;
+    background-size: cover !important;
+  }
   .mob-menue-overlay{
     background-color: transparent !important;
     top: 0px !important;
@@ -783,7 +867,6 @@
   font-style: normal;
   font-weight: 500;
   font-size: 1vw;
-
   color: #cfcfcf;
 }
 .sign-in-google,

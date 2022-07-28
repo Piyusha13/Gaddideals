@@ -43,6 +43,7 @@ import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookLogin from "react-facebook-login";
 // import cookie from "react-cookies";
+import { updateLanguage } from './../Helpers/helper';
 
 const queryString = require("query-string");
 
@@ -209,7 +210,11 @@ const Navbar = () => {
         city === "" 
       ) {
         toast.error("required feilds are empty");
-      } else if (!email.match("@gmail.com")) {
+      }  else if (!name.match(/^[A-Za-z]+$/)) {
+        toast.error("invalid name ");
+      }
+      // else if (!email.match("@gmail.com") || !email.match("@outlook.com" ) || !email.match("@yahoo.com") || !email.match("@icloud.com" ) || !email.match("@gmx.com") || !email.match("@contoso.onmicrosoft.com." ))
+      else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) {
         toast.error("enter valid mail id");
       } else if (password !== confirm_password) {
         toast.error("password and confirm password don't match");
@@ -411,6 +416,17 @@ const Navbar = () => {
     setvisibleSignUp(!visibleSignUp);
     
   }
+  function mobResponseGoogle(response) {
+    console.log("google response", response);
+    setsocial_token(response?.tokenId);
+    setname(response?.profileObj?.name);
+    setemail(response?.profileObj?.email);
+    sethidePassword(true);
+    
+    setshowsignup(!showsignup);
+    setshowSignIn(!showSignIn);
+    
+  }
 
   function setGoogleSignup() {
     console.log("otp verified");
@@ -453,6 +469,16 @@ const Navbar = () => {
     sethidePassword(true);
     setvisible(false);
     setvisibleSignUp(!visibleSignUp);
+  };
+  const mobResponseFacebook = (response) => {
+    console.log(response);
+    console.log("hey "+response.name);
+    setsocial_token(response?.accessToken);
+    setname(response?.name);
+    setemail(response?.email);
+    sethidePassword(true);
+    setshowsignup(!showsignup);
+    setshowSignIn(!showSignIn);
   };
   // const componentClicked = (data) => {
   //   console.log(data);
@@ -1002,16 +1028,50 @@ const Navbar = () => {
                 NEXT
               </button>
               <div className="mob-resp-multiple-signin">
-                <img
-                  className="mob-resp-fb-signin"
-                  src={mobFbIcon}
-                  alt=""
-                ></img>
-                <img
-                  className="mob-resp-gmail-signin"
-                  src={mobGmailIcon}
-                  alt=""
-                ></img>
+                <>
+                
+                <FacebookLogin
+                appId="615601846567774"
+                autoLoad={false}
+                callback={mobResponseFacebook}
+                cssClass="my-facebook-button-class"
+                fields="name,email"
+                render={(renderProps) => (
+                  
+                  <button onClick={renderProps.onClick}>
+                   
+                  </button>
+                )}
+
+              />
+              
+                </>
+                <>
+                <GoogleLogin
+                render={(renderProps) => (
+                  <button
+                  className="my-google-button-class"
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{ cursor: "pointer",
+                  backgroundColor:"transparent",
+                border:"none",
+                fontFamily: "Poppins",
+                fontStyle: "normal",
+                fontWeight: 0,
+                fontSize: "1vw",
+                color: "#cfcfcf",
+               }}
+                  >
+                    
+                  </button>
+                )}
+                clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                onSuccess={mobResponseGoogle}
+                onFailure={mobResponseGoogle}
+              />
+                
+                </>
                 <img
                   className="mob-resp-mail-signin"
                   src={mobMailIcon}
@@ -1082,6 +1142,8 @@ const Navbar = () => {
                 />
                 <img src={locationIcon} alt=""></img>
               </div>
+              {hidePassword? null :
+              <>
               <input
                 className="mob-resp-name-input"
                 onChange={(e) => {
@@ -1109,6 +1171,8 @@ const Navbar = () => {
                   alt=""
                 ></img>
               </div>
+              </>
+              }
               <button
                 className="mob-resp-next-button"
                 onClick={() => {
@@ -1347,7 +1411,7 @@ const Navbar = () => {
 
           <div className="languages-container">
             <div className="language">
-              <span className="SelectedLanguageDecoration">
+              <span className="SelectedLanguageDecoration notranslate">
                 {selectedLanguage}{" "}
               </span>
             </div>
@@ -1364,19 +1428,24 @@ const Navbar = () => {
               <div className="drop-down">
                 <p
                   onClick={() => {
+                    
+                    updateLanguage("en");
                     setselectedLanguage("English");
+                    setdropdown(!dropdown);
                   }}
-                  className="language-1"
+                  className="language-1 notranslate"
                 >
                   English
                 </p>
                 <p
                   onClick={() => {
-                    setselectedLanguage("Hindi");
+                    setselectedLanguage("हिन्दी");
+                    updateLanguage("hi");
+                    setdropdown(!dropdown);
                   }}
-                  className="language-2"
+                  className="language-2 notranslate"
                 >
-                  Hindi
+                  हिन्दी
                 </p>
               </div>
             )}
