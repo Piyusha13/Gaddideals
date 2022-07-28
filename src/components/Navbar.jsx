@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoIcon from "../assets/logo.png";
@@ -43,7 +44,9 @@ import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookLogin from "react-facebook-login";
 // import cookie from "react-cookies";
-import { updateLanguage } from './../Helpers/helper';
+import { updateLanguage } from "./../Helpers/helper";
+import { selectLocation } from "../store/location/location.selector";
+import { setCurrentCity } from "../store/location/location.action";
 
 const queryString = require("query-string");
 
@@ -63,8 +66,11 @@ const Navbar = () => {
 
   // const googleTranslate = require("google-translate")("AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw");
 
-
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const locationCity = useSelector(selectLocation);
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -151,8 +157,7 @@ const Navbar = () => {
   const [dropdown, setdropdown] = useState(false);
   const [selectedLanguage, setselectedLanguage] = useState("English");
   const [token, settoken] = useState(localStorage.getItem("Token"));
-  const [hidePassword,sethidePassword]=useState(false); //hiding password and confirm password for social token 
-  
+  const [hidePassword, sethidePassword] = useState(false); //hiding password and confirm password for social token
 
   // const notify = () =>toast("Enter mobile number")  ;
 
@@ -203,14 +208,9 @@ const Navbar = () => {
     let payload = { name, email, mob_no, city, password, confirm_password };
     axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
       console.log("res", res);
-      if (
-        name === "" ||
-        email === "" ||
-        mob_no === "" ||
-        city === "" 
-      ) {
+      if (name === "" || email === "" || mob_no === "" || city === "") {
         toast.error("required feilds are empty");
-      }  else if (!name.match(/^[A-Za-z]+$/)) {
+      } else if (!name.match(/^[A-Za-z]+$/)) {
         toast.error("invalid name ");
       }
       // else if (!email.match("@gmail.com") || !email.match("@outlook.com" ) || !email.match("@yahoo.com") || !email.match("@icloud.com" ) || !email.match("@gmx.com") || !email.match("@contoso.onmicrosoft.com." ))
@@ -411,10 +411,9 @@ const Navbar = () => {
     setname(response?.profileObj?.name);
     setemail(response?.profileObj?.email);
     sethidePassword(true);
-    
+
     setvisible(false);
     setvisibleSignUp(!visibleSignUp);
-    
   }
   function mobResponseGoogle(response) {
     console.log("google response", response);
@@ -422,10 +421,9 @@ const Navbar = () => {
     setname(response?.profileObj?.name);
     setemail(response?.profileObj?.email);
     sethidePassword(true);
-    
+
     setshowsignup(!showsignup);
     setshowSignIn(!showSignIn);
-    
   }
 
   function setGoogleSignup() {
@@ -462,7 +460,7 @@ const Navbar = () => {
 
   const responseFacebook = (response) => {
     console.log(response);
-    console.log("hey "+response.name);
+    console.log("hey " + response.name);
     setsocial_token(response?.accessToken);
     setname(response?.name);
     setemail(response?.email);
@@ -472,7 +470,7 @@ const Navbar = () => {
   };
   const mobResponseFacebook = (response) => {
     console.log(response);
-    console.log("hey "+response.name);
+    console.log("hey " + response.name);
     setsocial_token(response?.accessToken);
     setname(response?.name);
     setemail(response?.email);
@@ -544,15 +542,16 @@ const Navbar = () => {
                   <button
                     onClick={renderProps.onClick}
                     disabled={renderProps.disabled}
-                    style={{ cursor: "pointer",
-                  backgroundColor:"transparent",
-                border:"none",
-                fontFamily: "Poppins",
-                fontStyle: "normal",
-                fontWeight: 500,
-                fontSize: "1vw",
-                color: "#cfcfcf"
-               }}
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontFamily: "Poppins",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      fontSize: "1vw",
+                      color: "#cfcfcf",
+                    }}
                   >
                     Sign in with Google
                   </button>
@@ -723,39 +722,39 @@ const Navbar = () => {
                 alt=""
               ></img>
             </div>
-            { hidePassword?null:
-            <>
-            <input
-              onChange={(e) => {
-                setpassword(e.target.value);
-              }}
-              value={password}
-              type="password"
-              className="signup-phone-no-input"
-              placeholder="Password "
-            />
-          
-            <div className="SingupEyeIconDiv">
-              <input
-                onChange={(e) => {
-                  setconfirm_password(e.target.value);
-                }}
-                value={confirm_password}
-                type={eye ? "text" : "password"}
-                className="signup-location-input"
-                placeholder="Confirm Password"
-              />
-              <img
-                alt=""
-                onClick={() => {
-                  seteye(!eye);
-                }}
-                className="Singup-eye-Icon"
-                src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-              ></img>
-            </div>
-            </>
-            }
+            {hidePassword ? null : (
+              <>
+                <input
+                  onChange={(e) => {
+                    setpassword(e.target.value);
+                  }}
+                  value={password}
+                  type="password"
+                  className="signup-phone-no-input"
+                  placeholder="Password "
+                />
+
+                <div className="SingupEyeIconDiv">
+                  <input
+                    onChange={(e) => {
+                      setconfirm_password(e.target.value);
+                    }}
+                    value={confirm_password}
+                    type={eye ? "text" : "password"}
+                    className="signup-location-input"
+                    placeholder="Confirm Password"
+                  />
+                  <img
+                    alt=""
+                    onClick={() => {
+                      seteye(!eye);
+                    }}
+                    className="Singup-eye-Icon"
+                    src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                  ></img>
+                </div>
+              </>
+            )}
             <button
               onClick={() => {
                 setSignup();
@@ -1029,48 +1028,40 @@ const Navbar = () => {
               </button>
               <div className="mob-resp-multiple-signin">
                 <>
-                
-                <FacebookLogin
-                appId="615601846567774"
-                autoLoad={false}
-                callback={mobResponseFacebook}
-                cssClass="my-facebook-button-class"
-                fields="name,email"
-                render={(renderProps) => (
-                  
-                  <button onClick={renderProps.onClick}>
-                   
-                  </button>
-                )}
-
-              />
-              
+                  <FacebookLogin
+                    appId="615601846567774"
+                    autoLoad={false}
+                    callback={mobResponseFacebook}
+                    cssClass="my-facebook-button-class"
+                    fields="name,email"
+                    render={(renderProps) => (
+                      <button onClick={renderProps.onClick}></button>
+                    )}
+                  />
                 </>
                 <>
-                <GoogleLogin
-                render={(renderProps) => (
-                  <button
-                  className="my-google-button-class"
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    style={{ cursor: "pointer",
-                  backgroundColor:"transparent",
-                border:"none",
-                fontFamily: "Poppins",
-                fontStyle: "normal",
-                fontWeight: 0,
-                fontSize: "1vw",
-                color: "#cfcfcf",
-               }}
-                  >
-                    
-                  </button>
-                )}
-                clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                onSuccess={mobResponseGoogle}
-                onFailure={mobResponseGoogle}
-              />
-                
+                  <GoogleLogin
+                    render={(renderProps) => (
+                      <button
+                        className="my-google-button-class"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "transparent",
+                          border: "none",
+                          fontFamily: "Poppins",
+                          fontStyle: "normal",
+                          fontWeight: 0,
+                          fontSize: "1vw",
+                          color: "#cfcfcf",
+                        }}
+                      ></button>
+                    )}
+                    clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                    onSuccess={mobResponseGoogle}
+                    onFailure={mobResponseGoogle}
+                  />
                 </>
                 <img
                   className="mob-resp-mail-signin"
@@ -1142,37 +1133,37 @@ const Navbar = () => {
                 />
                 <img src={locationIcon} alt=""></img>
               </div>
-              {hidePassword? null :
-              <>
-              <input
-                className="mob-resp-name-input"
-                onChange={(e) => {
-                  setpassword(e.target.value);
-                }}
-                value={password}
-                type="password"
-                placeholder="Password "
-              />
-              <div className="mob-resp-confirmPassword-div">
-                <input
-                  className="mob-resp-confirmPassword-input"
-                  onChange={(e) => {
-                    setconfirm_password(e.target.value);
-                  }}
-                  value={confirm_password}
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Confirm Password"
-                />
-                <img
-                  src={showPassword ? SingupEyeIcon : SingupClosedEyeIcon}
-                  onClick={() => {
-                    setshowPassword(!showPassword);
-                  }}
-                  alt=""
-                ></img>
-              </div>
-              </>
-              }
+              {hidePassword ? null : (
+                <>
+                  <input
+                    className="mob-resp-name-input"
+                    onChange={(e) => {
+                      setpassword(e.target.value);
+                    }}
+                    value={password}
+                    type="password"
+                    placeholder="Password "
+                  />
+                  <div className="mob-resp-confirmPassword-div">
+                    <input
+                      className="mob-resp-confirmPassword-input"
+                      onChange={(e) => {
+                        setconfirm_password(e.target.value);
+                      }}
+                      value={confirm_password}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Confirm Password"
+                    />
+                    <img
+                      src={showPassword ? SingupEyeIcon : SingupClosedEyeIcon}
+                      onClick={() => {
+                        setshowPassword(!showPassword);
+                      }}
+                      alt=""
+                    ></img>
+                  </div>
+                </>
+              )}
               <button
                 className="mob-resp-next-button"
                 onClick={() => {
@@ -1239,7 +1230,6 @@ const Navbar = () => {
                     setotp(e.target.value);
                   }}
                   className="mob-resp-moile-input"
-                  placeholder="Enter OTP"
                   name="mob_no"
                 />
                 <span></span>
@@ -1373,7 +1363,9 @@ const Navbar = () => {
               onClick={() => setLangDropdown(!langDropdown)}
             >
               <img src={locationIcon} alt="location" />
-              <span>Location</span>
+              <span>
+                {locationCity !== undefined ? locationCity : "Location"}
+              </span>
               <div className="arrow-icon">
                 <img src={downArrow} alt="down arrow" />
               </div>
@@ -1396,7 +1388,14 @@ const Navbar = () => {
                           key={index}
                           onClick={() => {
                             setCitySearch(city);
+                            dispatch(setCurrentCity(city));
                             setLangDropdown(false);
+                            if (location.city) {
+                              location.city = city;
+                              let prevUrl = queryString.stringify(location);
+                              window.location.href =
+                                window.location.pathname + "?" + prevUrl;
+                            }
                           }}
                         >
                           {city}
@@ -1428,7 +1427,6 @@ const Navbar = () => {
               <div className="drop-down">
                 <p
                   onClick={() => {
-                    
                     updateLanguage("en");
                     setselectedLanguage("English");
                     setdropdown(!dropdown);

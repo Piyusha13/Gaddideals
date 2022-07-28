@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { imgurl } from "../constants";
 
@@ -22,6 +23,7 @@ import lottieAnimation from "../assets/my-vehicles-lottie.json";
 import ToggleCategory from "../components/ToggleCategory";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { selectLocation } from "../store/location/location.selector";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -171,12 +173,14 @@ const VehicleListings = () => {
 
   const navigate = useNavigate();
 
+  const locationCity = useSelector(selectLocation);
+
   const handleSearchChange = async (e) => {
     setSearchInput(e.target.value);
 
     if (searchInput.length > 0) {
       const res = await axios.get(
-        `${Constant.getUrls.getAllVehicles}?q=` + searchInput
+        `${Constant.getUrls.getAllVehicles}?q=` + searchInput.toLowerCase()
       );
 
       setVehiclesArray(res.data.vehicle.docs);
@@ -209,6 +213,8 @@ const VehicleListings = () => {
         setCat(response.data.category.docs[0]._id);
         location.category_name =
           response.data.category.docs[0].title.toLowerCase();
+        console.log(locationCity);
+        location.city = locationCity;
         location.category = response.data.category.docs[0]._id;
         let prevUrl = queryString.stringify(location);
         navigate("?" + prevUrl);
@@ -1013,7 +1019,7 @@ const VehicleListings = () => {
       )}
       {displayFilterOne && (
         //  {/* Filter One for mobile */}
-        <div className="filter-one lg-devices"> 
+        <div className="filter-one lg-devices">
           <div className="filter-container">
             <h3 className="sort-by">Sort By :</h3>
             <div
@@ -1471,21 +1477,25 @@ const VehicleListings = () => {
           )}
         </div>
         {/* </InfiniteScroll> */}
-        {displayFilterOne &&
-      <div  className="mob-menue-overlay" 
-        onClick={()=>{setdisplayFilterOne(false);
-          }}
-         ></div>
-        }
-        {displayFilterTwo &&
-      <div  className="mob-menue-overlay" 
-        onClick={()=>{
-          setdisplayFilterTwo(false);}}
-         ></div>
-        }
+        {displayFilterOne && (
+          <div
+            className="mob-menue-overlay"
+            onClick={() => {
+              setdisplayFilterOne(false);
+            }}
+          ></div>
+        )}
+        {displayFilterTwo && (
+          <div
+            className="mob-menue-overlay"
+            onClick={() => {
+              setdisplayFilterTwo(false);
+            }}
+          ></div>
+        )}
       </section>
-        {/*Truck Image  */}
-        <div className="truck-section">
+      {/*Truck Image  */}
+      <div className="truck-section">
         <div className="image-wrapper">
           <img src={truckHomeImage} alt="truck" />
         </div>

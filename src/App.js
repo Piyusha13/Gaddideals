@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import VehicleDetails from "./pages/VehicleDetails";
 import VehicleListings from "./pages/VehicleListings";
 import SellerForm from "./pages/SellerForm";
@@ -14,41 +16,73 @@ import VehicleCard from "./pages/VehicleCard";
 import DirectSignup from "./components/DirectSignup";
 import "../src/App.css";
 
+import { setCurrentCity } from "./store/location/location.action";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Geocode from "react-geocode";
 
 function App() {
-  Geocode.setApiKey("AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw");
-  Geocode.setLanguage("en");
-  Geocode.setRegion("in");
-  Geocode.setLocationType("ROOFTOP");
+  const [locationCity, setLocationCity] = useState("");
 
-  function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+  const dispatch = useDispatch();
 
-    Geocode.fromLatLng(latitude, longitude).then(
-      (response) => {
-        const address = response.results[0].formatted_address;
-        console.log(address);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  useEffect(() => {
+    Geocode.setApiKey("AIzaSyAELAwwgOsEByDFADInfu25LgorYeILwRI");
+    Geocode.setLanguage("en");
+    Geocode.setRegion("in");
+    Geocode.setLocationType("ROOFTOP");
 
-    console.log(latitude, longitude);
-  }
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
-  function error() {
-    console.log("Unable to retrieve location");
-  }
+      Geocode.fromLatLng(latitude, longitude).then(
+        (response) => {
+          const address = response.results[0].formatted_address;
+          let city, state, country;
+          for (
+            let i = 0;
+            i < response.results[0].address_components.length;
+            i++
+          ) {
+            for (
+              let j = 0;
+              j < response.results[0].address_components[i].types.length;
+              j++
+            ) {
+              switch (response.results[0].address_components[i].types[j]) {
+                case "locality":
+                  city = response.results[0].address_components[i].long_name;
+                  break;
+                case "administrative_area_level_1":
+                  state = response.results[0].address_components[i].long_name;
+                  break;
+                case "country":
+                  country = response.results[0].address_components[i].long_name;
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+          dispatch(setCurrentCity(city));
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
+    function error() {
+      console.log("Unable to retrieve location");
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+  }, [dispatch]);
 
   return (
     <>

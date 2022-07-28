@@ -6,6 +6,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+
 import { BrowserRouter as Router } from "react-router-dom";
 // setConfig({
 //   clientEmail: "384857094071-ej4f1bi786jn698rkocn43vkhaebo157.apps.googleusercontent.com",
@@ -17,9 +20,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>
 );
 

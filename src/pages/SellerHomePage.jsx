@@ -46,7 +46,7 @@ import Edit from "../assets/edit.png";
 
 // import { setConfig } from 'react-google-translate';
 
-const SellerHomePage = () => {
+const SellerHomePage = ({ locationCity, setLocationCity }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [categoriesData, setCategoriesData] = useState([]);
