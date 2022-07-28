@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import { imgurl } from "../constants";
 
@@ -23,7 +23,6 @@ import lottieAnimation from "../assets/my-vehicles-lottie.json";
 import ToggleCategory from "../components/ToggleCategory";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { selectLocation } from "../store/location/location.selector";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -40,6 +39,9 @@ import OtpInput from "react-otp-input";
 import CloseTab from "../assets/close-tab.png";
 // import downArrow from "../assets/down-arrow.png";
 import Edit from "../assets/edit.png";
+import { selectLocation } from "../store/location/location.selector";
+import { useSelector} from "react-redux";
+
 
 const queryString = require("query-string");
 
@@ -65,6 +67,8 @@ const VehicleListings = () => {
   const [pageNo, setPageNo] = useState(1);
   const [displayFilterTwo, setdisplayFilterTwo] = useState(false);
   const [displayFilterOne, setdisplayFilterOne] = useState(false);
+
+  const locationCity = useSelector(selectLocation);
 
 
 // for get seller details
@@ -106,13 +110,9 @@ const VehicleListings = () => {
   );
 
   function saveBuyer() {
-    let payload = { name, email, mob_no, seller_id, user_type, city };
+    let payload = { seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
     axios
-      .post(Constant.postUrls.postAllEnquiries, payload, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+      .post(Constant.postUrls.postAllEnquiries, payload)
       .then((result) => {
         if (result.data.status === "failed") {
           toast.error(result.data.message);
@@ -121,6 +121,7 @@ const VehicleListings = () => {
             toast.success(result.data.message);
             // setvisibleOTP(!visibleOTP);
             setmob_no(mob_no);
+            setSellerDetails(!SellerDetails);
             // setOtp(otp);
             setBuyerOtp(!BuyerOtp);
             // setCounter(59);
@@ -129,6 +130,29 @@ const VehicleListings = () => {
       });
   }
 
+  function verifyOtp() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      console.log("result", result);
+      if (mob_no === "") {
+        // notify();
+        toast.error("enter moile number");
+      } else if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          
+          // setOtp(result.data.otp);
+          // setvisibleOTP(!visibleOTP);
+          // setvisible(false);
+
+          // setCounter(59);
+        }
+      }
+    });
+  }
   function handleChange(o) {
     setOtp(o);
     // console.log(otp);
@@ -145,7 +169,7 @@ const VehicleListings = () => {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
         toast.success(res.data.message);
-        setSellerDetails(!SellerDetails);
+        // setSellerDetails(!SellerDetails);
         setBuyerOtp(!BuyerOtp);
       }
     });
@@ -173,7 +197,7 @@ const VehicleListings = () => {
 
   const navigate = useNavigate();
 
-  const locationCity = useSelector(selectLocation);
+  // const locationCity = useSelector(selectLocation);
 
   const handleSearchChange = async (e) => {
     setSearchInput(e.target.value);
@@ -650,7 +674,7 @@ const VehicleListings = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={city}
+                  value={locationCity}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -680,6 +704,7 @@ const VehicleListings = () => {
                 onClick={() => {
                   // saveBuyer();
                   setBuyerInput(!BuyerInput);
+                  verifyOtp();
                   setBuyerOtp(!BuyerOtp);
                 }}
               >
@@ -1456,7 +1481,7 @@ const VehicleListings = () => {
                     </div>
                     <button
                      onClick={() => {
-                     
+                     setseller_id(vehicle.user._id);
                       setUserObj(vehicle.user);
                       if(userToken){
                         setSellerDetails(!SellerDetails)

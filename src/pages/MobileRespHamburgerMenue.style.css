@@ -14,6 +14,7 @@
     .mob-top-div{
         border-bottom: 1px solid #E9E9E9;
         padding: 10px;
+        padding-left: 0px;
         padding-bottom: 15px;
         position: relative;
     }
@@ -111,6 +112,7 @@
 .mob-top-div{
     border-bottom: 1px solid #E9E9E9;
     padding: 10px;
+    padding-left: 0px;
     padding-bottom: 15px;
     position: relative;
 }

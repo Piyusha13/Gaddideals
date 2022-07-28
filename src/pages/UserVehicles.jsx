@@ -151,7 +151,7 @@ function UserVehicles() {
                           <div className="location">
                             <img src={locationIcon} alt="location icon" />
                             {/* fetching city name  */}
-                            <span>{item.city}</span>
+                            <span>{item.city.substring(0,15)}</span>
                           </div>
                         </div>
                         <div className="card-publish-review">

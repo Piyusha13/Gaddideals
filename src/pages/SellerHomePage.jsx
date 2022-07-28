@@ -38,6 +38,8 @@ import OtpInput from "react-otp-input";
 import CloseTab from "../assets/close-tab.png";
 import downArrow from "../assets/down-arrow.png";
 import Edit from "../assets/edit.png";
+import { selectLocation } from "../store/location/location.selector";
+import { useSelector} from "react-redux";
 
 // import { useLazyTranslate } from 'react-google-translate';
 // const GCP_PRIVATE_KEY=["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"];
@@ -46,7 +48,7 @@ import Edit from "../assets/edit.png";
 
 // import { setConfig } from 'react-google-translate';
 
-const SellerHomePage = ({ locationCity, setLocationCity }) => {
+const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [categoriesData, setCategoriesData] = useState([]);
@@ -62,6 +64,9 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
   const [latestConstructionData, setLatestConstructionData] = useState([]);
   const [faqs, setFAQS] = useState([]);
   const [vehicleId,setvehicleId]=useState("");
+
+  const locationCity = useSelector(selectLocation);
+
 
   // for get seller details
   // const [loadingDetails, setLoadingDetails] = useState(false);
@@ -215,28 +220,68 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
   //   FaGoogle.translate.TranslateElement("intro-title");
   // }
 
-  function saveBuyer() {
-    let payload = { name, email, mob_no, seller_id, user_type, city };
-    axios
-      .post(Constant.postUrls.postAllEnquiries, payload, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((result) => {
-        if (result.data.status === "failed") {
-          toast.error(result.data.message);
-        } else {
-          if (result.data.status === "success") {
-            toast.success(result.data.message);
-            // setvisibleOTP(!visibleOTP);
-            setmob_no(mob_no);
-            // setOtp(otp);
-            setBuyerOtp(!BuyerOtp);
-            // setCounter(59);
+  //saveBuyer
+  const  saveBuyer= async() =>{
+    
+      let payload = { seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload)
+        .then((result) => {
+          if (result.data.status === "failed") {
+            toast.error(result.data.message);
+            console.log(result);
+          } else {
+            if (result.data.status === "success") {
+              toast.success(result.data.message);
+              // setvisibleOTP(!visibleOTP);
+              setSellerDetails(!SellerDetails);
+              // setOtp(otp);
+              // verifyOtp();
+              setBuyerOtp(!BuyerOtp);
+              // setCounter(59);
+              // savePhoneOtp();
+              
+            }
           }
+        }).catch(function (error) {
+          if (error.response) {
+            // Request made and server responded
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+      
+        });
+    }
+   
+  function verifyOtp() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      console.log("result", result);
+      if (mob_no === "") {
+        // notify();
+        toast.error("enter moile number");
+      } else if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          
+          // setOtp(result.data.otp);
+          // setvisibleOTP(!visibleOTP);
+          // setvisible(false);
+
+          // setCounter(59);
         }
-      });
+      }
+    });
   }
 
   function handleChange(o) {
@@ -255,7 +300,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
         toast.success(res.data.message);
-        setSellerDetails(!SellerDetails);
+        
         setBuyerOtp(!BuyerOtp);
       }
     });
@@ -405,7 +450,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={city}
+                  value={locationCity}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -435,6 +480,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                 onClick={() => {
                   // saveBuyer();
                   setBuyerInput(!BuyerInput);
+                  verifyOtp();
                   setBuyerOtp(!BuyerOtp);
                 }}
               >
@@ -655,14 +701,14 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                         <div className="latest-img-wrapper">
                           <img
                             src={`https://gaddideals.brokerinvoice.co.in${latestTruck.front_side_pic}`}
-                            alt={latestTruck.brand.title}
+                            alt={latestTruck?.brand?.title}
                           />
                         </div>
                       </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
-                            <h5>{latestTruck.brand.title}</h5>
+                            <h5>{latestTruck?.brand?.title}</h5>
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
                               <span>{latestTruck.city}</span>
@@ -676,6 +722,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                           // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                           // setvehicleId(latestTruck._id)
                           setUserObj(latestTruck.user);
+                          setseller_id(latestTruck.user._id);
                           if(userToken){
                             setSellerDetails(!SellerDetails)
                           }else{
@@ -720,14 +767,14 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                         <div className="latest-img-wrapper">
                           <img
                             src={`https://gaddideals.brokerinvoice.co.in${latestBuses.front_side_pic}`}
-                            alt={latestBuses.brand.title}
+                            alt={latestBuses?.brand?.title}
                           />
                         </div>
                       </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
-                            <h5>{latestBuses.brand.title}</h5>
+                            <h5>{latestBuses?.brand?.title}</h5>
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
@@ -742,7 +789,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                           // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                           // setvehicleId(latestBuses._id)
                           setUserObj(latestBuses.user);
-
+                          setseller_id(latestBuses.user._id);
                           if(userToken){
                             setSellerDetails(!SellerDetails)
                           }else{
@@ -787,14 +834,14 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                         <div className="latest-img-wrapper">
                           <img
                             src={`https://gaddideals.brokerinvoice.co.in${latestTractor.front_side_pic}`}
-                            alt={latestTractor.brand.title}
+                            alt={latestTractor?.brand?.title}
                           />
                         </div>
                       </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
-                            <h5>{latestTractor.brand.title}</h5>
+                            <h5>{latestTractor?.brand?.title}</h5>
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
@@ -809,7 +856,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                           // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                           // setvehicleId(latestTractor._id)
                           setUserObj(latestTractor.user);
-
+                          setseller_id(latestTractor.user._id);
                           if(userToken){
                             setSellerDetails(!SellerDetails)
                           }else{
@@ -854,14 +901,14 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                         <div className="latest-img-wrapper">
                           <img
                             src={`https://gaddideals.brokerinvoice.co.in${latestConstruction.front_side_pic}`}
-                            alt={latestConstruction.brand.title}
+                            alt={latestConstruction?.brand?.title}
                           />
                         </div>
                       </Link>
                       <div className="latest-info">
                         <div className="latest-header">
                           <div className="latest-title">
-                            <h5>{latestConstruction.brand.title}</h5>
+                            <h5>{latestConstruction?.brand?.title}</h5>
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
@@ -879,7 +926,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                         // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                         // setvehicleId(latestConstruction._id)
                         setUserObj(latestConstruction.user);
-
+                        setseller_id(latestConstruction.user._id);
                         if(userToken){
                           setSellerDetails(!SellerDetails)
                         }else{
@@ -910,11 +957,11 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                 <a href={"/vehiclelistings?category=" + category._id}>
                   <img
                     src={`https://gaddideals.brokerinvoice.co.in${category.image}`}
-                    alt={category.title}
+                    alt={category?.title}
                   />
                 </a>
                 <div className="our-category-title">
-                  <h6>{category.title}</h6>
+                  <h6>{category?.title}</h6>
                 </div>
               </div>
             );
@@ -965,11 +1012,11 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                   <div className="profile-img">
                     <img
                       src={`https://gaddideals.brokerinvoice.co.in${testimonial.image}`}
-                      alt={testimonial.title}
+                      alt={testimonial?.title}
                     />
                   </div>
                   <div className="profile-name-location">
-                    <h6>{testimonial.title}</h6>
+                    <h6>{testimonial?.title}</h6>
                     <div className="profile-location">
                       <img src={locationIcon} alt={testimonial.location} />
                       <span>{testimonial.location}</span>
@@ -1027,7 +1074,7 @@ const SellerHomePage = ({ locationCity, setLocationCity }) => {
                 <div className="brand-wrapper">
                   <img
                     src={`https://gaddideals.brokerinvoice.co.in${brand.image}`}
-                    alt={brand.title}
+                    alt={brand?.title}
                   />
                 </div>
               </SwiperSlide>

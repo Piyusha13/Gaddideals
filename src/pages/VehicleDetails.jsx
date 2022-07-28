@@ -40,6 +40,10 @@ import { Navigation, Thumbs, FreeMode } from "swiper";
 import Modal from "react-awesome-modal";
 import OtpInput from "react-otp-input";
 
+
+import { selectLocation } from "../store/location/location.selector";
+import { useSelector} from "react-redux";
+
 const VehicleDetails = () => {
   const { id } = useParams();
   const [getvehicledetails, setVehicleDetails] = useState({});
@@ -66,6 +70,8 @@ const VehicleDetails = () => {
   const [isTypeActive, setIsTypeActive] = useState();
   const [seller_id, setseller_id] = useState("");
   const [seller, setSeller] = useState("");
+
+  const locationCity = useSelector(selectLocation);
 
   const dealerType = [
     {
@@ -147,13 +153,9 @@ const VehicleDetails = () => {
   };
 
   function saveBuyer() {
-    let payload = { name, email, mob_no, seller_id, user_type, city };
+    let payload = {seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
     axios
-      .post(Constant.postUrls.postAllEnquiries, payload, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+      .post(Constant.postUrls.postAllEnquiries, payload)
       .then((result) => {
         if (result.data.status === "failed") {
           toast.error(result.data.message);
@@ -161,13 +163,38 @@ const VehicleDetails = () => {
           if (result.data.status === "success") {
             toast.success(result.data.message);
             // setvisibleOTP(!visibleOTP);
-            setmob_no(mob_no);
+            // setmob_no(mob_no);
+            setSellerDetails(!SellerDetails);
             // setOtp(otp);
             setBuyerOtp(!BuyerOtp);
             // setCounter(59);
           }
         }
       });
+  }
+
+  function verifyOtp() {
+    console.warn({ mob_no });
+    let payload = { mob_no, hash: "ekxpmAB8m9v" };
+    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+      console.log("result", result);
+      if (mob_no === "") {
+        // notify();
+        toast.error("enter moile number");
+      } else if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          
+          // setOtp(result.data.otp);
+          // setvisibleOTP(!visibleOTP);
+          // setvisible(false);
+
+          // setCounter(59);
+        }
+      }
+    });
   }
 
   function handleChange(o) {
@@ -186,7 +213,7 @@ const VehicleDetails = () => {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
         toast.success(res.data.message);
-        setSellerDetails(!SellerDetails);
+        // setSellerDetails(!SellerDetails);
         setBuyerOtp(!BuyerOtp);
       }
     });
@@ -275,7 +302,7 @@ const VehicleDetails = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={city}
+                  value={locationCity}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -305,6 +332,7 @@ const VehicleDetails = () => {
                 onClick={() => {
                   // saveBuyer();
                   setBuyerInput(!BuyerInput);
+                  verifyOtp();
                   setBuyerOtp(!BuyerOtp);
                 }}
               >
