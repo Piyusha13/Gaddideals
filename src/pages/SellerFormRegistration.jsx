@@ -87,7 +87,7 @@ const SellerFormRegistration = ({
 
           <div className="route-nav">
             <div className="circle"></div>
-            <a href="#vehicledetail">vehicle Detail</a>
+            <a href="#vehicledetail">Vehicle Detail</a>
           </div>
 
           <div className="route-nav">
@@ -205,7 +205,9 @@ const SellerFormRegistration = ({
               )}
 
               <div className="form-register-controls">
-                <label htmlFor="tyrecondition">Tyre Condition</label>
+                <label htmlFor="tyrecondition">
+                  Tyre Condition <small style={{ color: "red" }}>*</small>
+                </label>
                 <div className="conditions">
                   {tyreConditionArray.map((conditions, index) => (
                     <div
@@ -227,7 +229,10 @@ const SellerFormRegistration = ({
               </div>
 
               <div className="form-register-controls">
-                <label htmlFor="pricingvehicle">Pricing of the vehicle</label>
+                <label htmlFor="pricingvehicle">
+                  Pricing of the vehicle
+                  <small style={{ color: "red" }}>*</small>
+                </label>
                 <input
                   type="number"
                   value={formData.pricingvehicle}
@@ -269,7 +274,9 @@ const SellerFormRegistration = ({
               </div>
 
               <div className="form-register-controls">
-                <label htmlFor="rcdocument">RC</label>
+                <label htmlFor="rcdocument">
+                  RC <small style={{ color: "red" }}>*</small>
+                </label>
                 <div className="rcs">
                   {RCArray.map((rcs, index) => (
                     <div

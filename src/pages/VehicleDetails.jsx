@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import Constant from "../constants";
 
 import { toast } from "react-toastify";
+import { FaUserTie } from "react-icons/fa";
 
 import moment from "moment";
 
@@ -533,7 +534,8 @@ const VehicleDetails = () => {
                       <span>{getvehicledetails.km_driven}</span>
                     </div>
                     <div className="stat">
-                      <img src={ownerIcon} alt="owner icon" />
+                      {/* <img src={ownerIcon} alt="owner icon" /> */}
+                      <FaUserTie size={30} color={"#050F56"} />
                       <span>{getvehicledetails.no_of_owner}</span>
                     </div>
                     <div className="stat calender">
@@ -599,7 +601,11 @@ const VehicleDetails = () => {
 
               <div className="selling-detail-container">
                 <button
-                  onClick={()=>{userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)} }
+                  onClick={() => {
+                    userToken
+                      ? setSellerDetails(!SellerDetails)
+                      : setBuyerInput(!BuyerInput);
+                  }}
                 >
                   Get Seller Details
                 </button>

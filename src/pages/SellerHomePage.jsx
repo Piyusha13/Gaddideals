@@ -39,7 +39,7 @@ import CloseTab from "../assets/close-tab.png";
 import downArrow from "../assets/down-arrow.png";
 import Edit from "../assets/edit.png";
 import { selectLocation } from "../store/location/location.selector";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 // import { useLazyTranslate } from 'react-google-translate';
 // const GCP_PRIVATE_KEY=["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"];
@@ -57,20 +57,20 @@ const SellerHomePage = () => {
   const [busesCategoryId, setBusesCategoryId] = useState("");
   const [constructionCategoryId, setConstructionCategoryId] = useState("");
   const [testimonialsData, setTestimonialsData] = useState([]);
+  const [advertisementData, setAdvertisementData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
   const [latestTrucksData, setLatestTrucksData] = useState([]);
   const [latestBusesData, setLatestBusesData] = useState([]);
   const [latestTractorsData, setLatestTractorsData] = useState([]);
   const [latestConstructionData, setLatestConstructionData] = useState([]);
   const [faqs, setFAQS] = useState([]);
-  const [vehicleId,setvehicleId]=useState("");
+  const [vehicleId, setvehicleId] = useState("");
 
   const locationCity = useSelector(selectLocation);
 
-
   // for get seller details
   // const [loadingDetails, setLoadingDetails] = useState(false);
-  const [userObj,setUserObj]=useState();
+  const [userObj, setUserObj] = useState();
   const [BuyerInput, setBuyerInput] = useState(false);
   const [BuyerOtp, setBuyerOtp] = useState(false);
   const [otp, setOtp] = useState("");
@@ -102,7 +102,6 @@ const SellerHomePage = () => {
     },
   ];
 
-
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
   );
@@ -126,21 +125,19 @@ const SellerHomePage = () => {
   //     setseller_id(res.data?.vehicle?.user?._id);
   //     setSeller(res.data?.vehicle?.user);
 
-
   //     setLoadingDetails(false);
   //   };
 
   //   getSingleVehicleDetails();
   // }, []);
 
-//  if buyer is not logged-in 
-
+  //  if buyer is not logged-in
 
   // if (loadingDetails) {
   //   return "Loading...";
   // }
 
-  // 
+  //
 
   const fetchFaqs = async () => {
     const response = await axios.get(Constant.getUrls.getAllFaqs);
@@ -155,6 +152,11 @@ const SellerHomePage = () => {
   const fetchTestimonials = async () => {
     const response = await axios.get(Constant.getUrls.getAllTestimonials);
     setTestimonialsData(response.data.testimonial.docs);
+  };
+
+  const fetchAdvertisements = async () => {
+    const response = await axios.get(Constant.getUrls.getAllAdvertisments);
+    setAdvertisementData(response.data.advertisment.docs);
   };
 
   const fetchBrands = async () => {
@@ -221,45 +223,55 @@ const SellerHomePage = () => {
   // }
 
   //saveBuyer
-  const  saveBuyer= async() =>{
-    
-      let payload = { seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
-      await axios
-        .post(Constant.postUrls.postAllEnquiries, payload)
-        .then((result) => {
-          if (result.data.status === "failed") {
-            toast.error(result.data.message);
-            console.log(result);
-          } else {
-            if (result.data.status === "success") {
-              toast.success(result.data.message);
-              // setvisibleOTP(!visibleOTP);
-              setSellerDetails(!SellerDetails);
-              // setOtp(otp);
-              // verifyOtp();
-              setBuyerOtp(!BuyerOtp);
-              // setCounter(59);
-              // savePhoneOtp();
-              
-            }
+  const saveBuyer = async () => {
+    let payload = {
+      seller_id,
+      name,
+      email,
+      mob_no,
+      user_type,
+      city: locationCity,
+      hash: "ekxpmAB8m9v",
+    };
+    await axios
+      .post(Constant.postUrls.postAllEnquiries, payload)
+      .then((result) => {
+        if (result.data.status === "failed") {
+          toast.error(result.data.message);
+          console.log(result);
+        } else {
+          if (result.data.status === "success") {
+            toast.success(result.data.message);
+            // setvisibleOTP(!visibleOTP);
+            setSellerDetails(!SellerDetails);
+            // setOtp(otp);
+            // verifyOtp();
+            setBuyerOtp(!BuyerOtp);
+            // setCounter(59);
+            // savePhoneOtp();
           }
-        }).catch(function (error) {
-          if (error.response) {
-            // Request made and server responded
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-      
-        });
-    }
-   
+        }
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // Request made and server responded
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+      });
+  };
+
+  const testimonialBuyer = testimonialsData.filter(
+    (buyer) => buyer.type === "buyer"
+  );
+
   function verifyOtp() {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
@@ -273,7 +285,7 @@ const SellerHomePage = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          
+
           // setOtp(result.data.otp);
           // setvisibleOTP(!visibleOTP);
           // setvisible(false);
@@ -300,7 +312,7 @@ const SellerHomePage = () => {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
         toast.success(res.data.message);
-        
+
         setBuyerOtp(!BuyerOtp);
       }
     });
@@ -329,6 +341,7 @@ const SellerHomePage = () => {
   useEffect(() => {
     fetchCategories();
     fetchTestimonials();
+    fetchAdvertisements();
     fetchBrands();
     fetchLatestTrucks();
     fetchLatestBuses();
@@ -345,9 +358,8 @@ const SellerHomePage = () => {
     // setTruckCategoryId(converted.Trucks._id);
 
     window
-    .matchMedia("(max-width: 1000px)")
-    .addEventListener("change", (e) => setMatches(e.matches));
-
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
 
     // get single seller
     // const getSingleVehicleDetails = async () => {
@@ -363,7 +375,7 @@ const SellerHomePage = () => {
     //   setSeller(res.data?.vehicle?.user);
     //   console.log(res.data?.vehicle?.user);
 
-    //   setSellerDetails(true);   
+    //   setSellerDetails(true);
     //   setLoadingDetails(false);
     // };
 
@@ -394,7 +406,7 @@ const SellerHomePage = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  console.log(userObj);
+
   return (
     <div>
       <Navbar />
@@ -553,7 +565,7 @@ const SellerHomePage = () => {
           </Modal>
         </div>
       )}
-      {SellerDetails  && (
+      {SellerDetails && (
         <div>
           <Modal
             visible={SellerDetails}
@@ -586,7 +598,7 @@ const SellerHomePage = () => {
               <input value={userObj?.email} placeholder="Email"></input>
             </div>
           </Modal>
-        </div> 
+        </div>
       )}
       <Banner />
       <div className="how-it-works-section">
@@ -718,19 +730,20 @@ const SellerHomePage = () => {
                         </div>
 
                         <button
-                         onClick={() => {
-                          // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                          // setvehicleId(latestTruck._id)
-                          setUserObj(latestTruck.user);
-                          setseller_id(latestTruck.user._id);
-                          if(userToken){
-                            setSellerDetails(!SellerDetails)
-                          }else{
-                            setBuyerInput(!BuyerInput)
-                          }
-                          
-                         }}
-                        >Get Seller Details</button>
+                          onClick={() => {
+                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                            // setvehicleId(latestTruck._id)
+                            setUserObj(latestTruck.user);
+                            setseller_id(latestTruck.user._id);
+                            if (userToken) {
+                              setSellerDetails(!SellerDetails);
+                            } else {
+                              setBuyerInput(!BuyerInput);
+                            }
+                          }}
+                        >
+                          Get Seller Details
+                        </button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -785,19 +798,20 @@ const SellerHomePage = () => {
                         </div>
 
                         <button
-                        onClick={() => {
-                          // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                          // setvehicleId(latestBuses._id)
-                          setUserObj(latestBuses.user);
-                          setseller_id(latestBuses.user._id);
-                          if(userToken){
-                            setSellerDetails(!SellerDetails)
-                          }else{
-                            setBuyerInput(!BuyerInput)
-                          }
-                          
-                         }}
-                        >Get Seller Details</button>
+                          onClick={() => {
+                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                            // setvehicleId(latestBuses._id)
+                            setUserObj(latestBuses.user);
+                            setseller_id(latestBuses.user._id);
+                            if (userToken) {
+                              setSellerDetails(!SellerDetails);
+                            } else {
+                              setBuyerInput(!BuyerInput);
+                            }
+                          }}
+                        >
+                          Get Seller Details
+                        </button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -852,19 +866,20 @@ const SellerHomePage = () => {
                         </div>
 
                         <button
-                        onClick={() => {
-                          // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                          // setvehicleId(latestTractor._id)
-                          setUserObj(latestTractor.user);
-                          setseller_id(latestTractor.user._id);
-                          if(userToken){
-                            setSellerDetails(!SellerDetails)
-                          }else{
-                            setBuyerInput(!BuyerInput)
-                          }
-                          
-                         }}
-                        >Get Seller Details</button>
+                          onClick={() => {
+                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                            // setvehicleId(latestTractor._id)
+                            setUserObj(latestTractor.user);
+                            setseller_id(latestTractor.user._id);
+                            if (userToken) {
+                              setSellerDetails(!SellerDetails);
+                            } else {
+                              setBuyerInput(!BuyerInput);
+                            }
+                          }}
+                        >
+                          Get Seller Details
+                        </button>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -920,22 +935,22 @@ const SellerHomePage = () => {
                           </p>
                         </div>
 
-                        
-                      <button
-                      onClick={() => {
-                        // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                        // setvehicleId(latestConstruction._id)
-                        setUserObj(latestConstruction.user);
-                        setseller_id(latestConstruction.user._id);
-                        if(userToken){
-                          setSellerDetails(!SellerDetails)
-                        }else{
-                          setBuyerInput(!BuyerInput)
-                        }
-                        
-                       }} 
-                      >Get Seller Details</button>
-                      </div>  
+                        <button
+                          onClick={() => {
+                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                            // setvehicleId(latestConstruction._id)
+                            setUserObj(latestConstruction.user);
+                            setseller_id(latestConstruction.user._id);
+                            if (userToken) {
+                              setSellerDetails(!SellerDetails);
+                            } else {
+                              setBuyerInput(!BuyerInput);
+                            }
+                          }}
+                        >
+                          Get Seller Details
+                        </button>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
@@ -978,8 +993,9 @@ const SellerHomePage = () => {
         <div className="customer-review-container">
           <Swiper
             className="testimonial-slide"
+            centeredSlides={true}
             spaceBetween={20}
-            slidesPerView={3}
+            slidesPerView={testimonialBuyer.length === 1 ? "auto" : 3}
             grabCursor={true}
             breakpoints={{
               50: {
@@ -1003,7 +1019,7 @@ const SellerHomePage = () => {
             }}
             modules={[Autoplay]}
           >
-            {testimonialsData.map((testimonial) => (
+            {testimonialBuyer.map((testimonial) => (
               <SwiperSlide
                 key={testimonial._id}
                 className="customer-swiper-slide"
@@ -1102,9 +1118,22 @@ const SellerHomePage = () => {
 
       {/*Truck Image  */}
       <div className="truck-section">
-        <div className="image-wrapper">
-          <img src={truckHomeImage} alt="truck" />
-        </div>
+        <Swiper
+          grabCursor={true}
+          modules={[Autoplay]}
+          className="advertise-swiper"
+        >
+          {advertisementData.map((advertise) => (
+            <SwiperSlide key={advertise._id} className="advertise-slide">
+              <div className="image-wrapper">
+                <img
+                  src={`https://gaddideals.brokerinvoice.co.in${advertise.image}`}
+                  alt="truck"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       {/* Footer */}

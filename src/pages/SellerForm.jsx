@@ -17,7 +17,8 @@ const SellerForm = () => {
   const { categoryId } = useParams();
 
   const [saveLoading, setSaveLoading] = useState(false);
-
+  const [pubLoading, setpubLoading] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
   const [isYearActive, setIsYearActive] = useState();
   const [isFuelActive, setIsFuelActive] = useState();
   const [isOwnerActive, setIsOwnerActive] = useState();
@@ -87,6 +88,8 @@ const SellerForm = () => {
   const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
   const [citySuggestionBox, setCitySuggestionBox] = useState(false);
   const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
+
+  const [vehicleID, setVehicleID] = useState("");
 
   const [formData, setFormData] = useState({
     vehiclenumber: "",
@@ -323,6 +326,7 @@ const SellerForm = () => {
   };
 
   const handlePostData = async () => {
+    setDisableBtn(false);
     setSaveLoading(true);
     let fd = new FormData();
 
@@ -365,11 +369,58 @@ const SellerForm = () => {
 
     if (response.data.status === "success") {
       toast.success(response.data.message);
+      setVehicleID(response.data.vehicle._id);
       setSaveLoading(false);
       setStep(1);
     }
 
     console.log(response);
+  };
+
+  const handlePublishPostData = async () => {
+    const userToken = localStorage.getItem("Token");
+
+    let fd = new FormData();
+
+    fd.append("category", categoryId);
+    fd.append("state", stateTitle);
+    fd.append("city", cityTitle);
+    fd.append("brand", brandId);
+    fd.append("model", modelId);
+    fd.append("years", year);
+    fd.append("reg_no", formData.vehiclenumber);
+    fd.append("km_driven", formData.kmsdriven || 0);
+    fd.append("no_of_hrs", formData.noofhrs);
+    fd.append("no_of_owner", owner);
+    fd.append("fuelType", fuel);
+    fd.append("insurance", formData.insurancevalidity);
+    fd.append("tax_validity", formData.taxvalidity);
+    fd.append("vehicle_permit", permit);
+    fd.append("no_of_tyre", formData.nooftyres);
+    fd.append("horse_power", formData.horsepower);
+    fd.append("no_of_seats", formData.noofseats);
+    fd.append("tyre_cond", tyreCondition);
+    fd.append("selling_price", formData.pricingvehicle);
+    fd.append("fitness_certificate", formData.fitnesscertificate);
+    fd.append("bodyType", bodyTypeId);
+    fd.append("rc_document", rc);
+
+    const publishResponse = await axios.put(
+      Constant.getUrls.getAllVehicles + `/${vehicleID}?status=published`,
+      fd,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+
+    if (publishResponse.data.status === "success") {
+      toast.success(publishResponse.data.message);
+      setpubLoading(false);
+    }
+
+    console.log(publishResponse);
   };
 
   switch (step) {
@@ -518,6 +569,7 @@ const SellerForm = () => {
             sidePicLeft={sidePicLeft}
             sidePicRight={sidePicRight}
             handlePostData={handlePostData}
+            handlePublishPostData={handlePublishPostData}
             brandTitle={brandTitle}
             modelTitle={modelTitle}
             formData={formData}
@@ -528,7 +580,8 @@ const SellerForm = () => {
             setStep={setStep}
             categoryTractorTitle={categoryTractorTitle}
             caetgoryBusTitle={caetgoryBusTitle}
-            saveLoading={saveLoading}
+            pubLoading={pubLoading}
+            disableBtn={disableBtn}
           />
         </>
       );

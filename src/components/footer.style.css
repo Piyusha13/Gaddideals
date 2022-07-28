@@ -859,9 +859,10 @@
   align-items: center;
   flex-direction: column;
   float: right;
-  position: relative;
+  margin-top: 100px;
+  /* position: a;
   top: 100px;
-  right: 20px;
+  right: 20px; */
 }
 .social-title h5 {
   font-family: "Roboto";

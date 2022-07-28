@@ -98,6 +98,10 @@ const SellerHome = () => {
     },
   };
 
+  const testimonialSeller = testimonialsData.filter(
+    (seller) => seller.type === "seller"
+  );
+
   return (
     <div>
       <Navbar />
@@ -160,7 +164,7 @@ const SellerHome = () => {
         <div className="how-cards-container container">
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Select the vehicle of your choice</h5>
+              <h5>Upload the required details of the vehicle</h5>
             </div>
 
             <div className="how-card-img1">
@@ -170,15 +174,18 @@ const SellerHome = () => {
 
             <div className="how-card-text">
               <p>
-                We have a variety of options available on the website and one
-                can select the vehicle of their choice
+                For quicker sale of the vehicle Gaddideals will ask for a few
+                details which will be mandatory for the seller of the vehicle to
+                fill.
               </p>
             </div>
           </div>
 
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Get the seller details</h5>
+              <h5>
+                The details will be verified and then will the vehicle be listed
+              </h5>
             </div>
 
             <div className="how-card-img2">
@@ -188,15 +195,15 @@ const SellerHome = () => {
 
             <div className="how-card-text2">
               <p>
-                Once the buyer selects the vehicle of their choice, they will
-                get the seller details
+                We will verify the details that is uploaded to make sure that
+                there is no mistake and the documents are authenticated
               </p>
             </div>
           </div>
 
           <div className="how-card">
             <div className="how-card-title">
-              <h5>Directly negotiate with the seller of the vehicle</h5>
+              <h5>Receive call from our buyer network</h5>
             </div>
 
             <div className="how-card-img">
@@ -206,9 +213,10 @@ const SellerHome = () => {
 
             <div className="how-card-text">
               <p>
-                The buyer can directly negotiate with the seller of the vehicle
-                and there will be NO COMMISSION charged to the buyer of the
-                vehicle
+                As gaddideals has a Pan India buyer network the process of
+                selling the vehicle will be quick. Post the sale it's the duty
+                of the seller to make sure that they give us 1% service fees as
+                per listing price.
               </p>
             </div>
           </div>
@@ -246,7 +254,7 @@ const SellerHome = () => {
           <Swiper
             className="testimonial-slide"
             spaceBetween={20}
-            slidesPerView={3}
+            slidesPerView={testimonialSeller.length === 1 ? "auto" : 3}
             grabCursor={true}
             breakpoints={{
               50: {
@@ -270,7 +278,7 @@ const SellerHome = () => {
             }}
             modules={[Autoplay]}
           >
-            {testimonialsData.map((testimonial) => (
+            {testimonialSeller.map((testimonial) => (
               <SwiperSlide
                 key={testimonial._id}
                 className="customer-swiper-slide"

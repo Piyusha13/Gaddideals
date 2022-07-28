@@ -1,6 +1,5 @@
 @media screen and (min-width: 768px) and (max-width: 990px) {
-
-  .location-and-icon{
+  .location-and-icon {
     display: flex !important;
     /* justify-content: space-around !important; */
     width: 100% !important;
@@ -8,20 +7,20 @@
   .location-container {
     /* display: none !important; */
     display: block !important;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
     justify-content: space-between !important;
     /* background-color: #00adef !important; */
   }
-  .sm-device{
+  .sm-device {
     display: none !important;
   }
-  .mob-resp-mail-signin{
+  .mob-resp-mail-signin {
     width: 70px !important;
     height: 70px !important;
   }
-  .my-google-button-class{
+  .my-google-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -29,7 +28,7 @@
     background-image: url("../assets/mob-gmail-icon.png") !important;
     background-size: cover !important;
   }
-  .my-facebook-button-class{
+  .my-facebook-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -37,7 +36,7 @@
     background-image: url("../assets/mob-fb-icon.png") !important;
     background-size: cover !important;
   }
-  .mob-menue-overlay{
+  .mob-menue-overlay {
     background-color: transparent !important;
     width: 100vw !important;
     height: 100vh !important;
@@ -166,11 +165,9 @@
   .languages-container {
     display: none !important;
   }
-  
 }
 @media screen and (min-width: 991px) and (max-width: 1000px) {
-  
-  .location-and-icon{
+  .location-and-icon {
     display: flex !important;
     /* justify-content: space-around !important; */
     width: 100% !important;
@@ -178,20 +175,20 @@
   .location-container {
     /* display: none !important; */
     display: block !important;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
     justify-content: space-between !important;
     /* background-color: #00adef !important; */
   }
-  .sm-device{
+  .sm-device {
     display: none !important;
   }
-  .mob-resp-mail-signin{
+  .mob-resp-mail-signin {
     width: 70px !important;
     height: 70px !important;
   }
-  .my-google-button-class{
+  .my-google-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -199,7 +196,7 @@
     background-image: url("../assets/mob-gmail-icon.png") !important;
     background-size: cover !important;
   }
-  .my-facebook-button-class{
+  .my-facebook-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -207,7 +204,7 @@
     background-image: url("../assets/mob-fb-icon.png") !important;
     background-size: cover !important;
   }
-  .mob-menue-overlay{
+  .mob-menue-overlay {
     background-color: transparent !important;
     width: 100vw !important;
     height: 100vh !important;
@@ -336,10 +333,8 @@
   .languages-container {
     display: none !important;
   }
-  
 }
 @media screen and (min-width: 1001px) and (max-width: 1236px) {
-
   /* .location-and-icon{
     display: flex !important;
     width: 100% !important;
@@ -357,13 +352,13 @@
     display: none !important;
   } */
   .location-container {
-    display: none !important; 
+    display: none !important;
   }
-  .mob-resp-mail-signin{
+  .mob-resp-mail-signin {
     width: 70px !important;
     height: 70px !important;
   }
-  .my-google-button-class{
+  .my-google-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -371,7 +366,7 @@
     background-image: url("../assets/mob-gmail-icon.png") !important;
     background-size: cover !important;
   }
-  .my-facebook-button-class{
+  .my-facebook-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -418,13 +413,12 @@
 }
 
 @media screen and (max-width: 767px) {
-
-  .mob-resp-mail-signin{
+  .mob-resp-mail-signin {
     width: 70px !important;
     height: 70px !important;
   }
 
-  .my-google-button-class{
+  .my-google-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -432,7 +426,7 @@
     background-image: url("../assets/mob-gmail-icon.png") !important;
     background-size: cover !important;
   }
-  .my-facebook-button-class{
+  .my-facebook-button-class {
     font-size: 0px !important;
     /* background-color: #050f56; */
     width: 70px !important;
@@ -440,13 +434,12 @@
     background-image: url("../assets/mob-fb-icon.png") !important;
     background-size: cover !important;
   }
-  .mob-menue-overlay{
+  .mob-menue-overlay {
     background-color: transparent !important;
     top: 0px !important;
     width: 100vw !important;
     height: 100vh !important;
     position: absolute !important;
-
   }
 
   .sell-buy-container-desktop {
@@ -578,7 +571,7 @@
     border-radius: 8px;
     border: none;
   }
-  .location-and-icon{
+  .location-and-icon {
     display: flex !important;
     /* justify-content: space-around !important; */
     width: 100% !important;
@@ -586,13 +579,13 @@
   .location-container {
     /* display: none !important; */
     display: block !important;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
     justify-content: space-between !important;
     /* background-color: #00adef !important; */
   }
-  .sm-device{
+  .sm-device {
     display: none !important;
   }
   .languages-container {
@@ -665,9 +658,15 @@
   background-color: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
 }
+.search-nav-suggestion a {
+  color: #000000;
+  text-transform: capitalize !important;
+}
 .search-nav-suggestion p {
   cursor: pointer;
   padding: 0px 20px 0;
+  text-transform: capitalize !important;
+  font-family: "Poppins", sans-serif;
 }
 /* .search-overlay {
   position: absolute;
@@ -917,7 +916,7 @@
   font-size: 1.1vw;
   color: #969696;
 }
-.google-sign-in-button{
+.google-sign-in-button {
   border: none !important;
   background-color: transparent !important;
   font-family: "Poppins";
@@ -927,7 +926,7 @@
 
   color: #cfcfcf;
 }
-.my-facebook-button-class{
+.my-facebook-button-class {
   border: none;
   background-color: transparent;
   font-family: "Poppins";
@@ -1143,10 +1142,10 @@ a {
   border-radius: 10px;
   padding-left: 4%;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .signup-phone-no-input {
   background: #ffffff;

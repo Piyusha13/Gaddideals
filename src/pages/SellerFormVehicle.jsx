@@ -147,7 +147,7 @@ const SellerFormVehicle = ({
 
           <div className="route-nav">
             <div className="circle"></div>
-            <a href="#vehicledetail">vehicle Detail</a>
+            <a href="#vehicledetail">Vehicle Detail</a>
           </div>
 
           <div className="route-nav">
@@ -158,7 +158,7 @@ const SellerFormVehicle = ({
 
         <div className="form-details-container">
           {overlayState && (
-            <div 
+            <div
               className="overlay"
               onClick={() => {
                 setStatesSuggestionBox(false);
@@ -179,7 +179,9 @@ const SellerFormVehicle = ({
           <div className="form-details">
             <form>
               <div className="form-controls">
-                <label htmlFor="whichstate">Which State</label>
+                <label htmlFor="whichstate">
+                  Which State <small style={{ color: "red" }}>*</small>
+                </label>
 
                 <div className="state-input">
                   <input
@@ -210,7 +212,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="whichcity">Which City</label>
+                <label htmlFor="whichcity">
+                  Which City <small style={{ color: "red" }}>*</small>
+                </label>
 
                 <div className="city-input">
                   <input
@@ -241,7 +245,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="vehiclebrand">Vehicle Brand</label>
+                <label htmlFor="vehiclebrand">
+                  Vehicle Brand <small style={{ color: "red" }}>*</small>
+                </label>
 
                 <div className="brand-input">
                   <input
@@ -273,7 +279,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="vehiclemodel">Vehicle Model</label>
+                <label htmlFor="vehiclemodel">
+                  Vehicle Model <small style={{ color: "red" }}>*</small>
+                </label>
                 <div className="model-input">
                   <input
                     type="text"
@@ -304,7 +312,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="manufacturing">Manufacturing Year</label>
+                <label htmlFor="manufacturing">
+                  Manufacturing Year <small style={{ color: "red" }}>*</small>
+                </label>
                 <div className="years">
                   {yearsArray.map((years, index) => (
                     <div
@@ -354,7 +364,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="vehiclebnumber">Vehicle Number</label>
+                <label htmlFor="vehiclebnumber">
+                  Vehicle Number <small style={{ color: "red" }}>*</small>
+                </label>
                 <input
                   type="text"
                   name="vehiclenumber"
@@ -409,7 +421,9 @@ const SellerFormVehicle = ({
               </div>
 
               <div className="form-controls">
-                <label htmlFor="transmission">Fuel Type</label>
+                <label htmlFor="transmission">
+                  Fuel Type <small style={{ color: "red" }}>*</small>
+                </label>
                 <div className="transmission">
                   {fuelTypesArray.map((fuelType, index) => (
                     <div

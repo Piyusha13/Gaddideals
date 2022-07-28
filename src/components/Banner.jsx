@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./banner.style.css";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Constant from "../constants";
 import { imgurl } from "../constants";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import { toast } from "react-toastify";
 
 const Banner = () => {
   const [bannerData, setBannerData] = useState([]);
@@ -17,8 +18,12 @@ const Banner = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCategoryActive, setIsCategoryActive] = useState();
   const [isCategoryActiveTwo, setIsCategoryActiveTwo] = useState();
+  const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const [sellerPathname, setSellerPathname] = useState(pathname);
 
   const fetchCategories = async () => {
     const response = await axios.get(Constant.getUrls.getAllCategories);
@@ -50,27 +55,29 @@ const Banner = () => {
 
   const RightIntro = () => {
     return (
-     
       <div className="intro-right mob-intro-right">
         <h2>What vehicle do you want to sell?</h2>
         <div className="categories">
           <div className="row-one">
             {categoriesData.slice(0, 2).map((category, index) => (
               <div className="category-item" key={category._id}>
-                <Link to={`/sellerform/${category._id}`}>
-                  <div
-                    className={
-                      isCategoryActive === index
-                        ? "category active"
-                        : "category"
+                {/* <Link to={`/sellerform/${category._id}`}> */}
+                <div
+                  className={
+                    isCategoryActive === index ? "category active" : "category"
+                  }
+                  onClick={() => {
+                    setIsCategoryActive(index);
+                    if (!userToken) {
+                      toast.error("Login First !");
+                    } else {
+                      navigate(`/sellerform/${category._id}`);
                     }
-                    onClick={() => {
-                      setIsCategoryActive(index);
-                    }}
-                  >
-                    <img src={imgurl + category.icon} alt={category.title} />
-                  </div>
-                </Link>
+                  }}
+                >
+                  <img src={imgurl + category.icon} alt={category.title} />
+                </div>
+                {/* </Link> */}
                 <span>{category.title}</span>
               </div>
             ))}
@@ -98,9 +105,16 @@ const Banner = () => {
           </div>
         </div>
       </div>
-    
     );
   };
+
+  const bannerHomeFilter = bannerData.filter(
+    (bannerHome) => bannerHome.banner_type === "buyer"
+  );
+
+  const bannerSellerFilter = bannerData.filter(
+    (bannerSeller) => bannerSeller.banner_type === "seller"
+  );
 
   return (
     <div className="carousel-container">
@@ -114,22 +128,43 @@ const Banner = () => {
         }}
         modules={[Pagination, Autoplay]}
       >
-        {bannerData.map((banner) => (
-          <SwiperSlide key={banner._id}>
-            <div className="intro-left">
-              <h1>{banner.title}</h1>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: banner.description.substring(0,100),
-                }}
-              ></p>
-            </div>
-            <img
-              src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
-              alt={banner.title}
-            />
-          </SwiperSlide>
-        ))}
+        {pathname === "/" &&
+          bannerHomeFilter.map((banner) => (
+            <SwiperSlide key={banner._id}>
+              <div className="intro-left">
+                <h1>{banner.title}</h1>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: banner.description.substring(0, 100),
+                  }}
+                ></p>
+              </div>
+              <a href={banner.url} target="_blank" rel="noreferrer">
+                <img
+                  src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
+                  alt={banner.title}
+                />
+              </a>
+            </SwiperSlide>
+          ))}
+
+        {pathname === "/sellerhome" &&
+          bannerSellerFilter.map((banner) => (
+            <SwiperSlide key={banner._id}>
+              <div className="intro-left">
+                <h1>{banner.title}</h1>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: banner.description.substring(0, 100),
+                  }}
+                ></p>
+              </div>
+              <img
+                src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
+                alt={banner.title}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       {pathname === "/sellerhome" ? <RightIntro /> : ""}

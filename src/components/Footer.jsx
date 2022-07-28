@@ -15,9 +15,23 @@ const Footer = () => {
             <h5>Keep in Touch</h5>
           </div>
           <div className="social-links">
-            <img src={facebookIcon} alt="facebook" />
-            <img src={twitterIcon} alt="twitter" />
-            <img src={instagramIcon} alt="instagram" />
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={facebookIcon} alt="facebook" />
+            </a>
+            <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+              <img src={twitterIcon} alt="twitter" />
+            </a>
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={instagramIcon} alt="instagram" />
+            </a>
           </div>
         </div>
 
@@ -29,13 +43,14 @@ const Footer = () => {
               </div>
 
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris,
-                commodo tortor, enim eget turpis pellentesque egesta.Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Mauris, commodo
-                tortor, enim eget turpis pellentesque egesta.eget turpis
-                pellentesque egesta.Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Mauris, commodo tortor, enim eget turpis
-                pellentesque egesta.
+                Gaddideals believes that commercial vehicle users face a lot of
+                problems during the process of buying and selling used
+                commercial vehicles such as trucks, tractors, buses, 3-wheelers
+                etc. We at Gaddideals want to solve this problem by providing
+                them with information about the vehicle, and a variety of
+                options so that they not only buy the best vehicle relatable for
+                their business but also at the right price and with no
+                commission being charged to them.
               </p>
             </div>
 
@@ -196,13 +211,14 @@ const Footer = () => {
               </div>
 
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris,
-                commodo tortor, enim eget turpis pellentesque egesta.Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Mauris, commodo
-                tortor, enim eget turpis pellentesque egesta.eget turpis
-                pellentesque egesta.Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Mauris, commodo tortor, enim eget turpis
-                pellentesque egesta.
+                Gaddideals believes that commercial vehicle users face a lot of
+                problems during the process of buying and selling used
+                commercial vehicles such as trucks, tractors, buses, 3-wheelers
+                etc. We at Gaddideals want to solve this problem by providing
+                them with information about the vehicle, and a variety of
+                options so that they not only buy the best vehicle relatable for
+                their business but also at the right price and with no
+                commission being charged to them.
               </p>
             </div>
 

@@ -1647,7 +1647,7 @@ const Navbar = () => {
                         ? `/vehiclelistings?category=${modelbrand.category}&brand[]=${modelbrand.brand}`
                         : modelbrand.category
                         ? `/vehiclelistings?category=${modelbrand.category}`
-                        : ""
+                        : `/vehiclelistings?category=${modelbrand.category}&brand[]=${modelbrand.brand}`
                     }
                   >
                     <p

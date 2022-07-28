@@ -44,7 +44,8 @@ const Constant = {
     postAllSignins: mainDomain + "api/user/auth/signin",
     postAllOtps: mainDomain + "api/user/auth/verifyOTP",
     potsALLresendotps: mainDomain + "api/user/auth/resendOTP",
-    postAllEnquiries:mainDomain+"api/enquiries",
+    postAllEnquiries: mainDomain + "api/enquiries",
+    postVehiclePublish: mainDomain + "api/status/",
   },
   putAllUrls: {
     putAllUsers: mainDomain + "api/user/update_profile",

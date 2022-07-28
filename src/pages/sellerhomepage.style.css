@@ -1507,8 +1507,8 @@
 }
 
 .customer-review-container .customer-card {
-  width: 100%;
-  height: 578px;
+  width: 400px;
+  /* height: 578px; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -2068,9 +2068,11 @@
 .truck-section {
   padding: 0rem 2rem;
   margin-top: 40px;
+  width: 100%;
 }
 
 .truck-section .image-wrapper {
+  width: 100%;
   border-radius: 10px;
   overflow: hidden;
 }

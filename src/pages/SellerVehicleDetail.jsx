@@ -161,7 +161,7 @@ const SellerVehicleDetail = ({
               <FiCheckCircle color="#050F56" />
             </div>
             <a href="#vehicledetail" className="active">
-              vehicle Detail
+              Vehicle Detail
             </a>
           </div>
 

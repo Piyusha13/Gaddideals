@@ -21,6 +21,7 @@ const SellerPreviewDetails = ({
   sidePicLeft,
   sidePicRight,
   handlePostData,
+  handlePublishPostData,
   modelTitle,
   yearTitle,
   setStep,
@@ -28,6 +29,8 @@ const SellerPreviewDetails = ({
   categoryTractorTitle,
   caetgoryBusTitle,
   saveLoading,
+  pubLoading,
+  disableBtn,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -61,7 +64,7 @@ const SellerPreviewDetails = ({
               <FiCheckCircle color="#050F56" />
             </div>
             <a href="#vehicledetail" className="active">
-              vehicle Detail
+              Vehicle Detail
             </a>
           </div>
 
@@ -155,10 +158,10 @@ const SellerPreviewDetails = ({
                 <p>{formData.taxvalidity}</p>
               </div>
 
-              <div className="detail">
+              {/* <div className="detail">
                 <h6>Do you want to Scrap Vehicle?</h6>
                 <p>{formData.scrap}</p>
-              </div>
+              </div> */}
 
               {categoryTractorTitle === "Tractors" ? (
                 <div className="detail">
@@ -176,6 +179,8 @@ const SellerPreviewDetails = ({
                   <p>{formData.nooftyres}</p>
                 </div>
               )}
+
+              <div className="detail"></div>
             </div>
 
             <div className="preview-line"></div>
@@ -327,7 +332,15 @@ const SellerPreviewDetails = ({
               <button onClick={handlePostData} className="save">
                 {saveLoading ? "Saving..." : "Save Now"}
               </button>
-              <button>Publish</button>
+              <button
+                onClick={handlePublishPostData}
+                disabled={disableBtn}
+                style={{
+                  filter: disableBtn ? "opacity(20%)" : "opacity(100%)",
+                }}
+              >
+                {pubLoading ? "Publishing..." : "Publish"}
+              </button>
             </div>
           </div>
         </div>
