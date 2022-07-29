@@ -11,7 +11,7 @@ import logout from "../assets/logout.png";
 import next_arrow from "../assets/next_arrow.svg";
 // import edit_box from "../assets/edit_box.jpg";
 // import edit_pen from "../assets/edit.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Lottie from "react-lottie";
@@ -20,6 +20,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import init from "../Helpers/WindowToken";
 import VehicleCard from "../pages/VehicleCard";
+import Constant from "../constants";
+import clipboard from "../assets/clipboard.png";
+import { toast } from "react-toastify";
+
 function UserVehicles() {
   const defaultOptions = {
     loop: true,
@@ -49,8 +53,8 @@ function UserVehicles() {
   const [vehicleName, setvehicleName] = useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   //for vehicle data
-  const getMyVehicleDetails = () => {
-    axios
+  const getMyVehicleDetails = async () => {
+    await axios
       .get("https://gaddideals.brokerinvoice.co.in/api/vehicle/my_vehicles", {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -66,10 +70,25 @@ function UserVehicles() {
         });
       });
   };
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     getDetails();
     getMyVehicleDetails();
   }, []);
+
+  const handleVehicleDelete = async (vehicleId) => {
+    const response = await axios.delete(
+      Constant.getUrls.getAllVehicles + `/delete/${vehicleId}`
+    );
+
+    if (response.data.status === "success") {
+      getMyVehicleDetails();
+      toast.success(response.data.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -92,16 +111,16 @@ function UserVehicles() {
                   <img className="next-arrow-img" src={next_arrow} alt="" />
                 </Link>
               </div>
-              {/* <div className="my-order-div">
-            <img className="clipboard-img" src={clipboard} alt=""></img>
-            <Link to="/Userorder" className="my-order-text">
-            <span > My Order</span>
-            </Link>
-            <Link to="/Userorder">
-            <img className="next-arrow-img" src={next_arrow} alt=""></img>
-            </Link>
-          </div> */}
-              <div className="user-Faq-div">
+              <div className="my-order-div">
+                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <Link to="" className="my-order-text">
+                  <span>My Enquiries</span>
+                </Link>
+                <Link to="/Userorder">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
+              {/* <div className="user-Faq-div">
                 <img className="help-img" src={help} alt=""></img>
                 <Link to="/UserFaq" className="user-Faq-text">
                   <span>FAQ</span>
@@ -109,7 +128,7 @@ function UserVehicles() {
                 <Link to="/UserFaq">
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
-              </div>
+              </div> */}
               <div className="sign-out-div">
                 <img className="logout-img" src={logout} alt=""></img>
                 {/* <span className="sign-out-text"> Sign out</span> */}
@@ -135,46 +154,62 @@ function UserVehicles() {
               <div className="vehicle-card-container">
                 {vehicleData?.map((item) => (
                   <div className="card" key={item._id}>
-                    <div className="card-img-wrapper">
-                      <img
-                        src={
-                          "https://gaddideals.brokerinvoice.co.in" +
-                          item.front_side_pic
-                        }
-                        alt="truck"
-                      />
+                    <div className="card-wrapper-vehicles">
+                      <div className="card-img-wrapper">
+                        <img
+                          src={
+                            "https://gaddideals.brokerinvoice.co.in" +
+                            item.front_side_pic
+                          }
+                          alt="truck"
+                        />
+                      </div>
+                      <div className="card-info">
+                        <div className="card-info-header">
+                          <div className="card-info-title">
+                            <h1>{item.model.name}</h1>
+                            <div className="location">
+                              <img src={locationIcon} alt="location icon" />
+                              {/* fetching city name  */}
+                              <span>{item.city.substring(0, 10)}</span>
+                            </div>
+                          </div>
+                          <div className="card-publish-review">
+                            <div className="review">
+                              <strong>Under Review</strong>
+                            </div>
+                            <span>(Uploaded on Jun 01,2022)</span>
+                          </div>
+                        </div>
+                        <div className="card-price">
+                          <h3>₹{item.selling_price} </h3>
+                        </div>
+                        <div className="card-stats">
+                          <div className="stat">
+                            <span>{item.km_driven} km</span>
+                          </div>
+                          <div className="stat">
+                            <span>{item.no_of_owner} Owner</span>
+                          </div>
+                          <div className="stat">
+                            <span>{item.no_of_tyre} tyres </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="card-info">
-                      <div className="card-info-header">
-                        <div className="card-info-title">
-                          <h1>{item.model.name}</h1>
-                          <div className="location">
-                            <img src={locationIcon} alt="location icon" />
-                            {/* fetching city name  */}
-                            <span>{item.city.substring(0,15)}</span>
-                          </div>
-                        </div>
-                        <div className="card-publish-review">
-                          <div className="review">
-                            <strong>Under Review</strong>
-                          </div>
-                          <span>(Uploaded on Jun 01,2022)</span>
-                        </div>
-                      </div>
-                      <div className="card-price">
-                        <h3>₹{item.selling_price} </h3>
-                      </div>
-                      <div className="card-stats">
-                        <div className="stat">
-                          <span>{item.km_driven} km</span>
-                        </div>
-                        <div className="stat">
-                          <span>{item.no_of_owner} Owner</span>
-                        </div>
-                        <div className="stat">
-                          <span>{item.no_of_tyre} tyres </span>
-                        </div>
-                      </div>
+                    <div className="card-btns">
+                      <button>Book for Inspection</button>
+                      <button
+                        onClick={() => navigate(`/sellerform/${item._id}`)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="del-btn"
+                        onClick={() => handleVehicleDelete(item._id)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 ))}

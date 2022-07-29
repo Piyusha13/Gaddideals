@@ -16,6 +16,7 @@ import { set } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ToastContainer, toast } from "react-toastify";
+import clipboard from "../assets/clipboard.png";
 
 function LoggedUser() {
   const [name, setname] = useState("");
@@ -44,7 +45,6 @@ function LoggedUser() {
       axios
         .get("https://gaddideals.brokerinvoice.co.in/api/user")
         .then((res) => {
-          
           setname(res.data.user);
           setemail(res.data.user);
           setmob_no(res.data.user);
@@ -71,7 +71,6 @@ function LoggedUser() {
         .then((res) => {
           console.log(res.data.message);
           if (res.data.message === "Updated Successfully") {
-          
             setImgstate(true);
             getDetails();
           }
@@ -173,16 +172,16 @@ function LoggedUser() {
                   <img className="next-arrow-img" src={next_arrow} alt="" />
                 </Link>
               </div>
-              {/* <div className="my-order-div">
-              <img className="clipboard-img" src={clipboard} alt=""></img>
-              <Link to="/Userorder" className="my-order-text">
-                <span> My Order</span>
-              </Link>
-              <Link to="/Userorder">
-                <img className="next-arrow-img" src={next_arrow} alt=""></img>
-              </Link>
-            </div> */}
-              <div className="user-Faq-div">
+              <div className="my-order-div">
+                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <Link to="" className="my-order-text">
+                  <span>My Enquireis</span>
+                </Link>
+                <Link to="">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
+              {/* <div className="user-Faq-div">
                 <img className="help-img" src={help} alt=""></img>
                 <Link to="/UserFaq" className="user-Faq-text">
                   <span>FAQ</span>
@@ -190,7 +189,7 @@ function LoggedUser() {
                 <Link to="/UserFaq">
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
-              </div>
+              </div> */}
               <div className="sign-out-div">
                 <img className="logout-img" src={logout} alt=""></img>
                 <Link to="/">
@@ -208,7 +207,14 @@ function LoggedUser() {
             </div>
           </div>
           <div className="right-profile-container">
-            <img className="back-to-home-screen" src={next_arrow} alt="" onClick={()=>{window.location.href = "/"}} ></img>
+            <img
+              className="back-to-home-screen"
+              src={next_arrow}
+              alt=""
+              onClick={() => {
+                window.location.href = "/";
+              }}
+            ></img>
             <div className="user-profile-header">
               <h1>Profile</h1>
               <h2>My Profile</h2>

@@ -12,13 +12,13 @@ import SellerPreviewDetails from "./SellerPreviewDetails";
 
 import statecities from "../state-cities.json";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 const SellerForm = () => {
   const { categoryId } = useParams();
 
   const [saveLoading, setSaveLoading] = useState(false);
   const [pubLoading, setpubLoading] = useState(false);
-  const [disableBtn, setDisableBtn] = useState(true);
   const [isYearActive, setIsYearActive] = useState();
   const [isFuelActive, setIsFuelActive] = useState();
   const [isOwnerActive, setIsOwnerActive] = useState();
@@ -89,6 +89,8 @@ const SellerForm = () => {
   const [citySuggestionBox, setCitySuggestionBox] = useState(false);
   const [modelSuggestionBox, setModelSuggestionBox] = useState(false);
 
+  const [editVehicleObj, setEditVehicleObj] = useState();
+
   const [vehicleID, setVehicleID] = useState("");
 
   const [formData, setFormData] = useState({
@@ -126,8 +128,8 @@ const SellerForm = () => {
     const response = await axios.get(
       Constant.getUrls.getAllCategories + `/${categoryId}`
     );
-    setCategoryTractorTitle(response.data.category.title);
-    setCategoryBusTitle(response.data.category.title);
+    setCategoryTractorTitle(response?.data?.category?.title);
+    setCategoryBusTitle(response?.data?.category?.title);
   };
 
   const fetchBodyTypes = async () => {
@@ -164,8 +166,61 @@ const SellerForm = () => {
     setCitiesArray(citiesArr);
   };
 
+  const formatDate = (date) => {
+    return moment(date).utc().format("YYYY-MM-DD");
+  };
+
+  const fetchSingleVehivleObj = async () => {
+    const response = await axios.get(
+      Constant.getUrls.getAllVehicles + `/vehicleDetails/${categoryId}`
+    );
+    setEditVehicleObj(response.data.vehicle);
+
+    if (response?.data?.vehicle) {
+      setStateTitle(response?.data?.vehicle?.state);
+      setCityTitle(response?.data?.vehicle?.city);
+      setBrandTitle(response?.data?.vehicle?.brand?.title);
+      setBrandId(response?.data?.vehicle?.brand?._id);
+      setModelTitle(response?.data?.vehicle?.model?.name);
+      setModelId(response?.data?.vehicle?.model?._id);
+      setYear(response?.data?.vehicle?.years?._id);
+      setYearTitle(response?.data?.vehicle?.years?.year);
+      formData.vehiclenumber = response?.data?.vehicle?.reg_no;
+      formData.kmsdriven = response?.data?.vehicle?.km_driven;
+      setOwner(response?.data?.vehicle?.no_of_owner);
+      setFuel(response?.data?.vehicle?.fuelType._id);
+      formData.insurancevalidity = formatDate(
+        response?.data?.vehicle?.insurance
+      );
+      formData.taxvalidity = formatDate(response?.data?.vehicle?.tax_validity);
+      formData.nooftyres = response?.data?.vehicle?.no_of_tyre;
+      formData.noofhrs = response?.data?.vehicle?.no_of_hrs;
+      formData.noofseats = response?.data?.vehicle?.no_of_seats;
+      formData.horsepower = response?.data?.vehicle?.horse_power;
+      setTyreCondition(response?.data?.vehicle?.tyre_cond);
+      formData.pricingvehicle = response?.data?.vehicle?.selling_price;
+      formData.fitnesscertificate = formatDate(
+        response?.data?.vehicle?.fitness_certificate
+      );
+      setBodyTypeId(response?.data?.vehicle?.bodyType?._id);
+      setBodyTypeTitle(response?.data?.vehicle?.bodyType?.title);
+      setRC(response?.data?.vehicle?.rc_document);
+      setPermit(response?.data?.vehicle?.vehicle_permit);
+      setEngImage(response?.data?.vehicle?.engine_pic);
+      setFrontSideImg(response?.data?.vehicle?.front_side_pic);
+      setBackSideImg(response?.data?.vehicle?.back_side_pic);
+      setFronttyreLeftImg(response?.data?.vehicle?.front_tyre[0]);
+      setFronttyreRightImg(response?.data?.vehicle?.front_tyre[1]);
+      setSidePicLeft(response?.data?.vehicle?.side_pic_vehicle[0]);
+      setSidePicRight(response?.data?.vehicle?.side_pic_vehicle[1]);
+    }
+  };
+
+  console.log(formData.insurancevalidity);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchSingleVehivleObj();
     fetchBrands();
     fetchModels();
     fetchCatgory();
@@ -306,7 +361,7 @@ const SellerForm = () => {
     }
 
     if (step === 3) {
-      if (!documentFrontSideImg) {
+      if (frontSideImg.length <= 0) {
         toast.error("Forntside Image is required");
       } else {
         setStep(step + 1);
@@ -326,7 +381,6 @@ const SellerForm = () => {
   };
 
   const handlePostData = async () => {
-    setDisableBtn(false);
     setSaveLoading(true);
     let fd = new FormData();
 
@@ -371,13 +425,13 @@ const SellerForm = () => {
       toast.success(response.data.message);
       setVehicleID(response.data.vehicle._id);
       setSaveLoading(false);
-      setStep(1);
     }
 
     console.log(response);
   };
 
   const handlePublishPostData = async () => {
+    setpubLoading(true);
     const userToken = localStorage.getItem("Token");
 
     let fd = new FormData();
@@ -404,9 +458,10 @@ const SellerForm = () => {
     fd.append("fitness_certificate", formData.fitnesscertificate);
     fd.append("bodyType", bodyTypeId);
     fd.append("rc_document", rc);
+    fd.append("status", "published");
 
-    const publishResponse = await axios.put(
-      Constant.getUrls.getAllVehicles + `/${vehicleID}?status=published`,
+    const publishResponse = await axios.post(
+      Constant.getUrls.getAllVehicles,
       fd,
       {
         headers: {
@@ -416,7 +471,7 @@ const SellerForm = () => {
     );
 
     if (publishResponse.data.status === "success") {
-      toast.success(publishResponse.data.message);
+      toast.success("Published Successfully");
       setpubLoading(false);
     }
 
@@ -581,7 +636,13 @@ const SellerForm = () => {
             categoryTractorTitle={categoryTractorTitle}
             caetgoryBusTitle={caetgoryBusTitle}
             pubLoading={pubLoading}
-            disableBtn={disableBtn}
+            documentEngImg={documentEngImg}
+            documentFrontSideImg={documentFrontSideImg}
+            documentBackSideImg={documentBackSideImg}
+            documentFronttyreLeft={documentFronttyreLeft}
+            documentFronttyreRight={documentFronttyreRight}
+            documentSidePicLeft={documentSidePicLeft}
+            documentSidePicRight={documentSidePicRight}
           />
         </>
       );

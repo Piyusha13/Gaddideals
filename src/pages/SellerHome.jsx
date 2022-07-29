@@ -30,6 +30,7 @@ const SellerHome = () => {
 
   const [categoriesData, setCategoriesData] = useState([]);
   const [testimonialsData, setTestimonialsData] = useState([]);
+  const [advertisementData, setAdvertisementData] = useState([]);
   const [brandsData, setBrandsData] = useState([]);
   const [faqs, setFAQS] = useState([]);
   const [isCategoryActive, setIsCategoryActive] = useState();
@@ -55,6 +56,11 @@ const SellerHome = () => {
     setCategoriesData(response.data.category.docs);
   };
 
+  const fetchAdvertisements = async () => {
+    const response = await axios.get(Constant.getUrls.getAllAdvertisments);
+    setAdvertisementData(response.data.advertisment.docs);
+  };
+
   const fetchTestimonials = async () => {
     const response = await axios.get(Constant.getUrls.getAllTestimonials);
     setTestimonialsData(response.data.testimonial.docs);
@@ -69,6 +75,7 @@ const SellerHome = () => {
     window.scrollTo(0, 0);
     fetchCategories();
     fetchTestimonials();
+    fetchAdvertisements();
     fetchBrands();
     fetchFaqs();
   }, []);
@@ -101,6 +108,12 @@ const SellerHome = () => {
   const testimonialSeller = testimonialsData.filter(
     (seller) => seller.type === "seller"
   );
+
+  const filterAdvertisementSeller = advertisementData.filter(
+    (buyer) => buyer.type === "seller"
+  );
+
+  const faqsSeller = faqs.filter((seller) => seller.type === "seller");
 
   return (
     <div>
@@ -365,7 +378,7 @@ const SellerHome = () => {
         </div>
 
         <div className="faq-container">
-          {faqs.map((faq) => (
+          {faqsSeller.map((faq) => (
             <FAQToggle key={faq._id} question={faq.question}>
               <div className="answer">
                 <p dangerouslySetInnerHTML={{ __html: faq.answer }}></p>
@@ -377,9 +390,22 @@ const SellerHome = () => {
 
       {/*Truck Image  */}
       <div className="truck-section">
-        <div className="image-wrapper">
-          <img src={truckHomeImage} alt="truck" />
-        </div>
+        <Swiper
+          grabCursor={true}
+          modules={[Autoplay]}
+          className="advertise-swiper"
+        >
+          {filterAdvertisementSeller.map((advertise) => (
+            <SwiperSlide key={advertise._id} className="advertise-slide">
+              <div className="image-wrapper">
+                <img
+                  src={`https://gaddideals.brokerinvoice.co.in${advertise.image}`}
+                  alt="truck"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       {/* Footer */}

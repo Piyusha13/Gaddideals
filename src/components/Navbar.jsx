@@ -128,9 +128,9 @@ const Navbar = () => {
     fetchIcons();
     fetchSearchBrandsModelArray();
     fetchCities();
-    loadGT(()=>{
+    loadGT(() => {
       // setdropdown(f)
-    })
+    });
   }, []);
 
   const filterCities = cities.filter((city) =>
@@ -425,11 +425,10 @@ const Navbar = () => {
       // console.log(goingUp, currentScrollY);
     };
     const lang = location.lang;
-    if(lang){
-      setselectedLanguage(lang)
-    }
-    else{
-      setselectedLanguage('en')
+    if (lang) {
+      setselectedLanguage(lang);
+    } else {
+      setselectedLanguage("en");
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -1638,7 +1637,11 @@ const Navbar = () => {
           <div className="brand-categories">
             {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
               <a
-                href={"/vehiclelistings?category=" + catgeoryIcon._id}
+                href={
+                  "/vehiclelistings?category=" +
+                  catgeoryIcon._id +
+                  `&city=${locationCity}`
+                }
                 className={`${
                   activeCategory === catgeoryIcon._id
                     ? "brand-category active"
@@ -1646,9 +1649,10 @@ const Navbar = () => {
                 }`}
                 onClick={() => {
                   setActiveCategory(index);
-                  navigate("/vehiclelistings?category=" + catgeoryIcon._id);
+                  // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
                 }}
                 key={catgeoryIcon._id}
+                title={catgeoryIcon.title}
               >
                 <img
                   src={`https://gaddideals.brokerinvoice.co.in${catgeoryIcon.icon}`}
@@ -1725,7 +1729,7 @@ const Navbar = () => {
 
                   {langSuggestion && (
                     <div className="lang-suggetion">
-                      {filterCities.slice(0, 7).map((city, index) => (
+                      {filterCities.slice(0, 5).map((city, index) => (
                         <p
                           key={index}
                           onClick={() => {
@@ -1753,7 +1757,7 @@ const Navbar = () => {
           <div className="languages-container">
             <div className="language">
               <span className="SelectedLanguageDecoration notranslate">
-                {selectedLanguage === "en" ?"English":"हिन्दी" }{" "}
+                {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
               </span>
             </div>
             <div className="language-arrow-icon">
@@ -1773,14 +1777,16 @@ const Navbar = () => {
                     // updateLanguage("en");
                     setselectedLanguage("en");
                     setdropdown(!dropdown);
-                    var a =document.querySelector("#google_translate_element select");
-                    a.value =  'en';
+                    var a = document.querySelector(
+                      "#google_translate_element select"
+                    );
+                    a.value = "en";
                     a.dispatchEvent(new Event("change"));
                     // window.location.reload();
-                    location.lang = 'en';
+                    location.lang = "en";
                     let prevUrl = queryString.stringify(location);
                     window.location.href =
-                    window.location.pathname + "?" + prevUrl;
+                      window.location.pathname + "?" + prevUrl;
                   }}
                   className="language-1 notranslate"
                 >
@@ -1791,15 +1797,16 @@ const Navbar = () => {
                     setselectedLanguage("hi");
                     // updateLanguage("hi");
                     setdropdown(!dropdown);
-                    var a =document.querySelector("#google_translate_element select");
-                      a.value =  'hi';
-                      a.dispatchEvent(new Event("change"));
-                      // window.location.reload();
-                      location.lang = 'hi';
-                      let prevUrl = queryString.stringify(location);
-                      window.location.href =
+                    var a = document.querySelector(
+                      "#google_translate_element select"
+                    );
+                    a.value = "hi";
+                    a.dispatchEvent(new Event("change"));
+                    // window.location.reload();
+                    location.lang = "hi";
+                    let prevUrl = queryString.stringify(location);
+                    window.location.href =
                       window.location.pathname + "?" + prevUrl;
-
                   }}
                   className="language-2 notranslate"
                 >

@@ -1,11 +1,10 @@
 @media screen and (max-width: 1000px) {
-
-  .outside-container{
+  .outside-container {
     /* background-color: #fe620d; */
     padding: 0% !important;
     margin: 0% !important;
   }
-  .profile-container{
+  .profile-container {
     /* background-color: #00adef !important; */
     width: 95% !important;
     padding-top: 20px !important;
@@ -18,11 +17,11 @@
     margin: 0 auto;
     padding: 0px !important;
   }
-  .card{
+  .card {
     width: 100%;
     height: 15% !important;
   }
-  
+
   .vehicle-card-container .card {
     display: flex;
     flex-direction: row;
@@ -35,7 +34,7 @@
     height: 20% !important;
     /* background-color: #fe620d !important; */
   }
-  .card .card-img-wrapper{
+  .card .card-img-wrapper {
     /* background-color: #fe620d; */
   }
   .card .card-img-wrapper img {
@@ -44,18 +43,15 @@
     height: auto !important;
     object-fit: contain;
     align-self: center;
-
-  
   }
-  
+
   .card .card-info {
     padding: 20px 20px;
     margin-bottom: 0px;
-    width:95% !important;
+    width: 95% !important;
     /* position: absolute; */
     display: flex;
     flex-direction: column;
-    
   }
   .card .card-info .card-info-header {
     display: flex;
@@ -79,10 +75,10 @@
     margin: 0;
     padding: 0;
   }
-  .card .card-info .card-info-header .card-info-title .location img{
-  /* background-color: #fe620d !important; */
-  height: 12px !important;
-  width: 12px !important;
+  .card .card-info .card-info-header .card-info-title .location img {
+    /* background-color: #fe620d !important; */
+    height: 12px !important;
+    width: 12px !important;
   }
   .card .card-info .card-info-header .card-info-title .location span {
     display: inline-block;
@@ -93,7 +89,7 @@
     margin-left: 2px !important;
     color: #121212;
   }
-  
+
   .card .card-info .card-info-header .card-publish-review {
     display: flex;
     justify-content: center;
@@ -127,7 +123,7 @@
     font-size: 8px;
     color: #000000;
   }
-  
+
   .card .card-info .card-price {
     margin-top: 5px !important;
     margin-bottom: 0% !important;
@@ -140,15 +136,14 @@
     font-size: 20px !important;
     color: #00adef;
   }
-  
+
   .card .card-info .card-stats {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 5px !important; 
+    margin-top: 5px !important;
     padding: 0% !important;
     /* background-color: #00adef !important; */
-
   }
   .card .card-info .card-stats .stat {
     background: #ffffff;
@@ -170,49 +165,55 @@
     font-size: 10px;
     color: #121212;
   }
-  
-
 }
 
 .vehicle-card-container {
   width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  /* padding: 10px; */
 }
-.card{
+.card {
   width: 100%;
 }
 
 .vehicle-card-container .card {
   display: flex;
-  flex-direction: row;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 3rem;
+  /* overflow: hidden; */
+  margin: 0rem 0rem 3rem 0rem;
   align-items: center;
+  /* padding: 0px 10px 0; */
+  padding: 10px 10px;
 }
-.card .card-img-wrapper{
+
+.vehicle-card-container .card .card-wrapper-vehicles {
+  display: flex;
+  flex-direction: row;
+  /* padding: 10px 10px 0; */
+}
+
+.card .card-img-wrapper {
   /* background-color: #fe620d; */
+  overflow: hidden;
+  border-radius: 8px;
 }
 .card .card-img-wrapper img {
   /* background-color: aqua; */
   width: 100%;
-  height: 168px;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   align-self: center;
-
 }
 
 .card .card-info {
-  padding: 20px 20px;
+  padding: 0px 10px;
   margin-bottom: 0px;
-  width:100%;
+  width: 100%;
   /* position: absolute; */
   display: flex;
   flex-direction: column;
-  
 }
 .card .card-info .card-info-header {
   display: flex;
@@ -231,7 +232,7 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 16px;
   color: #050f56;
   margin: 0;
   padding: 0;
@@ -288,7 +289,7 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   color: #00adef;
 }
 
@@ -296,6 +297,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  text-align: center;
   margin-top: 10px;
 }
 .card .card-info .card-stats .stat {
@@ -315,4 +317,26 @@
   font-weight: bold;
   font-size: 10px;
   color: #121212;
+}
+
+.vehicle-card-container .card .card-btns {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.vehicle-card-container .card button {
+  border: none;
+  width: 100%;
+  padding: 10px 0px;
+  font-family: "Roboto";
+  font-size: 16px;
+  background: #050f56;
+  border-radius: 5px;
+  color: #ffffff;
+}
+
+.vehicle-card-container .card .del-btn {
+  background-color: rgb(233, 131, 131);
 }

@@ -40,8 +40,7 @@ import CloseTab from "../assets/close-tab.png";
 // import downArrow from "../assets/down-arrow.png";
 import Edit from "../assets/edit.png";
 import { selectLocation } from "../store/location/location.selector";
-import { useSelector} from "react-redux";
-
+import { useSelector } from "react-redux";
 
 const queryString = require("query-string");
 
@@ -70,9 +69,8 @@ const VehicleListings = () => {
 
   const locationCity = useSelector(selectLocation);
 
-
-// for get seller details
-  const [userObj,setUserObj]=useState();
+  // for get seller details
+  const [userObj, setUserObj] = useState();
   const [BuyerInput, setBuyerInput] = useState(false);
   const [BuyerOtp, setBuyerOtp] = useState(false);
   const [otp, setOtp] = useState("");
@@ -104,30 +102,35 @@ const VehicleListings = () => {
     },
   ];
 
-
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
   );
 
   function saveBuyer() {
-    let payload = { seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
-    axios
-      .post(Constant.postUrls.postAllEnquiries, payload)
-      .then((result) => {
-        if (result.data.status === "failed") {
-          toast.error(result.data.message);
-        } else {
-          if (result.data.status === "success") {
-            toast.success(result.data.message);
-            // setvisibleOTP(!visibleOTP);
-            setmob_no(mob_no);
-            setSellerDetails(!SellerDetails);
-            // setOtp(otp);
-            setBuyerOtp(!BuyerOtp);
-            // setCounter(59);
-          }
+    let payload = {
+      seller_id,
+      name,
+      email,
+      mob_no,
+      user_type,
+      city: locationCity,
+      hash: "ekxpmAB8m9v",
+    };
+    axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
+      if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          // setvisibleOTP(!visibleOTP);
+          setmob_no(mob_no);
+          setSellerDetails(!SellerDetails);
+          // setOtp(otp);
+          setBuyerOtp(!BuyerOtp);
+          // setCounter(59);
         }
-      });
+      }
+    });
   }
 
   function verifyOtp() {
@@ -143,7 +146,7 @@ const VehicleListings = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          
+
           // setOtp(result.data.otp);
           // setvisibleOTP(!visibleOTP);
           // setvisible(false);
@@ -615,8 +618,8 @@ const VehicleListings = () => {
     fetchFuelTypes();
 
     window
-    .matchMedia("(max-width: 1000px)")
-    .addEventListener("change", (e) => setMatches(e.matches));
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
 
   return (
@@ -777,7 +780,7 @@ const VehicleListings = () => {
           </Modal>
         </div>
       )}
-      {SellerDetails  && (
+      {SellerDetails && (
         <div>
           <Modal
             visible={SellerDetails}
@@ -810,7 +813,7 @@ const VehicleListings = () => {
               <input value={userObj?.email} placeholder="Email"></input>
             </div>
           </Modal>
-        </div> 
+        </div>
       )}
       <div className="filter-sort-button-div">
         <div
@@ -1224,8 +1227,14 @@ const VehicleListings = () => {
               <h3>Category</h3>
 
               {categories.map((category) => (
-                <div className="category" key={category._id}>
-                  <a href={"/vehiclelistings?category=" + category._id}>
+                <a
+                  href={
+                    "/vehiclelistings?category=" +
+                    category._id +
+                    `&city=${locationCity}`
+                  }
+                >
+                  <div className="category" key={category._id}>
                     <div
                       onClick={() => {
                         handleCat(category._id);
@@ -1238,11 +1247,11 @@ const VehicleListings = () => {
                     >
                       <img src={imgurl + category.icon} alt={category.title} />
                     </div>
-                  </a>
-                  <p rel="noreferrer" href="#dasd">
-                    {category.title}
-                  </p>
-                </div>
+                    <p rel="noreferrer" href="#dasd">
+                      {category.title}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
             <div className="line"></div>
@@ -1480,17 +1489,18 @@ const VehicleListings = () => {
                       </p>
                     </div>
                     <button
-                     onClick={() => {
-                     setseller_id(vehicle.user._id);
-                      setUserObj(vehicle.user);
-                      if(userToken){
-                        setSellerDetails(!SellerDetails)
-                      }else{
-                        setBuyerInput(!BuyerInput)
-                      }
-                      
-                     }}
-                    >Get Seller Details</button>
+                      onClick={() => {
+                        setseller_id(vehicle.user._id);
+                        setUserObj(vehicle.user);
+                        if (userToken) {
+                          setSellerDetails(!SellerDetails);
+                        } else {
+                          setBuyerInput(!BuyerInput);
+                        }
+                      }}
+                    >
+                      Get Seller Details
+                    </button>
                   </div>
                 </div>
               ))}

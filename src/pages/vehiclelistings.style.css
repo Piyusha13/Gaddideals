@@ -1,5 +1,5 @@
 @media screen and (max-width: 1000px) {
-  .mob-menue-overlay{
+  .mob-menue-overlay {
     background-color: transparent !important;
     top: 0% !important;
     width: 100vw !important;
@@ -939,6 +939,8 @@
   .list-content
   p {
   margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
 }
 
 .vehicles-container
@@ -950,7 +952,6 @@
   text-decoration: none;
   font-family: "Poppins";
   font-size: 16px;
-  line-height: 24px;
   color: #121212;
 }
 .vehicles-container
@@ -1142,7 +1143,6 @@
   align-items: center;
   object-fit: cover;
 }
-
 
 /* truck section */
 @media screen and (min-width: 768px) and (max-width: 1000px) {

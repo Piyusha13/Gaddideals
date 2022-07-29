@@ -272,6 +272,8 @@ const SellerHomePage = () => {
     (buyer) => buyer.type === "buyer"
   );
 
+  const faqsBuyer = faqs.filter((buyer) => buyer.type === "buyer");
+
   function verifyOtp() {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
@@ -406,6 +408,10 @@ const SellerHomePage = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+
+  const filterAdvertisementBuyer = advertisementData.filter(
+    (buyer) => buyer.type === "buyer"
+  );
 
   return (
     <div>
@@ -1106,7 +1112,7 @@ const SellerHomePage = () => {
         </div>
 
         <div className="faq-container">
-          {faqs.map((faq) => (
+          {faqsBuyer.map((faq) => (
             <FAQToggle key={faq._id} question={faq.question}>
               <div className="answer">
                 <p dangerouslySetInnerHTML={{ __html: faq.answer }}></p>
@@ -1123,7 +1129,7 @@ const SellerHomePage = () => {
           modules={[Autoplay]}
           className="advertise-swiper"
         >
-          {advertisementData.map((advertise) => (
+          {filterAdvertisementBuyer.map((advertise) => (
             <SwiperSlide key={advertise._id} className="advertise-slide">
               <div className="image-wrapper">
                 <img

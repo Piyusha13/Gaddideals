@@ -9,6 +9,8 @@ import cloudIcon from "../assets/cloud.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+import { imgurl } from "../constants";
+
 const SellerPreviewDetails = ({
   stateTitle,
   cityTitle,
@@ -30,7 +32,13 @@ const SellerPreviewDetails = ({
   caetgoryBusTitle,
   saveLoading,
   pubLoading,
-  disableBtn,
+  documentEngImg,
+  documentFrontSideImg,
+  documentBackSideImg,
+  documentFronttyreLeft,
+  documentFronttyreRight,
+  documentSidePicLeft,
+  documentSidePicRight,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -180,17 +188,15 @@ const SellerPreviewDetails = ({
                 </div>
               )}
 
-              <div className="detail"></div>
+              <div className="detail">
+                <h6>Pricing of the vehicle</h6>
+                <p>{formData.pricingvehicle}</p>
+              </div>
             </div>
 
             <div className="preview-line"></div>
 
             <div className="row">
-              <div className="detail">
-                <h6>Pricing of the vehicle</h6>
-                <p>{formData.pricingvehicle}</p>
-              </div>
-
               <div className="detail">
                 <h6>Body Type</h6>
                 <p>{bodyTypeTitle}</p>
@@ -200,6 +206,8 @@ const SellerPreviewDetails = ({
                 <h6>RC</h6>
                 <p>{formData.rc}</p>
               </div>
+
+              <div className="detail"></div>
             </div>
 
             <div className="preview-line"></div>
@@ -212,7 +220,13 @@ const SellerPreviewDetails = ({
                   style={engImage ? { padding: "0px" } : { padding: "40px" }}
                 >
                   <img
-                    src={engImage ? URL.createObjectURL(engImage) : cloudIcon}
+                    src={
+                      documentEngImg
+                        ? URL.createObjectURL(engImage)
+                        : engImage
+                        ? imgurl + engImage
+                        : cloudIcon
+                    }
                     alt="cloud icon"
                   />
                 </div>
@@ -228,8 +242,10 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      frontSideImg
+                      documentFrontSideImg
                         ? URL.createObjectURL(frontSideImg)
+                        : frontSideImg
+                        ? imgurl + frontSideImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -245,7 +261,11 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      backSideImg ? URL.createObjectURL(backSideImg) : cloudIcon
+                      documentBackSideImg
+                        ? URL.createObjectURL(backSideImg)
+                        : backSideImg
+                        ? imgurl + backSideImg
+                        : cloudIcon
                     }
                     alt="cloud icon"
                   />
@@ -266,8 +286,10 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      fronttyreLeftImg
+                      documentFronttyreLeft
                         ? URL.createObjectURL(fronttyreLeftImg)
+                        : fronttyreLeftImg
+                        ? imgurl + fronttyreLeftImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -282,8 +304,10 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      fronttyreRightImg
+                      documentFronttyreRight
                         ? URL.createObjectURL(fronttyreRightImg)
+                        : fronttyreRightImg
+                        ? imgurl + fronttyreRightImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -301,7 +325,11 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      sidePicLeft ? URL.createObjectURL(sidePicLeft) : cloudIcon
+                      documentSidePicLeft
+                        ? URL.createObjectURL(sidePicLeft)
+                        : sidePicLeft
+                        ? imgurl + sidePicLeft
+                        : cloudIcon
                     }
                     alt="cloud icon"
                   />
@@ -315,8 +343,10 @@ const SellerPreviewDetails = ({
                 >
                   <img
                     src={
-                      sidePicRight
+                      documentSidePicRight
                         ? URL.createObjectURL(sidePicRight)
+                        : sidePicRight
+                        ? imgurl + sidePicRight
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -332,13 +362,7 @@ const SellerPreviewDetails = ({
               <button onClick={handlePostData} className="save">
                 {saveLoading ? "Saving..." : "Save Now"}
               </button>
-              <button
-                onClick={handlePublishPostData}
-                disabled={disableBtn}
-                style={{
-                  filter: disableBtn ? "opacity(20%)" : "opacity(100%)",
-                }}
-              >
+              <button onClick={handlePublishPostData}>
                 {pubLoading ? "Publishing..." : "Publish"}
               </button>
             </div>

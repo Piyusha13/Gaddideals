@@ -4,7 +4,7 @@ import VehicleDetails from "./pages/VehicleDetails";
 import VehicleListings from "./pages/VehicleListings";
 import SellerForm from "./pages/SellerForm";
 import UserLogin from "./pages/UserLogin";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import SellerHomePage from "./pages/SellerHomePage";
 import UserVehicles from "./pages/UserVehicles";
 import LoggedUser from "./pages/LoggedUser";
@@ -23,8 +23,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Geocode from "react-geocode";
 
+const queryString = require("query-string");
+
 function App() {
-  const [locationCity, setLocationCity] = useState("");
+  const location = queryString.parse(window.location.search);
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -67,7 +71,14 @@ function App() {
               }
             }
           }
+
           dispatch(setCurrentCity(city));
+
+          if (!location.city) {
+            location["city"] = city || "Mumbai";
+            let prevUrl = queryString.stringify(location);
+            navigate("?" + prevUrl);
+          }
         },
         (error) => {
           console.error(error);
@@ -86,7 +97,7 @@ function App() {
 
   return (
     <>
-    <div id='google_translate_element'></div>
+      <div id="google_translate_element"></div>
       <Routes>
         {/* all routes here */}
         <Route element={<SellerHomePage />} index />

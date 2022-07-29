@@ -3,6 +3,8 @@ import "./sellervehicledetail.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import cloudIcon from "../assets/cloud.png";
 
+import { imgurl } from "../constants";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -189,13 +191,15 @@ const SellerVehicleDetail = ({
                 />
                 <div
                   className="document"
-                  style={
-                    documentEngImg ? { padding: "0px" } : { padding: "40px" }
-                  }
+                  style={engImage ? { padding: "0px" } : { padding: "40px" }}
                 >
                   <img
                     src={
-                      documentEngImg ? URL.createObjectURL(engImage) : cloudIcon
+                      documentEngImg
+                        ? URL.createObjectURL(engImage)
+                        : engImage
+                        ? imgurl + engImage
+                        : cloudIcon
                     }
                     alt="cloud icon"
                   />
@@ -222,6 +226,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentFrontSideImg
                         ? URL.createObjectURL(frontSideImg)
+                        : frontSideImg
+                        ? imgurl + frontSideImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -247,6 +253,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentBackSideImg
                         ? URL.createObjectURL(backSideImg)
+                        : backSideImg
+                        ? imgurl + backSideImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -279,6 +287,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentFronttyreLeft
                         ? URL.createObjectURL(fronttyreLeftImg)
+                        : fronttyreLeftImg
+                        ? imgurl + fronttyreLeftImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -304,6 +314,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentFronttyreRight
                         ? URL.createObjectURL(fronttyreRightImg)
+                        : fronttyreRightImg
+                        ? imgurl + fronttyreRightImg
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -332,6 +344,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentSidePicLeft
                         ? URL.createObjectURL(sidePicLeft)
+                        : sidePicLeft
+                        ? imgurl + sidePicLeft
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -357,6 +371,8 @@ const SellerVehicleDetail = ({
                     src={
                       documentSidePicRight
                         ? URL.createObjectURL(sidePicRight)
+                        : sidePicRight
+                        ? imgurl + sidePicRight
                         : cloudIcon
                     }
                     alt="cloud icon"
