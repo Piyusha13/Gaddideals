@@ -74,6 +74,8 @@ const VehicleDetails = () => {
 
   const locationCity = useSelector(selectLocation);
 
+  const [EmiModal,setEmiModal]=useState(false);
+
   const dealerType = [
     {
       user_type: "Company",
@@ -251,6 +253,52 @@ const VehicleDetails = () => {
   return (
     <>
       <Navbar />
+      {EmiModal &&(
+        <Modal
+        visible={EmiModal}
+        width={matches ? "85%" : "75%"}
+        effect="fadeInUp"
+        onClickAway={() => {
+          setEmiModal(!EmiModal);
+        }}>
+          
+          <div className="emi-section">
+            <div className="emi-left-side-div">
+              <div className="emi-left-top-div">
+                <p><span className="selling-price"> ₹4,65,000 </span> per month</p>
+              </div>
+              <div className="emi-left-mid-div">
+                <div className="donut-graph"></div>
+                <div className="pla-div">
+                  <div className="pla-text">Principal Loan Amount</div>
+                  <div className="pla-price"> ₹4,65,000</div>
+                </div>
+                <div className="tip-div">
+                  <div className="tip-text">Total Interest Payable</div>
+                  <div className="tip-price">₹4,65,000</div>
+                </div>
+              </div>
+              <div className="emi-left-bottom-div">
+                <div className="tap-text">Total Amount Payable</div>
+                <div className="tap-price">₹4,65,000</div>
+              </div>
+            </div>
+            {/* <hr className="verticle-hr"></hr> */}
+            <div className="emi-right-side-div">
+              <img src="CloseTab" alt=""></img>
+              <div className="la-div">
+                <div className="la-top-div">
+                  <div className="la-text">Loan Amount</div>
+                  <div className="la-price">₹4,65,000</div>
+                </div>
+                <div className="range-slider"></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          
+        </Modal>
+      )}
       {BuyerInput && (
         <div>
           <Modal
@@ -515,7 +563,7 @@ const VehicleDetails = () => {
                     </div>
                   </div>
                   <div className="wrapper">
-                    <div className="calculator">
+                    <div onClick={()=>{setEmiModal(!EmiModal);} } className="calculator">
                       <img src={calculatorIcon} alt="calculator icon" />
                       <span>EMI Calcualtor</span>
                     </div>

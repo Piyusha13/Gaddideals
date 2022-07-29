@@ -1,7 +1,8 @@
 import "./footer.style.css";
 
 import footerLogo from "../assets/footer-logo.png";
-import appIcons from "../assets/app-store-logos.png";
+import appIcons from "../assets/google-play.png";
+import appStoreIcon from "../assets/app-store.png";
 import facebookIcon from "../assets/facebook.png";
 import twitterIcon from "../assets/twitter.png";
 import instagramIcon from "../assets/instagram.png";
@@ -98,7 +99,12 @@ const Footer = () => {
                 </h5>
               </div>
               <div className="app-icons">
+                <a target='_blank' href="https://play.google.com/store/games?utm_source=apac_med&utm_medium=hasem&utm_content=Oct0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-py-Evergreen-Oct0121-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700058906740516_creativeid_480977734970_device_c&gclid=Cj0KCQjw54iXBhCXARIsADWpsG-CCJ0Va1SM47pcLde7OIB2qTUQqRMNXrjApqyWTvovb5yTz72kgn8aAnMeEALw_wcB&gclsrc=aw.ds">
+              <img src={appStoreIcon} alt="app store" />
+              </a>
+              <a target='_blank' href="https://www.apple.com/in/app-store/">
                 <img src={appIcons} alt="app store" />
+                </a>
               </div>
             </div>
           </div>
@@ -229,7 +235,13 @@ const Footer = () => {
                 <h5>-Download from-</h5>
               </div>
               <div className="mobile-app-icons">
+              <a target='_blank' href="https://play.google.com/store/games?utm_source=apac_med&utm_medium=hasem&utm_content=Oct0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-py-Evergreen-Oct0121-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700058906740516_creativeid_480977734970_device_c&gclid=Cj0KCQjw54iXBhCXARIsADWpsG-CCJ0Va1SM47pcLde7OIB2qTUQqRMNXrjApqyWTvovb5yTz72kgn8aAnMeEALw_wcB&gclsrc=aw.ds"> 
+              <img src={appStoreIcon} alt="app store" />
+              </a>
+              <a target='_blank' href="https://www.apple.com/in/app-store/">
                 <img src={appIcons} alt="app store" />
+                </a>
+                
               </div>
             </div>
 

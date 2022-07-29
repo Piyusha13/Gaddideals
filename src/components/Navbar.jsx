@@ -47,6 +47,7 @@ import FacebookLogin from "react-facebook-login";
 import { updateLanguage } from "./../Helpers/helper";
 import { selectLocation } from "../store/location/location.selector";
 import { setCurrentCity } from "../store/location/location.action";
+import loadGT from "../Helpers/gtt_loader";
 
 const queryString = require("query-string");
 
@@ -127,6 +128,9 @@ const Navbar = () => {
     fetchIcons();
     fetchSearchBrandsModelArray();
     fetchCities();
+    loadGT(()=>{
+      // setdropdown(f)
+    })
   }, []);
 
   const filterCities = cities.filter((city) =>
@@ -144,8 +148,8 @@ const Navbar = () => {
   const [visible, setvisible] = useState(false);
   const [visibleSignUp, setvisibleSignUp] = useState(false);
   const [visibleOTP, setvisibleOTP] = useState(false);
-  const [visibleMailSigIn,setvisibleMailSigIn]=useState(false);
-  const [showMailSigIn,setshowMailSigIn]=useState(false);
+  const [visibleMailSigIn, setvisibleMailSigIn] = useState(false);
+  const [showMailSigIn, setshowMailSigIn] = useState(false);
   const [mob_no, setmob_no] = useState("");
   const [otp, setotp] = useState("");
   const [name, setname] = useState("");
@@ -208,7 +212,7 @@ const Navbar = () => {
     console.warn({ email, password });
     let payload = { email, password };
     axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
-      console.log("hey"+res);
+      console.log("hey" + res);
       localStorage.setItem("Token", res.data.user.accessToken);
       window.location.href = "/loggeduser";
       // if (res.data.status == "failed") {
@@ -225,20 +229,27 @@ const Navbar = () => {
   function setSignup() {
     console.log("otp verified");
     console.warn({ name, email, mob_no, city, password, confirm_password });
-    let payload = { name, email, mob_no, city:locationCity, password, confirm_password };
+    let payload = {
+      name,
+      email,
+      mob_no,
+      city: locationCity,
+      password,
+      confirm_password,
+    };
     axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
       console.log("res", res);
       // let regex ='[a-z0-9]+@[a-z]+\.[a-z]{2,3}';
-      let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+      let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
       if (name === "" || email === "" || mob_no === "" || city === "") {
         toast.error("required feilds are empty");
       } else if (!name.match(/^[a-zA-Z]+$/)) {
         toast.error("invalid name ");
       }
       // else if (!email.match("@gmail.com") || !email.match("@outlook.com" ) || !email.match("@yahoo.com") || !email.match("@icloud.com" ) || !email.match("@gmx.com") || !email.match("@contoso.onmicrosoft.com." ))
-      else  if (!regex.test(email)) {
+      else if (!regex.test(email)) {
         toast.error("invalid mail id");
-      } 
+      }
       // else  if (!email.match("@outlook.com")) {
       //   toast.error("invalid mail id");
       // }  else  if (!email.match("@yahoo.com")) {
@@ -413,7 +424,13 @@ const Navbar = () => {
       prevScrollY.current = currentScrollY;
       // console.log(goingUp, currentScrollY);
     };
-
+    const lang = location.lang;
+    if(lang){
+      setselectedLanguage(lang)
+    }
+    else{
+      setselectedLanguage('en')
+    }
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -430,6 +447,7 @@ const Navbar = () => {
       clientId:
         "863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com",
       plugin_name: "sign in",
+      scope: "",
     });
   });
 
@@ -509,7 +527,6 @@ const Navbar = () => {
   // const componentClicked = (data) => {
   //   console.log(data);
   // };
-
 
   //sign in with email and password
   function saveMobMailPassword() {
@@ -634,7 +651,13 @@ const Navbar = () => {
                 )}
               />
             </button>
-            <button className="sign-in-email" onClick={()=>{setvisibleMailSigIn(!visibleMailSigIn); setvisible(false);}} >
+            <button
+              className="sign-in-email"
+              onClick={() => {
+                setvisibleMailSigIn(!visibleMailSigIn);
+                setvisible(false);
+              }}
+            >
               <img src={gmailLogo} alt=""></img>
               Sign in with Email & Password
             </button>
@@ -737,7 +760,6 @@ const Navbar = () => {
               type="text"
               className="signup-phone-no-input"
               placeholder="Name "
-              
             />
             <input
               onChange={(e) => {
@@ -985,7 +1007,11 @@ const Navbar = () => {
               alt=""
             />
             <p className="otp-sign-in-title">
-              Enter<span className="signup-text-color-blue"> Email and Password </span>
+              Enter
+              <span className="signup-text-color-blue">
+                {" "}
+                Email and Password{" "}
+              </span>
             </p>
             <p className="otp-welcome-text">
               Sign in using your email and password
@@ -1010,7 +1036,7 @@ const Navbar = () => {
                 setpassword(e.target.value);
               }}
             />
-            
+
             <button
               onClick={() => {
                 saveMailPassword();
@@ -1029,57 +1055,57 @@ const Navbar = () => {
             {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
             <div className="location-container">
-            <div
-              className="location"
-              onClick={() => setLangDropdown(!langDropdown)}
-            >
-              <div className="location-and-icon">
-              <img src={locationIcon} alt="location" />
-              <span>
-                {locationCity !== undefined ? locationCity : "Location"}
-              </span>
-              </div>
-              <div className="arrow-icon">
-                <img src={downArrow} alt="down arrow" />
-              </div>
-            </div>
-
-            {langDropdown && (
-              <div className="lang-dropdown">
-                <div className="lang-input">
-                  <input
-                    type="text"
-                    placeholder="Enter City here..."
-                    onChange={handleCityChange}
-                    value={citySearch}
-                  />
-
-                  {langSuggestion && (
-                    <div className="lang-suggetion">
-                      {filterCities.slice(0, 7).map((city, index) => (
-                        <p
-                          key={index}
-                          onClick={() => {
-                            setCitySearch(city);
-                            dispatch(setCurrentCity(city));
-                            setLangDropdown(false);
-                            if (location.city) {
-                              location.city = city;
-                              let prevUrl = queryString.stringify(location);
-                              window.location.href =
-                                window.location.pathname + "?" + prevUrl;
-                            }
-                          }}
-                        >
-                          {city}
-                        </p>
-                      ))}
-                    </div>
-                  )}
+              <div
+                className="location"
+                onClick={() => setLangDropdown(!langDropdown)}
+              >
+                <div className="location-and-icon">
+                  <img src={locationIcon} alt="location" />
+                  <span>
+                    {locationCity !== undefined ? locationCity : "Location"}
+                  </span>
+                </div>
+                <div className="arrow-icon">
+                  <img src={downArrow} alt="down arrow" />
                 </div>
               </div>
-            )}
-          </div>
+
+              {langDropdown && (
+                <div className="lang-dropdown">
+                  <div className="lang-input">
+                    <input
+                      type="text"
+                      placeholder="Enter City here..."
+                      onChange={handleCityChange}
+                      value={citySearch}
+                    />
+
+                    {langSuggestion && (
+                      <div className="lang-suggetion">
+                        {filterCities.slice(0, 7).map((city, index) => (
+                          <p
+                            key={index}
+                            onClick={() => {
+                              setCitySearch(city);
+                              dispatch(setCurrentCity(city));
+                              setLangDropdown(false);
+                              if (location.city) {
+                                location.city = city;
+                                let prevUrl = queryString.stringify(location);
+                                window.location.href =
+                                  window.location.pathname + "?" + prevUrl;
+                              }
+                            }}
+                          >
+                            {city}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mob-middle-div">
@@ -1124,57 +1150,57 @@ const Navbar = () => {
             {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
             <div className="location-container">
-            <div
-              className="location"
-              onClick={() => setLangDropdown(!langDropdown)}
-            >
-              <div className="location-and-icon">
-              <img src={locationIcon} alt="location" />
-              <span>
-                {locationCity !== undefined ? locationCity : "Location"}
-              </span>
-              </div>
-              <div className="arrow-icon">
-                <img src={downArrow} alt="down arrow" />
-              </div>
-            </div>
-
-            {langDropdown && (
-              <div className="lang-dropdown">
-                <div className="lang-input">
-                  <input
-                    type="text"
-                    placeholder="Enter City here..."
-                    onChange={handleCityChange}
-                    value={citySearch}
-                  />
-
-                  {langSuggestion && (
-                    <div className="lang-suggetion">
-                      {filterCities.slice(0, 7).map((city, index) => (
-                        <p
-                          key={index}
-                          onClick={() => {
-                            setCitySearch(city);
-                            dispatch(setCurrentCity(city));
-                            setLangDropdown(false);
-                            if (location.city) {
-                              location.city = city;
-                              let prevUrl = queryString.stringify(location);
-                              window.location.href =
-                                window.location.pathname + "?" + prevUrl;
-                            }
-                          }}
-                        >
-                          {city}
-                        </p>
-                      ))}
-                    </div>
-                  )}
+              <div
+                className="location"
+                onClick={() => setLangDropdown(!langDropdown)}
+              >
+                <div className="location-and-icon">
+                  <img src={locationIcon} alt="location" />
+                  <span>
+                    {locationCity !== undefined ? locationCity : "Location"}
+                  </span>
+                </div>
+                <div className="arrow-icon">
+                  <img src={downArrow} alt="down arrow" />
                 </div>
               </div>
-            )}
-          </div>
+
+              {langDropdown && (
+                <div className="lang-dropdown">
+                  <div className="lang-input">
+                    <input
+                      type="text"
+                      placeholder="Enter City here..."
+                      onChange={handleCityChange}
+                      value={citySearch}
+                    />
+
+                    {langSuggestion && (
+                      <div className="lang-suggetion">
+                        {filterCities.slice(0, 7).map((city, index) => (
+                          <p
+                            key={index}
+                            onClick={() => {
+                              setCitySearch(city);
+                              dispatch(setCurrentCity(city));
+                              setLangDropdown(false);
+                              if (location.city) {
+                                location.city = city;
+                                let prevUrl = queryString.stringify(location);
+                                window.location.href =
+                                  window.location.pathname + "?" + prevUrl;
+                              }
+                            }}
+                          >
+                            {city}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mob-LoggedUser-middle-div">
@@ -1312,7 +1338,10 @@ const Navbar = () => {
                   className="mob-resp-mail-signin"
                   src={mobMailIcon}
                   alt=""
-                  onClick={()=>{setshowMailSigIn(!showMailSigIn); setshowsignup(!showsignup);}}
+                  onClick={() => {
+                    setshowMailSigIn(!showMailSigIn);
+                    setshowsignup(!showsignup);
+                  }}
                 ></img>
               </div>
             </div>
@@ -1502,66 +1531,71 @@ const Navbar = () => {
         </div>
       )}
 
-      {showMailSigIn &&(
+      {showMailSigIn && (
         <div>
-        <Modal
-          width="90%"
-          effect="fadeInRight"
-          className="modal"
-          visible={showMailSigIn}
-          onClickAway={()=>{setshowMailSigIn(!showMailSigIn);}}//chnage
-        >
-          {/* for CSS check  MobileRespSignInPage.style.css */}
-          <div className="mob-signin-resp">
-            <img
-              className="mob-resp-closing-arrow"
-              onClick={()=>{setshowMailSigIn(!showMailSigIn);}}
-              src={closingArrow}
-              alt=""
-            ></img>
-            <p className="mob-resp-enterOtp-text">
-              Enter<span className="text-color-blue"> Email and Password </span>
-            </p>
-            <p className="mob-resp-otpSent-text">
-              Sign in with your email and password.
-            </p>
-            <p className="mob-resp-phone-num-text">Email</p>
-            <input
-              className="mob-resp-moile-input"
-              placeholder="Email"
-              name="email"
-              type="text"
-              value={email}
-              onChange={(e) => {
-                setemail(e.target.value);
-              }}
-            />
-            <p className="mob-resp-otp-text">Password</p>
-            <div>
-              <input
-                value={password}
-                type="password"
-                placeholder="Enter password"
-                onChange={(e) => {
-                  setpassword(e.target.value);
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={showMailSigIn}
+            onClickAway={() => {
+              setshowMailSigIn(!showMailSigIn);
+            }} //chnage
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={() => {
+                  setshowMailSigIn(!showMailSigIn);
                 }}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-enterOtp-text">
+                Enter
+                <span className="text-color-blue"> Email and Password </span>
+              </p>
+              <p className="mob-resp-otpSent-text">
+                Sign in with your email and password.
+              </p>
+              <p className="mob-resp-phone-num-text">Email</p>
+              <input
                 className="mob-resp-moile-input"
-                name="password"
+                placeholder="Email"
+                name="email"
+                type="text"
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
               />
-              <span></span>
+              <p className="mob-resp-otp-text">Password</p>
+              <div>
+                <input
+                  value={password}
+                  type="password"
+                  placeholder="Enter password"
+                  onChange={(e) => {
+                    setpassword(e.target.value);
+                  }}
+                  className="mob-resp-moile-input"
+                  name="password"
+                />
+                <span></span>
+              </div>
+
+              <button
+                className="mob-resp-next-button"
+                onClick={() => {
+                  saveMobMailPassword();
+                }}
+              >
+                Sign In
+              </button>
             </div>
-            
-            <button
-              className="mob-resp-next-button"
-              onClick={() => {
-                saveMobMailPassword();
-              }}
-            >
-              Sign In
-            </button>
-          </div>
-        </Modal>
-      </div>
+          </Modal>
+        </div>
       )}
 
       {sellBuyContainerOnScroll && (
@@ -1719,7 +1753,7 @@ const Navbar = () => {
           <div className="languages-container">
             <div className="language">
               <span className="SelectedLanguageDecoration notranslate">
-                {selectedLanguage}{" "}
+                {selectedLanguage === "en" ?"English":"हिन्दी" }{" "}
               </span>
             </div>
             <div className="language-arrow-icon">
@@ -1736,11 +1770,17 @@ const Navbar = () => {
                 <p
                   onClick={() => {
                     // window.location.reload();
-                    updateLanguage("en");
-                    setselectedLanguage("English");
+                    // updateLanguage("en");
+                    setselectedLanguage("en");
                     setdropdown(!dropdown);
-                    // var a = document.querySelector("#google_translate_element select");
-                    // a.selectedIndex = 28;
+                    var a =document.querySelector("#google_translate_element select");
+                    a.value =  'en';
+                    a.dispatchEvent(new Event("change"));
+                    // window.location.reload();
+                    location.lang = 'en';
+                    let prevUrl = queryString.stringify(location);
+                    window.location.href =
+                    window.location.pathname + "?" + prevUrl;
                   }}
                   className="language-1 notranslate"
                 >
@@ -1748,12 +1788,18 @@ const Navbar = () => {
                 </p>
                 <p
                   onClick={() => {
-                    // window.location.reload();
-                    setselectedLanguage("हिन्दी");
-                    updateLanguage("hi");
+                    setselectedLanguage("hi");
+                    // updateLanguage("hi");
                     setdropdown(!dropdown);
-                    // var a = document.querySelector("#google_translate_element select");
-                    // a.selectedIndex = 46;                    
+                    var a =document.querySelector("#google_translate_element select");
+                      a.value =  'hi';
+                      a.dispatchEvent(new Event("change"));
+                      // window.location.reload();
+                      location.lang = 'hi';
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                      window.location.pathname + "?" + prevUrl;
+
                   }}
                   className="language-2 notranslate"
                 >

@@ -2152,3 +2152,17 @@ hr {
   font-size: 12px;
   color: #b5b5b5;
 }
+
+/* Emi section */
+.emi-section{
+  margin: 10px;
+  border: 1px solid #B1B1B1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+/* .verticle-hr{
+  width: 50%;
+  transform: rotate(90deg);
+} */
