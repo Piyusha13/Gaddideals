@@ -106,6 +106,24 @@ const VehicleListings = () => {
     window.matchMedia("(max-width: 1000px)").matches
   );
 
+  function getSingleUserInfo(){
+    let user_token = localStorage.getItem("Token");
+    axios.get(Constant.getUrls.getSingleUser,{
+      headers: {
+        Authorization: ` Bearer ${user_token} `,
+      },
+    }).then((res)=>{
+      console.log(res);
+      // console.log(res.data.user);
+          setname(res.data.user.name);
+          setemail(res.data.user.email);
+          setmob_no(res.data.user.mob_no);
+          setBuyerInput(!BuyerInput);
+          // saveBuyer();
+    });
+
+  }
+
   function saveBuyer() {
     let payload = {
       seller_id,
@@ -852,6 +870,7 @@ const VehicleListings = () => {
             />
           </div>
           <div className="categories-container">
+            <img className="close-div-img" src={CloseTab} alt="" onClick={()=>{setdisplayFilterTwo(!displayFilterTwo);}} />
             <h3>Category</h3>
             <div className="four-category-container">
               {categories.map((category) => (
@@ -1052,7 +1071,7 @@ const VehicleListings = () => {
             <h3 className="sort-by">Sort By :</h3>
             <div
               className="filter-controls"
-              onClick={() => handleRecentlyAdded(!recentlyAdded)}
+              onClick={() =>{ handleRecentlyAdded(!recentlyAdded); setdisplayFilterOne(!displayFilterOne);} }
             >
               {recentlyAdded ? (
                 <ImRadioChecked color="#050F56" size={15} />
@@ -1069,6 +1088,7 @@ const VehicleListings = () => {
               className="filter-controls"
               onClick={() => {
                 handleLowToHighPrice("low");
+                setdisplayFilterOne(!displayFilterOne);
               }}
             >
               {lthPrice === "low" ? (
@@ -1082,6 +1102,7 @@ const VehicleListings = () => {
               className="filter-controls"
               onClick={() => {
                 handleLowToHighPrice("high");
+                setdisplayFilterOne(!displayFilterOne);
               }}
             >
               {lthPrice === "high" ? (
@@ -1099,6 +1120,7 @@ const VehicleListings = () => {
               className="filter-controls"
               onClick={() => {
                 handleLowToHighKms("low");
+                setdisplayFilterOne(!displayFilterOne);
               }}
             >
               {lth === "low" ? (
@@ -1112,6 +1134,7 @@ const VehicleListings = () => {
               className="filter-controls"
               onClick={() => {
                 handleLowToHighKms("high");
+                setdisplayFilterOne(!displayFilterOne);
               }}
             >
               {lth === "high" ? (
@@ -1489,18 +1512,17 @@ const VehicleListings = () => {
                       </p>
                     </div>
                     <button
-                      onClick={() => {
-                        setseller_id(vehicle.user._id);
-                        setUserObj(vehicle.user);
-                        if (userToken) {
-                          setSellerDetails(!SellerDetails);
-                        } else {
-                          setBuyerInput(!BuyerInput);
-                        }
-                      }}
-                    >
-                      Get Seller Details
-                    </button>
+                     onClick={() => {
+                     setseller_id(vehicle.user._id);
+                      setUserObj(vehicle.user);
+                      if(userToken){
+                        getSingleUserInfo()
+                      }else{
+                        setBuyerInput(!BuyerInput)
+                      }
+                      
+                     }}
+                    >Get Seller Details</button>
                   </div>
                 </div>
               ))}

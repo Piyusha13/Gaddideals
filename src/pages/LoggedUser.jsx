@@ -62,7 +62,7 @@ function LoggedUser() {
       fd.append("email", email.email);
       fd.append("mob_no", mob_no.mob_no);
       fd.append("profile_pic_url", e.target.files[0]);
-      axios
+      axios 
         .put(Constant.putAllUrls.putAllUsers, fd, {
           headers: {
             Authorization: ` Bearer ${user_token} `,
@@ -174,10 +174,10 @@ function LoggedUser() {
               </div>
               <div className="my-order-div">
                 <img className="clipboard-img" src={clipboard} alt=""></img>
-                <Link to="" className="my-order-text">
+                <Link to="/UserOrder" className="my-order-text">
                   <span>My Enquireis</span>
                 </Link>
-                <Link to="">
+                <Link to="/UserOrder">
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div>

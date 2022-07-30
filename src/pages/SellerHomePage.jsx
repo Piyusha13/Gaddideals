@@ -221,6 +221,24 @@ const SellerHomePage = () => {
   // function loadGoogleTranslate(){
   //   FaGoogle.translate.TranslateElement("intro-title");
   // }
+  function getSingleUserInfo(){
+    let user_token = localStorage.getItem("Token");
+    axios.get(Constant.getUrls.getSingleUser,{
+      headers: {
+        Authorization: ` Bearer ${user_token} `,
+      },
+    }).then((res)=>{
+      console.log(res);
+      // console.log(res.data.user);
+          setname(res.data.user.name);
+          setemail(res.data.user.email);
+          setmob_no(res.data.user.mob_no);
+          setBuyerInput(!BuyerInput);
+          // saveBuyer();
+    });
+
+  }
+
 
   //saveBuyer
   const saveBuyer = async () => {
@@ -742,7 +760,7 @@ const SellerHomePage = () => {
                             setUserObj(latestTruck.user);
                             setseller_id(latestTruck.user._id);
                             if (userToken) {
-                              setSellerDetails(!SellerDetails);
+                              getSingleUserInfo()
                             } else {
                               setBuyerInput(!BuyerInput);
                             }

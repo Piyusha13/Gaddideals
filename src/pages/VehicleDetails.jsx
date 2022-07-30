@@ -41,9 +41,22 @@ import { Navigation, Thumbs, FreeMode } from "swiper";
 import Modal from "react-awesome-modal";
 import OtpInput from "react-otp-input";
 
-
 import { selectLocation } from "../store/location/location.selector";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import TapIcon from "../assets/tap-icon.png";
+
+import DonutChart from "react-donut-chart";
+
+// import Slider from 'react-rangeslider'
+import { Slider,Box } from "@material-ui/core";
+// import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// import { MuiThemeProvider } from 'material-ui';
+ 
+// To include the default styles
+// import 'react-rangeslider/lib/index.css'
+ 
+// Not using an ES6 transpiler
+// var Slider = require('react-rangeslider')
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -74,7 +87,26 @@ const VehicleDetails = () => {
 
   const locationCity = useSelector(selectLocation);
 
-  const [EmiModal,setEmiModal]=useState(false);
+  const [EmiModal, setEmiModal] = useState(false);
+  // const [volume,setvolume]=useState(0);
+
+  //  function handleOnChange (value) {
+    // this.setState({
+    //   volume: value
+    // })
+    // setvolume(value);
+  // }
+  
+  // const muiTheme = getMuiTheme({
+  //   slider: {
+  //     trackColor: "yellow",
+  //     selectionColor: "red"
+  //   }
+  // });
+
+function valuetext(value: number) {
+  return `${value}°C`;
+}
 
   const dealerType = [
     {
@@ -155,25 +187,49 @@ const VehicleDetails = () => {
     }
   };
 
+  function getSingleUserInfo(){
+    let user_token = localStorage.getItem("Token");
+    axios.get(Constant.getUrls.getSingleUser,{
+      headers: {
+        Authorization: ` Bearer ${user_token} `,
+      },
+    }).then((res)=>{
+      console.log(res);
+      // console.log(res.data.user);
+          setname(res.data.user.name);
+          setemail(res.data.user.email);
+          setmob_no(res.data.user.mob_no);
+          setBuyerInput(!BuyerInput);
+          // saveBuyer();
+    });
+
+  }
+
   function saveBuyer() {
-    let payload = {seller_id,name, email, mob_no, user_type, city:locationCity,hash:"ekxpmAB8m9v" };
-    axios
-      .post(Constant.postUrls.postAllEnquiries, payload)
-      .then((result) => {
-        if (result.data.status === "failed") {
-          toast.error(result.data.message);
-        } else {
-          if (result.data.status === "success") {
-            toast.success(result.data.message);
-            // setvisibleOTP(!visibleOTP);
-            // setmob_no(mob_no);
-            setSellerDetails(!SellerDetails);
-            // setOtp(otp);
-            setBuyerOtp(!BuyerOtp);
-            // setCounter(59);
-          }
+    let payload = {
+      seller_id,
+      name,
+      email,
+      mob_no,
+      user_type,
+      city: locationCity,
+      hash: "ekxpmAB8m9v",
+    };
+    axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
+      if (result.data.status === "failed") {
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          toast.success(result.data.message);
+          // setvisibleOTP(!visibleOTP);
+          // setmob_no(mob_no);
+          setSellerDetails(!SellerDetails);
+          // setOtp(otp);
+          setBuyerOtp(!BuyerOtp);
+          // setCounter(59);
         }
-      });
+      }
+    });
   }
 
   function verifyOtp() {
@@ -189,7 +245,7 @@ const VehicleDetails = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          
+
           // setOtp(result.data.otp);
           // setvisibleOTP(!visibleOTP);
           // setvisible(false);
@@ -253,50 +309,155 @@ const VehicleDetails = () => {
   return (
     <>
       <Navbar />
-      {EmiModal &&(
+      {EmiModal && (
         <Modal
-        visible={EmiModal}
-        width={matches ? "85%" : "75%"}
-        effect="fadeInUp"
-        onClickAway={() => {
-          setEmiModal(!EmiModal);
-        }}>
-          
+          visible={EmiModal}
+          width={matches ? "85%" : "aotu"}
+          effect="fadeInUp"
+          onClickAway={() => {
+            setEmiModal(!EmiModal);
+          }}
+        >
           <div className="emi-section">
             <div className="emi-left-side-div">
               <div className="emi-left-top-div">
-                <p><span className="selling-price"> ₹4,65,000 </span> per month</p>
+                <p>
+                  <span className="selling-price"> ₹4,65,000 </span> per month
+                </p>
               </div>
               <div className="emi-left-mid-div">
-                <div className="donut-graph"></div>
+                <div className="donut-graph">
+                  <DonutChart
+                  className="donut-cotainer"
+                    // height="300px"
+                    // width="300px"
+                    data={[
+                      {
+                        label: "Principal Loan Amount",
+                        value: 25,
+                        
+                      },
+                      {
+                        label: "Total Interest Payable",
+                        value: 10,
+                        
+                      },
+                    ]}
+                  />
+                  ;
+                </div>
                 <div className="pla-div">
                   <div className="pla-text">Principal Loan Amount</div>
                   <div className="pla-price"> ₹4,65,000</div>
                 </div>
-                <div className="tip-div">
-                  <div className="tip-text">Total Interest Payable</div>
-                  <div className="tip-price">₹4,65,000</div>
+                {/* total interest payable div */}
+                <div className="pla-div">
+                  <div className="pla-text">Total Interest Payable</div>
+                  <div className="pla-price">₹4,65,000</div>
                 </div>
               </div>
+
               <div className="emi-left-bottom-div">
-                <div className="tap-text">Total Amount Payable</div>
-                <div className="tap-price">₹4,65,000</div>
+                <div className="pla-text">
+                  <img src={TapIcon} alt="" />
+                  Total Amount Payable
+                </div>
+                <div className="pla-price">₹4,65,000</div>
               </div>
             </div>
-            {/* <hr className="verticle-hr"></hr> */}
+            {/* <div className="verticle-hr"></div> */}
             <div className="emi-right-side-div">
-              <img src="CloseTab" alt=""></img>
+              <img
+                src={CloseTab}
+                alt=""
+                onClick={() => {
+                  setEmiModal(!EmiModal);
+                }}
+              />
+              {/* loan amount div */}
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Loan Amount</div>
-                  <div className="la-price">₹4,65,000</div>
+                  <div className="la-price pla-price">₹{rupee_format(getvehicledetails?.selling_price)}</div>
                 </div>
-                <div className="range-slider"></div>
-                <div></div>
+                <div className="range-slider">
+    <Box sx={{ width: 400 }}>
+    {/* <MuiThemeProvider muiTheme={muiTheme}> */}
+      <Slider
+        aria-label="Temperature"
+        defaultValue={getvehicledetails?.selling_price}
+        getAriaValueText={valuetext}
+        valueLabelDisplay="auto"
+        step={100000}
+        marks
+        min={0}
+        max={getvehicledetails?.selling_price}
+        color="red"
+      />
+      {/* </MuiThemeProvider> */}
+    </Box>
+
+
+                </div>
+                <div className="selected-la pla-price">₹{rupee_format(getvehicledetails?.selling_price)}</div>
               </div>
+              {/* down payment div */}
+              <div className="la-div">
+                <div className="la-top-div">
+                  <div className="la-text">Down Payment</div>
+                  <div className="la-price pla-price">₹4,65,000</div>
+                </div>
+                <div className="range-slider">
+                <Box sx={{ width: 300 }}>
+      <Slider
+        aria-label="Temperature"
+        defaultValue={0}
+        getAriaValueText={valuetext}
+        valueLabelDisplay="auto"
+        step={100000}
+        marks
+        min={0}
+        max={getvehicledetails?.selling_price}
+      />
+    </Box>
+                </div>
+                <div className="selected-la pla-price">₹4,65,000</div>
+              </div>
+              {/* loan duration div */}
+              <div className="la-div">
+                <div className="la-top-div">
+                  <div className="la-text">Duration of loan</div>
+                  <div className="la-price pla-price">₹4,65,000</div>
+                </div>
+                <div className="range-slider">
+                <Box sx={{ width: 300 }}>
+      <Slider
+        aria-label="Temperature"
+        defaultValue={5}
+        getAriaValueText={valuetext}
+        valueLabelDisplay="auto"
+        step={1}
+        marks
+        min={0}
+        max={5}
+      />
+    </Box>
+                </div>
+                <div className="selected-la pla-price">₹4,65,000</div>
+              </div>
+              {/* interest rate div */}
+              <div className="ir-div">
+                <div className="ir-text"> Interest Rate*</div>
+                <div className="ir-number-div">
+                  <div className="ir-percent">12.5%</div>
+                  {/* <div className="edit-img"> */}
+                  <img src={Edit} alt="" />
+                  {/* </div> */}
+                </div>
+              </div>
+              <button>CHECK ELIGIBILITY</button>
             </div>
           </div>
-          
         </Modal>
       )}
       {BuyerInput && (
@@ -553,17 +714,22 @@ const VehicleDetails = () => {
                 <div className="heading-container">
                   <div className="title">
                     <h3>
-                      {getvehicledetails.model
-                        ? getvehicledetails.model.name
+                      {getvehicledetails?.model
+                        ? getvehicledetails?.model?.name
                         : "No model found"}
                     </h3>
                     <div className="truck-location">
                       <img src={locationIcon} alt="location" />
-                      <span>{getvehicledetails.city} </span>
+                      <span>{getvehicledetails?.city} </span>
                     </div>
                   </div>
                   <div className="wrapper">
-                    <div onClick={()=>{setEmiModal(!EmiModal);} } className="calculator">
+                    <div
+                      onClick={() => {
+                        setEmiModal(!EmiModal);
+                      }}
+                      className="calculator"
+                    >
                       <img src={calculatorIcon} alt="calculator icon" />
                       <span>EMI Calcualtor</span>
                     </div>
@@ -579,12 +745,12 @@ const VehicleDetails = () => {
                   <div className="row-one-detail">
                     <div className="stat">
                       <img src={speedometerIcon} alt="speedometer icon" />
-                      <span>{getvehicledetails.km_driven}</span>
+                      <span>{getvehicledetails?.km_driven}</span>
                     </div>
                     <div className="stat">
                       {/* <img src={ownerIcon} alt="owner icon" /> */}
                       <FaUserTie size={30} color={"#050F56"} />
-                      <span>{getvehicledetails.no_of_owner}</span>
+                      <span>{getvehicledetails?.no_of_owner}</span>
                     </div>
                     <div className="stat calender">
                       <img src={calenderIcon} alt="calender icon" />
@@ -596,30 +762,30 @@ const VehicleDetails = () => {
                     {checkCategory === "Trucks" && (
                       <div className="stat">
                         <img src={tyreIcon} alt="tyre icon" />
-                        <span>{getvehicledetails.no_of_tyre}</span>
+                        <span>{getvehicledetails?.no_of_tyre}</span>
                       </div>
                     )}
                     {checkCategory === "Tractors" && (
                       <div className="stat">
                         <img src={horsePowerIcon} alt="horse power icon" />
-                        <span>{getvehicledetails.horse_power} Bph</span>
+                        <span>{getvehicledetails?.horse_power} Bph</span>
                       </div>
                     )}
                     {checkCategory === "Buses" && (
                       <div className="stat">
                         <img src={seatIcon} alt="seat icon" />
-                        <span>{getvehicledetails.no_of_seats}</span>
+                        <span>{getvehicledetails?.no_of_seats}</span>
                       </div>
                     )}
                     {checkCategory === "Construction Equipments" && (
                       <div className="stat">
                         <img src={tyreIcon} alt="tyre icon" />
-                        <span>{getvehicledetails.no_of_tyre}</span>
+                        <span>{getvehicledetails?.no_of_tyre}</span>
                       </div>
                     )}
                     <div className="stat racing">
                       <img src={racingIcon} alt="racing icon" />
-                      <span>{getvehicledetails.tyre_cond}</span>
+                      <span>{getvehicledetails?.tyre_cond}</span>
                     </div>
                     <div className="stat manual">
                       <img
@@ -627,8 +793,8 @@ const VehicleDetails = () => {
                         alt="manual transmission icon"
                       />
                       <span>
-                        {getvehicledetails.fuelType
-                          ? getvehicledetails.fuelType.title
+                        {getvehicledetails?.fuelType
+                          ? getvehicledetails?.fuelType?.title
                           : "No Title Found"}
                       </span>
                     </div>
@@ -651,7 +817,9 @@ const VehicleDetails = () => {
                 <button
                   onClick={() => {
                     userToken
-                      ? setSellerDetails(!SellerDetails)
+                      ? 
+                      // setSellerDetails(!SellerDetails)
+                      getSingleUserInfo()
                       : setBuyerInput(!BuyerInput);
                   }}
                 >
@@ -683,11 +851,11 @@ const VehicleDetails = () => {
             <div className="row-one">
               <div className="row-content">
                 <h6>Number of kilometers</h6>
-                <span>{getvehicledetails.km_driven} Km</span>
+                <span>{getvehicledetails?.km_driven} Km</span>
               </div>
               <div className="row-content">
                 <h6>Number of Owners</h6>
-                <span>{getvehicledetails.no_of_owner}</span>
+                <span>{getvehicledetails?.no_of_owner}</span>
               </div>
             </div>
 
@@ -700,7 +868,7 @@ const VehicleDetails = () => {
               </div>
               <div className="row-content">
                 <h6>City</h6>
-                <span>{getvehicledetails.city}</span>
+                <span>{getvehicledetails?.city}</span>
               </div>
             </div>
 
@@ -709,11 +877,11 @@ const VehicleDetails = () => {
             <div className="row-three">
               <div className="row-content">
                 <h6>Insurance validity</h6>
-                <span>{formatDate(getvehicledetails.insurance)}</span>
+                <span>{formatDate(getvehicledetails?.insurance)}</span>
               </div>
               <div className="row-content">
                 <h6>Tyre condition</h6>
-                <span>{getvehicledetails.tyre_cond}</span>
+                <span>{getvehicledetails?.tyre_cond}</span>
               </div>
             </div>
 
@@ -723,14 +891,14 @@ const VehicleDetails = () => {
               <div className="row-content">
                 <h6>Transmission</h6>
                 <span>
-                  {getvehicledetails.fuelType
-                    ? getvehicledetails.fuelType.title
+                  {getvehicledetails?.fuelType
+                    ? getvehicledetails?.fuelType?.title
                     : "No Title Found"}
                 </span>
               </div>
               <div className="row-content">
                 <h6>Vehicle number</h6>
-                <span>{getvehicledetails.reg_no}</span>
+                <span>{getvehicledetails?.reg_no}</span>
               </div>
             </div>
 
@@ -739,18 +907,20 @@ const VehicleDetails = () => {
             <div className="row-four">
               <div className="row-content">
                 <h6>Tax validity up to</h6>
-                <span>{formatDate(getvehicledetails.tax_validity)}</span>
+                <span>{formatDate(getvehicledetails?.tax_validity)}</span>
               </div>
               <div className="row-content">
                 <h6>Number of tyres</h6>
-                <span>{getvehicledetails.no_of_tyre}</span>
+                <span>{getvehicledetails?.no_of_tyre}</span>
               </div>
             </div>
             <div className="line"></div>
             <div className="row-four">
               <div className="row-content">
                 <h6>Fitness certificate</h6>
-                <span>{formatDate(getvehicledetails.fitness_certificate)}</span>
+                <span>
+                  {formatDate(getvehicledetails?.fitness_certificate)}
+                </span>
               </div>
             </div>
           </div>
@@ -785,11 +955,11 @@ const VehicleDetails = () => {
             <div className="row-one">
               <div className="row-content">
                 <h6>Number of kilometers</h6>
-                <span>{getvehicledetails.km_driven} Km</span>
+                <span>{getvehicledetails?.km_driven} Km</span>
               </div>
               <div className="row-content">
                 <h6>Number of Owners</h6>
-                <span>{getvehicledetails.no_of_owner}</span>
+                <span>{getvehicledetails?.no_of_owner}</span>
               </div>
               <div className="row-content">
                 <h6>Manufacturing year</h6>
@@ -802,15 +972,15 @@ const VehicleDetails = () => {
             <div className="row-two">
               <div className="row-content">
                 <h6>City</h6>
-                <span>{getvehicledetails.city}</span>
+                <span>{getvehicledetails?.city}</span>
               </div>
               <div className="row-content">
                 <h6>Insurance validity</h6>
-                <span>{formatDate(getvehicledetails.insurance)}</span>
+                <span>{formatDate(getvehicledetails?.insurance)}</span>
               </div>
               <div className="row-content">
                 <h6>Tyre condition</h6>
-                <span>{getvehicledetails.tyre_cond}</span>
+                <span>{getvehicledetails?.tyre_cond}</span>
               </div>
             </div>
 
@@ -820,18 +990,18 @@ const VehicleDetails = () => {
               <div className="row-content">
                 <h6>Fuel Type</h6>
                 <span>
-                  {getvehicledetails.fuelType
-                    ? getvehicledetails.fuelType.title
+                  {getvehicledetails?.fuelType
+                    ? getvehicledetails?.fuelType?.title
                     : "No Title Found"}
                 </span>
               </div>
               <div className="row-content">
                 <h6>Vehicle number</h6>
-                <span>{getvehicledetails.reg_no}</span>
+                <span>{getvehicledetails?.reg_no}</span>
               </div>
               <div className="row-content">
                 <h6>Tax validity up to</h6>
-                <span>{formatDate(getvehicledetails.tax_validity)}</span>
+                <span>{formatDate(getvehicledetails?.tax_validity)}</span>
               </div>
             </div>
 
@@ -841,24 +1011,26 @@ const VehicleDetails = () => {
               {checkCategory === "Trucks" && (
                 <div className="row-content">
                   <h6>Number of tyres</h6>
-                  <span>{getvehicledetails.no_of_tyre}</span>
+                  <span>{getvehicledetails?.no_of_tyre}</span>
                 </div>
               )}
               {checkCategory === "Tractors" && (
                 <div className="row-content">
                   <h6>Horse Power</h6>
-                  <span>{getvehicledetails.horse_power} Bph</span>
+                  <span>{getvehicledetails?.horse_power} Bph</span>
                 </div>
               )}
               {checkCategory === "Buses" && (
                 <div className="row-content">
                   <h6>Number of seating</h6>
-                  <span>{getvehicledetails.no_of_seats}</span>
+                  <span>{getvehicledetails?.no_of_seats}</span>
                 </div>
               )}
               <div className="row-content">
                 <h6>Fitness certificate</h6>
-                <span>{formatDate(getvehicledetails.fitness_certificate)}</span>
+                <span>
+                  {formatDate(getvehicledetails?.fitness_certificate)}
+                </span>
               </div>
               <div className="row-content"></div>
             </div>
