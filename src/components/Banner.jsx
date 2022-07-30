@@ -59,7 +59,7 @@ const Banner = () => {
         <h2>What vehicle do you want to sell?</h2>
         <div className="categories">
           <div className="row-one">
-            {categoriesData.map((category, index) => (
+            {categoriesData.slice(0, 2).map((category, index) => (
               <div className="category-item" key={category._id}>
                 {/* <Link to={`/sellerform/${category._id}`}> */}
                 <div

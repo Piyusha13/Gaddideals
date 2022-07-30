@@ -393,19 +393,19 @@ const SellerForm = () => {
     fd.append("reg_no", formData.vehiclenumber);
     fd.append("km_driven", formData.kmsdriven || 0);
     fd.append("no_of_hrs", formData.noofhrs);
-    fd.append("no_of_owner", owner);
+    fd.append("no_of_owner", owner.toLowerCase());
     fd.append("fuelType", fuel);
     fd.append("insurance", formData.insurancevalidity);
     fd.append("tax_validity", formData.taxvalidity);
-    fd.append("vehicle_permit", permit);
+    fd.append("vehicle_permit", permit.toLowerCase());
     fd.append("no_of_tyre", formData.nooftyres);
     fd.append("horse_power", formData.horsepower);
     fd.append("no_of_seats", formData.noofseats);
-    fd.append("tyre_cond", tyreCondition);
+    fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);
     fd.append("bodyType", bodyTypeId);
-    fd.append("rc_document", rc);
+    fd.append("rc_document", rc.toLowerCase());
     fd.append("engine_pic", engImage);
     fd.append("front_side_pic", frontSideImg);
     fd.append("back_side_pic", backSideImg);
@@ -436,7 +436,7 @@ const SellerForm = () => {
 
     let fd = new FormData();
 
-    fd.append("category", categoryId);
+    fd.append("category", editVehicleObj?.category?._id);
     fd.append("state", stateTitle);
     fd.append("city", cityTitle);
     fd.append("brand", brandId);
@@ -444,15 +444,15 @@ const SellerForm = () => {
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
     fd.append("km_driven", formData.kmsdriven || 0);
-    fd.append("no_of_hrs", formData.noofhrs);
+    fd.append("no_of_hrs", formData.noofhrs || 0);
     fd.append("no_of_owner", owner);
     fd.append("fuelType", fuel);
     fd.append("insurance", formData.insurancevalidity);
     fd.append("tax_validity", formData.taxvalidity);
     fd.append("vehicle_permit", permit);
-    fd.append("no_of_tyre", formData.nooftyres);
-    fd.append("horse_power", formData.horsepower);
-    fd.append("no_of_seats", formData.noofseats);
+    fd.append("no_of_tyre", formData.nooftyres || 0);
+    fd.append("horse_power", formData.horsepower || 0);
+    fd.append("no_of_seats", formData.noofseats || 0);
     fd.append("tyre_cond", tyreCondition);
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);

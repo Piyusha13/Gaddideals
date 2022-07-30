@@ -64,6 +64,7 @@ const Navbar = () => {
   const [cities, setCities] = useState([]);
   const [citySearch, setCitySearch] = useState("");
   const [langSuggestion, setLangSuggestion] = useState(false);
+  const [overlayLocation, setOverlayLocation] = useState(false);
 
   const [GoogleSignIn, setGoogleSignIn] = useState(false);
   const [FaceookSignIn, setFaceookSignIn] = useState(false);
@@ -88,27 +89,29 @@ const Navbar = () => {
 
   const handleCityChange = (e) => {
     setCitySearch(e.target.value);
-
-    if (e.target.value.length > 0) {
-      setLangSuggestion(true);
-    } else {
-      setLangSuggestion(false);
-    }
   };
 
-  // const handleLangFocus = () => {
-  //   setLangSuggestion((prevSuggestion) => !prevSuggestion);
-  // };
+  const handleLangFocus = () => {
+    setLangSuggestion((prevSuggestion) => !prevSuggestion);
+  };
 
-  const fetchCities = () => {
-    let citiesArr = [];
-    statecities.map((city) => {
-      if (city) {
-        citiesArr.push(city.City);
-      }
-      return citiesArr;
-    });
-    setCities(citiesArr);
+  const fetchCities = async () => {
+    // let citiesArr = [];
+    // statecities.map((city) => {
+    //   if (city) {
+    //     citiesArr.push(city.City);
+    //   }
+    //   return citiesArr;
+    // });
+    // setCities(citiesArr);
+
+    const response = await axios.get(
+      Constant.getUrls.getAllVehicles + `/getCity`
+    );
+
+    if (response.data) {
+      setCities(response.data.data);
+    }
   };
 
   useEffect(() => {
@@ -2156,6 +2159,7 @@ const Navbar = () => {
                     type="text"
                     placeholder="Enter City here..."
                     onChange={handleCityChange}
+                    onFocus={handleLangFocus}
                     value={citySearch}
                   />
 
@@ -2267,6 +2271,12 @@ const Navbar = () => {
           )}
         </div>
       </nav>
+      {langDropdown && (
+        <div
+          className="location-overlay"
+          onClick={() => setLangDropdown(false)}
+        ></div>
+      )}
       {LoggedUserHamburgerMenue && (
         <div
           className="mob-menue-overlay"

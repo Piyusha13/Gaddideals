@@ -1,6 +1,8 @@
 import React from "react";
 import truckImg from "../assets/trucks1.png";
 import locationIcon from "../assets/location.png";
+import editIcon from "../assets/edit.png";
+import deleteIcon from "../assets/delete.png";
 import "./UserVehicles.style.css";
 import "./vehiclecard.styles.css";
 import "./LoggedUser.css";
@@ -174,11 +176,28 @@ function UserVehicles() {
                               <span>{item.city.substring(0, 10)}</span>
                             </div>
                           </div>
-                          <div className="card-publish-review">
-                            <div className="review">
-                              <strong>Under Review</strong>
+
+                          <div className="review-container">
+                            <div
+                              className="review-action"
+                              onClick={() =>
+                                navigate(`/sellerform/${item._id}`)
+                              }
+                            >
+                              <img src={editIcon} alt="edit icon" />
                             </div>
-                            <span>(Uploaded on Jun 01,2022)</span>
+                            <div
+                              className="review-action"
+                              onClick={() => handleVehicleDelete(item._id)}
+                            >
+                              <img src={deleteIcon} alt="delete icon" />
+                            </div>
+                            <div className="card-publish-review">
+                              <div className="review">
+                                <strong>Under Review</strong>
+                              </div>
+                              <span>(Uploaded on Jun 01,2022)</span>
+                            </div>
                           </div>
                         </div>
                         <div className="card-price">
@@ -199,7 +218,7 @@ function UserVehicles() {
                     </div>
                     <div className="card-btns">
                       <button>Book for Inspection</button>
-                      <button
+                      {/* <button
                         onClick={() => navigate(`/sellerform/${item._id}`)}
                       >
                         Edit
@@ -209,7 +228,7 @@ function UserVehicles() {
                         onClick={() => handleVehicleDelete(item._id)}
                       >
                         Delete
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 ))}

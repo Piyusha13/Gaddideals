@@ -87,7 +87,7 @@ function App() {
     }
 
     function error() {
-      console.log("Unable to retrieve location");
+      alert("Unable to retrieve your location!");
     }
 
     if (navigator.geolocation) {

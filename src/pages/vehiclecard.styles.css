@@ -191,6 +191,7 @@
 .vehicle-card-container .card .card-wrapper-vehicles {
   display: flex;
   flex-direction: row;
+  width: 100%;
   /* padding: 10px 10px 0; */
 }
 
@@ -201,7 +202,7 @@
 }
 .card .card-img-wrapper img {
   /* background-color: aqua; */
-  width: 100%;
+  width: 160px;
   height: 100%;
   object-fit: cover;
   align-self: center;
@@ -245,6 +246,27 @@
   font-size: 15px;
   margin-left: 5px;
   color: #121212;
+}
+
+.card .card-info .card-info-header .review-container {
+  display: flex;
+  gap: 10px;
+}
+.card .card-info .card-info-header .review-container .review-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.card .card-info .card-info-header .review-container .review-action img {
+  width: 15px;
+  height: 15px;
+  object-fit: cover;
 }
 
 .card .card-info .card-info-header .card-publish-review {

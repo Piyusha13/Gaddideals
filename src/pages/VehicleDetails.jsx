@@ -48,13 +48,13 @@ import TapIcon from "../assets/tap-icon.png";
 import DonutChart from "react-donut-chart";
 
 // import Slider from 'react-rangeslider'
-import { Slider,Box } from "@material-ui/core";
+import { Slider, Box } from "@material-ui/core";
 // import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import { MuiThemeProvider } from 'material-ui';
- 
+
 // To include the default styles
 // import 'react-rangeslider/lib/index.css'
- 
+
 // Not using an ES6 transpiler
 // var Slider = require('react-rangeslider')
 
@@ -91,12 +91,12 @@ const VehicleDetails = () => {
   // const [volume,setvolume]=useState(0);
 
   //  function handleOnChange (value) {
-    // this.setState({
-    //   volume: value
-    // })
-    // setvolume(value);
+  // this.setState({
+  //   volume: value
+  // })
+  // setvolume(value);
   // }
-  
+
   // const muiTheme = getMuiTheme({
   //   slider: {
   //     trackColor: "yellow",
@@ -104,9 +104,9 @@ const VehicleDetails = () => {
   //   }
   // });
 
-function valuetext(value: number) {
-  return `${value}°C`;
-}
+  function valuetext(value: number) {
+    return `${value}°C`;
+  }
 
   const dealerType = [
     {
@@ -187,22 +187,23 @@ function valuetext(value: number) {
     }
   };
 
-  function getSingleUserInfo(){
+  function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
-    axios.get(Constant.getUrls.getSingleUser,{
-      headers: {
-        Authorization: ` Bearer ${user_token} `,
-      },
-    }).then((res)=>{
-      console.log(res);
-      // console.log(res.data.user);
-          setname(res.data.user.name);
-          setemail(res.data.user.email);
-          setmob_no(res.data.user.mob_no);
-          setBuyerInput(!BuyerInput);
-          // saveBuyer();
-    });
-
+    axios
+      .get(Constant.getUrls.getSingleUser, {
+        headers: {
+          Authorization: ` Bearer ${user_token} `,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // console.log(res.data.user);
+        setname(res.data.user.name);
+        setemail(res.data.user.email);
+        setmob_no(res.data.user.mob_no);
+        setBuyerInput(!BuyerInput);
+        // saveBuyer();
+      });
   }
 
   function saveBuyer() {
@@ -328,19 +329,17 @@ function valuetext(value: number) {
               <div className="emi-left-mid-div">
                 <div className="donut-graph">
                   <DonutChart
-                  className="donut-cotainer"
+                    className="donut-cotainer"
                     // height="300px"
                     // width="300px"
                     data={[
                       {
                         label: "Principal Loan Amount",
                         value: 25,
-                        
                       },
                       {
                         label: "Total Interest Payable",
                         value: 10,
-                        
                       },
                     ]}
                   />
@@ -378,28 +377,30 @@ function valuetext(value: number) {
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Loan Amount</div>
-                  <div className="la-price pla-price">₹{rupee_format(getvehicledetails?.selling_price)}</div>
+                  <div className="la-price pla-price">
+                    ₹{rupee_format(getvehicledetails?.selling_price)}
+                  </div>
                 </div>
                 <div className="range-slider">
-    <Box sx={{ width: 400 }}>
-    {/* <MuiThemeProvider muiTheme={muiTheme}> */}
-      <Slider
-        aria-label="Temperature"
-        defaultValue={getvehicledetails?.selling_price}
-        getAriaValueText={valuetext}
-        valueLabelDisplay="auto"
-        step={100000}
-        marks
-        min={0}
-        max={getvehicledetails?.selling_price}
-        color="red"
-      />
-      {/* </MuiThemeProvider> */}
-    </Box>
-
-
+                  <Box sx={{ width: 400 }}>
+                    {/* <MuiThemeProvider muiTheme={muiTheme}> */}
+                    <Slider
+                      aria-label="Temperature"
+                      defaultValue={getvehicledetails?.selling_price}
+                      getAriaValueText={valuetext}
+                      valueLabelDisplay="auto"
+                      step={100000}
+                      marks
+                      min={0}
+                      max={getvehicledetails?.selling_price}
+                      color="red"
+                    />
+                    {/* </MuiThemeProvider> */}
+                  </Box>
                 </div>
-                <div className="selected-la pla-price">₹{rupee_format(getvehicledetails?.selling_price)}</div>
+                <div className="selected-la pla-price">
+                  ₹{rupee_format(getvehicledetails?.selling_price)}
+                </div>
               </div>
               {/* down payment div */}
               <div className="la-div">
@@ -408,18 +409,18 @@ function valuetext(value: number) {
                   <div className="la-price pla-price">₹4,65,000</div>
                 </div>
                 <div className="range-slider">
-                <Box sx={{ width: 300 }}>
-      <Slider
-        aria-label="Temperature"
-        defaultValue={0}
-        getAriaValueText={valuetext}
-        valueLabelDisplay="auto"
-        step={100000}
-        marks
-        min={0}
-        max={getvehicledetails?.selling_price}
-      />
-    </Box>
+                  <Box sx={{ width: 300 }}>
+                    <Slider
+                      aria-label="Temperature"
+                      defaultValue={0}
+                      getAriaValueText={valuetext}
+                      valueLabelDisplay="auto"
+                      step={100000}
+                      marks
+                      min={0}
+                      max={getvehicledetails?.selling_price}
+                    />
+                  </Box>
                 </div>
                 <div className="selected-la pla-price">₹4,65,000</div>
               </div>
@@ -430,18 +431,18 @@ function valuetext(value: number) {
                   <div className="la-price pla-price">₹4,65,000</div>
                 </div>
                 <div className="range-slider">
-                <Box sx={{ width: 300 }}>
-      <Slider
-        aria-label="Temperature"
-        defaultValue={5}
-        getAriaValueText={valuetext}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={0}
-        max={5}
-      />
-    </Box>
+                  <Box sx={{ width: 300 }}>
+                    <Slider
+                      aria-label="Temperature"
+                      defaultValue={5}
+                      getAriaValueText={valuetext}
+                      valueLabelDisplay="auto"
+                      step={1}
+                      marks
+                      min={0}
+                      max={5}
+                    />
+                  </Box>
                 </div>
                 <div className="selected-la pla-price">₹4,65,000</div>
               </div>
@@ -805,7 +806,7 @@ function valuetext(value: number) {
 
                 <div className="selling-price-container">
                   <p>
-                    Selling Price{" "}
+                    Selling Price
                     <span>
                       ₹{rupee_format(getvehicledetails?.selling_price)}
                     </span>
@@ -817,9 +818,8 @@ function valuetext(value: number) {
                 <button
                   onClick={() => {
                     userToken
-                      ? 
-                      // setSellerDetails(!SellerDetails)
-                      getSingleUserInfo()
+                      ? // setSellerDetails(!SellerDetails)
+                        getSingleUserInfo()
                       : setBuyerInput(!BuyerInput);
                   }}
                 >
@@ -834,12 +834,13 @@ function valuetext(value: number) {
                   </p>
                 </div>
 
-                <p className="para">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui
-                  libero, dicta ex quod reprehenderit repellat optio nisi
-                  molestiae, dignissimos mollitia voluptates ipsa perspiciatis!
-                  Asperiores ipsam, at itaque ipsum esse beatae!
-                </p>
+                <div className="agree-terms">
+                  <input type="checkbox" checked />
+                  <span>
+                    agree to the terms and conditions of&nbsp;
+                    <strong>Gaddideals</strong>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
