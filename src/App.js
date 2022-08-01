@@ -72,10 +72,9 @@ function App() {
             }
           }
 
-          dispatch(setCurrentCity(city));
-
           if (!location.city) {
-            location["city"] = city || "Mumbai";
+            dispatch(setCurrentCity("Mumbai"));
+            location["city"] = "Mumbai";
             let prevUrl = queryString.stringify(location);
             navigate("?" + prevUrl);
           }

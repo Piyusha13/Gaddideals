@@ -700,6 +700,7 @@
   font-weight: 500;
   font-size: 14px;
   color: #505050;
+  text-transform: capitalize;
   margin-left: 3px;
 }
 .location-container .location img {
@@ -754,6 +755,7 @@
   font-size: 12px;
   margin: 0;
   cursor: pointer;
+  text-transform: capitalize;
 }
 .lang-overlay {
   position: absolute;

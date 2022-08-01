@@ -137,6 +137,10 @@ const Navbar = () => {
     loadGT(() => {
       // setdropdown(f)
     });
+
+    if (location.city) {
+      dispatch(setCurrentCity(location.city));
+    }
   }, []);
 
   const filterCities = cities.filter((city) =>
@@ -199,7 +203,7 @@ const Navbar = () => {
       }
     });
   }
-  //website  otp page 
+  //website  otp page
   function savePhoneOtp() {
     validateFeildsForOtp();
     console.log("otp verified");
@@ -326,7 +330,6 @@ const Navbar = () => {
     });
   }
 
-
   //wesite sign up page
   function setSignup() {
     validateFeilds();
@@ -346,28 +349,25 @@ const Navbar = () => {
       city: locationCity,
       password,
       confirm_password,
-      type:"",
-    social_token:"",
+      type: "",
+      social_token: "",
     };
     axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
       console.log("res", res);
 
-      //  if (password !== confirm_password) {
-      //    toast.error("password and confirm password doesn't match");
-      //  } 
-      //  else
+      if (password !== confirm_password) {
+        toast.error("password and confirm password doesn't match");
+      } else {
         if (res.data.status === "success") {
           toast.success(res.data.message);
           setmob_no(res.data.mob_no);
           setvisibleSignUp(false);
           // savePhoneOtp();
           setvisibleOTP(true);
-           }
-       else if (res.data.status === "failed") {
+        } else if (res.data.status === "failed") {
           toast.error(res.data.message);
         }
-      
-      
+      }
     });
   }
   //wesite resed otp
@@ -621,7 +621,6 @@ const Navbar = () => {
     setshowsignup(!showsignup);
     setshowSignIn(!showSignIn);
   };
-  
 
   //responsive sign in with email and password page
   function saveMobMailPassword() {
@@ -654,7 +653,7 @@ const Navbar = () => {
       toast.error("please enter valid mobile number");
     }
   };
-//for sign in page
+  //for sign in page
   const validateFeildsForSignIn = () => {
     let validateMobNo =
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
@@ -663,7 +662,7 @@ const Navbar = () => {
       toast.error("please enter valid mobile number");
     }
   };
-//for signup page
+  //for signup page
   const validateFeilds = () => {
     let validateName = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
     let validateMobNo =
@@ -1240,7 +1239,10 @@ const Navbar = () => {
                   className="signup-phone-no-input"
                   placeholder="Password "
                 />
-                <p className="password-guide">Password length must be more than 8 characters and less than 10 characters</p>
+                <p className="password-guide">
+                  Password length must be more than 8 characters and less than
+                  10 characters
+                </p>
                 <div className="SingupEyeIconDiv">
                   <input
                     onChange={(e) => {

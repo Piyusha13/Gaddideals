@@ -177,6 +177,7 @@ const SellerForm = () => {
     setEditVehicleObj(response.data.vehicle);
 
     if (response?.data?.vehicle) {
+      setVehicleID(response?.data?.vehicle?._id);
       setStateTitle(response?.data?.vehicle?.state);
       setCityTitle(response?.data?.vehicle?.city);
       setBrandTitle(response?.data?.vehicle?.brand?.title);
@@ -215,8 +216,6 @@ const SellerForm = () => {
       setSidePicRight(response?.data?.vehicle?.side_pic_vehicle[1]);
     }
   };
-
-  console.log(formData.insurancevalidity);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -328,20 +327,35 @@ const SellerForm = () => {
   ];
 
   const nextStep = () => {
+    let validateText = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    let validateModel = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
+    let validateVehicleNo =
+      /^[A-Z|a-z]{2}\s?[0-9]{1,2}\s?[A-Z|a-z]{0,3}\s?[0-9]{4}$/;
+
     if (step === 1) {
       if (stateTitle === "") {
         toast.error("State is required");
+      } else if (!validateText.test(stateTitle)) {
+        toast.error("Please enter valid state");
       } else if (cityTitle === "") {
         toast.error("City is required");
-      } else if (brandId === "") {
+      } else if (!validateText.test(cityTitle)) {
+        toast.error("Please enter valid city");
+      } else if (brandTitle === "") {
         toast.error("Vehicle brand is required");
-      } else if (modelId === "") {
+      } else if (!validateText.test(brandTitle)) {
+        toast.error("Please enter vaild brand name");
+      } else if (modelTitle === "") {
         toast.error("Vehicle model is required");
+      } else if (!validateModel.test(modelTitle)) {
+        toast.error("Please enter vaild model name");
       } else if (yearTitle === "") {
         toast.error("Year is required");
+      } else if (!validateVehicleNo.test(formData.vehiclenumber)) {
+        toast.error("Please enter vaild vehicle number");
       } else if (formData.vehiclenumber === "") {
         toast.error("Vehicle number is required");
-      } else if (fuel === "") {
+      } else if (fuelTitle === "") {
         toast.error("Fuel type is required");
       } else {
         setStep(step + 1);
@@ -392,15 +406,15 @@ const SellerForm = () => {
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
     fd.append("km_driven", formData.kmsdriven || 0);
-    fd.append("no_of_hrs", formData.noofhrs);
+    fd.append("no_of_hrs", formData.noofhrs || 0);
     fd.append("no_of_owner", owner.toLowerCase());
     fd.append("fuelType", fuel);
     fd.append("insurance", formData.insurancevalidity);
     fd.append("tax_validity", formData.taxvalidity);
     fd.append("vehicle_permit", permit.toLowerCase());
-    fd.append("no_of_tyre", formData.nooftyres);
-    fd.append("horse_power", formData.horsepower);
-    fd.append("no_of_seats", formData.noofseats);
+    fd.append("no_of_tyre", formData.nooftyres || 0);
+    fd.append("horse_power", formData.horsepower || 0);
+    fd.append("no_of_seats", formData.noofseats || 0);
     fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);
@@ -423,11 +437,64 @@ const SellerForm = () => {
 
     if (response.data.status === "success") {
       toast.success(response.data.message);
-      setVehicleID(response.data.vehicle._id);
       setSaveLoading(false);
     }
 
     console.log(response);
+  };
+
+  const handleUpdateData = async () => {
+    setSaveLoading(true);
+    let fd = new FormData();
+
+    fd.append("category", editVehicleObj?.category?._id);
+    fd.append("state", stateTitle);
+    fd.append("city", cityTitle);
+    fd.append("brand", brandId);
+    fd.append("model", modelId);
+    fd.append("years", year);
+    fd.append("reg_no", formData.vehiclenumber);
+    fd.append("km_driven", formData.kmsdriven || 0);
+    fd.append("no_of_hrs", formData.noofhrs || 0);
+    fd.append("no_of_owner", owner.toLowerCase());
+    fd.append("fuelType", fuel);
+    fd.append("insurance", formData.insurancevalidity);
+    fd.append("tax_validity", formData.taxvalidity);
+    fd.append("vehicle_permit", permit.toLowerCase());
+    fd.append("no_of_tyre", formData.nooftyres || 0);
+    fd.append("horse_power", formData.horsepower || 0);
+    fd.append("no_of_seats", formData.noofseats || 0);
+    fd.append("tyre_cond", tyreCondition.toLowerCase());
+    fd.append("selling_price", formData.pricingvehicle);
+    fd.append("fitness_certificate", formData.fitnesscertificate);
+    fd.append("bodyType", bodyTypeId);
+    fd.append("rc_document", rc.toLowerCase());
+    fd.append("engine_pic", engImage);
+    fd.append("front_side_pic", frontSideImg);
+    fd.append("back_side_pic", backSideImg);
+    fd.append("front_tyre", fronttyreLeftImg);
+    fd.append("front_tyre", fronttyreRightImg);
+    fd.append("side_pic_vehicle", sidePicLeft);
+    fd.append("side_pic_vehicle", sidePicRight);
+
+    const userToken = localStorage.getItem("Token");
+
+    const updateResponse = await axios.put(
+      Constant.getUrls.getAllVehicles + `/${editVehicleObj?._id}`,
+      fd,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+
+    if (updateResponse.data.status === "success") {
+      toast.success(updateResponse.data.message);
+      setSaveLoading(false);
+    }
+
+    console.log(updateResponse);
   };
 
   const handlePublishPostData = async () => {
@@ -445,23 +512,30 @@ const SellerForm = () => {
     fd.append("reg_no", formData.vehiclenumber);
     fd.append("km_driven", formData.kmsdriven || 0);
     fd.append("no_of_hrs", formData.noofhrs || 0);
-    fd.append("no_of_owner", owner);
+    fd.append("no_of_owner", owner.toLowerCase());
     fd.append("fuelType", fuel);
     fd.append("insurance", formData.insurancevalidity);
     fd.append("tax_validity", formData.taxvalidity);
-    fd.append("vehicle_permit", permit);
+    fd.append("vehicle_permit", permit.toLowerCase());
     fd.append("no_of_tyre", formData.nooftyres || 0);
     fd.append("horse_power", formData.horsepower || 0);
     fd.append("no_of_seats", formData.noofseats || 0);
-    fd.append("tyre_cond", tyreCondition);
+    fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
     fd.append("fitness_certificate", formData.fitnesscertificate);
     fd.append("bodyType", bodyTypeId);
-    fd.append("rc_document", rc);
+    fd.append("rc_document", rc.toLowerCase());
+    fd.append("engine_pic", engImage);
+    fd.append("front_side_pic", frontSideImg);
+    fd.append("back_side_pic", backSideImg);
+    fd.append("front_tyre", fronttyreLeftImg);
+    fd.append("front_tyre", fronttyreRightImg);
+    fd.append("side_pic_vehicle", sidePicLeft);
+    fd.append("side_pic_vehicle", sidePicRight);
     fd.append("status", "published");
 
-    const publishResponse = await axios.post(
-      Constant.getUrls.getAllVehicles,
+    const publishResponse = await axios.put(
+      Constant.getUrls.getAllVehicles + `/${editVehicleObj?._id}`,
       fd,
       {
         headers: {
@@ -632,11 +706,14 @@ const SellerForm = () => {
             stateTitle={stateTitle}
             cityTitle={cityTitle}
             bodyTypeTitle={bodyTypeTitle}
+            saveLoading={saveLoading}
             setStep={setStep}
+            vehicleID={vehicleID}
             categoryTractorTitle={categoryTractorTitle}
             caetgoryBusTitle={caetgoryBusTitle}
             pubLoading={pubLoading}
             documentEngImg={documentEngImg}
+            handleUpdateData={handleUpdateData}
             documentFrontSideImg={documentFrontSideImg}
             documentBackSideImg={documentBackSideImg}
             documentFronttyreLeft={documentFronttyreLeft}

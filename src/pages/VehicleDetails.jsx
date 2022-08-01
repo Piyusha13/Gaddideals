@@ -75,6 +75,7 @@ const VehicleDetails = () => {
 
   const [imageArray, setImageArray] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [mobThumbsSwiper, setMobThumbsSwiper] = useState(null);
 
   const [loadingDetails, setLoadingDetails] = useState(false);
 
@@ -737,6 +738,32 @@ const VehicleDetails = () => {
                       ? thumbsSwiper
                       : null,
                 }}
+                on
+                spaceBetween={10}
+                navigation={true}
+                grabCursor={true}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="vehicles-swiper-container"
+              >
+                {imageArray.map((thumbsImage, index) => (
+                  <SwiperSlide key={index}>
+                    <img src={`${imgurl}${thumbsImage}`} alt="truck" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Mob Vehicle Thumbnail */}
+            <div className="mob-vehicle-thumbnail">
+              <Swiper
+                loop={true}
+                thumbs={{
+                  swiper:
+                    mobThumbsSwiper && !mobThumbsSwiper.destroyed
+                      ? mobThumbsSwiper
+                      : null,
+                }}
+                on
                 spaceBetween={10}
                 navigation={true}
                 grabCursor={true}
@@ -754,10 +781,11 @@ const VehicleDetails = () => {
             {/* mob vehicle gallery */}
             <div className="mob-vehicle-gallery-container">
               <Swiper
+                onSwiper={setMobThumbsSwiper}
                 loop={true}
                 navigation={true}
                 spaceBetween={10}
-                slidesPerView={5}
+                slidesPerView={4}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="vehicles-thumbs-swiper"

@@ -24,6 +24,7 @@ const SellerPreviewDetails = ({
   sidePicRight,
   handlePostData,
   handlePublishPostData,
+  handleUpdateData,
   modelTitle,
   yearTitle,
   setStep,
@@ -39,6 +40,7 @@ const SellerPreviewDetails = ({
   documentFronttyreRight,
   documentSidePicLeft,
   documentSidePicRight,
+  vehicleID,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -359,9 +361,15 @@ const SellerPreviewDetails = ({
               <button className="edit" onClick={() => setStep(1)}>
                 Edit
               </button>
-              <button onClick={handlePostData} className="save">
-                {saveLoading ? "Saving..." : "Save Now"}
-              </button>
+              {vehicleID ? (
+                <button onClick={handleUpdateData} className="save">
+                  {saveLoading ? "Updating..." : "Update"}
+                </button>
+              ) : (
+                <button onClick={handlePostData} className="save">
+                  {saveLoading ? "Saving..." : "Save Now"}
+                </button>
+              )}
               <button onClick={handlePublishPostData}>
                 {pubLoading ? "Publishing..." : "Publish"}
               </button>

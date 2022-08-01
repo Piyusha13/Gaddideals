@@ -173,7 +173,7 @@ const SellerFormRegistration = ({
                 <div className="form-register-controls">
                   <label htmlFor="horsepower">Horse Power</label>
                   <input
-                    type="text"
+                    type="number"
                     value={formData.horsepower}
                     name="horsepower"
                     onChange={handleOnChange}
@@ -184,7 +184,7 @@ const SellerFormRegistration = ({
                 <div className="form-register-controls">
                   <label htmlFor="noofseats">Number of seats</label>
                   <input
-                    type="text"
+                    type="number"
                     value={formData.noofseats}
                     name="noofseats"
                     onChange={handleOnChange}

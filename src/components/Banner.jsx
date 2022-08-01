@@ -33,7 +33,9 @@ const Banner = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await axios.get(Constant.getUrls.getAllBanners);
+      const response = await axios.get(
+        Constant.getUrls.getAllBanners + "?sort=true&status=active"
+      );
       setBannerData(response.data.banner.docs);
       setIsLoading(false);
     };
@@ -69,7 +71,7 @@ const Banner = () => {
                   onClick={() => {
                     setIsCategoryActive(index);
                     if (!userToken) {
-                      toast.error("Login First !");
+                      toast.error("Please Login First");
                     } else {
                       navigate(`/sellerform/${category._id}`);
                     }
@@ -123,7 +125,7 @@ const Banner = () => {
         grabCursor={true}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         modules={[Pagination, Autoplay]}
@@ -135,7 +137,7 @@ const Banner = () => {
                 <h1>{banner.title}</h1>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: banner.description.substring(0, 100),
+                    __html: banner.description,
                   }}
                 ></p>
               </div>
