@@ -51,22 +51,24 @@ function UserVehicles() {
   // const [array,setarray]=useState("");
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
+  const [Seller,setSeller]=useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   //for vehicle data
   const getMyVehicleDetails = async () => {
     await axios
-      .get("https://gaddideals.brokerinvoice.co.in/api/vehicle/my_vehicles", {
+      .get("https://gaddideals.brokerinvoice.co.in/api/enquiries/my_enquiries", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
-        setvehicleData(res.data.getMyVehicle);
-        console.log(res.data.getMyVehicle);
-        res.data.getMyVehicle.forEach((item, index) => {
-          setvehicleName(item.model);
+        setvehicleData(res.data.getMyEnquiries);
+        console.log(res.data.getMyEnquiries);
+        res.data.getMyEnquiries.forEach((item, index) => {
+          setvehicleName(item.vehicle_id.model);
           setdataAvailable(true);
-          console.log(item.model);
+          console.log(item.vehicle_id.model);
+          setSeller(item.seller_id)
         });
       });
   };
@@ -167,50 +169,39 @@ function UserVehicles() {
                       <div className="card-info">
                         <div className="card-info-header">
                           <div className="card-info-title">
-                            <h1>{item.model.name}</h1>
+                            <h1>{vehicleName.name}</h1>
                             <div className="location">
                               <img src={locationIcon} alt="location icon" />
                               {/* fetching city name  */}
                               <span>{item.city.substring(0, 10)}</span>
                             </div>
                           </div>
-                          <div className="card-publish-review">
+                          {/* <div className="card-publish-review">
                             <div className="review">
                               <strong>Under Review</strong>
                             </div>
                             <span>(Uploaded on Jun 01,2022)</span>
-                          </div>
+                          </div> */}
+                          <div className="card-price">
+                          <h3>₹{item.vehicle_id.selling_price} </h3>
                         </div>
-                        <div className="card-price">
-                          <h3>₹{item.selling_price} </h3>
                         </div>
-                        <div className="card-stats">
+
+                        
+                        <div className="seller-details-container">
                           <div className="stat">
-                            <span>{item.km_driven} km</span>
+                            <span><span className="text-color-blue">Name - </span>{Seller.name} </span>
                           </div>
                           <div className="stat">
-                            <span>{item.no_of_owner} Owner</span>
+                            <span><span className="text-color-blue">Phone Number - </span>{Seller.mob_no} </span>
                           </div>
                           <div className="stat">
-                            <span>{item.no_of_tyre} tyres </span>
+                            <span><span className="text-color-blue">Email - </span>{Seller.email}  </span>
                           </div>
                         </div>
                       </div>
                     </div>
-                    {/* <div className="card-btns">
-                      <button>Book for Inspection</button>
-                      <button
-                        onClick={() => navigate(`/sellerform/${item._id}`)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="del-btn"
-                        onClick={() => handleVehicleDelete(item._id)}
-                      >
-                        Delete
-                      </button>
-                    </div> */}
+                   
                   </div>
                 ))}
               </div>

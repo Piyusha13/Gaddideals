@@ -49,14 +49,25 @@ import DonutChart from "react-donut-chart";
 
 // import Slider from 'react-rangeslider'
 import { Slider, Box } from "@material-ui/core";
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
-// import { MuiThemeProvider } from 'material-ui';
+import { withStyles } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import { Pie } from "react-chartjs-2";
+import {Chart, ArcElement} from 'chart.js'
+Chart.register(ArcElement);
 
-// To include the default styles
-// import 'react-rangeslider/lib/index.css'
-
-// Not using an ES6 transpiler
-// var Slider = require('react-rangeslider')
+const PrettoSlider = withStyles({
+  root: { color: "#050F56", height: 10 },
+  thumb: {
+    height: 15,
+    width: 15,
+    backgroundColor: "#050F56",
+    border: "none",
+    marginTop: -5,
+    marginLeft: -9,
+  },
+  track: { height: 5, borderRadius: 7 },
+  rail: { height: 5, borderRadius: 7 },
+})(Slider);
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -72,7 +83,7 @@ const VehicleDetails = () => {
   const [BuyerInput, setBuyerInput] = useState(false);
   const [BuyerOtp, setBuyerOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  const [SellerDetails, setSellerDetails] = useState("");
+  const [SellerDetails, setSellerDetails] = useState(false);
 
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
 
@@ -82,12 +93,33 @@ const VehicleDetails = () => {
   const [city, setcity] = useState("");
   const [user_type, setuser_type] = useState("");
   const [isTypeActive, setIsTypeActive] = useState();
-  const [seller_id, setseller_id] = useState("");
+  const [vehicleId, setvehicleId] = useState("");
   const [seller, setSeller] = useState("");
 
   const locationCity = useSelector(selectLocation);
 
+  const [editableIntrest,seteditableIntrest]=useState(true);
   const [EmiModal, setEmiModal] = useState(false);
+  const [downPayment,setdownPayment]=useState(50000);
+  const maxValue = getvehicledetails?.selling_price - 50000;
+  const initialPAmount=getvehicledetails?.selling_price - 50000;
+  const [pAmount, setpAmount] = useState(90000); //loan priciple amount
+  const [interest, setinterest] = useState(15);
+  const [duration, setDuration] = useState(147);
+  // const maxValue = getvehicledetails?.selling_price - downPayment;
+  const intMax = 20; //maximum intrest
+  const maxDuration = 360;
+
+  const intr = interest / 1200;
+  const emi = duration
+    ? Math.round((pAmount * intr) / (1 - Math.pow(1 / (1 + intr), duration)))
+    : 0;
+  const totalAmt = duration * emi;
+  var TotalAmountOfCredit = Math.round(
+    (emi / intr) * (1 - Math.pow(1 + intr, -duration))
+  );
+  const TotalAmountOfIntrest = Math.round(totalAmt - TotalAmountOfCredit);
+
   // const [volume,setvolume]=useState(0);
 
   //  function handleOnChange (value) {
@@ -147,7 +179,8 @@ const VehicleDetails = () => {
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
       setCheckCategory(res.data?.vehicle?.category?.title);
-      setseller_id(res.data?.vehicle?.user?._id);
+      setvehicleId(res.data?.vehicle?._id);
+      console.log(res.data?.vehicle?._id);
       setSeller(res.data?.vehicle?.user);
 
       let frontBackArr = [];
@@ -187,6 +220,7 @@ const VehicleDetails = () => {
     }
   };
 
+  //fetcing sigle user info if user is logged-in
   function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
     axios
@@ -201,14 +235,15 @@ const VehicleDetails = () => {
         setname(res.data.user.name);
         setemail(res.data.user.email);
         setmob_no(res.data.user.mob_no);
-        setBuyerInput(!BuyerInput);
+        setBuyerInput(!BuyerInput); //displaying buyer input detail screen
         // saveBuyer();
       });
   }
 
-  function saveBuyer() {
+  //enquri api hit => otp sent to mob no.
+  async function enquiryApi() {
     let payload = {
-      seller_id,
+      vehicleId,
       name,
       email,
       mob_no,
@@ -216,17 +251,22 @@ const VehicleDetails = () => {
       city: locationCity,
       hash: "ekxpmAB8m9v",
     };
-    axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
+    await axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
+      console.log(result.data);
       if (result.data.status === "failed") {
+        console.log(result.data);
         toast.error(result.data.message);
       } else {
         if (result.data.status === "success") {
+          console.log(result.data);
           toast.success(result.data.message);
+          setBuyerInput(!BuyerInput); //closing buyer input screen
+          setBuyerOtp(!BuyerOtp); //displaying otp screen
           // setvisibleOTP(!visibleOTP);
           // setmob_no(mob_no);
-          setSellerDetails(!SellerDetails);
+          // setSellerDetails(!SellerDetails); //displaying seller details
           // setOtp(otp);
-          setBuyerOtp(!BuyerOtp);
+          // setBuyerOtp(!BuyerOtp);
           // setCounter(59);
         }
       }
@@ -262,19 +302,40 @@ const VehicleDetails = () => {
     console.log(otp);
   }
 
-  function savePhoneOtp() {
+  //signup otp verify
+  function signUpVeryfyOtp(){
     console.log("otp verified");
     console.warn({ mob_no, otp });
     let payload = { mob_no, otp };
     axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
       console.log(res);
 
+      // if (res.data.status === "failed") {
+        // toast.error("incorrect otp");
+      // } else if (res.data.status === "Success") {
+        // toast.success(res.data.message);
+        // setBuyerOtp(!BuyerOtp); //closingotp screen
+        // setSellerDetails(!SellerDetails); //displaing seller details
+        // saveBuyer();
+      // }
+    });
+  }
+
+  //enquiry otp verify
+  function enquiryVerifyOtp() {
+    console.log("otp verified");
+    console.warn({ mob_no, otp });
+    let payload = { mob_no, otp };
+    axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
+      console.log(res);
+
       if (res.data.status === "failed") {
         toast.error("incorrect otp");
       } else if (res.data.status === "Success") {
         toast.success(res.data.message);
-        // setSellerDetails(!SellerDetails);
-        setBuyerOtp(!BuyerOtp);
+        setBuyerOtp(!BuyerOtp); //closingotp screen
+        setSellerDetails(!SellerDetails); //displaing seller details
+        // saveBuyer();
       }
     });
   }
@@ -313,7 +374,7 @@ const VehicleDetails = () => {
       {EmiModal && (
         <Modal
           visible={EmiModal}
-          width={matches ? "85%" : "aotu"}
+          width={matches ? "85%" : "auto"}
           effect="fadeInUp"
           onClickAway={() => {
             setEmiModal(!EmiModal);
@@ -323,36 +384,31 @@ const VehicleDetails = () => {
             <div className="emi-left-side-div">
               <div className="emi-left-top-div">
                 <p>
-                  <span className="selling-price"> ₹4,65,000 </span> per month
+                  <span className="selling-price"> ₹{emi} </span> per month
                 </p>
               </div>
               <div className="emi-left-mid-div">
                 <div className="donut-graph">
-                  <DonutChart
-                    className="donut-cotainer"
-                    // height="300px"
-                    // width="300px"
-                    data={[
-                      {
-                        label: "Principal Loan Amount",
-                        value: 25,
-                      },
-                      {
-                        label: "Total Interest Payable",
-                        value: 10,
-                      },
-                    ]}
+                  
+                  <Pie
+                  data={{
+                    labels:['total interest', 'Total Amount'],
+                    datasets:[{
+                      data:[pAmount,TotalAmountOfIntrest],
+                      backgroundColor:['#CAF0FF','#050F56']
+                    }]
+                  }}
                   />
-                  ;
+
                 </div>
                 <div className="pla-div">
-                  <div className="pla-text">Principal Loan Amount</div>
-                  <div className="pla-price"> ₹4,65,000</div>
+                  <div className="pla-text"><span className="cir1"></span>Principal Loan Amount</div>
+                  <div className="pla-price"> ₹{pAmount}</div>
                 </div>
                 {/* total interest payable div */}
                 <div className="pla-div">
-                  <div className="pla-text">Total Interest Payable</div>
-                  <div className="pla-price">₹4,65,000</div>
+                  <div className="pla-text"><span className="cir2"></span>Total Interest Payable</div>
+                  <div className="pla-price">₹{TotalAmountOfIntrest}</div>
                 </div>
               </div>
 
@@ -361,7 +417,7 @@ const VehicleDetails = () => {
                   <img src={TapIcon} alt="" />
                   Total Amount Payable
                 </div>
-                <div className="pla-price">₹4,65,000</div>
+                <div className="pla-price">₹{totalAmt} </div>
               </div>
             </div>
             {/* <div className="verticle-hr"></div> */}
@@ -382,25 +438,19 @@ const VehicleDetails = () => {
                   </div>
                 </div>
                 <div className="range-slider">
-                  <Box sx={{ width: 400 }}>
-                    {/* <MuiThemeProvider muiTheme={muiTheme}> */}
-                    <Slider
-                      aria-label="Temperature"
-                      defaultValue={getvehicledetails?.selling_price}
-                      getAriaValueText={valuetext}
-                      valueLabelDisplay="auto"
-                      step={100000}
-                      marks
-                      min={0}
-                      max={getvehicledetails?.selling_price}
-                      color="red"
-                    />
-                    {/* </MuiThemeProvider> */}
-                  </Box>
+                  {/* slider 1 */}
+                  {/* <Typography gutterBottom>Loan Amount</Typography> */}
+                  <PrettoSlider
+                    value={pAmount}
+                    onChange={(event, vAmt) => {
+                      setpAmount(vAmt);
+                      // setdownPayment(downPayment-vAmt);
+                    }}
+                    defaultValue={initialPAmount}
+                    max={maxValue}
+                  />
                 </div>
-                <div className="selected-la pla-price">
-                  ₹{rupee_format(getvehicledetails?.selling_price)}
-                </div>
+                <div className="selected-la pla-price">{pAmount}</div>
               </div>
               {/* down payment div */}
               <div className="la-div">
@@ -409,54 +459,62 @@ const VehicleDetails = () => {
                   <div className="la-price pla-price">₹4,65,000</div>
                 </div>
                 <div className="range-slider">
-                  <Box sx={{ width: 300 }}>
-                    <Slider
-                      aria-label="Temperature"
-                      defaultValue={0}
-                      getAriaValueText={valuetext}
-                      valueLabelDisplay="auto"
-                      step={100000}
-                      marks
-                      min={0}
-                      max={getvehicledetails?.selling_price}
-                    />
-                  </Box>
+                  {/* slider 2 */}
+                  {/* <Typography gutterBottom>Interest Rate</Typography> */}
+                  <PrettoSlider
+                    value={downPayment}
+                    onChange={(event, vInt) => {
+                      setdownPayment(vInt);
+                      
+                      // setpAmount(pAmount-vInt);
+                    }}
+                    defaultValue={downPayment}
+                    min={50000}
+                    max={getvehicledetails?.selling_price}
+                  />
                 </div>
-                <div className="selected-la pla-price">₹4,65,000</div>
+                <div className="selected-la pla-price">₹{downPayment}</div>
               </div>
               {/* loan duration div */}
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Duration of loan</div>
-                  <div className="la-price pla-price">₹4,65,000</div>
+                  <div className="la-price pla-price">{duration} months</div>
                 </div>
                 <div className="range-slider">
-                  <Box sx={{ width: 300 }}>
-                    <Slider
-                      aria-label="Temperature"
-                      defaultValue={5}
-                      getAriaValueText={valuetext}
-                      valueLabelDisplay="auto"
-                      step={1}
-                      marks
-                      min={0}
-                      max={5}
-                    />
-                  </Box>
+                  {/* slider 3 */}
+                  {/* <Typography gutterBottom>Duration</Typography> */}
+                  <PrettoSlider
+                    value={duration}
+                    onChange={(event, vDur) => {
+                      setDuration(vDur);
+                    }}
+                    defaultValue={duration}
+                    max={maxDuration}
+                  />
                 </div>
-                <div className="selected-la pla-price">₹4,65,000</div>
+                <div className="selected-la pla-price">{duration} </div>
               </div>
               {/* interest rate div */}
               <div className="ir-div">
                 <div className="ir-text"> Interest Rate*</div>
                 <div className="ir-number-div">
-                  <div className="ir-percent">12.5%</div>
+                  <span className="percent-symbol">
+                  <input
+                   readOnly={editableIntrest}
+                  type="number" min="0" max="20"
+                  className="ir-percent"
+                    value={interest}
+                    onChange={(event) => {
+                      setinterest(event.target.value);
+                    }}
+                  />%</span>
                   {/* <div className="edit-img"> */}
-                  <img src={Edit} alt="" />
+                  <img src={Edit} alt="" onClick={()=>{seteditableIntrest(false);}} />
                   {/* </div> */}
                 </div>
               </div>
-              <button>CHECK ELIGIBILITY</button>
+              {/* <button>CHECK ELIGIBILITY</button> */}
             </div>
           </div>
         </Modal>
@@ -541,10 +599,11 @@ const VehicleDetails = () => {
 
               <button
                 onClick={() => {
+                  enquiryApi(); //posting data into enquiry api
                   // saveBuyer();
-                  setBuyerInput(!BuyerInput);
-                  verifyOtp();
-                  setBuyerOtp(!BuyerOtp);
+                  // verifyOtp(); //sending otp using phone no. 
+                  // setBuyerInput(!BuyerInput); //closing input screen
+                  // setBuyerOtp(!BuyerOtp); //displaying otp screen
                 }}
               >
                 Get Contact Details
@@ -606,8 +665,11 @@ const VehicleDetails = () => {
               </div>
               <button
                 onClick={() => {
-                  savePhoneOtp();
-                  saveBuyer();
+                  
+                  userToken
+                      ?
+                  enquiryVerifyOtp() //verify enquiry otp
+                  :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
                 }}
               >
                 Verify

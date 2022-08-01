@@ -115,7 +115,7 @@ function UserVehicles() {
               </div>
               <div className="my-order-div">
                 <img className="clipboard-img" src={clipboard} alt=""></img>
-                <Link to="" className="my-order-text">
+                <Link to="/Userorder" className="my-order-text">
                   <span>My Enquiries</span>
                 </Link>
                 <Link to="/Userorder">

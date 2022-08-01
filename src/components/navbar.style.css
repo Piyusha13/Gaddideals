@@ -351,9 +351,9 @@
   .sm-device{
     display: none !important;
   } */
-  .location-container {
+  /* .location-container {
     display: none !important;
-  }
+  } */
   .mob-resp-mail-signin {
     width: 70px !important;
     height: 70px !important;
@@ -1371,3 +1371,9 @@ a {
   font-size: 16px;
   color: #4A4A4A;
 } */
+.password-guide{
+  color: #969696;
+  align-self: flex-end;
+  margin-top: -10px;
+  font-size:xx-small;
+}

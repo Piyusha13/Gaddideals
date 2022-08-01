@@ -346,25 +346,27 @@ const Navbar = () => {
       city: locationCity,
       password,
       confirm_password,
+      type:"",
+    social_token:"",
     };
     axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
       console.log("res", res);
 
-       if (password !== confirm_password) {
-         toast.error("password and confirm password doesn't match");
-       } 
-       else
-       { if (res.data.status === "success") {
+      //  if (password !== confirm_password) {
+      //    toast.error("password and confirm password doesn't match");
+      //  } 
+      //  else
+        if (res.data.status === "success") {
           toast.success(res.data.message);
-          setvisibleSignUp(false);
           setmob_no(res.data.mob_no);
-          savePhoneOtp();
+          setvisibleSignUp(false);
+          // savePhoneOtp();
           setvisibleOTP(true);
            }
        else if (res.data.status === "failed") {
           toast.error(res.data.message);
         }
-      }
+      
       
     });
   }
@@ -560,7 +562,7 @@ const Navbar = () => {
 
   // for google sign-in
   gapi.load("client:auth2", () => {
-    gapi.client.init({
+    gapi.auth2.init({
       clientId:
         "863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com",
       plugin_name: "sign in",
@@ -1238,7 +1240,7 @@ const Navbar = () => {
                   className="signup-phone-no-input"
                   placeholder="Password "
                 />
-
+                <p className="password-guide">Password length must be more than 8 characters and less than 10 characters</p>
                 <div className="SingupEyeIconDiv">
                   <input
                     onChange={(e) => {
