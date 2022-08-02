@@ -6,7 +6,7 @@ import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import FAQToggle from "../components/FAQToggle";
 import Footer from "../components/Footer";
-import Constant from "../constants";
+import Constant, { imgurl } from "../constants";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper";
@@ -19,6 +19,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 // import girlImage from "../assets/girl_image.png";
 import locationIcon from "../assets/location-home.png";
 import truckHomeImage from "../assets/truck-home.png";
+import imgPlaceholder from "../assets/img-not-available.jpg";
 
 import "./sellerhomepage.style.css";
 
@@ -229,57 +230,58 @@ const SellerHomePage = () => {
 
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
-      return(false)
+      return false;
     }
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
-      return(false)
+      return false;
     }
     if (!validateEmail.test(email)) {
       toast.error("please enter valid email id");
-      return(false)
+      return false;
     }
-    if(user_type===""){
+    if (user_type === "") {
       toast.error("please select user type");
-      return(false)
+      return false;
     }
-    return(true)
+    return true;
   };
 
   async function enquiryApi() {
     let user_token = localStorage.getItem("Token");
 
-    if(validateFields()){
-
-    let payload = {
-      vehicleId:seller_id,
-      name,
-      email,
-      mob_no,
-      user_type,
-      city: locationCity,
-      hash: "ekxpmAB8m9v",
-    };
-    await axios.post(Constant.postUrls.postAllEnquiries, payload,{
-      headers: {
-     Authorization: ` Bearer ${user_token} `,
-   },}).then((result) => {
-      console.log(result.data);
-      if (result.data.status === "failed") {
-        console.log(result.data);
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
+    if (validateFields()) {
+      let payload = {
+        vehicleId: seller_id,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city: locationCity,
+        hash: "ekxpmAB8m9v",
+      };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
+        .then((result) => {
           console.log(result.data);
-          // toast.success(result.data.message);
-          setBuyerInput(!BuyerInput); //closing buyer input screen
-          setBuyerOtp(!BuyerOtp); //displaying otp screen
-        }
-      }
-    });
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+            }
+          }
+        });
+    }
   }
-  }
-
 
   function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
@@ -299,7 +301,6 @@ const SellerHomePage = () => {
         // saveBuyer();
       });
   }
-
 
   //saveBuyer
   const saveBuyer = async () => {
@@ -405,23 +406,21 @@ const SellerHomePage = () => {
 
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
-      return(false)
-    }
-    else{
-      return(true)
+      return false;
+    } else {
+      return true;
     }
   };
 
-
-    //enquiry otp verify
-    function enquiryVerifyOtp() {
-      if(ValidateMobileNo()){
+  //enquiry otp verify
+  function enquiryVerifyOtp() {
+    if (ValidateMobileNo()) {
       console.log("otp verified");
       console.warn({ mob_no, otp });
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
         console.log(res);
-  
+
         if (res.data.status === "failed") {
           toast.error("incorrect otp");
         } else if (res.data.status === "Success") {
@@ -432,29 +431,28 @@ const SellerHomePage = () => {
         }
       });
     }
-    }
+  }
 
-    //signup otp verify
-  function signUpVeryfyOtp(){
-    if(ValidateMobileNo()){
-    console.log("otp verified");
-    console.warn({ mob_no, otp });
-    let payload = { mob_no, otp };
-    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
-      console.log(res);
+  //signup otp verify
+  function signUpVeryfyOtp() {
+    if (ValidateMobileNo()) {
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+        console.log(res);
 
-      // if (res.data.status === "failed") {
+        // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
-      // } else if (res.data.status === "Success") {
+        // } else if (res.data.status === "Success") {
         // toast.success(res.data.message);
         // setBuyerOtp(!BuyerOtp); //closingotp screen
         // setSellerDetails(!SellerDetails); //displaing seller details
         // saveBuyer();
-      // }
-    });
+        // }
+      });
+    }
   }
-  }
-
 
   function resendotp() {
     console.warn({ mob_no });
@@ -633,7 +631,6 @@ const SellerHomePage = () => {
               <button
                 onClick={() => {
                   enquiryApi(); //posting data into enquiry api
-                  
                 }}
               >
                 Get Contact Details
@@ -696,9 +693,9 @@ const SellerHomePage = () => {
               <button
                 onClick={() => {
                   userToken
-                      ?
-                  enquiryVerifyOtp() //verify enquiry otp
-                  :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
+                    ? enquiryVerifyOtp() //verify enquiry otp
+                    : enquiryVerifyOtp();
+                  signUpVeryfyOtp(); //hitting both api
                 }}
               >
                 Verify
@@ -854,7 +851,11 @@ const SellerHomePage = () => {
                       <Link to={`/vehicledetails/${latestTruck._id}`}>
                         <div className="latest-img-wrapper">
                           <img
-                            src={`https://gaddideals.brokerinvoice.co.in${latestTruck.front_side_pic}`}
+                            src={
+                              latestTruck.front_side_pic
+                                ? `${imgurl}${latestTruck.front_side_pic}`
+                                : ` ${imgPlaceholder}`
+                            }
                             alt={latestTruck?.brand?.title}
                           />
                         </div>
@@ -865,7 +866,7 @@ const SellerHomePage = () => {
                             <h5>{latestTruck?.brand?.title}</h5>
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
-                              <span>{latestTruck.city}</span>
+                              <span>{latestTruck.city.title}</span>
                             </div>
                           </div>
                           <p>₹ {rupee_format(latestTruck.selling_price)}</p>
@@ -873,12 +874,11 @@ const SellerHomePage = () => {
 
                         <button
                           onClick={() => {
-                           
                             setUserObj(latestTruck.user);
                             setseller_id(latestTruck._id);
-                            
+
                             if (userToken) {
-                              getSingleUserInfo()
+                              getSingleUserInfo();
                             } else {
                               setBuyerInput(!BuyerInput);
                             }
@@ -921,7 +921,11 @@ const SellerHomePage = () => {
                       <Link to={`/vehicledetails/${latestBuses._id}`}>
                         <div className="latest-img-wrapper">
                           <img
-                            src={`https://gaddideals.brokerinvoice.co.in${latestBuses.front_side_pic}`}
+                            src={
+                              latestBuses.front_side_pic
+                                ? `${imgurl}${latestBuses.front_side_pic}`
+                                : ` ${imgPlaceholder}`
+                            }
                             alt={latestBuses?.brand?.title}
                           />
                         </div>
@@ -933,7 +937,7 @@ const SellerHomePage = () => {
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
-                              <span>{latestBuses.city}</span>
+                              <span>{latestBuses.city.title}</span>
                             </div>
                           </div>
                           <p>₹ {rupee_format(latestBuses.selling_price)}</p>
@@ -989,7 +993,11 @@ const SellerHomePage = () => {
                       <Link to={`/vehicledetails/${latestTractor._id}`}>
                         <div className="latest-img-wrapper">
                           <img
-                            src={`https://gaddideals.brokerinvoice.co.in${latestTractor.front_side_pic}`}
+                            src={
+                              latestTractor.front_side_pic
+                                ? `${imgurl}${latestTractor.front_side_pic}`
+                                : ` ${imgPlaceholder}`
+                            }
                             alt={latestTractor?.brand?.title}
                           />
                         </div>
@@ -1001,7 +1009,7 @@ const SellerHomePage = () => {
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
-                              <span>{latestTractor.city}</span>
+                              <span>{latestTractor.city.title}</span>
                             </div>
                           </div>
                           <p>₹ {rupee_format(latestTractor.selling_price)}</p>
@@ -1057,7 +1065,11 @@ const SellerHomePage = () => {
                       <Link to={`/vehicledetails/${latestConstruction._id}`}>
                         <div className="latest-img-wrapper">
                           <img
-                            src={`https://gaddideals.brokerinvoice.co.in${latestConstruction.front_side_pic}`}
+                            src={
+                              latestConstruction.front_side_pic
+                                ? `${imgurl}${latestConstruction.front_side_pic}`
+                                : ` ${imgPlaceholder}`
+                            }
                             alt={latestConstruction?.brand?.title}
                           />
                         </div>
@@ -1069,7 +1081,7 @@ const SellerHomePage = () => {
 
                             <div className="latest-location">
                               <img src={locationIcon} alt="location icon" />
-                              <span>{latestConstruction.city}</span>
+                              <span>{latestConstruction.city.title}</span>
                             </div>
                           </div>
                           <p>
@@ -1113,7 +1125,7 @@ const SellerHomePage = () => {
               <div className="our-category" key={category._id}>
                 <a href={"/vehiclelistings?category=" + category._id}>
                   <img
-                    src={`https://gaddideals.brokerinvoice.co.in${category.image}`}
+                    src={`${imgurl}${category.image}`}
                     alt={category?.title}
                   />
                 </a>
@@ -1169,7 +1181,7 @@ const SellerHomePage = () => {
                 <div className="customer-card">
                   <div className="profile-img">
                     <img
-                      src={`https://gaddideals.brokerinvoice.co.in${testimonial.image}`}
+                      src={`${imgurl}${testimonial.image}`}
                       alt={testimonial?.title}
                     />
                   </div>
@@ -1230,10 +1242,7 @@ const SellerHomePage = () => {
             {brandsData.map((brand) => (
               <SwiperSlide key={brand._id} className="brands-swiper-slide">
                 <div className="brand-wrapper">
-                  <img
-                    src={`https://gaddideals.brokerinvoice.co.in${brand.image}`}
-                    alt={brand?.title}
-                  />
+                  <img src={`${imgurl}${brand.image}`} alt={brand?.title} />
                 </div>
               </SwiperSlide>
             ))}
@@ -1268,10 +1277,7 @@ const SellerHomePage = () => {
           {filterAdvertisementBuyer.map((advertise) => (
             <SwiperSlide key={advertise._id} className="advertise-slide">
               <div className="image-wrapper">
-                <img
-                  src={`https://gaddideals.brokerinvoice.co.in${advertise.image}`}
-                  alt="truck"
-                />
+                <img src={`${imgurl}${advertise.image}`} alt="truck" />
               </div>
             </SwiperSlide>
           ))}

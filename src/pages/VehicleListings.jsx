@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
 import { imgurl } from "../constants";
+import imgPlaceholder from "../assets/img-not-available.jpg";
 
 import "./vehiclelistings.style.css";
 // import img1 from "../assets/img-1.jpg";
@@ -217,25 +218,25 @@ const VehicleListings = () => {
     });
   }
 
-   //enquiry otp verify
-   function enquiryVerifyOtp() {
-    if(ValidateMobileNo()){
-    console.log("otp verified");
-    console.warn({ mob_no, otp });
-    let payload = { mob_no, otp };
-    axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
-      console.log(res);
+  //enquiry otp verify
+  function enquiryVerifyOtp() {
+    if (ValidateMobileNo()) {
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
+        console.log(res);
 
-      if (res.data.status === "failed") {
-        toast.error("incorrect otp");
-      } else if (res.data.status === "Success") {
-        toast.success(res.data.message);
-        setBuyerOtp(!BuyerOtp); //closingotp screen
-        setSellerDetails(!SellerDetails); //displaing seller details
-        // saveBuyer();
-      }
-    });
-  }
+        if (res.data.status === "failed") {
+          toast.error("incorrect otp");
+        } else if (res.data.status === "Success") {
+          toast.success(res.data.message);
+          setBuyerOtp(!BuyerOtp); //closingotp screen
+          setSellerDetails(!SellerDetails); //displaing seller details
+          // saveBuyer();
+        }
+      });
+    }
   }
 
   const validateFields = () => {
@@ -246,90 +247,91 @@ const VehicleListings = () => {
 
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
-      return(false)
+      return false;
     }
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
-      return(false)
+      return false;
     }
     if (!validateEmail.test(email)) {
       toast.error("please enter valid email id");
-      return(false)
+      return false;
     }
-    if(user_type===""){
+    if (user_type === "") {
       toast.error("please select user type");
-      return(false)
+      return false;
     }
-    return(true)
+    return true;
   };
 
-    //for otp page
-    const ValidateMobileNo = () => {
-      let validateMobNo =
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-  
-      if (!validateMobNo.test(mob_no)) {
-        toast.error("please enter valid mobile number");
-        return(false)
-      }
-      else{
-        return(true)
-      }
-    };
+  //for otp page
+  const ValidateMobileNo = () => {
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
 
-     //signup otp verify
-     function signUpVeryfyOtp(){
-      if(ValidateMobileNo()){
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  //signup otp verify
+  function signUpVeryfyOtp() {
+    if (ValidateMobileNo()) {
       console.log("otp verified");
       console.warn({ mob_no, otp });
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
-  
+
         // if (res.data.status === "failed") {
-          // toast.error("incorrect otp");
+        // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
-          // toast.success(res.data.message);
-          // setBuyerOtp(!BuyerOtp); //closingotp screen
-          // setSellerDetails(!SellerDetails); //displaing seller details
-          // saveBuyer();
+        // toast.success(res.data.message);
+        // setBuyerOtp(!BuyerOtp); //closingotp screen
+        // setSellerDetails(!SellerDetails); //displaing seller details
+        // saveBuyer();
         // }
       });
     }
-    }
+  }
 
   async function enquiryApi() {
     let user_token = localStorage.getItem("Token");
 
-    if(validateFields()){
-
-    let payload = {
-      vehicleId:seller_id,
-      name,
-      email,
-      mob_no,
-      user_type,
-      city: locationCity,
-      hash: "ekxpmAB8m9v",
-    };
-    await axios.post(Constant.postUrls.postAllEnquiries, payload,{
-      headers: {
-     Authorization: ` Bearer ${user_token} `,
-   },}).then((result) => {
-      console.log(result.data);
-      if (result.data.status === "failed") {
-        console.log(result.data);
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
+    if (validateFields()) {
+      let payload = {
+        vehicleId: seller_id,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city: locationCity,
+        hash: "ekxpmAB8m9v",
+      };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
+        .then((result) => {
           console.log(result.data);
-          // toast.success(result.data.message);
-          setBuyerInput(!BuyerInput); //closing buyer input screen
-          setBuyerOtp(!BuyerOtp); //displaying otp screen
-        }
-      }
-    });
-  }
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+            }
+          }
+        });
+    }
   }
 
   const navigate = useNavigate();
@@ -902,9 +904,9 @@ const VehicleListings = () => {
               <button
                 onClick={() => {
                   userToken
-                  ?
-              enquiryVerifyOtp() //verify enquiry otp
-              :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
+                    ? enquiryVerifyOtp() //verify enquiry otp
+                    : enquiryVerifyOtp();
+                  signUpVeryfyOtp(); //hitting both api
                 }}
               >
                 Verify
@@ -932,12 +934,7 @@ const VehicleListings = () => {
                 }}
               ></img>
               <div className="userProfilePic">
-                <img
-                  src={
-                    "https://gaddideals.brokerinvoice.co.in" +
-                    userObj?.profile_pic_url
-                  }
-                ></img>
+                <img src={imgurl + userObj?.profile_pic_url}></img>
               </div>
               <div className="userName">{userObj?.name}</div>
               <hr></hr>
@@ -985,7 +982,14 @@ const VehicleListings = () => {
             />
           </div>
           <div className="categories-container">
-            <img className="close-div-img" src={CloseTab} alt="" onClick={()=>{setdisplayFilterTwo(!displayFilterTwo);}} />
+            <img
+              className="close-div-img"
+              src={CloseTab}
+              alt=""
+              onClick={() => {
+                setdisplayFilterTwo(!displayFilterTwo);
+              }}
+            />
             <h3>Category</h3>
             <div className="four-category-container">
               {categories.map((category) => (
@@ -1186,7 +1190,10 @@ const VehicleListings = () => {
             <h3 className="sort-by">Sort By :</h3>
             <div
               className="filter-controls"
-              onClick={() =>{ handleRecentlyAdded(!recentlyAdded); setdisplayFilterOne(!displayFilterOne);} }
+              onClick={() => {
+                handleRecentlyAdded(!recentlyAdded);
+                setdisplayFilterOne(!displayFilterOne);
+              }}
             >
               {recentlyAdded ? (
                 <ImRadioChecked color="#050F56" size={15} />
@@ -1584,7 +1591,11 @@ const VehicleListings = () => {
                   <Link to={`/vehicledetails/${vehicle._id}`}>
                     <div className="img-wrapper">
                       <img
-                        src={`https://gaddideals.brokerinvoice.co.in${vehicle.front_side_pic}`}
+                        src={
+                          vehicle.front_side_pic
+                            ? `${imgurl}${vehicle.front_side_pic}`
+                            : ` ${imgPlaceholder}`
+                        }
                         alt={vehicle.category.title}
                       />
                     </div>
@@ -1594,7 +1605,7 @@ const VehicleListings = () => {
                       <h3>{vehicle.brand.title}</h3>
                       <div className="location">
                         <img src={locationIcon} alt="location-icon" />
-                        <span>{vehicle.city}</span>
+                        <span>{vehicle.city.title}</span>
                       </div>
                     </div>
                     <div className="truck-stats">
@@ -1627,17 +1638,18 @@ const VehicleListings = () => {
                       </p>
                     </div>
                     <button
-                     onClick={() => {
-                     setseller_id(vehicle._id);
-                      setUserObj(vehicle.user);
-                      if(userToken){
-                        getSingleUserInfo()
-                      }else{
-                        setBuyerInput(!BuyerInput)
-                      }
-                      
-                     }}
-                    >Get Seller Details</button>
+                      onClick={() => {
+                        setseller_id(vehicle._id);
+                        setUserObj(vehicle.user);
+                        if (userToken) {
+                          getSingleUserInfo();
+                        } else {
+                          setBuyerInput(!BuyerInput);
+                        }
+                      }}
+                    >
+                      Get Seller Details
+                    </button>
                   </div>
                 </div>
               ))}

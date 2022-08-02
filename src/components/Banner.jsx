@@ -23,8 +23,6 @@ const Banner = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const [sellerPathname, setSellerPathname] = useState(pathname);
-
   const fetchCategories = async () => {
     const response = await axios.get(Constant.getUrls.getAllCategories);
     setCategoriesData(response.data.category.docs);
@@ -63,7 +61,6 @@ const Banner = () => {
           <div className="row-one">
             {categoriesData.slice(0, 2).map((category, index) => (
               <div className="category-item" key={category._id}>
-                {/* <Link to={`/sellerform/${category._id}`}> */}
                 <div
                   className={
                     isCategoryActive === index ? "category active" : "category"
@@ -79,7 +76,6 @@ const Banner = () => {
                 >
                   <img src={imgurl + category.icon} alt={category.title} />
                 </div>
-                {/* </Link> */}
                 <span>{category.title}</span>
               </div>
             ))}
@@ -87,20 +83,23 @@ const Banner = () => {
           <div className="row-two">
             {categoriesData.slice(2, 4).map((category, index) => (
               <div className="category-item" key={category._id}>
-                <Link to={`/sellerform/${category._id}`}>
-                  <div
-                    className={
-                      isCategoryActiveTwo === index
-                        ? "category active"
-                        : "category"
+                <div
+                  className={
+                    isCategoryActiveTwo === index
+                      ? "category active"
+                      : "category"
+                  }
+                  onClick={() => {
+                    setIsCategoryActiveTwo(index);
+                    if (!userToken) {
+                      toast.error("Please Login First");
+                    } else {
+                      navigate(`/sellerform/${category._id}`);
                     }
-                    onClick={() => {
-                      setIsCategoryActiveTwo(index);
-                    }}
-                  >
-                    <img src={imgurl + category.icon} alt={category.title} />
-                  </div>
-                </Link>
+                  }}
+                >
+                  <img src={imgurl + category.icon} alt={category.title} />
+                </div>
                 <span>{category.title}</span>
               </div>
             ))}
@@ -125,7 +124,7 @@ const Banner = () => {
         grabCursor={true}
         centeredSlides={true}
         autoplay={{
-          delay: 5000,
+          delay: 7500,
           disableOnInteraction: false,
         }}
         modules={[Pagination, Autoplay]}
@@ -142,10 +141,7 @@ const Banner = () => {
                 ></p>
               </div>
               <a href={banner.url} target="_blank" rel="noreferrer">
-                <img
-                  src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
-                  alt={banner.title}
-                />
+                <img src={`${imgurl}${banner.poster}`} alt={banner.title} />
               </a>
             </SwiperSlide>
           ))}
@@ -157,14 +153,11 @@ const Banner = () => {
                 <h1>{banner.title}</h1>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: banner.description.substring(0, 100),
+                    __html: banner.description,
                   }}
                 ></p>
               </div>
-              <img
-                src={`https://gaddideals.brokerinvoice.co.in${banner.poster}`}
-                alt={banner.title}
-              />
+              <img src={`${imgurl}${banner.poster}`} alt={banner.title} />
             </SwiperSlide>
           ))}
       </Swiper>

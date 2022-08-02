@@ -33,64 +33,73 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    Geocode.setApiKey("AIzaSyAELAwwgOsEByDFADInfu25LgorYeILwRI");
-    Geocode.setLanguage("en");
-    Geocode.setRegion("in");
-    Geocode.setLocationType("ROOFTOP");
+    // Geocode.setApiKey("AIzaSyAELAwwgOsEByDFADInfu25LgorYeILwRI");
+    // Geocode.setLanguage("en");
+    // Geocode.setRegion("in");
+    // Geocode.setLocationType("ROOFTOP");
 
-    function success(position) {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
+    // function success(position) {
+    //   const latitude = position.coords.latitude;
+    //   const longitude = position.coords.longitude;
 
-      Geocode.fromLatLng(latitude, longitude).then(
-        (response) => {
-          const address = response.results[0].formatted_address;
-          let city, state, country;
-          for (
-            let i = 0;
-            i < response.results[0].address_components.length;
-            i++
-          ) {
-            for (
-              let j = 0;
-              j < response.results[0].address_components[i].types.length;
-              j++
-            ) {
-              switch (response.results[0].address_components[i].types[j]) {
-                case "locality":
-                  city = response.results[0].address_components[i].long_name;
-                  break;
-                case "administrative_area_level_1":
-                  state = response.results[0].address_components[i].long_name;
-                  break;
-                case "country":
-                  country = response.results[0].address_components[i].long_name;
-                  break;
-                default:
-                  break;
-              }
-            }
-          }
+    //   Geocode.fromLatLng(latitude, longitude).then(
+    //     (response) => {
+    //       const address = response.results[0].formatted_address;
+    //       let city, state, country;
+    //       for (
+    //         let i = 0;
+    //         i < response.results[0].address_components.length;
+    //         i++
+    //       ) {
+    //         for (
+    //           let j = 0;
+    //           j < response.results[0].address_components[i].types.length;
+    //           j++
+    //         ) {
+    //           switch (response.results[0].address_components[i].types[j]) {
+    //             case "locality":
+    //               city = response.results[0].address_components[i].long_name;
+    //               break;
+    //             case "administrative_area_level_1":
+    //               state = response.results[0].address_components[i].long_name;
+    //               break;
+    //             case "country":
+    //               country = response.results[0].address_components[i].long_name;
+    //               break;
+    //             default:
+    //               break;
+    //           }
+    //         }
+    //       }
 
-          if (!location.city) {
-            dispatch(setCurrentCity("Mumbai"));
-            location["city"] = "Mumbai";
-            let prevUrl = queryString.stringify(location);
-            navigate("?" + prevUrl);
-          }
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
+    // }
 
-    function error() {
-      alert("Unable to retrieve your location!");
-    }
+    // function error() {
+    //   alert("Unable to retrieve your location!");
+    // }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(success, error);
+    // }
+
+    if (!location.city) {
+      const loc = localStorage.getItem("location");
+      location["city"] = loc ? loc : "Mumbai";
+      dispatch(setCurrentCity(loc));
+
+      const lang = localStorage.getItem("lang");
+      let prevUrl = queryString.stringify(location);
+      if (lang) {
+        prevUrl += "&lang=" + lang;
+      } else {
+        prevUrl += "&lang=" + "en";
+      }
+      navigate("?" + prevUrl);
     }
   }, [dispatch]);
 

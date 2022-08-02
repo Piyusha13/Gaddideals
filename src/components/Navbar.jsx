@@ -16,6 +16,7 @@ import SinguplocationIcon from "../assets/SignUpLocation.png";
 import SingupClosedEyeIcon from "../assets/closed_eye_icon.png";
 import "../pages/MobileRespSignInPage.style.css";
 import SingupEyeIcon from "../assets/eye_icon.png";
+import { imgurl } from "../constants";
 
 import upArrowIcon from "../assets/up-arrow.png";
 import googleLogo from "../assets/google_logo.svg";
@@ -66,6 +67,7 @@ const Navbar = () => {
   const [citySearch, setCitySearch] = useState("");
   const [langSuggestion, setLangSuggestion] = useState(false);
   const [overlayLocation, setOverlayLocation] = useState(false);
+  const [selectedLanguage, setselectedLanguage] = useState("");
 
   const [GoogleSignIn, setGoogleSignIn] = useState(false);
   const [FaceookSignIn, setFaceookSignIn] = useState(false);
@@ -107,15 +109,22 @@ const Navbar = () => {
     // setCities(citiesArr);
 
     const response = await axios.get(
-      Constant.getUrls.getAllVehicles + `/getCity`
+      Constant.getUrls.getAllCity + "?status=active&sort=true"
     );
 
     if (response.data) {
-      setCities(response.data.data);
+      setCities(response.data.getAllCities.docs);
     }
   };
 
   useEffect(() => {
+    const lang = localStorage.getItem("lang");
+    if (lang) {
+      console.log(lang);
+      setselectedLanguage(lang);
+    } else {
+      setselectedLanguage("en");
+    }
     const fetchIcons = async () => {
       const response = await axios.get(Constant.getUrls.getAllCategories);
       setNavIcons(response.data.category.docs);
@@ -145,7 +154,7 @@ const Navbar = () => {
   }, []);
 
   const filterCities = cities.filter((city) =>
-    city.toLowerCase().includes(citySearch.toLowerCase())
+    city.title.toLowerCase().includes(citySearch.toLowerCase())
   );
 
   const filterBrandsModel = searchArray.filter((modbrd) => {
@@ -172,7 +181,6 @@ const Navbar = () => {
   const [showPassword, setshowPassword] = useState(false);
   const [onclose, setonclose] = useState(false);
   const [dropdown, setdropdown] = useState(false);
-  const [selectedLanguage, setselectedLanguage] = useState("English");
   const [token, settoken] = useState(localStorage.getItem("Token"));
   const [hidePassword, sethidePassword] = useState(false); //hiding password and confirm password for social token
 
@@ -543,12 +551,6 @@ const Navbar = () => {
       prevScrollY.current = currentScrollY;
       // console.log(goingUp, currentScrollY);
     };
-    const lang = location.lang;
-    if (lang) {
-      setselectedLanguage(lang);
-    } else {
-      setselectedLanguage("en");
-    }
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -2120,7 +2122,7 @@ const Navbar = () => {
                 title={catgeoryIcon.title}
               >
                 <img
-                  src={`https://gaddideals.brokerinvoice.co.in${catgeoryIcon.icon}`}
+                  src={`${imgurl}${catgeoryIcon.icon}`}
                   alt={catgeoryIcon.title}
                 />
               </a>
@@ -2199,18 +2201,20 @@ const Navbar = () => {
                         <p
                           key={index}
                           onClick={() => {
-                            setCitySearch(city);
-                            dispatch(setCurrentCity(city));
+                            setCitySearch(city?.title);
+                            dispatch(setCurrentCity(city?.title));
                             setLangDropdown(false);
+                            localStorage.setItem("location", city?.title);
                             if (location.city) {
-                              location.city = city;
+                              location.city = city?.title;
+                              location.cid = city?._id;
                               let prevUrl = queryString.stringify(location);
                               window.location.href =
                                 window.location.pathname + "?" + prevUrl;
                             }
                           }}
                         >
-                          {city}
+                          {city.title}
                         </p>
                       ))}
                     </div>
@@ -2248,6 +2252,8 @@ const Navbar = () => {
                     );
                     a.value = "en";
                     a.dispatchEvent(new Event("change"));
+                    localStorage.setItem("lang", "en");
+                    // return console.log(a.value)
                     // window.location.reload();
                     location.lang = "en";
                     let prevUrl = queryString.stringify(location);
@@ -2268,7 +2274,10 @@ const Navbar = () => {
                     );
                     a.value = "hi";
                     a.dispatchEvent(new Event("change"));
+                    localStorage.setItem("lang", "hi");
                     // window.location.reload();
+                    // return console.log(a.value);
+
                     location.lang = "hi";
                     let prevUrl = queryString.stringify(location);
                     window.location.href =

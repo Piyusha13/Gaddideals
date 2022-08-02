@@ -1,6 +1,6 @@
 const mainDomain = "https://core.gaddideals.com/";
 // const imgurl="https://gaddideals.brokerinvoice.co.in";
-export const imgurl = "https://core.gaddideals.com/";
+export const imgurl = "https://core.gaddideals.com";
 
 const Constant = {
   getUrls: {
@@ -23,6 +23,8 @@ const Constant = {
     getSingleUser: mainDomain + "api/user",
     getAllBodyTypes: mainDomain + "api/bodyType",
     getAllSearchSuggestions: mainDomain + "api/vehicle/searchSuggestion",
+    getAllStates: mainDomain + "api/state",
+    getAllCity: mainDomain + "api/city",
   },
   postUrls: {
     postAllAdmins: mainDomain + "api/user/admin_login",
@@ -46,7 +48,7 @@ const Constant = {
     potsALLresendotps: mainDomain + "api/user/auth/resendOTP",
     postAllEnquiries: mainDomain + "api/enquiries",
     postVehiclePublish: mainDomain + "api/status/",
-    postAllEnquiryOtps: mainDomain+"api/enquiries/enquiryVerifyOTP",
+    postAllEnquiryOtps: mainDomain + "api/enquiries/enquiryVerifyOTP",
   },
   putAllUrls: {
     putAllUsers: mainDomain + "api/user/update_profile",

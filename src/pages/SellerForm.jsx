@@ -33,9 +33,11 @@ const SellerForm = () => {
   const [caetgoryBusTitle, setCategoryBusTitle] = useState("");
 
   const [statesArray, setStatesArray] = useState([]);
+  const [stateId, setStateId] = useState("");
   const [stateTitle, setStateTitle] = useState("");
 
   const [citiesArray, setCitiesArray] = useState([]);
+  const [cityId, setCityId] = useState("");
   const [cityTitle, setCityTitle] = useState("");
 
   const [brandsArray, setBrandsArray] = useState([]);
@@ -137,33 +139,43 @@ const SellerForm = () => {
     setBodyTypeArray(response.data._getBodyType.docs);
   };
 
-  const fetchStates = () => {
-    let statesArr = [];
+  const fetchStates = async () => {
+    // let statesArr = [];
 
-    statecities.map((state) => {
-      if (statesArr.indexOf(state.State) === -1) {
-        statesArr.push(state.State);
-      }
+    // statecities.map((state) => {
+    //   if (statesArr.indexOf(state.State) === -1) {
+    //     statesArr.push(state.State);
+    //   }
 
-      return statesArr;
-    });
+    //   return statesArr;
+    // });
 
-    setStatesArray(statesArr);
+    const res = await axios.get(
+      Constant.getUrls.getAllStates + "?status=active&sort=true"
+    );
+    if (res.data) {
+      setStatesArray(res.data.getAllStates.docs);
+    }
   };
 
-  const fetchCities = () => {
-    let citiesArr = [];
+  const fetchCities = async () => {
+    // let citiesArr = [];
 
-    if (stateTitle.length > 0) {
-      statecities.filter((city) => {
-        if (city.State === stateTitle) {
-          citiesArr.push(city.City);
-        }
-        return citiesArr;
-      });
+    // if (stateTitle.length > 0) {
+    //   statecities.filter((city) => {
+    //     if (city.State === stateTitle) {
+    //       citiesArr.push(city.City);
+    //     }
+    //     return citiesArr;
+    //   });
+    // }
+
+    const res = await axios.get(
+      Constant.getUrls.getAllCity + "?status=active&sort=true"
+    );
+    if (res.data) {
+      setCitiesArray(res.data.getAllCities.docs);
     }
-
-    setCitiesArray(citiesArr);
   };
 
   const formatDate = (date) => {
@@ -178,8 +190,10 @@ const SellerForm = () => {
 
     if (response?.data?.vehicle) {
       setVehicleID(response?.data?.vehicle?._id);
-      setStateTitle(response?.data?.vehicle?.state);
-      setCityTitle(response?.data?.vehicle?.city);
+      setStateTitle(response?.data?.vehicle?.state?.title);
+      setCityTitle(response?.data?.vehicle?.city?.title);
+      setStateId(response?.data?.vehicle?.state?._id);
+      setCityId(response?.data?.vehicle?.city?._id);
       setBrandTitle(response?.data?.vehicle?.brand?.title);
       setBrandId(response?.data?.vehicle?.brand?._id);
       setModelTitle(response?.data?.vehicle?.model?.name);
@@ -269,11 +283,11 @@ const SellerForm = () => {
   };
 
   const filterStates = statesArray.filter((state) => {
-    return state.toLowerCase().includes(stateTitle.toLowerCase());
+    return state.title.toLowerCase().includes(stateTitle.toLowerCase());
   });
 
   const filterCities = citiesArray.filter((city) => {
-    return city.toLowerCase().includes(cityTitle.toLowerCase());
+    return city.title.toLowerCase().includes(cityTitle.toLowerCase());
   });
 
   const filterBrands = brandsArray.filter((brand) => {
@@ -399,8 +413,8 @@ const SellerForm = () => {
     let fd = new FormData();
 
     fd.append("category", categoryId);
-    fd.append("state", stateTitle);
-    fd.append("city", cityTitle);
+    fd.append("state", stateId);
+    fd.append("city", cityId);
     fd.append("brand", brandId);
     fd.append("model", modelId);
     fd.append("years", year);
@@ -448,8 +462,8 @@ const SellerForm = () => {
     let fd = new FormData();
 
     fd.append("category", editVehicleObj?.category?._id);
-    fd.append("state", stateTitle);
-    fd.append("city", cityTitle);
+    fd.append("state", stateId);
+    fd.append("city", cityId);
     fd.append("brand", brandId);
     fd.append("model", modelId);
     fd.append("years", year);
@@ -504,8 +518,8 @@ const SellerForm = () => {
     let fd = new FormData();
 
     fd.append("category", editVehicleObj?.category?._id);
-    fd.append("state", stateTitle);
-    fd.append("city", cityTitle);
+    fd.append("state", stateId);
+    fd.append("city", cityId);
     fd.append("brand", brandId);
     fd.append("model", modelId);
     fd.append("years", year);
@@ -577,8 +591,10 @@ const SellerForm = () => {
             setIsOwnerActive={setIsOwnerActive}
             owner={owner}
             cityTitle={cityTitle}
+            setCityId={setCityId}
             setCityTitle={setCityTitle}
             stateTitle={stateTitle}
+            setStateId={setStateId}
             setStateTitle={setStateTitle}
             setBrandId={setBrandId}
             setBrandTitle={setBrandTitle}

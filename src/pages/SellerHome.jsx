@@ -22,8 +22,9 @@ import Lottie from "react-lottie";
 import animationData1 from "../assets/step-1-lottie.json";
 import animationData3 from "../assets/mental-therapy-lottie.json";
 import animationData2 from "../assets/step-3rd-lottie.json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { imgurl } from "../constants";
+import { toast } from "react-toastify";
 
 const SellerHome = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -35,10 +36,13 @@ const SellerHome = () => {
   const [faqs, setFAQS] = useState([]);
   const [isCategoryActive, setIsCategoryActive] = useState();
   const [isCategoryActiveTwo, setIsCategoryActiveTwo] = useState();
+  const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
   );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     window
@@ -127,20 +131,23 @@ const SellerHome = () => {
             <div className="row-one">
               {categoriesData.slice(0, 2).map((category, index) => (
                 <div className="category-item" key={category._id}>
-                  <Link to={`/sellerform/${category._id}`}>
-                    <div
-                      className={
-                        isCategoryActive === index
-                          ? "category active"
-                          : "category"
+                  <div
+                    className={
+                      isCategoryActive === index
+                        ? "category active"
+                        : "category"
+                    }
+                    onClick={() => {
+                      setIsCategoryActive(index);
+                      if (!userToken) {
+                        toast.error("Please Login First");
+                      } else {
+                        navigate(`/sellerform/${category._id}`);
                       }
-                      onClick={() => {
-                        setIsCategoryActive(index);
-                      }}
-                    >
-                      <img src={imgurl + category.icon} alt={category.title} />
-                    </div>
-                  </Link>
+                    }}
+                  >
+                    <img src={imgurl + category.icon} alt={category.title} />
+                  </div>
                   <span>{category.title}</span>
                 </div>
               ))}
@@ -148,20 +155,23 @@ const SellerHome = () => {
             <div className="row-two">
               {categoriesData.slice(2, 4).map((category, index) => (
                 <div className="category-item" key={category._id}>
-                  <Link to={`/sellerform/${category._id}`}>
-                    <div
-                      className={
-                        isCategoryActiveTwo === index
-                          ? "category active"
-                          : "category"
+                  <div
+                    className={
+                      isCategoryActiveTwo === index
+                        ? "category active"
+                        : "category"
+                    }
+                    onClick={() => {
+                      setIsCategoryActiveTwo(index);
+                      if (!userToken) {
+                        toast.error("Please Login First");
+                      } else {
+                        navigate(`/sellerform/${category._id}`);
                       }
-                      onClick={() => {
-                        setIsCategoryActiveTwo(index);
-                      }}
-                    >
-                      <img src={imgurl + category.icon} alt={category.title} />
-                    </div>
-                  </Link>
+                    }}
+                  >
+                    <img src={imgurl + category.icon} alt={category.title} />
+                  </div>
                   <span>{category.title}</span>
                 </div>
               ))}

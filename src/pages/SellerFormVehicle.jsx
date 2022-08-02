@@ -64,6 +64,8 @@ const SellerFormVehicle = ({
   filterModels,
   setModelId,
   setModelTitle,
+  setCityId,
+  setStateId,
   modelTitle,
   setYearTitle,
   categoryTractorTitle,
@@ -199,11 +201,12 @@ const SellerFormVehicle = ({
                         <p
                           key={index}
                           onClick={() => {
-                            setStateTitle(state);
+                            setStateId(state._id);
+                            setStateTitle(state.title);
                             setStatesSuggestionBox(false);
                           }}
                         >
-                          {state}
+                          {state.title}
                         </p>
                       ))}
                     </div>
@@ -232,11 +235,12 @@ const SellerFormVehicle = ({
                         <p
                           key={index}
                           onClick={() => {
-                            setCityTitle(city);
+                            setCityId(city._id);
+                            setCityTitle(city.title);
                             setCitySuggestionBox(false);
                           }}
                         >
-                          {city}
+                          {city.title}
                         </p>
                       ))}
                     </div>

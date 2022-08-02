@@ -11,6 +11,7 @@ import horsePowerIcon from "../assets/horse-power-icon.png";
 import seatIcon from "../assets/seat-icon.png";
 import CloseTab from "../assets/close-tab.png";
 import downArrow from "../assets/down-arrow.png";
+import imgPlaceHolder from "../assets/img-not-available.jpg";
 import Edit from "../assets/edit.png";
 import manualTransmissionIcon from "../assets/gas-station.png";
 import similarTruck from "../assets/trucks1.png";
@@ -174,8 +175,7 @@ const VehicleDetails = () => {
     const getSingleVehicleDetails = async () => {
       setLoadingDetails(true);
       const res = await axios.get(
-        "https://gaddideals.brokerinvoice.co.in/api/vehicle/vehicleDetails/" +
-          id
+        Constant.getUrls.getAllVehicles + "/vehicleDetails/" + id
       );
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
@@ -282,10 +282,11 @@ const VehicleDetails = () => {
       };
       console.log(payload);
       await axios
-        .post(Constant.postUrls.postAllEnquiries, payload,{
-           headers: {
-          Authorization: ` Bearer ${user_token} `,
-        },} )
+        .post(Constant.postUrls.postAllEnquiries, payload, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
         .then((result) => {
           console.log(result.data);
           if (result.data.status === "failed") {
@@ -833,7 +834,14 @@ const VehicleDetails = () => {
               >
                 {imageArray.map((thumbsImage, index) => (
                   <SwiperSlide key={index}>
-                    <img src={`${imgurl}${thumbsImage}`} alt="truck" />
+                    <img
+                      src={
+                        thumbsImage
+                          ? `${imgurl}${thumbsImage}`
+                          : `${imgPlaceHolder}`
+                      }
+                      alt="truck"
+                    />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -858,7 +866,14 @@ const VehicleDetails = () => {
               >
                 {imageArray.map((thumbsImage, index) => (
                   <SwiperSlide key={index}>
-                    <img src={`${imgurl}${thumbsImage}`} alt="truck" />
+                    <img
+                      src={
+                        thumbsImage
+                          ? `${imgurl}${thumbsImage}`
+                          : `${imgPlaceHolder}`
+                      }
+                      alt="truck"
+                    />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -879,7 +894,10 @@ const VehicleDetails = () => {
                 {imageArray.map((thumb, index) => (
                   <SwiperSlide key={index}>
                     <div className="thumb">
-                      <img src={imgurl + thumb} alt="truck thumbnail" />
+                      <img
+                        src={thumb ? `${imgurl}${thumb}` : `${imgPlaceHolder}`}
+                        alt="truck thumbnail"
+                      />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -897,7 +915,7 @@ const VehicleDetails = () => {
                     </h3>
                     <div className="truck-location">
                       <img src={locationIcon} alt="location" />
-                      <span>{getvehicledetails?.city} </span>
+                      <span>{getvehicledetails?.city?.title}</span>
                     </div>
                   </div>
                   <div className="wrapper">
@@ -1045,7 +1063,7 @@ const VehicleDetails = () => {
               </div>
               <div className="row-content">
                 <h6>City</h6>
-                <span>{getvehicledetails?.city}</span>
+                <span>{getvehicledetails?.city?.title}</span>
               </div>
             </div>
 
@@ -1118,7 +1136,10 @@ const VehicleDetails = () => {
               {imageArray.map((thumb, index) => (
                 <SwiperSlide key={index}>
                   <div className="thumb">
-                    <img src={imgurl + thumb} alt="truck thumbnail" />
+                    <img
+                      src={thumb ? `${imgurl}${thumb}` : `${imgPlaceHolder}`}
+                      alt="truck thumbnail"
+                    />
                   </div>
                 </SwiperSlide>
               ))}
@@ -1149,7 +1170,7 @@ const VehicleDetails = () => {
             <div className="row-two">
               <div className="row-content">
                 <h6>City</h6>
-                <span>{getvehicledetails?.city}</span>
+                <span>{getvehicledetails?.city?.title}</span>
               </div>
               <div className="row-content">
                 <h6>Insurance validity</h6>

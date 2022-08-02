@@ -23,7 +23,7 @@ import VehicleCard from "../pages/VehicleCard";
 import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
-import noDataImg from "../assets/no-picture-available-icon-1.jpg"
+import noDataImg from "../assets/no-picture-available-icon-1.jpg";
 
 function UserVehicles() {
   const defaultOptions = {
@@ -38,11 +38,9 @@ function UserVehicles() {
   // for get name
   const getDetails = () => {
     if (init() === "success") {
-      axios
-        .get("https://core.gaddideals.com/api/user")
-        .then((res) => {
-          setname(res.data.user);
-        });
+      axios.get("https://core.gaddideals.com/api/user").then((res) => {
+        setname(res.data.user);
+      });
     }
   };
   function logoutAccount() {
@@ -52,21 +50,21 @@ function UserVehicles() {
   // const [array,setarray]=useState("");
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
-  const [Seller,setSeller]=useState("");
+  const [Seller, setSeller] = useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
-
 
   //for vehicle data
   const getMyVehicleDetails = async () => {
     console.log("otsideeeeeeeeeeeee");
-    await axios.get("https://core.gaddideals.com/api/enquiries/my_enquiries", {
+    await axios
+      .get("https://core.gaddideals.com/api/enquiries/my_enquiries", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
         console.log("insideeeeeeeeeeeeeeeeeeee");
-        console.log("enquiries response======="+res);
+        console.log("enquiries response=======" + res);
         setvehicleData(res?.data?.getMyEnquiries);
         // console.log(res?.data?.getMyEnquiries);
         res.data.getMyEnquiries.forEach((item, index) => {
@@ -164,7 +162,8 @@ function UserVehicles() {
                     <div className="card-wrapper-vehicles">
                       <div className="card-img-wrapper">
                         <img
-                          src={noDataImg
+                          src={
+                            noDataImg
                             // "https://gaddideals.brokerinvoice.co.in" +
                             // item.front_side_pic
                           }
@@ -178,7 +177,7 @@ function UserVehicles() {
                             <div className="location">
                               <img src={locationIcon} alt="location icon" />
                               {/* fetching city name  */}
-                              <span>{item.city.substring(0, 10)}</span>
+                              <span>{item.city.title.substring(0, 10)}</span>
                             </div>
                           </div>
                           {/* <div className="card-publish-review">
@@ -188,25 +187,34 @@ function UserVehicles() {
                             <span>(Uploaded on Jun 01,2022)</span>
                           </div> */}
                           <div className="card-price">
-                          <h3>₹{item?.vehicle_id?.selling_price} </h3>
-                        </div>
+                            <h3>₹{item?.vehicle_id?.selling_price} </h3>
+                          </div>
                         </div>
 
-                        
                         <div className="seller-details-container">
                           <div className="stat">
-                            <span><span className="text-color-blue">Name - </span>{Seller.name} </span>
+                            <span>
+                              <span className="text-color-blue">Name - </span>
+                              {Seller.name}{" "}
+                            </span>
                           </div>
                           <div className="stat">
-                            <span><span className="text-color-blue">Phone Number - </span>{Seller.mob_no} </span>
+                            <span>
+                              <span className="text-color-blue">
+                                Phone Number -{" "}
+                              </span>
+                              {Seller.mob_no}{" "}
+                            </span>
                           </div>
                           <div className="stat">
-                            <span><span className="text-color-blue">Email - </span>{Seller.email}  </span>
+                            <span>
+                              <span className="text-color-blue">Email - </span>
+                              {Seller.email}{" "}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
-                   
                   </div>
                 ))}
               </div>
