@@ -1,6 +1,6 @@
-const mainDomain = "https://gaddideals.brokerinvoice.co.in/";
+const mainDomain = "https://core.gaddideals.com/";
 // const imgurl="https://gaddideals.brokerinvoice.co.in";
-export const imgurl = "https://gaddideals.brokerinvoice.co.in";
+export const imgurl = "https://core.gaddideals.com/";
 
 const Constant = {
   getUrls: {

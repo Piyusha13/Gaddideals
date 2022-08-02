@@ -221,22 +221,83 @@ const SellerHomePage = () => {
   // function loadGoogleTranslate(){
   //   FaGoogle.translate.TranslateElement("intro-title");
   // }
-  function getSingleUserInfo(){
-    let user_token = localStorage.getItem("Token");
-    axios.get(Constant.getUrls.getSingleUser,{
-      headers: {
-        Authorization: ` Bearer ${user_token} `,
-      },
-    }).then((res)=>{
-      console.log(res);
-      // console.log(res.data.user);
-          setname(res.data.user.name);
-          setemail(res.data.user.email);
-          setmob_no(res.data.user.mob_no);
-          setBuyerInput(!BuyerInput);
-          // saveBuyer();
-    });
+  const validateFields = () => {
+    let validateName = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
+    if (!validateName.test(name)) {
+      toast.error("please enter valid name");
+      return(false)
+    }
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return(false)
+    }
+    if (!validateEmail.test(email)) {
+      toast.error("please enter valid email id");
+      return(false)
+    }
+    if(user_type===""){
+      toast.error("please select user type");
+      return(false)
+    }
+    return(true)
+  };
+
+  async function enquiryApi() {
+    let user_token = localStorage.getItem("Token");
+
+    if(validateFields()){
+
+    let payload = {
+      vehicleId:seller_id,
+      name,
+      email,
+      mob_no,
+      user_type,
+      city: locationCity,
+      hash: "ekxpmAB8m9v",
+    };
+    await axios.post(Constant.postUrls.postAllEnquiries, payload,{
+      headers: {
+     Authorization: ` Bearer ${user_token} `,
+   },}).then((result) => {
+      console.log(result.data);
+      if (result.data.status === "failed") {
+        console.log(result.data);
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          console.log(result.data);
+          // toast.success(result.data.message);
+          setBuyerInput(!BuyerInput); //closing buyer input screen
+          setBuyerOtp(!BuyerOtp); //displaying otp screen
+        }
+      }
+    });
+  }
+  }
+
+
+  function getSingleUserInfo() {
+    let user_token = localStorage.getItem("Token");
+    axios
+      .get(Constant.getUrls.getSingleUser, {
+        headers: {
+          Authorization: ` Bearer ${user_token} `,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // console.log(res.data.user);
+        setname(res.data.user.name);
+        setemail(res.data.user.email);
+        setmob_no(res.data.user.mob_no);
+        setBuyerInput(!BuyerInput); //displaying buyer input detail screen
+        // saveBuyer();
+      });
   }
 
 
@@ -337,6 +398,63 @@ const SellerHomePage = () => {
       }
     });
   }
+  //for otp page
+  const ValidateMobileNo = () => {
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return(false)
+    }
+    else{
+      return(true)
+    }
+  };
+
+
+    //enquiry otp verify
+    function enquiryVerifyOtp() {
+      if(ValidateMobileNo()){
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
+        console.log(res);
+  
+        if (res.data.status === "failed") {
+          toast.error("incorrect otp");
+        } else if (res.data.status === "Success") {
+          toast.success(res.data.message);
+          setBuyerOtp(!BuyerOtp); //closingotp screen
+          setSellerDetails(!SellerDetails); //displaing seller details
+          // saveBuyer();
+        }
+      });
+    }
+    }
+
+    //signup otp verify
+  function signUpVeryfyOtp(){
+    if(ValidateMobileNo()){
+    console.log("otp verified");
+    console.warn({ mob_no, otp });
+    let payload = { mob_no, otp };
+    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+      console.log(res);
+
+      // if (res.data.status === "failed") {
+        // toast.error("incorrect otp");
+      // } else if (res.data.status === "Success") {
+        // toast.success(res.data.message);
+        // setBuyerOtp(!BuyerOtp); //closingotp screen
+        // setSellerDetails(!SellerDetails); //displaing seller details
+        // saveBuyer();
+      // }
+    });
+  }
+  }
+
 
   function resendotp() {
     console.warn({ mob_no });
@@ -514,10 +632,8 @@ const SellerHomePage = () => {
 
               <button
                 onClick={() => {
-                  // saveBuyer();
-                  setBuyerInput(!BuyerInput);
-                  verifyOtp();
-                  setBuyerOtp(!BuyerOtp);
+                  enquiryApi(); //posting data into enquiry api
+                  
                 }}
               >
                 Get Contact Details
@@ -579,8 +695,10 @@ const SellerHomePage = () => {
               </div>
               <button
                 onClick={() => {
-                  savePhoneOtp();
-                  saveBuyer();
+                  userToken
+                      ?
+                  enquiryVerifyOtp() //verify enquiry otp
+                  :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
                 }}
               >
                 Verify
@@ -755,10 +873,10 @@ const SellerHomePage = () => {
 
                         <button
                           onClick={() => {
-                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                            // setvehicleId(latestTruck._id)
+                           
                             setUserObj(latestTruck.user);
-                            setseller_id(latestTruck.user._id);
+                            setseller_id(latestTruck._id);
+                            
                             if (userToken) {
                               getSingleUserInfo()
                             } else {
@@ -826,7 +944,7 @@ const SellerHomePage = () => {
                             // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                             // setvehicleId(latestBuses._id)
                             setUserObj(latestBuses.user);
-                            setseller_id(latestBuses.user._id);
+                            setseller_id(latestBuses._id);
                             if (userToken) {
                               setSellerDetails(!SellerDetails);
                             } else {
@@ -894,7 +1012,7 @@ const SellerHomePage = () => {
                             // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                             // setvehicleId(latestTractor._id)
                             setUserObj(latestTractor.user);
-                            setseller_id(latestTractor.user._id);
+                            setseller_id(latestTractor._id);
                             if (userToken) {
                               setSellerDetails(!SellerDetails);
                             } else {
@@ -964,7 +1082,7 @@ const SellerHomePage = () => {
                             // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
                             // setvehicleId(latestConstruction._id)
                             setUserObj(latestConstruction.user);
-                            setseller_id(latestConstruction.user._id);
+                            setseller_id(latestConstruction._id);
                             if (userToken) {
                               setSellerDetails(!SellerDetails);
                             } else {

@@ -106,22 +106,23 @@ const VehicleListings = () => {
     window.matchMedia("(max-width: 1000px)").matches
   );
 
-  function getSingleUserInfo(){
+  function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
-    axios.get(Constant.getUrls.getSingleUser,{
-      headers: {
-        Authorization: ` Bearer ${user_token} `,
-      },
-    }).then((res)=>{
-      console.log(res);
-      // console.log(res.data.user);
-          setname(res.data.user.name);
-          setemail(res.data.user.email);
-          setmob_no(res.data.user.mob_no);
-          setBuyerInput(!BuyerInput);
-          // saveBuyer();
-    });
-
+    axios
+      .get(Constant.getUrls.getSingleUser, {
+        headers: {
+          Authorization: ` Bearer ${user_token} `,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // console.log(res.data.user);
+        setname(res.data.user.name);
+        setemail(res.data.user.email);
+        setmob_no(res.data.user.mob_no);
+        setBuyerInput(!BuyerInput); //displaying buyer input detail screen
+        // saveBuyer();
+      });
   }
 
   function saveBuyer() {
@@ -214,6 +215,121 @@ const VehicleListings = () => {
         }
       }
     });
+  }
+
+   //enquiry otp verify
+   function enquiryVerifyOtp() {
+    if(ValidateMobileNo()){
+    console.log("otp verified");
+    console.warn({ mob_no, otp });
+    let payload = { mob_no, otp };
+    axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
+      console.log(res);
+
+      if (res.data.status === "failed") {
+        toast.error("incorrect otp");
+      } else if (res.data.status === "Success") {
+        toast.success(res.data.message);
+        setBuyerOtp(!BuyerOtp); //closingotp screen
+        setSellerDetails(!SellerDetails); //displaing seller details
+        // saveBuyer();
+      }
+    });
+  }
+  }
+
+  const validateFields = () => {
+    let validateName = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+
+    if (!validateName.test(name)) {
+      toast.error("please enter valid name");
+      return(false)
+    }
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return(false)
+    }
+    if (!validateEmail.test(email)) {
+      toast.error("please enter valid email id");
+      return(false)
+    }
+    if(user_type===""){
+      toast.error("please select user type");
+      return(false)
+    }
+    return(true)
+  };
+
+    //for otp page
+    const ValidateMobileNo = () => {
+      let validateMobNo =
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+  
+      if (!validateMobNo.test(mob_no)) {
+        toast.error("please enter valid mobile number");
+        return(false)
+      }
+      else{
+        return(true)
+      }
+    };
+
+     //signup otp verify
+     function signUpVeryfyOtp(){
+      if(ValidateMobileNo()){
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+        console.log(res);
+  
+        // if (res.data.status === "failed") {
+          // toast.error("incorrect otp");
+        // } else if (res.data.status === "Success") {
+          // toast.success(res.data.message);
+          // setBuyerOtp(!BuyerOtp); //closingotp screen
+          // setSellerDetails(!SellerDetails); //displaing seller details
+          // saveBuyer();
+        // }
+      });
+    }
+    }
+
+  async function enquiryApi() {
+    let user_token = localStorage.getItem("Token");
+
+    if(validateFields()){
+
+    let payload = {
+      vehicleId:seller_id,
+      name,
+      email,
+      mob_no,
+      user_type,
+      city: locationCity,
+      hash: "ekxpmAB8m9v",
+    };
+    await axios.post(Constant.postUrls.postAllEnquiries, payload,{
+      headers: {
+     Authorization: ` Bearer ${user_token} `,
+   },}).then((result) => {
+      console.log(result.data);
+      if (result.data.status === "failed") {
+        console.log(result.data);
+        toast.error(result.data.message);
+      } else {
+        if (result.data.status === "success") {
+          console.log(result.data);
+          // toast.success(result.data.message);
+          setBuyerInput(!BuyerInput); //closing buyer input screen
+          setBuyerOtp(!BuyerOtp); //displaying otp screen
+        }
+      }
+    });
+  }
   }
 
   const navigate = useNavigate();
@@ -723,10 +839,7 @@ const VehicleListings = () => {
 
               <button
                 onClick={() => {
-                  // saveBuyer();
-                  setBuyerInput(!BuyerInput);
-                  verifyOtp();
-                  setBuyerOtp(!BuyerOtp);
+                  enquiryApi(); //posting data into enquiry api
                 }}
               >
                 Get Contact Details
@@ -788,8 +901,10 @@ const VehicleListings = () => {
               </div>
               <button
                 onClick={() => {
-                  savePhoneOtp();
-                  saveBuyer();
+                  userToken
+                  ?
+              enquiryVerifyOtp() //verify enquiry otp
+              :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
                 }}
               >
                 Verify
@@ -1513,7 +1628,7 @@ const VehicleListings = () => {
                     </div>
                     <button
                      onClick={() => {
-                     setseller_id(vehicle.user._id);
+                     setseller_id(vehicle._id);
                       setUserObj(vehicle.user);
                       if(userToken){
                         getSingleUserInfo()

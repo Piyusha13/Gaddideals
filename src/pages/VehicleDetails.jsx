@@ -52,7 +52,7 @@ import { Slider, Box } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Pie } from "react-chartjs-2";
-import {Chart, ArcElement} from 'chart.js'
+import { Chart, ArcElement } from "chart.js";
 Chart.register(ArcElement);
 
 const PrettoSlider = withStyles({
@@ -99,11 +99,11 @@ const VehicleDetails = () => {
 
   const locationCity = useSelector(selectLocation);
 
-  const [editableIntrest,seteditableIntrest]=useState(true);
+  const [editableIntrest, seteditableIntrest] = useState(true);
   const [EmiModal, setEmiModal] = useState(false);
-  const [downPayment,setdownPayment]=useState(50000);
+  const [downPayment, setdownPayment] = useState(50000);
   const maxValue = getvehicledetails?.selling_price - 50000;
-  const initialPAmount=getvehicledetails?.selling_price - 50000;
+  const initialPAmount = getvehicledetails?.selling_price - 50000;
   const [pAmount, setpAmount] = useState(90000); //loan priciple amount
   const [interest, setinterest] = useState(15);
   const [duration, setDuration] = useState(147);
@@ -181,6 +181,7 @@ const VehicleDetails = () => {
       setVehicleDetails(res.data.vehicle);
       setCheckCategory(res.data?.vehicle?.category?.title);
       setvehicleId(res.data?.vehicle?._id);
+
       console.log(res.data?.vehicle?._id);
       setSeller(res.data?.vehicle?.user);
 
@@ -241,37 +242,71 @@ const VehicleDetails = () => {
       });
   }
 
+  const validateFields = () => {
+    let validateName = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+
+    if (!validateName.test(name)) {
+      toast.error("please enter valid name");
+      return false;
+    }
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return false;
+    }
+    if (!validateEmail.test(email)) {
+      toast.error("please enter valid email id");
+      return false;
+    }
+    if (user_type === "") {
+      toast.error("please select user type");
+      return false;
+    }
+    return true;
+  };
+
   //enquri api hit => otp sent to mob no.
   async function enquiryApi() {
-    let payload = {
-      vehicleId,
-      name,
-      email,
-      mob_no,
-      user_type,
-      city: locationCity,
-      hash: "ekxpmAB8m9v",
-    };
-    await axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
-      console.log(result.data);
-      if (result.data.status === "failed") {
-        console.log(result.data);
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
+    let user_token = localStorage.getItem("Token");
+    if (validateFields()) {
+      let payload = {
+        vehicleId,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city: locationCity,
+        hash: "ekxpmAB8m9v",
+      };
+      console.log(payload);
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload,{
+           headers: {
+          Authorization: ` Bearer ${user_token} `,
+        },} )
+        .then((result) => {
           console.log(result.data);
-          toast.success(result.data.message);
-          setBuyerInput(!BuyerInput); //closing buyer input screen
-          setBuyerOtp(!BuyerOtp); //displaying otp screen
-          // setvisibleOTP(!visibleOTP);
-          // setmob_no(mob_no);
-          // setSellerDetails(!SellerDetails); //displaying seller details
-          // setOtp(otp);
-          // setBuyerOtp(!BuyerOtp);
-          // setCounter(59);
-        }
-      }
-    });
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+              // setvisibleOTP(!visibleOTP);
+              // setmob_no(mob_no);
+              // setSellerDetails(!SellerDetails); //displaying seller details
+              // setOtp(otp);
+              // setBuyerOtp(!BuyerOtp);
+              // setCounter(59);
+            }
+          }
+        });
+    }
   }
 
   function verifyOtp() {
@@ -302,24 +337,59 @@ const VehicleDetails = () => {
     setOtp(o);
     console.log(otp);
   }
+  //for otp page
+  const ValidateMobileNo = () => {
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+    if (!validateMobNo.test(mob_no)) {
+      toast.error("please enter valid mobile number");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  //enquiry otp verify
+  function enquiryVerifyOtp() {
+    if (ValidateMobileNo()) {
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
+        console.log(res);
+
+        if (res.data.status === "failed") {
+          toast.error("incorrect otp");
+        } else if (res.data.status === "Success") {
+          toast.success(res.data.message);
+          setBuyerOtp(!BuyerOtp); //closingotp screen
+          setSellerDetails(!SellerDetails); //displaing seller details
+          // saveBuyer();
+        }
+      });
+    }
+  }
 
   //signup otp verify
-  function signUpVeryfyOtp(){
-    console.log("otp verified");
-    console.warn({ mob_no, otp });
-    let payload = { mob_no, otp };
-    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
-      console.log(res);
+  function signUpVeryfyOtp() {
+    if (ValidateMobileNo()) {
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+        console.log(res);
 
-      // if (res.data.status === "failed") {
+        // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
-      // } else if (res.data.status === "Success") {
+        // } else if (res.data.status === "Success") {
         // toast.success(res.data.message);
         // setBuyerOtp(!BuyerOtp); //closingotp screen
         // setSellerDetails(!SellerDetails); //displaing seller details
         // saveBuyer();
-      // }
-    });
+        // }
+      });
+    }
   }
 
   //enquiry otp verify
@@ -390,25 +460,29 @@ const VehicleDetails = () => {
               </div>
               <div className="emi-left-mid-div">
                 <div className="donut-graph">
-                  
                   <Pie
-                  data={{
-                    labels:['total interest', 'Total Amount'],
-                    datasets:[{
-                      data:[pAmount,TotalAmountOfIntrest],
-                      backgroundColor:['#CAF0FF','#050F56']
-                    }]
-                  }}
+                    data={{
+                      labels: ["total interest", "Total Amount"],
+                      datasets: [
+                        {
+                          data: [pAmount, TotalAmountOfIntrest],
+                          backgroundColor: ["#CAF0FF", "#050F56"],
+                        },
+                      ],
+                    }}
                   />
-
                 </div>
                 <div className="pla-div">
-                  <div className="pla-text"><span className="cir1"></span>Principal Loan Amount</div>
+                  <div className="pla-text">
+                    <span className="cir1"></span>Principal Loan Amount
+                  </div>
                   <div className="pla-price"> ₹{pAmount}</div>
                 </div>
                 {/* total interest payable div */}
                 <div className="pla-div">
-                  <div className="pla-text"><span className="cir2"></span>Total Interest Payable</div>
+                  <div className="pla-text">
+                    <span className="cir2"></span>Total Interest Payable
+                  </div>
                   <div className="pla-price">₹{TotalAmountOfIntrest}</div>
                 </div>
               </div>
@@ -466,7 +540,7 @@ const VehicleDetails = () => {
                     value={downPayment}
                     onChange={(event, vInt) => {
                       setdownPayment(vInt);
-                      
+
                       // setpAmount(pAmount-vInt);
                     }}
                     defaultValue={downPayment}
@@ -501,17 +575,27 @@ const VehicleDetails = () => {
                 <div className="ir-text"> Interest Rate*</div>
                 <div className="ir-number-div">
                   <span className="percent-symbol">
-                  <input
-                   readOnly={editableIntrest}
-                  type="number" min="0" max="20"
-                  className="ir-percent"
-                    value={interest}
-                    onChange={(event) => {
-                      setinterest(event.target.value);
-                    }}
-                  />%</span>
+                    <input
+                      readOnly={editableIntrest}
+                      type="number"
+                      min="0"
+                      max="20"
+                      className="ir-percent"
+                      value={interest}
+                      onChange={(event) => {
+                        setinterest(event.target.value);
+                      }}
+                    />
+                    %
+                  </span>
                   {/* <div className="edit-img"> */}
-                  <img src={Edit} alt="" onClick={()=>{seteditableIntrest(false);}} />
+                  <img
+                    src={Edit}
+                    alt=""
+                    onClick={() => {
+                      seteditableIntrest(false);
+                    }}
+                  />
                   {/* </div> */}
                 </div>
               </div>
@@ -602,7 +686,7 @@ const VehicleDetails = () => {
                 onClick={() => {
                   enquiryApi(); //posting data into enquiry api
                   // saveBuyer();
-                  // verifyOtp(); //sending otp using phone no. 
+                  // verifyOtp(); //sending otp using phone no.
                   // setBuyerInput(!BuyerInput); //closing input screen
                   // setBuyerOtp(!BuyerOtp); //displaying otp screen
                 }}
@@ -666,11 +750,13 @@ const VehicleDetails = () => {
               </div>
               <button
                 onClick={() => {
-                  
-                  userToken
-                      ?
-                  enquiryVerifyOtp() //verify enquiry otp
-                  :enquiryVerifyOtp(); signUpVeryfyOtp(); //hitting both api
+                  if (userToken) {
+                    enquiryVerifyOtp();
+                  } //verify enquiry otp
+                  else {
+                    enquiryVerifyOtp();
+                    signUpVeryfyOtp(); //hitting both api
+                  }
                 }}
               >
                 Verify

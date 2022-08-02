@@ -48,6 +48,7 @@ import { updateLanguage } from "./../Helpers/helper";
 import { selectLocation } from "../store/location/location.selector";
 import { setCurrentCity } from "../store/location/location.action";
 import loadGT from "../Helpers/gtt_loader";
+import { log } from "util";
 
 const queryString = require("query-string");
 
@@ -164,7 +165,7 @@ const Navbar = () => {
   const [otp, setotp] = useState("");
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
-  const [city, setcity] = useState("");
+  const [city, setcity] = useState(locationCity);
   const [password, setpassword] = useState("");
   const [confirm_password, setconfirm_password] = useState("");
   const [eye, seteye] = useState(false);
@@ -179,109 +180,105 @@ const Navbar = () => {
 
   //desktop login section
 
-  //wesite sign in page
+  //website sign in page
   function saveUser() {
-    validateFeildsForSignIn();
-    console.warn({ mob_no });
-    let payload = { mob_no, hash: "ekxpmAB8m9v" };
-    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
-      console.log("result", result);
-      if (mob_no === "") {
-        // notify();
-        toast.error("enter moile number");
-      } else if (result.data.status === "failed") {
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
-          toast.success(result.data.message);
-          setotp(result.data.otp);
-          setvisibleOTP(!visibleOTP);
-          setvisible(false);
+    if (validateFeildsForSignIn()) {
+      console.warn({ mob_no });
+      let payload = { mob_no, hash: "ekxpmAB8m9v" };
+      axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+        console.log("result", result);
+        if (mob_no === "") {
+          toast.error("enter mobile number");
+        } else if (result.data.status === "failed") {
+          toast.error(result.data.message);
+        } else {
+          if (result.data.status === "success") {
+            toast.success(result.data.message);
+            setotp(result.data.otp);
+            setmob_no(mob_no);
+            setvisibleOTP(!visibleOTP);
+            setvisible(false);
 
-          setCounter(59);
+            setCounter(59);
+          }
         }
-      }
-    });
+      });
+    }
   }
   //website  otp page
   function savePhoneOtp() {
-    validateFeildsForOtp();
-    console.log("otp verified");
-    console.warn({ mob_no, otp });
-    let payload = { mob_no, otp };
-    axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
-      console.log(res);
-      localStorage.setItem("Token", res.data.user.accessToken);
-      window.location.href = "/loggeduser";
-      // if (res.data.status == "failed") {
-      if (res.data.status === "failed") {
-        toast.error("incorrect otp");
-      } else if (res.data.status === "Success") {
-        toast.success(res.data.message);
-        setvisibleOTP(false);
-      }
-    });
+    if (validateFeildsForOtp()) {
+      console.log("otp verified");
+      console.warn({ mob_no, otp });
+      let payload = { mob_no, otp };
+      axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
+        console.log(res);
+        localStorage.setItem("Token", res.data.user.accessToken);
+        window.location.href = "/loggeduser";
+        // if (res.data.status == "failed") {
+        if (res.data.status === "failed") {
+          toast.error("incorrect otp");
+        } else if (res.data.status === "Success") {
+          toast.success(res.data.message);
+          setvisibleOTP(false);
+        }
+      });
+    }
   }
+
+  const ValidationEmail = () => {
+    let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+
+    if (!validateEmail.test(email)) {
+      toast.error("please enter valid email id");
+      return false;
+    }
+    return true;
+  };
+
   //wesite sign in with mail and password
   function saveMailPassword() {
-    console.log("email verified");
-    console.warn({ email, password });
-    let payload = { email, password };
-    axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
-      console.log("hey" + res);
-      localStorage.setItem("Token", res.data.user.accessToken);
-      window.location.href = "/loggeduser";
-      // if (res.data.status == "failed") {
-      if (res.data.status === "failed") {
-        toast.error("incorrect password");
-      } else if (res.data.status === "Success") {
-        toast.success(res.data.message);
-        // setvisibleOTP(false);
-        setvisibleMailSigIn(!visibleMailSigIn);
-      }
-    });
+    if (ValidationEmail()) {
+      console.log("email verified");
+      console.warn({ email, password });
+      let payload = { email, password };
+      axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
+        console.log("hey" + res);
+        localStorage.setItem("Token", res.data.user.accessToken);
+        window.location.href = "/loggeduser";
+        // if (res.data.status == "failed") {
+        if (res.data.status === "failed") {
+          toast.error("incorrect password");
+        } else if (res.data.status === "Success") {
+          toast.success(res.data.message);
+          // setvisibleOTP(false);
+          setvisibleMailSigIn(!visibleMailSigIn);
+        }
+      });
+    }
   }
   //wesite sign in with google
-  function setGSignIp() {
+  function setGSignIp(email, social_token) {
     console.log("otp verified");
     console.warn({
-      name,
       email,
-      mob_no,
-      city: locationCity,
-      password,
-      confirm_password,
       type: "social",
-      social_token: "Google",
+      social_token,
     });
     let payload = {
-      name,
       email,
-      mob_no,
-      city: locationCity,
-      password,
-      confirm_password,
+      social_token,
       type: "social",
-      social_token: "Google",
     };
-    axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+    axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
       console.log("res", res);
-      if (name === "" || email === "" || mob_no === "") {
-        toast.error("required feilds are empty");
-      } else if (password !== confirm_password) {
-        toast.error("password and confirm password don't match");
-      } else {
-        if (res.data.status === "success") {
-          toast.success(res.data.message);
-          // setvisibleSignUp(false);
-          setGoogleSignIn(false);
-          setmob_no(res.data.mob_no);
-          // setotp(res.data.otp);
-          savePhoneOtp();
-          setvisibleOTP(true);
-        } else if (res.data.status === "failed") {
-          toast.error(res.data.message);
-        }
+
+      if (res.data.status === "success") {
+        toast.success(res.data.message);
+        localStorage.setItem("Token", res.data.user.accessToken);
+        window.location.href = "/loggeduser";
+      } else if (res.data.status === "failed") {
+        toast.error(res.data.message);
       }
     });
   }
@@ -292,7 +289,7 @@ const Navbar = () => {
       name,
       email,
       mob_no,
-      city: locationCity,
+      city,
       password,
       confirm_password,
       type: "social",
@@ -302,7 +299,7 @@ const Navbar = () => {
       name,
       email,
       mob_no,
-      city: locationCity,
+      city,
       password,
       confirm_password,
       type: "social",
@@ -330,45 +327,48 @@ const Navbar = () => {
     });
   }
 
-  //wesite sign up page
+  //website sign up page
   function setSignup() {
-    validateFeilds();
-    console.log("otp verified");
-    console.warn({
-      name,
-      email,
-      mob_no,
-      city: locationCity,
-      password,
-      confirm_password,
-    });
-    let payload = {
-      name,
-      email,
-      mob_no,
-      city: locationCity,
-      password,
-      confirm_password,
-      type: "",
-      social_token: "",
-    };
-    axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
-      console.log("res", res);
+    if (validateFeilds()) {
+      console.log("otp verified");
+      console.warn({
+        name,
+        email,
+        mob_no,
+        city,
+        password,
+        confirm_password,
+      });
+      let payload = {
+        name,
+        email,
+        mob_no,
+        city,
+        password,
+        confirm_password,
+        type: "",
+        social_token: "",
+      };
+      axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+        console.log("res", res);
 
-      if (password !== confirm_password) {
-        toast.error("password and confirm password doesn't match");
-      } else {
-        if (res.data.status === "success") {
-          toast.success(res.data.message);
-          setmob_no(res.data.mob_no);
-          setvisibleSignUp(false);
-          // savePhoneOtp();
-          setvisibleOTP(true);
-        } else if (res.data.status === "failed") {
-          toast.error(res.data.message);
+        if (password !== confirm_password) {
+          toast.error("password and confirm password doesn't match");
+        } else {
+          if (res.data.status === "success") {
+            toast.success(res.data.message);
+            // setmob_no(res.data.mob_no);
+            // console.log(res);
+            setmob_no(mob_no);
+            setvisibleSignUp(false);
+            setvisibleOTP(true);
+            setCounter(59);
+          } else if (res.data.status === "failed") {
+            toast.error(res.data.message);
+          }
         }
-      }
-    });
+      });
+    }
   }
   //wesite resed otp
   function resendotp() {
@@ -440,7 +440,7 @@ const Navbar = () => {
       name,
       email,
       mob_no,
-      city: locationCity,
+      city,
       password,
       confirm_password,
     });
@@ -448,7 +448,7 @@ const Navbar = () => {
       name,
       email,
       mob_no,
-      city: locationCity,
+      city,
       password,
       confirm_password,
     };
@@ -573,14 +573,17 @@ const Navbar = () => {
   //website sign in with google response
   function responseGoogle(response) {
     console.log("google response", response);
-    setsocial_token(response?.tokenId);
-    setname(response?.profileObj?.name);
+    setsocial_token(response?.accessToken);
+    // setname(response?.profileObj?.name);
     setemail(response?.profileObj?.email);
-    sethidePassword(true);
+
+    // sethidePassword(true);
     if (response) {
-      setvisible(false);
+      setGSignIp(response?.profileObj?.email, response?.accessToken);
+
+      // setvisible(false);
       // setvisibleSignUp(!visibleSignUp);
-      setGoogleSignIn(!GoogleSignIn);
+      // setGoogleSignIn(!GoogleSignIn);
     }
   }
   //responsive sign in with google response
@@ -651,7 +654,10 @@ const Navbar = () => {
 
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
+      return false;
     }
+
+    return true;
   };
   //for sign in page
   const validateFeildsForSignIn = () => {
@@ -660,7 +666,10 @@ const Navbar = () => {
 
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
+      return false;
     }
+
+    return true;
   };
   //for signup page
   const validateFeilds = () => {
@@ -671,13 +680,25 @@ const Navbar = () => {
 
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
+      return false;
     }
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
+      return false;
     }
     if (!validateEmail.test(email)) {
       toast.error("please enter valid email id");
+      return false;
     }
+    if (password.length > 10) {
+      toast.error("please enter password of 10 characters or less");
+      return false;
+    }
+    if (password==="") {
+      toast.error("please enter password");
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -1121,6 +1142,7 @@ const Navbar = () => {
               onClick={() => {
                 setvisibleSignUp(!visibleSignUp);
                 setvisible(false);
+                // setvisibleOTP(true);
               }}
               className="create-account"
             >
@@ -1350,6 +1372,7 @@ const Navbar = () => {
               className="otp-phone-no-input"
               placeholder="Mobile number "
               onChange={(e) => {
+                console.log(mob_no);
                 setmob_no(e.target.value);
               }}
             />
@@ -1515,6 +1538,7 @@ const Navbar = () => {
                       type="text"
                       placeholder="Enter City here..."
                       onChange={handleCityChange}
+                      onFocus={handleLangFocus}
                       value={citySearch}
                     />
 
@@ -1610,6 +1634,7 @@ const Navbar = () => {
                       type="text"
                       placeholder="Enter City here..."
                       onChange={handleCityChange}
+                      onFocus={handleLangFocus}
                       value={citySearch}
                     />
 
@@ -1930,6 +1955,7 @@ const Navbar = () => {
                 name="mob_no"
                 value={mob_no}
                 onChange={(e) => {
+                  console.log("hjj");
                   setmob_no(e.target.value);
                 }}
               />

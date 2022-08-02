@@ -23,6 +23,7 @@ import VehicleCard from "../pages/VehicleCard";
 import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
+import noDataImg from "../assets/no-picture-available-icon-1.jpg"
 
 function UserVehicles() {
   const defaultOptions = {
@@ -38,7 +39,7 @@ function UserVehicles() {
   const getDetails = () => {
     if (init() === "success") {
       axios
-        .get("https://gaddideals.brokerinvoice.co.in/api/user")
+        .get("https://core.gaddideals.com/api/user")
         .then((res) => {
           setname(res.data.user);
         });
@@ -53,22 +54,26 @@ function UserVehicles() {
   const [vehicleName, setvehicleName] = useState("");
   const [Seller,setSeller]=useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+
+
   //for vehicle data
   const getMyVehicleDetails = async () => {
-    await axios
-      .get("https://gaddideals.brokerinvoice.co.in/api/enquiries/my_enquiries", {
+    console.log("otsideeeeeeeeeeeee");
+    await axios.get("https://core.gaddideals.com/api/enquiries/my_enquiries", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
-        setvehicleData(res.data.getMyEnquiries);
-        console.log(res.data.getMyEnquiries);
+        console.log("insideeeeeeeeeeeeeeeeeeee");
+        console.log("enquiries response======="+res);
+        setvehicleData(res?.data?.getMyEnquiries);
+        // console.log(res?.data?.getMyEnquiries);
         res.data.getMyEnquiries.forEach((item, index) => {
-          setvehicleName(item.vehicle_id.model);
+          setvehicleName(item?.vehicle_id?.model);
           setdataAvailable(true);
-          console.log(item.vehicle_id.model);
-          setSeller(item.seller_id)
+          // console.log(item?.vehicle_id?.model);
+          setSeller(item?.seller_id);
         });
       });
   };
@@ -80,16 +85,16 @@ function UserVehicles() {
     getMyVehicleDetails();
   }, []);
 
-  const handleVehicleDelete = async (vehicleId) => {
-    const response = await axios.delete(
-      Constant.getUrls.getAllVehicles + `/delete/${vehicleId}`
-    );
+  // const handleVehicleDelete = async (vehicleId) => {
+  //   const response = await axios.delete(
+  //     Constant.getUrls.getAllVehicles + `/delete/${vehicleId}`
+  //   );
 
-    if (response.data.status === "success") {
-      getMyVehicleDetails();
-      toast.success(response.data.message);
-    }
-  };
+  //   if (response.data.status === "success") {
+  //     getMyVehicleDetails();
+  //     toast.success(response.data.message);
+  //   }
+  // };
 
   return (
     <>
@@ -159,9 +164,9 @@ function UserVehicles() {
                     <div className="card-wrapper-vehicles">
                       <div className="card-img-wrapper">
                         <img
-                          src={
-                            "https://gaddideals.brokerinvoice.co.in" +
-                            item.front_side_pic
+                          src={noDataImg
+                            // "https://gaddideals.brokerinvoice.co.in" +
+                            // item.front_side_pic
                           }
                           alt="truck"
                         />
@@ -183,7 +188,7 @@ function UserVehicles() {
                             <span>(Uploaded on Jun 01,2022)</span>
                           </div> */}
                           <div className="card-price">
-                          <h3>₹{item.vehicle_id.selling_price} </h3>
+                          <h3>₹{item?.vehicle_id?.selling_price} </h3>
                         </div>
                         </div>
 
