@@ -67,6 +67,9 @@ const VehicleListings = () => {
   const [pageNo, setPageNo] = useState(1);
   const [displayFilterTwo, setdisplayFilterTwo] = useState(false);
   const [displayFilterOne, setdisplayFilterOne] = useState(false);
+  const [statesArray, setStatesArray] = useState([]);
+  const [citiesArray, setCitiesArray] = useState([]);
+  const [selectedStateIds, setselectedStateIds] = useState([]);
 
   const locationCity = useSelector(selectLocation);
 
@@ -366,7 +369,6 @@ const VehicleListings = () => {
 
   const fetchCategories = async () => {
     const response = await axios.get(`${Constant.getUrls.getAllCategories}`);
-    const cityId = localStorage.getItem("cityId");
     if (response) {
       setCategories(response.data.category.docs);
       if (!location.category) {
@@ -374,7 +376,7 @@ const VehicleListings = () => {
         location.category_name =
           response.data.category.docs[0].title.toLowerCase();
         console.log(locationCity);
-        location.city = cityId;
+        // location.city = cityId;
         location.category = response.data.category.docs[0]._id;
         let prevUrl = queryString.stringify(location);
         navigate("?" + prevUrl);
@@ -394,6 +396,7 @@ const VehicleListings = () => {
   };
 
   const fetchVehiclesAPI = async (location) => {
+    console.log("fetch Vehicle");
     const apiUrl = queryString.stringify(location);
 
     const res = await axios.get(
@@ -473,6 +476,113 @@ const VehicleListings = () => {
     location["price_sort"] = priceStatus;
     let prevUrl = queryString.stringify(location);
     navigate("?" + prevUrl);
+    fetchVehiclesAPI(location);
+  };
+
+  // state checked
+  const isStateChecked = (id) => {
+    if (location["state[]"]) {
+      if (typeof location["state[]"] === "string") {
+        return location["state[]"] === id;
+      } else {
+        return location["state[]"].includes(id);
+      }
+    }
+  };
+  const handleStateType = (id, stateTitle) => {
+    // window.scrollTo(0, 0);
+    const prevUrl = queryString.stringify(location);
+
+    if (!location["state[]"]) {
+      location["state[]"] = id;
+      location["state_title"] = stateTitle;
+      navigate("?" + prevUrl + "&state[]=" + id + "&state_title=" + stateTitle);
+    } else {
+      if (typeof location["state[]"] === "string") {
+        if (location["state[]"] === id) {
+          delete location["state[]"];
+          delete location["state_title"];
+        } else {
+          location["state[]"] = [location["state[]"], id];
+        }
+      } else {
+        const isFT = location["state[]"].find((st) => st === id);
+        if (isFT) {
+          const idx = location["state[]"].indexOf(id);
+          location["state[]"].splice(idx, 1);
+        } else {
+          location["state[]"].push(id);
+        }
+      }
+    }
+    console.log(location);
+
+    console.log(location);
+
+    // manage cities data
+    if (selectedStateIds.includes(id)) {
+      let index = selectedStateIds.findIndex((_id) => _id === id);
+      selectedStateIds.splice(index, 1);
+      setselectedStateIds(selectedStateIds);
+      fetchCities(selectedStateIds);
+      console.log(selectedStateIds);
+      if (selectedStateIds.length === 0) {
+        setCitiesArray([]);
+        delete location["city[]"];
+        delete location["city_title"];
+      }
+    } else {
+      selectedStateIds.push(id);
+      setselectedStateIds(selectedStateIds);
+      fetchCities(selectedStateIds);
+    }
+
+    const STstring = queryString.stringify(location);
+    navigate("?" + STstring);
+    fetchVehiclesAPI(location);
+  };
+
+  // city checked
+  const isCityChecked = (id) => {
+    if (location["city[]"]) {
+      if (typeof location["city[]"] === "string") {
+        return location["city[]"] === id;
+      } else {
+        return location["city[]"].includes(id);
+      }
+    }
+  };
+  const handleCityType = (id, cityTitle) => {
+    window.scrollTo(0, 0);
+    const prevUrl = queryString.stringify(location);
+
+    console.log(location);
+    if (!location["city[]"]) {
+      location["city[]"] = id;
+      location["city_title"] = cityTitle;
+      navigate("?" + prevUrl + "&city[]=" + id + "&city_title=" + cityTitle);
+    } else {
+      if (typeof location["city[]"] === "string") {
+        if (location["city[]"] === id) {
+          delete location["city[]"];
+          delete location["city_title"];
+        } else {
+          location["city[]"] = [location["city[]"], id];
+        }
+      } else {
+        const isFT = location["city[]"].find((st) => st === id);
+        if (isFT) {
+          const idx = location["city[]"].indexOf(id);
+          location["city[]"].splice(idx, 1);
+        } else {
+          location["city[]"].push(id);
+        }
+      }
+    }
+
+    const STstring = queryString.stringify(location);
+    navigate("?" + STstring);
+
     fetchVehiclesAPI(location);
   };
 
@@ -741,6 +851,18 @@ const VehicleListings = () => {
   };
 
   useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        const res = await axios.get(Constant.getUrls.getAllStates);
+
+        if (res.data) {
+          setStatesArray(res.data.getAllStates.docs);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     window.scrollTo(0, 0);
     fetchCategories();
     fetchBodyTypes();
@@ -749,11 +871,39 @@ const VehicleListings = () => {
     fetchModelYears();
     fetchKmsDriven();
     fetchFuelTypes();
+    fetchStates();
 
     window
       .matchMedia("(max-width: 1000px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
+
+  const fetchCities = async (stateIds) => {
+    try {
+      console.log(stateIds);
+      if (stateIds.length > 0) {
+        let url = Constant.getUrls.getAllCity + "?";
+        stateIds.forEach((id) => {
+          url += "state[]=" + id + "&";
+        });
+        const res = await axios.get(url);
+
+        if (res.data) {
+          setCitiesArray((prevState) => [...res.data.getAllCities.docs]);
+        }
+      } else {
+        setCitiesArray([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    // const isCity = citiesArray.find((city) => city?._id === stateId);
+    // if (!isStateChecked) {
+    //   const idx = citiesArray.indexOf(stateId);
+    //   citiesArray.splice(idx, 1);
+    // }
+  };
 
   return (
     <>
@@ -1567,6 +1717,64 @@ const VehicleListings = () => {
                   </div>
                 ))}
               </ToggleCategory>
+
+              <ToggleCategory categoryTitle="State">
+                <div className="states">
+                  {statesArray.map((state) => (
+                    <div className="list" key={state?._id}>
+                      <div
+                        className="list-content"
+                        onClick={() => {
+                          handleStateType(state?._id, state?.title);
+                        }}
+                      >
+                        {isStateChecked(state?._id) ? (
+                          <MdOutlineCheckBox color="#050F56" size={25} />
+                        ) : (
+                          <MdOutlineCheckBoxOutlineBlank
+                            color="#050F56"
+                            size={25}
+                          />
+                        )}
+                        <p>{state?.title}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ToggleCategory>
+
+              {citiesArray.length > 0 && (
+                <ToggleCategory categoryTitle="City">
+                  <div className="city">
+                    {citiesArray.length > 0 ? (
+                      <>
+                        {citiesArray.map((city) => (
+                          <div className="list" key={city?._id}>
+                            <div
+                              className="list-content"
+                              onClick={() => {
+                                handleCityType(city?._id, city?.title);
+                              }}
+                            >
+                              {isCityChecked(city?._id) ? (
+                                <MdOutlineCheckBox color="#050F56" size={25} />
+                              ) : (
+                                <MdOutlineCheckBoxOutlineBlank
+                                  color="#050F56"
+                                  size={25}
+                                />
+                              )}
+                              <p>{city?.title}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    ) : (
+                      "No Cities Available"
+                    )}
+                  </div>
+                </ToggleCategory>
+              )}
             </div>
           </div>
         </aside>

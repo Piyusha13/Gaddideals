@@ -69,7 +69,7 @@ function UserVehicles() {
         // console.log("enquiries response=======" + res);
         setvehicleData(res?.data?.getMyEnquiries);
         console.log(res?.data?.getMyEnquiries);
-        res.data.getMyEnquiries.forEach((item, index) => {
+        res?.data?.getMyEnquiries?.forEach((item, index) => {
           setvehicleName(item?.vehicle_id?.brand);
           setvehicleImg(item?.vehicle_id?.front_side_pic);
           setdataAvailable(true);
@@ -173,7 +173,7 @@ function UserVehicles() {
                             <div className="location">
                               <img src={locationIcon} alt="location icon" />
                               {/* fetching city name  */}
-                              <span>{item.city.title}</span>
+                              <span>{item?.city}</span>
                             </div>
                           </div>
                           {/* <div className="card-publish-review">

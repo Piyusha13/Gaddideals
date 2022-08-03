@@ -30,8 +30,6 @@ const queryString = require("query-string");
 function App() {
   const location = queryString.parse(window.location.search);
 
-  const [cities, setCities] = useState([]);
-
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -94,30 +92,15 @@ function App() {
     if (!cookie.includes("googtrans")) {
       document.cookie = "googtrans=/auto/en";
     }
-    const fetchCities = async () => {
-      try {
-        const res = await axios.get(Constant.getUrls.getAllCity);
+  }, []);
 
-        if (res.data) {
-          setCities(res.data.getAllCities.docs);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // const cityMumbai = cities?.find((city) => city?.title === "Mumbai");
+  // localStorage.setItem("cityName", cityMumbai?.title);
+  // localStorage.setItem("cityId", cityMumbai?._id);
 
-    fetchCities();
-  }, [dispatch]);
+  // dispatch(setCurrentCity(cityMumbai?.title));
 
-  const cityMumbai = cities?.find((city) => city?.title === "Mumbai");
-  localStorage.setItem("cityName", cityMumbai?.title);
-  localStorage.setItem("cityId", cityMumbai?._id);
-
-  dispatch(setCurrentCity(cityMumbai?.title));
-
-  if (!location.cityName) {
-    location["cityName"] = cityMumbai?.title;
-
+  if (!location) {
     const lang = localStorage.getItem("lang");
     let prevUrl = queryString.stringify(location);
 

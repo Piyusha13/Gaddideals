@@ -2504,7 +2504,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="location-container sm-device">
+          {/* <div className="location-container sm-device">
             <div
               className="location"
               onClick={() => setLangDropdown(!langDropdown)}
@@ -2555,7 +2555,7 @@ const Navbar = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="languages-container">
             <div className="language">

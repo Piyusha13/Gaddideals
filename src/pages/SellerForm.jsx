@@ -151,7 +151,7 @@ const SellerForm = () => {
     // });
 
     const res = await axios.get(
-      Constant.getUrls.getAllStates + "?status=active&sort=true"
+      Constant.getUrls.getAllStates + "?status=active&sort=true&limit=100"
     );
     if (res.data) {
       setStatesArray(res.data.getAllStates.docs);
@@ -171,7 +171,7 @@ const SellerForm = () => {
     // }
 
     const res = await axios.get(
-      Constant.getUrls.getAllCity + "?status=active&sort=true"
+      Constant.getUrls.getAllCity + "?status=active&sort=true&limit=500"
     );
     if (res.data) {
       setCitiesArray(res.data.getAllCities.docs);
