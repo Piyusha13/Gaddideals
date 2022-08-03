@@ -696,7 +696,7 @@ const Navbar = () => {
       toast.error("please enter password of 10 characters or less");
       return false;
     }
-    if (password==="") {
+    if (password === "") {
       toast.error("please enter password");
       return false;
     }
@@ -2204,10 +2204,9 @@ const Navbar = () => {
                             setCitySearch(city?.title);
                             dispatch(setCurrentCity(city?.title));
                             setLangDropdown(false);
-                            localStorage.setItem("location", city?.title);
+                            // localStorage.setItem("cityName", city?.title);
                             if (location.city) {
-                              location.city = city?.title;
-                              location.cid = city?._id;
+                              location.city = city?._id;
                               let prevUrl = queryString.stringify(location);
                               window.location.href =
                                 window.location.pathname + "?" + prevUrl;
