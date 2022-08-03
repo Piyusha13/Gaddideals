@@ -54,6 +54,7 @@ import { log } from "util";
 const queryString = require("query-string");
 
 const Navbar = () => {
+  const locationCity = useSelector(selectLocation);
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
@@ -71,14 +72,15 @@ const Navbar = () => {
 
   const [GoogleSignIn, setGoogleSignIn] = useState(false);
   const [FaceookSignIn, setFaceookSignIn] = useState(false);
+  const [EnableResendOtp, setEnableResendOtp] = useState(false);
+
+  const [GSignUp, setGSignUp] = useState(false);
 
   // const googleTranslate = require("google-translate")("AIzaSyBokh77ocsW0ene-vrX80v1Wd5QUj64pSw");
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  const locationCity = useSelector(selectLocation);
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -174,7 +176,7 @@ const Navbar = () => {
   const [otp, setotp] = useState("");
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
-  const [city, setcity] = useState(locationCity);
+  const [city, setcity] = useState("");
   const [password, setpassword] = useState("");
   const [confirm_password, setconfirm_password] = useState("");
   const [eye, seteye] = useState(false);
@@ -187,6 +189,15 @@ const Navbar = () => {
   // const notify = () =>toast("Enter mobile number")  ;
 
   //desktop login section
+  function clearAllStates() {
+    setname("");
+    setmob_no("");
+    setemail("");
+    setcity("");
+    setpassword("");
+    setconfirm_password("");
+    setotp("");
+  }
 
   //website sign in page
   function saveUser() {
@@ -202,7 +213,7 @@ const Navbar = () => {
         } else {
           if (result.data.status === "success") {
             toast.success(result.data.message);
-            setotp(result.data.otp);
+            // setotp(result.data.otp);
             setmob_no(mob_no);
             setvisibleOTP(!visibleOTP);
             setvisible(false);
@@ -234,11 +245,15 @@ const Navbar = () => {
     }
   }
 
-  const ValidationEmail = () => {
+  const ValidationEmailAndPassword = () => {
     let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
     if (!validateEmail.test(email)) {
       toast.error("please enter valid email id");
+      return false;
+    }
+    if (password === "") {
+      toast.error("please enter password");
       return false;
     }
     return true;
@@ -246,7 +261,7 @@ const Navbar = () => {
 
   //wesite sign in with mail and password
   function saveMailPassword() {
-    if (ValidationEmail()) {
+    if (ValidationEmailAndPassword()) {
       console.log("email verified");
       console.warn({ email, password });
       let payload = { email, password };
@@ -335,6 +350,49 @@ const Navbar = () => {
     });
   }
 
+  //website google sign up page
+  function websiteGoogleSignup() {
+    // toast.success("working");
+    if (validateFeilds()) {
+      // toast.success("working");
+      console.log("otp verified");
+      console.warn({
+        name,
+        email,
+        mob_no,
+        city,
+        password,
+        confirm_password,
+        type: "social",
+        social_token,
+      });
+      let payload = {
+        name,
+        email,
+        mob_no,
+        city,
+        password: "",
+        confirm_password: "",
+        type: "social",
+        social_token,
+      };
+      axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+        console.log("res", res);
+        // toast.success("working");
+        if (res.data.status === "success") {
+          // toast.success(res.data.message);
+          setmob_no(mob_no);
+          setGSignUp(false);
+          saveUser();
+          setvisibleOTP(true);
+          setCounter(59);
+        } else if (res.data.status === "failed") {
+          toast.error(res.data.message);
+        }
+      });
+    }
+  }
+
   //website sign up page
   function setSignup() {
     if (validateFeilds()) {
@@ -390,8 +448,9 @@ const Navbar = () => {
         toast.error(result.data.message);
       } else {
         if (result.data.status === "success") {
+          setEnableResendOtp(false);
           toast.success(result.data.message);
-          setotp(result.data.otp);
+          // setotp(result.data.otp);
           setCounter(59);
         }
       }
@@ -403,6 +462,9 @@ const Navbar = () => {
   React.useEffect(() => {
     const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    if (counter == 0) {
+      setEnableResendOtp(true);
+    }
     return () => clearInterval(timer);
   }, [counter]);
 
@@ -432,7 +494,7 @@ const Navbar = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          setotp(result.data.otp);
+          // setotp(result.data.otp);
           setshowOtp(!showOtp);
           setshowsignup(!showsignup);
           setCounter(59);
@@ -572,6 +634,22 @@ const Navbar = () => {
     });
   });
 
+  //website sign up with google
+  function responseGoogleSignup(response) {
+    console.log("google response", response);
+    setsocial_token(response?.accessToken);
+    setemail(response?.profileObj?.email);
+    setname(response?.profileObj?.name);
+    console.log(response?.profileObj?.name);
+
+    if (response) {
+      //function for google sign up wbesite
+      sethidePassword(true);
+      setGSignUp(true);
+      setvisibleSignUp(false);
+    }
+  }
+
   //website sign in with google response
   function responseGoogle(response) {
     console.log("google response", response);
@@ -582,10 +660,6 @@ const Navbar = () => {
     // sethidePassword(true);
     if (response) {
       setGSignIp(response?.profileObj?.email, response?.accessToken);
-
-      // setvisible(false);
-      // setvisibleSignUp(!visibleSignUp);
-      // setGoogleSignIn(!GoogleSignIn);
     }
   }
   //responsive sign in with google response
@@ -600,6 +674,26 @@ const Navbar = () => {
     setshowSignIn(!showSignIn);
   }
 
+  //wesite faceook sign up
+  const responseFacebookSignup = (response) => {
+    console.log(response);
+    console.log("hey " + response.name);
+    setsocial_token(response?.accessToken);
+    setname(response?.name);
+    setemail(response?.email);
+    sethidePassword(true);
+    // if (response) {
+    //function for facebook sign up wbesite
+    // toast.error("working");
+    // }
+    if (response) {
+      //function for google sign up wbesite
+      sethidePassword(true);
+      setGSignUp(true);
+      setvisibleSignUp(false);
+    }
+  };
+
   //website sign in with fb response
   const responseFacebook = (response) => {
     console.log(response);
@@ -608,10 +702,13 @@ const Navbar = () => {
     setname(response?.name);
     setemail(response?.email);
     sethidePassword(true);
+    // if (response) {
+    //   setvisible(false);
+    //   // setvisibleSignUp(!visibleSignUp);
+    //   setFaceookSignIn(!FaceookSignIn);
+    // }
     if (response) {
-      setvisible(false);
-      // setvisibleSignUp(!visibleSignUp);
-      setFaceookSignIn(!FaceookSignIn);
+      setGSignIp(response?.email, response?.accessToken);
     }
   };
 
@@ -658,6 +755,10 @@ const Navbar = () => {
       toast.error("please enter valid mobile number");
       return false;
     }
+    if (otp === "") {
+      toast.error("please enter otp");
+      return false;
+    }
 
     return true;
   };
@@ -692,19 +793,178 @@ const Navbar = () => {
       toast.error("please enter valid email id");
       return false;
     }
-    if (password.length > 10) {
-      toast.error("please enter password of 10 characters or less");
-      return false;
-    }
-    if (password==="") {
-      toast.error("please enter password");
-      return false;
+    if (!GSignUp) {
+      if (password === "") {
+        toast.error("please enter password");
+        return false;
+      } else if (password.length > 10) {
+        toast.error("please enter password of 10 characters or less");
+        return false;
+      } else if (password.length < 4) {
+        toast.error("please enter password of 4 characters or more");
+        return false;
+      }
     }
     return true;
   };
 
   return (
     <header className="header-container">
+      {/* signup with google */}
+      {GSignUp && (
+        <div className="signup-main_parent">
+          <div
+            className="signup-parent"
+            className={onclose ? "parent" : "slideBack"}
+            onClick={() => {
+              clearAllStates();
+              setonclose(false);
+              setTimeout(() => {
+                setvisible(false);
+              }, 300);
+              setTimeout(() => {
+                setvisibleSignUp(false);
+              }, 300);
+            }}
+          ></div>
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "30px",
+              paddingLeft: "40px",
+              fontFamily: "Arial",
+              width: "35%",
+
+              float: "right",
+              height: "100%",
+              position: "fixed",
+              zIndex: 9999999999999999,
+              right: 0,
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: "30px 0px 0px 30px",
+            }}
+            className={onclose ? "DivSignInWithOptions" : "slideBack"}
+          >
+            <img
+              className="signup-closing-arrow"
+              onClick={() => {
+                clearAllStates();
+                setonclose(false);
+                setTimeout(() => {
+                  setvisible(false);
+                }, 300);
+                setTimeout(() => {
+                  setGSignUp(false);
+                }, 300);
+              }}
+              src={closingArrow}
+              alt=""
+            />
+            <p className="signup-sign-in-title">
+              Sign up to
+              <span className="signup-text-color-blue"> Gaddideals </span>
+            </p>
+            <input
+              onChange={(e) => {
+                setname(e.target.value);
+              }}
+              value={name}
+              type="text"
+              className="signup-phone-no-input"
+              placeholder="Name "
+            />
+            <input
+              onChange={(e) => {
+                setmob_no(e.target.value);
+              }}
+              value={mob_no}
+              maxLength={10}
+              className="signup-phone-no-input"
+              placeholder="Mobile number "
+              // type="number"
+            />
+            <input
+              onChange={(e) => {
+                setemail(e.target.value);
+              }}
+              value={email}
+              type="email"
+              className="signup-phone-no-input"
+              placeholder="Email "
+            />
+            <div className="SinguplocationIcon">
+              <input
+                onChange={(e) => {
+                  setcity(e.target.value);
+                }}
+                value={city}
+                type="text"
+                className="signup-location-input"
+                placeholder="Location "
+              />
+              <img
+                className="Singup-location-Icon"
+                src={SinguplocationIcon}
+                alt=""
+              ></img>
+            </div>
+            {hidePassword ? null : (
+              <>
+                <input
+                  onChange={(e) => {
+                    setpassword(e.target.value);
+                  }}
+                  value={password}
+                  type="password"
+                  className="signup-phone-no-input"
+                  placeholder="Password "
+                />
+                <p className="password-guide">
+                  Password length must be less than 10 characters
+                </p>
+                <div className="SingupEyeIconDiv">
+                  <input
+                    onChange={(e) => {
+                      setconfirm_password(e.target.value);
+                    }}
+                    value={confirm_password}
+                    type={eye ? "text" : "password"}
+                    className="signup-location-input"
+                    placeholder="Confirm Password"
+                  />
+                  <img
+                    alt=""
+                    onClick={() => {
+                      seteye(!eye);
+                    }}
+                    className="Singup-eye-Icon"
+                    src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                  ></img>
+                </div>
+              </>
+            )}
+            <button
+              onClick={() => {
+                websiteGoogleSignup();
+                // toast.success("working");
+              }}
+              className="signup-sign-in-button"
+            >
+              SIGN UP
+            </button>
+            <p
+              onClick={() => {
+                setvisible(true);
+                setGSignUp(false);
+              }}
+              className="signup-create-account"
+            >
+              Already a user? SIGN IN
+            </p>
+          </div>
+        </div>
+      )}
       {/* sign in with google */}
       {GoogleSignIn && (
         <div className="signup-main_parent">
@@ -712,6 +972,7 @@ const Navbar = () => {
             className="signup-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               setonclose(false);
               setTimeout(() => {
                 setvisible(false);
@@ -743,6 +1004,7 @@ const Navbar = () => {
             <img
               className="signup-closing-arrow"
               onClick={() => {
+                clearAllStates();
                 setonclose(false);
                 setTimeout(() => {
                   setvisible(false);
@@ -791,7 +1053,7 @@ const Navbar = () => {
                 onChange={(e) => {
                   setcity(e.target.value);
                 }}
-                value={locationCity}
+                value={city}
                 type="text"
                 className="signup-location-input"
                 placeholder="Location "
@@ -861,6 +1123,7 @@ const Navbar = () => {
             className="signup-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               setonclose(false);
               setTimeout(() => {
                 setvisible(false);
@@ -892,6 +1155,7 @@ const Navbar = () => {
             <img
               className="signup-closing-arrow"
               onClick={() => {
+                clearAllStates();
                 setonclose(false);
                 setTimeout(() => {
                   setvisible(false);
@@ -940,7 +1204,7 @@ const Navbar = () => {
                 onChange={(e) => {
                   setcity(e.target.value);
                 }}
-                value={locationCity}
+                value={city}
                 type="text"
                 className="signup-location-input"
                 placeholder="Location "
@@ -1010,6 +1274,7 @@ const Navbar = () => {
           <div
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               setonclose(false);
               setTimeout(() => {
                 setvisible(false);
@@ -1038,6 +1303,7 @@ const Navbar = () => {
             <img
               className="closing-arrow"
               onClick={() => {
+                clearAllStates();
                 setonclose(false);
                 setTimeout(() => {
                   setvisible(false);
@@ -1162,6 +1428,7 @@ const Navbar = () => {
             className="signup-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               setonclose(false);
               setTimeout(() => {
                 setvisible(false);
@@ -1178,7 +1445,7 @@ const Navbar = () => {
               paddingLeft: "40px",
               fontFamily: "Arial",
               width: "35%",
-
+              overflowY: "scroll",
               float: "right",
               height: "100%",
               position: "fixed",
@@ -1193,6 +1460,7 @@ const Navbar = () => {
             <img
               className="signup-closing-arrow"
               onClick={() => {
+                clearAllStates();
                 setonclose(false);
                 setTimeout(() => {
                   setvisible(false);
@@ -1208,6 +1476,67 @@ const Navbar = () => {
               Sign up to
               <span className="signup-text-color-blue"> Gaddideals </span>
             </p>
+
+            <div className="signup-other-option-div">
+              <div className="box-1">
+                <GoogleLogin
+                  render={(renderProps) => (
+                    <button
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                      style={{
+                        cursor: "pointer",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        fontFamily: "Poppins",
+                        fontStyle: "normal",
+                        fontWeight: 500,
+                        fontSize: "1vw",
+                        color: "#cfcfcf",
+                      }}
+                    >
+                      <img
+                        className="website-google-signup-img"
+                        src={mobGmailIcon}
+                        alt=""
+                      />
+                      Google
+                      {/* Sign in with Google */}
+                    </button>
+                  )}
+                  clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                  onSuccess={responseGoogleSignup}
+                  onFailure={responseGoogleSignup}
+                />
+              </div>
+              <div className="box-2">
+                {/* <img className="website-fb-signup-img" src={mobFbIcon} alt="" /> */}
+                <FacebookLogin
+                  appId="615601846567774"
+                  autoLoad={false}
+                  callback={responseFacebookSignup}
+                  cssClass="website-facebook-sign-up-button-class"
+                  fields="name,email"
+                  render={(renderProps) => (
+                    <button onClick={renderProps.onClick}>
+                      <img
+                        className="website-fb-signup-img"
+                        src={mobFbIcon}
+                        alt=""
+                      />{" "}
+                    </button>
+                  )}
+                />
+                <p className="paddingTop-5">Facebook</p>
+              </div>
+            </div>
+
+            <div className="or-div">
+              <hr></hr>
+              <span className="or">or</span>
+              <hr></hr>
+            </div>
+
             <input
               onChange={(e) => {
                 setname(e.target.value);
@@ -1241,7 +1570,7 @@ const Navbar = () => {
                 onChange={(e) => {
                   setcity(e.target.value);
                 }}
-                value={locationCity}
+                value={city}
                 type="text"
                 className="signup-location-input"
                 placeholder="Location "
@@ -1263,10 +1592,9 @@ const Navbar = () => {
                   className="signup-phone-no-input"
                   placeholder="Password "
                 />
-                <p className="password-guide">
-                  Password length must be more than 8 characters and less than
-                  10 characters
-                </p>
+                {/* <p className="password-guide">
+                  Password length must be less than 10 characters
+                </p> */}
                 <div className="SingupEyeIconDiv">
                   <input
                     onChange={(e) => {
@@ -1317,6 +1645,7 @@ const Navbar = () => {
             className="otp-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               setonclose(false);
               setvisibleSignUp(false);
               setTimeout(() => {
@@ -1349,6 +1678,7 @@ const Navbar = () => {
             <img
               className="otp-closing-arrow"
               onClick={() => {
+                clearAllStates();
                 setonclose(false);
                 setvisibleSignUp(false);
                 setTimeout(() => {
@@ -1389,23 +1719,25 @@ const Navbar = () => {
               }}
             />
             <span className="timer"> 00:{counter}s</span>
-            <p
-              onClick={() => {
-                setvisibleSignUp(!visibleSignUp);
-                setvisible(true);
-              }}
-              className="otp-create-account"
-            >
-              Didn’t recive the OTP?{" "}
-              <span
-                className="otp-text-color-blue"
+            {EnableResendOtp && (
+              <p
                 onClick={() => {
-                  resendotp();
+                  setvisibleSignUp(!visibleSignUp);
+                  setvisible(true);
                 }}
+                className="otp-create-account"
               >
-                RESEND OTP
-              </span>
-            </p>
+                Didn’t recive the OTP?{" "}
+                <span
+                  className="otp-text-color-blue"
+                  onClick={() => {
+                    resendotp();
+                  }}
+                >
+                  RESEND OTP
+                </span>
+              </p>
+            )}
             <button
               onClick={() => {
                 savePhoneOtp();
@@ -1425,6 +1757,7 @@ const Navbar = () => {
             className="otp-parent"
             className={onclose ? "parent" : "slideBack"}
             onClick={() => {
+              clearAllStates();
               // setonclose(false);
               setvisibleSignUp(false);
               // setTimeout(() => {
@@ -1457,6 +1790,7 @@ const Navbar = () => {
             <img
               className="otp-closing-arrow"
               onClick={() => {
+                clearAllStates();
                 // setonclose(false);
                 setvisibleSignUp(false);
                 // setTimeout(() => {
@@ -1867,7 +2201,7 @@ const Navbar = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={locationCity}
+                  value={city}
                   type="text"
                   placeholder="Location "
                 />

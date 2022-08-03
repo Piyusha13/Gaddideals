@@ -507,6 +507,7 @@ margin-bottom: 10px;
 box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 border-radius: 5px;
 border: none;
+padding: 10px;
 width: 100%;
 height: 100%;
 }
@@ -546,6 +547,7 @@ border-radius: 5px;
 border: none;
 width: 100%;
 height: 100%;
+padding: 10px;
 }
 .user-email-edit{
   position: absolute;
@@ -584,6 +586,7 @@ border-radius: 5px;
 border: none;
 width: 100%;
 height: 100%;
+padding: 10px;
 }
 .user-mobile-edit{
   position: absolute;

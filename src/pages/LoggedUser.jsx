@@ -18,6 +18,8 @@ import Footer from "../components/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import clipboard from "../assets/clipboard.png";
 
+import {imgurl} from './../constants';
+
 function LoggedUser() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -226,7 +228,7 @@ function LoggedUser() {
                   className="userProfileImg"
                   src={
                     profileimgstate.profile_pic_url
-                      ? "https://gaddideals.brokerinvoice.co.in" +
+                      ? imgurl+
                         profileimgstate.profile_pic_url
                       : profileImg
                   }

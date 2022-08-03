@@ -85,3 +85,12 @@ gap: 20px;
     color: #050F56;
     font-weight: 600;
   }
+
+  .card-img-wrapper img{
+    /* width: 220px !important; */
+    height: 160px !important;
+  }
+  .card-img-wrapper {
+    height: 160px !important;
+    width: 220px !important;
+  }

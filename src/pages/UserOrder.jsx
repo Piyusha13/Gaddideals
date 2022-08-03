@@ -24,6 +24,7 @@ import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
 import noDataImg from "../assets/no-picture-available-icon-1.jpg";
+import { imgurl } from "../constants";
 
 function UserVehicles() {
   const defaultOptions = {
@@ -52,10 +53,11 @@ function UserVehicles() {
   const [vehicleName, setvehicleName] = useState("");
   const [Seller, setSeller] = useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+  const [vehicleImg, setvehicleImg] = useState("");
 
   //for vehicle data
   const getMyVehicleDetails = async () => {
-    console.log("otsideeeeeeeeeeeee");
+    // console.log("otsideeeeeeeeeeeee");
     await axios
       .get("https://core.gaddideals.com/api/enquiries/my_enquiries", {
         headers: {
@@ -63,12 +65,13 @@ function UserVehicles() {
         },
       })
       .then((res) => {
-        console.log("insideeeeeeeeeeeeeeeeeeee");
-        console.log("enquiries response=======" + res);
+        // console.log("insideeeeeeeeeeeeeeeeeeee");
+        // console.log("enquiries response=======" + res);
         setvehicleData(res?.data?.getMyEnquiries);
-        // console.log(res?.data?.getMyEnquiries);
+        console.log(res?.data?.getMyEnquiries);
         res.data.getMyEnquiries.forEach((item, index) => {
-          setvehicleName(item?.vehicle_id?.model);
+          setvehicleName(item?.vehicle_id?.brand);
+          setvehicleImg(item?.vehicle_id?.front_side_pic);
           setdataAvailable(true);
           // console.log(item?.vehicle_id?.model);
           setSeller(item?.seller_id);
@@ -161,23 +164,16 @@ function UserVehicles() {
                   <div className="card" key={item._id}>
                     <div className="card-wrapper-vehicles">
                       <div className="card-img-wrapper">
-                        <img
-                          src={
-                            noDataImg
-                            // "https://gaddideals.brokerinvoice.co.in" +
-                            // item.front_side_pic
-                          }
-                          alt="truck"
-                        />
+                        <img src={imgurl + vehicleImg} alt="truck" />
                       </div>
                       <div className="card-info">
                         <div className="card-info-header">
                           <div className="card-info-title">
-                            <h1>{vehicleName.name}</h1>
+                            <h1>{vehicleName.title}</h1>
                             <div className="location">
                               <img src={locationIcon} alt="location icon" />
                               {/* fetching city name  */}
-                              <span>{item.city.title.substring(0, 10)}</span>
+                              <span>{item.city.title}</span>
                             </div>
                           </div>
                           {/* <div className="card-publish-review">

@@ -25,6 +25,7 @@ import VehicleCard from "../pages/VehicleCard";
 import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
+import {imgurl} from "./../constants"
 
 function UserVehicles() {
   const defaultOptions = {
@@ -40,7 +41,7 @@ function UserVehicles() {
   const getDetails = () => {
     if (init() === "success") {
       axios
-        .get("https://gaddideals.brokerinvoice.co.in/api/user")
+        .get(Constant.getUrls.getSingleUser)
         .then((res) => {
           setname(res.data.user);
         });
@@ -57,7 +58,7 @@ function UserVehicles() {
   //for vehicle data
   const getMyVehicleDetails = async () => {
     await axios
-      .get("https://gaddideals.brokerinvoice.co.in/api/vehicle/my_vehicles", {
+      .get(Constant.getUrls.getAllVehicles+"/my_vehicles", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -160,7 +161,7 @@ function UserVehicles() {
                       <div className="card-img-wrapper">
                         <img
                           src={
-                            "https://gaddideals.brokerinvoice.co.in" +
+                            imgurl +
                             item.front_side_pic
                           }
                           alt="truck"
@@ -173,7 +174,7 @@ function UserVehicles() {
                             <div className="location">
                               <img src={locationIcon} alt="location icon" />
                               {/* fetching city name  */}
-                              <span>{item.city.title.substring(0, 10)}</span>
+                              <span>{item.city.title}</span>
                             </div>
                           </div>
 

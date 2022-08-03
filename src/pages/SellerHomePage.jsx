@@ -66,6 +66,7 @@ const SellerHomePage = () => {
   const [latestConstructionData, setLatestConstructionData] = useState([]);
   const [faqs, setFAQS] = useState([]);
   const [vehicleId, setvehicleId] = useState("");
+  const [token, settoken] = useState(localStorage.getItem("Token"));
 
   const locationCity = useSelector(selectLocation);
 
@@ -247,6 +248,7 @@ const SellerHomePage = () => {
     return true;
   };
 
+  //for user visiting for the first time
   async function enquiryApi() {
     let user_token = localStorage.getItem("Token");
 
@@ -257,7 +259,40 @@ const SellerHomePage = () => {
         email,
         mob_no,
         user_type,
-        city: locationCity,
+        city,
+        hash: "ekxpmAB8m9v",
+      };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload)
+        .then((result) => {
+          console.log(result.data);
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+            }
+          }
+        });
+    }
+  }
+
+  //for already logged user
+  async function enquiryApi() {
+    let user_token = localStorage.getItem("Token");
+
+    if (validateFields()) {
+      let payload = {
+        vehicleId: seller_id,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city,
         hash: "ekxpmAB8m9v",
       };
       await axios
@@ -310,7 +345,7 @@ const SellerHomePage = () => {
       email,
       mob_no,
       user_type,
-      city: locationCity,
+      city,
       hash: "ekxpmAB8m9v",
     };
     await axios
@@ -441,6 +476,7 @@ const SellerHomePage = () => {
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
+        localStorage.setItem("Token", res.data.user.accessToken);
 
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
@@ -602,7 +638,7 @@ const SellerHomePage = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={locationCity}
+                  value={city}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -692,10 +728,12 @@ const SellerHomePage = () => {
               </div>
               <button
                 onClick={() => {
-                  userToken
-                    ? enquiryVerifyOtp() //verify enquiry otp
-                    : enquiryVerifyOtp();
-                  signUpVeryfyOtp(); //hitting both api
+                  if (userToken) {
+                    enquiryVerifyOtp(); //verify enquiry otp
+                  } else {
+                    enquiryVerifyOtp();
+                    signUpVeryfyOtp(); //hitting both api
+                  }
                 }}
               >
                 Verify
@@ -950,7 +988,7 @@ const SellerHomePage = () => {
                             setUserObj(latestBuses.user);
                             setseller_id(latestBuses._id);
                             if (userToken) {
-                              setSellerDetails(!SellerDetails);
+                              getSingleUserInfo();
                             } else {
                               setBuyerInput(!BuyerInput);
                             }
@@ -1022,7 +1060,7 @@ const SellerHomePage = () => {
                             setUserObj(latestTractor.user);
                             setseller_id(latestTractor._id);
                             if (userToken) {
-                              setSellerDetails(!SellerDetails);
+                              getSingleUserInfo();
                             } else {
                               setBuyerInput(!BuyerInput);
                             }
@@ -1096,7 +1134,7 @@ const SellerHomePage = () => {
                             setUserObj(latestConstruction.user);
                             setseller_id(latestConstruction._id);
                             if (userToken) {
-                              setSellerDetails(!SellerDetails);
+                              getSingleUserInfo();
                             } else {
                               setBuyerInput(!BuyerInput);
                             }

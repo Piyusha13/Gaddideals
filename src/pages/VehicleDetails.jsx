@@ -88,6 +88,7 @@ const VehicleDetails = () => {
   const [SellerDetails, setSellerDetails] = useState(false);
 
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+  const locationCity = useSelector(selectLocation);
 
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
@@ -97,8 +98,6 @@ const VehicleDetails = () => {
   const [isTypeActive, setIsTypeActive] = useState();
   const [vehicleId, setvehicleId] = useState("");
   const [seller, setSeller] = useState("");
-
-  const locationCity = useSelector(selectLocation);
 
   const [editableIntrest, seteditableIntrest] = useState(true);
   const [EmiModal, setEmiModal] = useState(false);
@@ -277,16 +276,12 @@ const VehicleDetails = () => {
         email,
         mob_no,
         user_type,
-        city: locationCity,
+        city,
         hash: "ekxpmAB8m9v",
       };
       console.log(payload);
       await axios
-        .post(Constant.postUrls.postAllEnquiries, payload, {
-          headers: {
-            Authorization: ` Bearer ${user_token} `,
-          },
-        })
+        .post(Constant.postUrls.postAllEnquiries, payload)
         .then((result) => {
           console.log(result.data);
           if (result.data.status === "failed") {
@@ -380,7 +375,7 @@ const VehicleDetails = () => {
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
-
+        localStorage.setItem("Token", res.data.user.accessToken);
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
@@ -657,7 +652,7 @@ const VehicleDetails = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={locationCity}
+                  value={city}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -785,12 +780,7 @@ const VehicleDetails = () => {
                 }}
               ></img>
               <div className="userProfilePic">
-                <img
-                  src={
-                    "https://gaddideals.brokerinvoice.co.in" +
-                    seller.profile_pic_url
-                  }
-                ></img>
+                <img src={imgurl + seller.profile_pic_url}></img>
               </div>
               <div className="userName">{seller.name}</div>
               <hr></hr>

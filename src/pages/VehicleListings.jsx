@@ -133,7 +133,7 @@ const VehicleListings = () => {
       email,
       mob_no,
       user_type,
-      city: locationCity,
+      city,
       hash: "ekxpmAB8m9v",
     };
     axios.post(Constant.postUrls.postAllEnquiries, payload).then((result) => {
@@ -285,7 +285,7 @@ const VehicleListings = () => {
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
-
+        localStorage.setItem("Token", res.data.user.accessToken);
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
@@ -308,15 +308,11 @@ const VehicleListings = () => {
         email,
         mob_no,
         user_type,
-        city: locationCity,
+        city,
         hash: "ekxpmAB8m9v",
       };
       await axios
-        .post(Constant.postUrls.postAllEnquiries, payload, {
-          headers: {
-            Authorization: ` Bearer ${user_token} `,
-          },
-        })
+        .post(Constant.postUrls.postAllEnquiries, payload)
         .then((result) => {
           console.log(result.data);
           if (result.data.status === "failed") {
@@ -813,7 +809,7 @@ const VehicleListings = () => {
                   onChange={(e) => {
                     setcity(e.target.value);
                   }}
-                  value={locationCity}
+                  value={city}
                   placeholder="Location"
                 ></input>
                 <img src={downArrow} alt=""></img>
@@ -903,10 +899,12 @@ const VehicleListings = () => {
               </div>
               <button
                 onClick={() => {
-                  userToken
-                    ? enquiryVerifyOtp() //verify enquiry otp
-                    : enquiryVerifyOtp();
-                  signUpVeryfyOtp(); //hitting both api
+                  if (userToken) {
+                    enquiryVerifyOtp(); //verify enquiry otp
+                  } else {
+                    enquiryVerifyOtp();
+                    signUpVeryfyOtp(); //hitting both api
+                  }
                 }}
               >
                 Verify
