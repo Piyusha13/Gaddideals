@@ -25,7 +25,7 @@ import VehicleCard from "../pages/VehicleCard";
 import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
-import {imgurl} from "./../constants"
+import { imgurl } from "../constants";
 
 function UserVehicles() {
   const defaultOptions = {
@@ -40,11 +40,9 @@ function UserVehicles() {
   // for get name
   const getDetails = () => {
     if (init() === "success") {
-      axios
-        .get(Constant.getUrls.getSingleUser)
-        .then((res) => {
-          setname(res.data.user);
-        });
+      axios.get(Constant.getUrls.getSingleUser).then((res) => {
+        setname(res.data.user);
+      });
     }
   };
   function logoutAccount() {
@@ -56,9 +54,10 @@ function UserVehicles() {
   const [vehicleName, setvehicleName] = useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   //for vehicle data
+
   const getMyVehicleDetails = async () => {
     await axios
-      .get(Constant.getUrls.getAllVehicles+"/my_vehicles", {
+      .get(Constant.getUrls.getAllVehicles + "/my_vehicles", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -159,13 +158,7 @@ function UserVehicles() {
                   <div className="card" key={item._id}>
                     <div className="card-wrapper-vehicles">
                       <div className="card-img-wrapper">
-                        <img
-                          src={
-                            imgurl +
-                            item.front_side_pic
-                          }
-                          alt="truck"
-                        />
+                        <img src={imgurl + item.front_side_pic} alt="truck" />
                       </div>
                       <div className="card-info">
                         <div className="card-info-header">

@@ -254,10 +254,7 @@ const SellerHome = () => {
         <div className="our-categories-container">
           {categoriesData.slice(0, 4).map((category) => (
             <div className="our-category" key={category._id}>
-              <img
-                src={`https://gaddideals.brokerinvoice.co.in${category.image}`}
-                alt={category.title}
-              />
+              <img src={`${imgurl}${category.image}`} alt={category.title} />
 
               <div className="our-category-title">
                 <h6>{category.title}</h6>
@@ -309,7 +306,7 @@ const SellerHome = () => {
                 <div className="customer-card">
                   <div className="profile-img">
                     <img
-                      src={`https://gaddideals.brokerinvoice.co.in${testimonial.image}`}
+                      src={`${imgurl}${testimonial.image}`}
                       alt={testimonial.title}
                     />
                   </div>
@@ -370,10 +367,7 @@ const SellerHome = () => {
             {brandsData.map((brand) => (
               <SwiperSlide key={brand._id} className="brands-swiper-slide">
                 <div className="brand-wrapper">
-                  <img
-                    src={`https://gaddideals.brokerinvoice.co.in${brand.image}`}
-                    alt={brand.title}
-                  />
+                  <img src={`${imgurl}${brand.image}`} alt={brand.title} />
                 </div>
               </SwiperSlide>
             ))}
@@ -384,7 +378,7 @@ const SellerHome = () => {
       {/* FAQ Section */}
       <div className="faq-section">
         <div className="faq-header">
-          <h1>Frequently Asked Question's</h1>
+          <h1>Frequently Asked Questions</h1>
         </div>
 
         <div className="faq-container">
@@ -408,10 +402,7 @@ const SellerHome = () => {
           {filterAdvertisementSeller.map((advertise) => (
             <SwiperSlide key={advertise._id} className="advertise-slide">
               <div className="image-wrapper">
-                <img
-                  src={`https://gaddideals.brokerinvoice.co.in${advertise.image}`}
-                  alt="truck"
-                />
+                <img src={`${imgurl}${advertise.image}`} alt="truck" />
               </div>
             </SwiperSlide>
           ))}

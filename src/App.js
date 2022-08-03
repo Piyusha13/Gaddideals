@@ -22,11 +22,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Geocode from "react-geocode";
+import axios from "axios";
+import Constant from "./constants";
 
 const queryString = require("query-string");
 
 function App() {
   const location = queryString.parse(window.location.search);
+
+  const [cities, setCities] = useState([]);
 
   const navigate = useNavigate();
 
@@ -86,22 +90,45 @@ function App() {
     // if (navigator.geolocation) {
     //   navigator.geolocation.getCurrentPosition(success, error);
     // }
-
-    if (!location.city) {
-      const loc = localStorage.getItem("location");
-      location["city"] = loc ? loc : "Mumbai";
-      dispatch(setCurrentCity(loc));
-
-      const lang = localStorage.getItem("lang");
-      let prevUrl = queryString.stringify(location);
-      if (lang) {
-        prevUrl += "&lang=" + lang;
-      } else {
-        prevUrl += "&lang=" + "en";
-      }
-      navigate("?" + prevUrl);
+    let cookie = document.cookie;
+    if (!cookie.includes("googtrans")) {
+      document.cookie = "googtrans=/auto/en";
     }
+    const fetchCities = async () => {
+      try {
+        const res = await axios.get(Constant.getUrls.getAllCity);
+
+        if (res.data) {
+          setCities(res.data.getAllCities.docs);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCities();
   }, [dispatch]);
+
+  const cityMumbai = cities?.find((city) => city?.title === "Mumbai");
+  localStorage.setItem("cityName", cityMumbai?.title);
+  localStorage.setItem("cityId", cityMumbai?._id);
+
+  dispatch(setCurrentCity(cityMumbai?.title));
+
+  if (!location.cityName) {
+    location["cityName"] = cityMumbai?.title;
+
+    const lang = localStorage.getItem("lang");
+    let prevUrl = queryString.stringify(location);
+
+    if (lang) {
+      prevUrl += "&lang=" + lang;
+    } else {
+      prevUrl += "&lang=" + "en";
+    }
+
+    navigate("?" + prevUrl);
+  }
 
   return (
     <>

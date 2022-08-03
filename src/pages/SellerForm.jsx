@@ -369,7 +369,7 @@ const SellerForm = () => {
         toast.error("Please enter vaild vehicle number");
       } else if (formData.vehiclenumber === "") {
         toast.error("Vehicle number is required");
-      } else if (fuelTitle === "") {
+      } else if (fuel === "") {
         toast.error("Fuel type is required");
       } else {
         setStep(step + 1);
@@ -517,7 +517,7 @@ const SellerForm = () => {
 
     let fd = new FormData();
 
-    fd.append("category", editVehicleObj?.category?._id);
+    fd.append("category", editVehicleObj?.category?._id || categoryId);
     fd.append("state", stateId);
     fd.append("city", cityId);
     fd.append("brand", brandId);

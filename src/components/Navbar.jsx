@@ -2538,10 +2538,9 @@ const Navbar = () => {
                             setCitySearch(city?.title);
                             dispatch(setCurrentCity(city?.title));
                             setLangDropdown(false);
-                            localStorage.setItem("location", city?.title);
+                            // localStorage.setItem("cityName", city?.title);
                             if (location.city) {
-                              location.city = city?.title;
-                              location.cid = city?._id;
+                              location.city = city?._id;
                               let prevUrl = queryString.stringify(location);
                               window.location.href =
                                 window.location.pathname + "?" + prevUrl;

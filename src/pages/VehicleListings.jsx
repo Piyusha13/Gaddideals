@@ -366,6 +366,7 @@ const VehicleListings = () => {
 
   const fetchCategories = async () => {
     const response = await axios.get(`${Constant.getUrls.getAllCategories}`);
+    const cityId = localStorage.getItem("cityId");
     if (response) {
       setCategories(response.data.category.docs);
       if (!location.category) {
@@ -373,7 +374,7 @@ const VehicleListings = () => {
         location.category_name =
           response.data.category.docs[0].title.toLowerCase();
         console.log(locationCity);
-        location.city = locationCity;
+        location.city = cityId;
         location.category = response.data.category.docs[0]._id;
         let prevUrl = queryString.stringify(location);
         navigate("?" + prevUrl);
