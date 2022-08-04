@@ -47,6 +47,7 @@ const queryString = require("query-string");
 
 const VehicleListings = () => {
   const location = queryString.parse(window.location.search);
+  let user_token = localStorage.getItem("Token");
 
   const [categories, setCategories] = useState([]);
   const [vehiclesArray, setVehiclesArray] = useState([]);
@@ -289,6 +290,7 @@ const VehicleListings = () => {
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
         localStorage.setItem("Token", res.data.user.accessToken);
+        window.location.href = "/loggeduser";
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
@@ -300,7 +302,44 @@ const VehicleListings = () => {
       });
     }
   }
+  //for already logged user
+  async function LoggedenquiryApi() {
+    let user_token = localStorage.getItem("Token");
 
+    if (validateFields()) {
+      let payload = {
+        vehicleId: seller_id,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city,
+        hash: "ekxpmAB8m9v",
+      };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
+        .then((result) => {
+          console.log(result.data);
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+            }
+          }
+        });
+    }
+  }
+
+  //for user visiting for the first time
   async function enquiryApi() {
     let user_token = localStorage.getItem("Token");
 
@@ -320,7 +359,9 @@ const VehicleListings = () => {
           console.log(result.data);
           if (result.data.status === "failed") {
             console.log(result.data);
-            toast.error(result.data.message);
+            // toast.error(result.data.message);
+            toast.error("You are already a user");
+            toast.error("Please sign in for enquiry");
           } else {
             if (result.data.status === "success") {
               console.log(result.data);
@@ -988,7 +1029,11 @@ const VehicleListings = () => {
 
               <button
                 onClick={() => {
-                  enquiryApi(); //posting data into enquiry api
+                  if (user_token) {
+                    LoggedenquiryApi();
+                  } else {
+                    enquiryApi(); //posting data into enquiry api
+                  }
                 }}
               >
                 Get Contact Details

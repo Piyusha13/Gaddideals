@@ -51,7 +51,7 @@ import { useSelector } from "react-redux";
 
 const SellerHomePage = () => {
   const [tabIndex, setTabIndex] = useState(0);
-
+  let user_token = localStorage.getItem("Token");
   const [categoriesData, setCategoriesData] = useState([]);
   const [truckCategoryId, setTruckCategoryId] = useState("");
   const [tractorsCategoryId, setTractorsCategoryId] = useState("");
@@ -268,7 +268,9 @@ const SellerHomePage = () => {
           console.log(result.data);
           if (result.data.status === "failed") {
             console.log(result.data);
-            toast.error(result.data.message);
+            // toast.error(result.data.message);
+            toast.error("You are already a user");
+            toast.error("Please sign in for enquiry");
           } else {
             if (result.data.status === "success") {
               console.log(result.data);
@@ -282,7 +284,7 @@ const SellerHomePage = () => {
   }
 
   //for already logged user
-  async function enquiryApi() {
+  async function LoggedenquiryApi() {
     let user_token = localStorage.getItem("Token");
 
     if (validateFields()) {
@@ -477,7 +479,7 @@ const SellerHomePage = () => {
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
         localStorage.setItem("Token", res.data.user.accessToken);
-
+        window.location.href = "/loggeduser";
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
@@ -666,7 +668,11 @@ const SellerHomePage = () => {
 
               <button
                 onClick={() => {
-                  enquiryApi(); //posting data into enquiry api
+                  if (user_token) {
+                    LoggedenquiryApi();
+                  } else {
+                    enquiryApi(); //posting data into enquiry api
+                  }
                 }}
               >
                 Get Contact Details

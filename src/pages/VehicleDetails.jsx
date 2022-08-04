@@ -73,7 +73,7 @@ const PrettoSlider = withStyles({
 const VehicleDetails = () => {
   const { id } = useParams();
   const [getvehicledetails, setVehicleDetails] = useState({});
-
+  let user_token = localStorage.getItem("Token");
   const [imageArray, setImageArray] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [mobThumbsSwiper, setMobThumbsSwiper] = useState(null);
@@ -221,6 +221,43 @@ const VehicleDetails = () => {
     }
   };
 
+  //for already logged user
+  async function LoggedenquiryApi() {
+    let user_token = localStorage.getItem("Token");
+
+    if (validateFields()) {
+      let payload = {
+        vehicleId,
+        name,
+        email,
+        mob_no,
+        user_type,
+        city,
+        hash: "ekxpmAB8m9v",
+      };
+      await axios
+        .post(Constant.postUrls.postAllEnquiries, payload, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
+        .then((result) => {
+          console.log(result.data);
+          if (result.data.status === "failed") {
+            console.log(result.data);
+            toast.error(result.data.message);
+          } else {
+            if (result.data.status === "success") {
+              console.log(result.data);
+              // toast.success(result.data.message);
+              setBuyerInput(!BuyerInput); //closing buyer input screen
+              setBuyerOtp(!BuyerOtp); //displaying otp screen
+            }
+          }
+        });
+    }
+  }
+
   //fetcing sigle user info if user is logged-in
   function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
@@ -286,7 +323,9 @@ const VehicleDetails = () => {
           console.log(result.data);
           if (result.data.status === "failed") {
             console.log(result.data);
-            toast.error(result.data.message);
+            // toast.error(result.data.message);
+            toast.error("You are already a user");
+            toast.error("Please sign in for enquiry");
           } else {
             if (result.data.status === "success") {
               console.log(result.data);
@@ -376,6 +415,7 @@ const VehicleDetails = () => {
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
         localStorage.setItem("Token", res.data.user.accessToken);
+        window.location.href = "/loggeduser";
         // if (res.data.status === "failed") {
         // toast.error("incorrect otp");
         // } else if (res.data.status === "Success") {
@@ -386,25 +426,6 @@ const VehicleDetails = () => {
         // }
       });
     }
-  }
-
-  //enquiry otp verify
-  function enquiryVerifyOtp() {
-    console.log("otp verified");
-    console.warn({ mob_no, otp });
-    let payload = { mob_no, otp };
-    axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
-      console.log(res);
-
-      if (res.data.status === "failed") {
-        toast.error("incorrect otp");
-      } else if (res.data.status === "Success") {
-        toast.success(res.data.message);
-        setBuyerOtp(!BuyerOtp); //closingotp screen
-        setSellerDetails(!SellerDetails); //displaing seller details
-        // saveBuyer();
-      }
-    });
   }
 
   function resendotp() {
@@ -680,11 +701,11 @@ const VehicleDetails = () => {
 
               <button
                 onClick={() => {
-                  enquiryApi(); //posting data into enquiry api
-                  // saveBuyer();
-                  // verifyOtp(); //sending otp using phone no.
-                  // setBuyerInput(!BuyerInput); //closing input screen
-                  // setBuyerOtp(!BuyerOtp); //displaying otp screen
+                  if (user_token) {
+                    LoggedenquiryApi();
+                  } else {
+                    enquiryApi(); //posting data into enquiry api
+                  }
                 }}
               >
                 Get Contact Details
@@ -1001,10 +1022,11 @@ const VehicleDetails = () => {
               <div className="selling-detail-container">
                 <button
                   onClick={() => {
-                    userToken
-                      ? // setSellerDetails(!SellerDetails)
-                        getSingleUserInfo()
-                      : setBuyerInput(!BuyerInput);
+                    if (userToken) {
+                      getSingleUserInfo();
+                    } else {
+                      setBuyerInput(!BuyerInput);
+                    }
                   }}
                 >
                   Get Seller Details

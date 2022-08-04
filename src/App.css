@@ -103,3 +103,13 @@ font-size: 0px;
 } */
 
   
+.goog-text-highlight{
+
+  /* display: none !important */
+  background-color: transparent !important;
+  box-shadow: none !important;
+  }
+
+  #goog-gt-tt{
+    display: none !important;
+  }

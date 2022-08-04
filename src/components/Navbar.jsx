@@ -302,6 +302,7 @@ const Navbar = () => {
         window.location.href = "/loggeduser";
       } else if (res.data.status === "failed") {
         toast.error(res.data.message);
+        log.console(res.data.message);
       }
     });
   }
@@ -661,6 +662,18 @@ const Navbar = () => {
     if (response) {
       setGSignIp(response?.profileObj?.email, response?.accessToken);
     }
+  }
+
+  function responseFailedGoogle(response) {
+    console.log("google response", response);
+    // setsocial_token(response?.accessToken);
+    // // setname(response?.profileObj?.name);
+    // setemail(response?.profileObj?.email);
+
+    // // sethidePassword(true);
+    // if (response) {
+    //   setGSignIp(response?.profileObj?.email, response?.accessToken);
+    // }
   }
   //responsive sign in with google response
   function mobResponseGoogle(response) {
@@ -1324,6 +1337,7 @@ const Navbar = () => {
               <img src={googleLogo} alt=""></img>
 
               <GoogleLogin
+                // uxMode="popup"
                 render={(renderProps) => (
                   <button
                     onClick={renderProps.onClick}
@@ -1344,7 +1358,8 @@ const Navbar = () => {
                 )}
                 clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
                 onSuccess={responseGoogle}
-                onFailure={responseGoogle}
+                onFailure={responseFailedGoogle}
+                cookiePolicy={"single_host_origin"}
               />
             </div>
             <button className="sign-in-fb">
@@ -1506,7 +1521,8 @@ const Navbar = () => {
                   )}
                   clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
                   onSuccess={responseGoogleSignup}
-                  onFailure={responseGoogleSignup}
+                  onFailure={responseFailedGoogle}
+                  cookiePolicy={"single_host_origin"}
                 />
               </div>
               <div className="box-2">
@@ -2130,7 +2146,8 @@ const Navbar = () => {
                     )}
                     clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
                     onSuccess={mobResponseGoogle}
-                    onFailure={mobResponseGoogle}
+                    onFailure={responseFailedGoogle}
+                    cookiePolicy={"single_host_origin"}
                   />
                 </>
                 <img
