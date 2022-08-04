@@ -1572,6 +1572,7 @@ const VehicleListings = () => {
                     category._id +
                     `&city=${locationCity}`
                   }
+                  key={category._id}
                 >
                   <div className="category" key={category._id}>
                     <div

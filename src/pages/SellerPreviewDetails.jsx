@@ -41,6 +41,7 @@ const SellerPreviewDetails = ({
   documentSidePicLeft,
   documentSidePicRight,
   vehicleID,
+  disableBtn,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -370,7 +371,11 @@ const SellerPreviewDetails = ({
                   {saveLoading ? "Saving..." : "Save Now"}
                 </button>
               )}
-              <button onClick={handlePublishPostData}>
+              <button
+                onClick={handlePublishPostData}
+                disabled={disableBtn}
+                style={{ opacity: disableBtn ? "20%" : "100%" }}
+              >
                 {pubLoading ? "Publishing..." : "Publish"}
               </button>
             </div>

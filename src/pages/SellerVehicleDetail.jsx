@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./sellervehicledetail.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import cloudIcon from "../assets/cloud.png";
@@ -7,6 +7,10 @@ import { imgurl } from "../constants";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+import ReactCrop, { Crop } from "react-image-crop";
+import Modal from "react-awesome-modal";
+import "react-image-crop/dist/ReactCrop.css";
 
 const SellerVehicleDetail = ({
   prevStep,
@@ -53,11 +57,15 @@ const SellerVehicleDetail = ({
   const sidePicLeftInput = useRef();
   const sidePicRightInput = useRef();
 
+  const [crop, setCrop] = useState({ aspect: 16 / 9 });
+  const [showModal, setShowModal] = useState();
+
   const handleFileInput = () => {
     fileInput.current.click();
   };
 
   const handleEngineInput = () => {
+    setShowModal(true);
     engineInput.current.click();
   };
 
@@ -189,6 +197,17 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                {showModal && (
+                  <Modal
+                    width="90%"
+                    effect="fadeInRight"
+                    visible={showModal}
+                    onClickAway={setShowModal(false)}
+                  >
+                    <div>Hello</div>
+                  </Modal>
+                )}
                 <div
                   className="document"
                   style={engImage ? { padding: "0px" } : { padding: "40px" }}

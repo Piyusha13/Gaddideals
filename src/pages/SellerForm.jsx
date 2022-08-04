@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -19,6 +19,7 @@ const SellerForm = () => {
 
   const [saveLoading, setSaveLoading] = useState(false);
   const [pubLoading, setpubLoading] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
   const [isYearActive, setIsYearActive] = useState();
   const [isFuelActive, setIsFuelActive] = useState();
   const [isOwnerActive, setIsOwnerActive] = useState();
@@ -116,6 +117,8 @@ const SellerForm = () => {
   formData.tyreCondition = tyreCondition;
   formData.rc = rc;
 
+  const navigate = useNavigate();
+
   const fetchBrands = async () => {
     const response = await axios.get(Constant.getUrls.getAllBrands);
     setBrandsArray(response.data.brand.docs);
@@ -189,6 +192,7 @@ const SellerForm = () => {
     setEditVehicleObj(response.data.vehicle);
 
     if (response?.data?.vehicle) {
+      setDisableBtn(false);
       setVehicleID(response?.data?.vehicle?._id);
       setStateTitle(response?.data?.vehicle?.state?.title);
       setCityTitle(response?.data?.vehicle?.city?.title);
@@ -441,6 +445,7 @@ const SellerForm = () => {
     fd.append("front_tyre", fronttyreRightImg);
     fd.append("side_pic_vehicle", sidePicLeft);
     fd.append("side_pic_vehicle", sidePicRight);
+    fd.append("status", "draft");
 
     const userToken = localStorage.getItem("Token");
     const response = await axios.post(Constant.postUrls.postAllVehicles, fd, {
@@ -452,6 +457,7 @@ const SellerForm = () => {
     if (response.data.status === "success") {
       toast.success(response.data.message);
       setSaveLoading(false);
+      navigate("/UserVehicles");
     }
 
     console.log(response);
@@ -517,7 +523,8 @@ const SellerForm = () => {
 
     let fd = new FormData();
 
-    fd.append("category", editVehicleObj?.category?._id || categoryId);
+    // editVehicleObj?.category?._id || // editVehicleObj?.category?._id ||
+    fd.append("category", editVehicleObj?.category?._id);
     fd.append("state", stateId);
     fd.append("city", cityId);
     fd.append("brand", brandId);
@@ -736,6 +743,7 @@ const SellerForm = () => {
             documentFronttyreRight={documentFronttyreRight}
             documentSidePicLeft={documentSidePicLeft}
             documentSidePicRight={documentSidePicRight}
+            disableBtn={disableBtn}
           />
         </>
       );

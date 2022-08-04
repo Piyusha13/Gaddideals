@@ -2201,7 +2201,8 @@ const Navbar = () => {
                 }}
                 value={mob_no}
                 maxLength={10}
-                placeholder="Mobile number "
+                placeholder="M
+                obile number "
               />
               <input
                 className="mob-resp-name-input"
