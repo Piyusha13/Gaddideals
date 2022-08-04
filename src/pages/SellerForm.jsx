@@ -423,29 +423,62 @@ const SellerForm = () => {
     fd.append("model", modelId);
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
-    fd.append("km_driven", formData.kmsdriven || 0);
-    fd.append("no_of_hrs", formData.noofhrs || 0);
-    fd.append("no_of_owner", owner.toLowerCase());
+    if (formData.kmsdriven) {
+      fd.append("km_driven", formData.kmsdriven || 0);
+    }
+    if (formData.noofhrs) {
+      fd.append("no_of_hrs", formData.noofhrs || 0);
+    }
+    if (owner !== "") {
+      fd.append("no_of_owner", owner.toLowerCase());
+    }
     fd.append("fuelType", fuel);
-    fd.append("insurance", formData.insurancevalidity);
-    fd.append("tax_validity", formData.taxvalidity);
-    fd.append("vehicle_permit", permit.toLowerCase());
-    fd.append("no_of_tyre", formData.nooftyres || 0);
-    fd.append("horse_power", formData.horsepower || 0);
-    fd.append("no_of_seats", formData.noofseats || 0);
+    if (formData.insurancevalidity) {
+      fd.append("insurance", formData.insurancevalidity);
+    }
+    if (formData.taxvalidity) {
+      fd.append("tax_validity", formData.taxvalidity);
+    }
+    if (permit !== "") {
+      fd.append("vehicle_permit", permit.toLowerCase());
+    }
+    if (formData.nooftyres) {
+      fd.append("no_of_tyre", formData.nooftyres || 0);
+    }
+    if (formData.horsepower) {
+      fd.append("horse_power", formData.horsepower || 0);
+    }
+    if (formData.noofseats) {
+      fd.append("no_of_seats", formData.noofseats || 0);
+    }
     fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
-    fd.append("fitness_certificate", formData.fitnesscertificate);
-    fd.append("bodyType", bodyTypeId);
+    if (formData.fitnesscertificate) {
+      fd.append("fitness_certificate", formData.fitnesscertificate);
+    }
+    if (bodyTypeId) {
+      fd.append("bodyType", bodyTypeId);
+    }
     fd.append("rc_document", rc.toLowerCase());
-    fd.append("engine_pic", engImage);
+    if (engImage) {
+      fd.append("engine_pic", engImage);
+    }
     fd.append("front_side_pic", frontSideImg);
-    fd.append("back_side_pic", backSideImg);
-    fd.append("front_tyre", fronttyreLeftImg);
-    fd.append("front_tyre", fronttyreRightImg);
-    fd.append("side_pic_vehicle", sidePicLeft);
-    fd.append("side_pic_vehicle", sidePicRight);
-    fd.append("status", "draft");
+    if (backSideImg) {
+      fd.append("back_side_pic", backSideImg);
+    }
+    if (fronttyreLeftImg) {
+      fd.append("front_tyre", fronttyreLeftImg);
+    }
+    if (fronttyreRightImg) {
+      fd.append("front_tyre", fronttyreRightImg);
+    }
+    if (sidePicLeft) {
+      fd.append("side_pic_vehicle", sidePicLeft);
+    }
+    if (sidePicRight) {
+      fd.append("side_pic_vehicle", sidePicRight);
+    }
 
     const userToken = localStorage.getItem("Token");
     const response = await axios.post(Constant.postUrls.postAllVehicles, fd, {
@@ -474,28 +507,62 @@ const SellerForm = () => {
     fd.append("model", modelId);
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
-    fd.append("km_driven", formData.kmsdriven || 0);
-    fd.append("no_of_hrs", formData.noofhrs || 0);
-    fd.append("no_of_owner", owner.toLowerCase());
+    if (formData.kmsdriven) {
+      fd.append("km_driven", formData.kmsdriven || 0);
+    }
+    if (formData.noofhrs) {
+      fd.append("no_of_hrs", formData.noofhrs || 0);
+    }
+    if (owner !== "") {
+      fd.append("no_of_owner", owner.toLowerCase());
+    }
     fd.append("fuelType", fuel);
-    fd.append("insurance", formData.insurancevalidity);
-    fd.append("tax_validity", formData.taxvalidity);
-    fd.append("vehicle_permit", permit.toLowerCase());
-    fd.append("no_of_tyre", formData.nooftyres || 0);
-    fd.append("horse_power", formData.horsepower || 0);
-    fd.append("no_of_seats", formData.noofseats || 0);
+    if (formData.insurancevalidity) {
+      fd.append("insurance", formData.insurancevalidity);
+    }
+    if (formData.taxvalidity) {
+      fd.append("tax_validity", formData.taxvalidity);
+    }
+    if (permit !== "") {
+      fd.append("vehicle_permit", permit.toLowerCase());
+    }
+    if (formData.nooftyres) {
+      fd.append("no_of_tyre", formData.nooftyres || 0);
+    }
+    if (formData.horsepower) {
+      fd.append("horse_power", formData.horsepower || 0);
+    }
+    if (formData.noofseats) {
+      fd.append("no_of_seats", formData.noofseats || 0);
+    }
     fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
-    fd.append("fitness_certificate", formData.fitnesscertificate);
-    fd.append("bodyType", bodyTypeId);
+    if (formData.fitnesscertificate) {
+      fd.append("fitness_certificate", formData.fitnesscertificate);
+    }
+    if (bodyTypeId) {
+      fd.append("bodyType", bodyTypeId);
+    }
     fd.append("rc_document", rc.toLowerCase());
-    fd.append("engine_pic", engImage);
+    if (engImage) {
+      fd.append("engine_pic", engImage);
+    }
     fd.append("front_side_pic", frontSideImg);
-    fd.append("back_side_pic", backSideImg);
-    fd.append("front_tyre", fronttyreLeftImg);
-    fd.append("front_tyre", fronttyreRightImg);
-    fd.append("side_pic_vehicle", sidePicLeft);
-    fd.append("side_pic_vehicle", sidePicRight);
+    if (backSideImg) {
+      fd.append("back_side_pic", backSideImg);
+    }
+    if (fronttyreLeftImg) {
+      fd.append("front_tyre", fronttyreLeftImg);
+    }
+    if (fronttyreRightImg) {
+      fd.append("front_tyre", fronttyreRightImg);
+    }
+    if (sidePicLeft) {
+      fd.append("side_pic_vehicle", sidePicLeft);
+    }
+    if (sidePicRight) {
+      fd.append("side_pic_vehicle", sidePicRight);
+    }
 
     const userToken = localStorage.getItem("Token");
 
@@ -531,28 +598,62 @@ const SellerForm = () => {
     fd.append("model", modelId);
     fd.append("years", year);
     fd.append("reg_no", formData.vehiclenumber);
-    fd.append("km_driven", formData.kmsdriven || 0);
-    fd.append("no_of_hrs", formData.noofhrs || 0);
-    fd.append("no_of_owner", owner.toLowerCase());
+    if (formData.kmsdriven) {
+      fd.append("km_driven", formData.kmsdriven || 0);
+    }
+    if (formData.noofhrs) {
+      fd.append("no_of_hrs", formData.noofhrs || 0);
+    }
+    if (owner !== "") {
+      fd.append("no_of_owner", owner.toLowerCase());
+    }
     fd.append("fuelType", fuel);
-    fd.append("insurance", formData.insurancevalidity);
-    fd.append("tax_validity", formData.taxvalidity);
-    fd.append("vehicle_permit", permit.toLowerCase());
-    fd.append("no_of_tyre", formData.nooftyres || 0);
-    fd.append("horse_power", formData.horsepower || 0);
-    fd.append("no_of_seats", formData.noofseats || 0);
+    if (formData.insurancevalidity) {
+      fd.append("insurance", formData.insurancevalidity);
+    }
+    if (formData.taxvalidity) {
+      fd.append("tax_validity", formData.taxvalidity);
+    }
+    if (permit !== "") {
+      fd.append("vehicle_permit", permit.toLowerCase());
+    }
+    if (formData.nooftyres) {
+      fd.append("no_of_tyre", formData.nooftyres || 0);
+    }
+    if (formData.horsepower) {
+      fd.append("horse_power", formData.horsepower || 0);
+    }
+    if (formData.noofseats) {
+      fd.append("no_of_seats", formData.noofseats || 0);
+    }
     fd.append("tyre_cond", tyreCondition.toLowerCase());
     fd.append("selling_price", formData.pricingvehicle);
-    fd.append("fitness_certificate", formData.fitnesscertificate);
-    fd.append("bodyType", bodyTypeId);
+    if (formData.fitnesscertificate) {
+      fd.append("fitness_certificate", formData.fitnesscertificate);
+    }
+    if (bodyTypeId) {
+      fd.append("bodyType", bodyTypeId);
+    }
     fd.append("rc_document", rc.toLowerCase());
-    fd.append("engine_pic", engImage);
+    if (engImage) {
+      fd.append("engine_pic", engImage);
+    }
     fd.append("front_side_pic", frontSideImg);
-    fd.append("back_side_pic", backSideImg);
-    fd.append("front_tyre", fronttyreLeftImg);
-    fd.append("front_tyre", fronttyreRightImg);
-    fd.append("side_pic_vehicle", sidePicLeft);
-    fd.append("side_pic_vehicle", sidePicRight);
+    if (backSideImg) {
+      fd.append("back_side_pic", backSideImg);
+    }
+    if (fronttyreLeftImg) {
+      fd.append("front_tyre", fronttyreLeftImg);
+    }
+    if (fronttyreRightImg) {
+      fd.append("front_tyre", fronttyreRightImg);
+    }
+    if (sidePicLeft) {
+      fd.append("side_pic_vehicle", sidePicLeft);
+    }
+    if (sidePicRight) {
+      fd.append("side_pic_vehicle", sidePicRight);
+    }
     fd.append("status", "published");
 
     const publishResponse = await axios.put(
