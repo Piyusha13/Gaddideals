@@ -1383,7 +1383,7 @@ const VehicleDetails = () => {
                         <div className="price">
                           <p>
                             Selling Price&nbsp;
-                            <span>₹{similar?.selling_price}</span>
+                            <span>₹{rupee_format(similar?.selling_price)}</span>
                           </p>
                         </div>
                         {/* <div className="gallery">

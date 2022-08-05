@@ -459,6 +459,9 @@ const SellerForm = () => {
       toast.success(response.data.message);
       setSaveLoading(false);
       navigate("/UserVehicles");
+    } else if (response.data.status === "failed") {
+      toast.error(response.data.message);
+      setSaveLoading(false);
     }
 
     console.log(response);
@@ -639,6 +642,9 @@ const SellerForm = () => {
       toast.success("Published Successfully");
       setpubLoading(false);
       navigate("/UserVehicles");
+    } else if (publishResponse.data.status === "failed") {
+      toast.error(publishResponse.data.message);
+      setpubLoading(false);
     }
 
     console.log(publishResponse);

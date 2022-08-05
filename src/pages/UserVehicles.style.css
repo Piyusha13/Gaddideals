@@ -1,15 +1,13 @@
 @media screen and (max-width: 1000px) {
-  
   .user-vehicle-header {
     display: none !important;
     justify-content: center;
     align-items: center;
-    
   }
-  .lottie-div{
+  .lottie-div {
     width: 80%;
   }
-  .right-vehicle-container{
+  .right-vehicle-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,54 +15,55 @@
     padding: 0px !important;
     /* background-color: #fe620d !important; */
   }
-  .right-vehicle-container{
-    background: #FFFFFF;
-  box-shadow:none !important;
-  border-radius: 20px;
-  width: 55%;
-  padding: 0px !important;
-  display: flex;
-  flex-direction: column;
+  .right-vehicle-container {
+    background: #ffffff;
+    box-shadow: none !important;
+    border-radius: 20px;
+    width: 55%;
+    padding: 0px !important;
+    display: flex;
+    flex-direction: column;
   }
 }
 .user-vehicle-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .user-vehicle-header h1 {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 32px;
-    color: #050f56;
-    margin-bottom: 30px;
-    position: relative;
-  }
-  .user-vehicle-header h1::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 85px;
-    height: 4px;
-    border-radius: 5px;
-    background-color: #fe620d;
-  }
-  .lottie-div{
-    width: 80%;
-  }
-  .right-vehicle-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .right-vehicle-container{
-    background: #FFFFFF;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+.user-vehicle-header h1 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  color: #050f56;
+  margin-bottom: 30px;
+  position: relative;
+}
+.user-vehicle-header h1::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 85px;
+  height: 4px;
+  border-radius: 5px;
+  background-color: #fe620d;
+}
+.lottie-div {
+  width: 80%;
+}
+.right-vehicle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.right-vehicle-container {
+  background: #ffffff;
   box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
   border-radius: 20px;
-  width: 55%;
+  width: calc(75% - 15px);
   padding: 30px;
   display: flex;
   flex-direction: column;
-  }
+}

@@ -65,7 +65,7 @@ const SellerVehicleDetail = ({
   };
 
   const handleEngineInput = () => {
-    setShowModal(true);
+    // setShowModal(true);
     engineInput.current.click();
   };
 
@@ -187,44 +187,6 @@ const SellerVehicleDetail = ({
           </div>
           <div className="container-wrapper">
             <div className="row-one">
-              <div className="vehicle-document" onClick={handleEngineInput}>
-                <h6>Engine Picture</h6>
-                <input
-                  ref={engineInput}
-                  type="file"
-                  name="engine"
-                  onChange={handleImageChange}
-                  accept="image/*"
-                  hidden
-                />
-
-                {showModal && (
-                  <Modal
-                    width="90%"
-                    effect="fadeInRight"
-                    visible={showModal}
-                    // onClickAway={setShowModal(!showModal)}
-                  >
-                    <div>Hello</div>
-                  </Modal>
-                )}
-                <div
-                  className="document"
-                  style={engImage ? { padding: "0px" } : { padding: "40px" }}
-                >
-                  <img
-                    src={
-                      documentEngImg
-                        ? URL.createObjectURL(engImage)
-                        : engImage
-                        ? imgurl + engImage
-                        : cloudIcon
-                    }
-                    alt="cloud icon"
-                  />
-                </div>
-              </div>
-
               <div className="vehicle-document" onClick={handleFrontsideInput}>
                 <h6>
                   Front Side Picture <span className="front-req">*</span>
@@ -276,6 +238,34 @@ const SellerVehicleDetail = ({
                         ? URL.createObjectURL(backSideImg)
                         : backSideImg
                         ? imgurl + backSideImg
+                        : cloudIcon
+                    }
+                    alt="cloud icon"
+                  />
+                </div>
+              </div>
+
+              <div className="vehicle-document" onClick={handleEngineInput}>
+                <h6>Engine Picture</h6>
+                <input
+                  ref={engineInput}
+                  type="file"
+                  name="engine"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                  hidden
+                />
+
+                <div
+                  className="document"
+                  style={engImage ? { padding: "0px" } : { padding: "40px" }}
+                >
+                  <img
+                    src={
+                      documentEngImg
+                        ? URL.createObjectURL(engImage)
+                        : engImage
+                        ? imgurl + engImage
                         : cloudIcon
                     }
                     alt="cloud icon"

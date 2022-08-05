@@ -217,25 +217,6 @@ const SellerPreviewDetails = ({
 
             <div className="preview-row-one">
               <div className="preview-vehicle-document">
-                <h6>Engine Picture</h6>
-                <div
-                  className="document"
-                  style={engImage ? { padding: "0px" } : { padding: "40px" }}
-                >
-                  <img
-                    src={
-                      documentEngImg
-                        ? URL.createObjectURL(engImage)
-                        : engImage
-                        ? imgurl + engImage
-                        : cloudIcon
-                    }
-                    alt="cloud icon"
-                  />
-                </div>
-              </div>
-
-              <div className="preview-vehicle-document">
                 <h6>Front Side Picture</h6>
                 <div
                   className="document"
@@ -268,6 +249,25 @@ const SellerPreviewDetails = ({
                         ? URL.createObjectURL(backSideImg)
                         : backSideImg
                         ? imgurl + backSideImg
+                        : cloudIcon
+                    }
+                    alt="cloud icon"
+                  />
+                </div>
+              </div>
+
+              <div className="preview-vehicle-document">
+                <h6>Engine Picture</h6>
+                <div
+                  className="document"
+                  style={engImage ? { padding: "0px" } : { padding: "40px" }}
+                >
+                  <img
+                    src={
+                      documentEngImg
+                        ? URL.createObjectURL(engImage)
+                        : engImage
+                        ? imgurl + engImage
                         : cloudIcon
                     }
                     alt="cloud icon"
@@ -372,7 +372,7 @@ const SellerPreviewDetails = ({
                 </button>
               )}
               <button onClick={handlePublishPostData}>
-                {pubLoading ? "Publishing..." : "Publish"}
+                {pubLoading ? "Uploading..." : "Upload Vehicle"}
               </button>
             </div>
           </div>

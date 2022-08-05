@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.bad89630.css",
-    "main.js": "/static/js/main.9708e355.js",
+    "main.css": "/static/css/main.fb0a1747.css",
+    "main.js": "/static/js/main.8368dc29.js",
     "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
     "static/media/truck-home.png": "/static/media/truck-home.d21e6cbe13c16b374e57.png",
     "static/media/trucks1.png": "/static/media/trucks1.630a49118a64a49e60d2.png",
@@ -16,12 +16,12 @@
     "index.html": "/index.html",
     "static/media/mobile-footer.svg": "/static/media/mobile-footer.312a3114bfaa511ffb06.svg",
     "static/media/footer-bg.svg": "/static/media/footer-bg.5d085100533921c8e8ce.svg",
-    "main.bad89630.css.map": "/static/css/main.bad89630.css.map",
-    "main.9708e355.js.map": "/static/js/main.9708e355.js.map",
+    "main.fb0a1747.css.map": "/static/css/main.fb0a1747.css.map",
+    "main.8368dc29.js.map": "/static/js/main.8368dc29.js.map",
     "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bad89630.css",
-    "static/js/main.9708e355.js"
+    "static/css/main.fb0a1747.css",
+    "static/js/main.8368dc29.js"
   ]
 }

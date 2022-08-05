@@ -2446,7 +2446,7 @@ const Navbar = () => {
       </div>
 
       <nav className="navbar navbar-expand-lg nav-container">
-        <div className="container navar_div">
+        <div className="container-fluid gd_container navar_div">
           <div className="logo">
             <a href="/" className="navbar-brand">
               <img src={logoIcon} alt="logo" />
@@ -2471,7 +2471,10 @@ const Navbar = () => {
                   // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
                 }}
                 key={catgeoryIcon._id}
-                title={catgeoryIcon.title}
+                // title={catgeoryIcon.title}
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                data-bs-title={catgeoryIcon.title}
               >
                 <img
                   src={`${imgurl}${catgeoryIcon.icon}`}

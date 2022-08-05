@@ -97,6 +97,20 @@ function UserVehicles() {
   //   }
   // };
 
+  const rupee_format = (str) => {
+    if (str) {
+      var x = str;
+      x = x.toString();
+      var lastThree = x.substring(x.length - 3);
+      var otherNumbers = x.substring(0, x.length - 3);
+      if (otherNumbers !== "") lastThree = "," + lastThree;
+      var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+      return res;
+    } else {
+      return;
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -183,7 +197,9 @@ function UserVehicles() {
                             <span>(Uploaded on Jun 01,2022)</span>
                           </div> */}
                           <div className="card-price">
-                            <h3>₹{item?.vehicle_id?.selling_price} </h3>
+                            <h3>
+                              ₹{rupee_format(item?.vehicle_id?.selling_price)}{" "}
+                            </h3>
                           </div>
                         </div>
 
