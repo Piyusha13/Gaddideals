@@ -1192,8 +1192,14 @@ const SellerHomePage = () => {
           <Swiper
             className="testimonial-slide"
             centeredSlides={true}
-            spaceBetween={20}
-            slidesPerView={testimonialBuyer.length === 1 ? "auto" : 3}
+            spaceBetween={testimonialBuyer.length === 2 ? 0 : 20}
+            slidesPerView={
+              testimonialBuyer.length === 1
+                ? "auto"
+                : testimonialBuyer.length === 2
+                ? 2
+                : 3
+            }
             grabCursor={true}
             breakpoints={{
               50: {

@@ -83,6 +83,7 @@ const SellerFormVehicle = ({
   setCitySuggestionBox,
   modelSuggestionBox,
   setModelSuggestionBox,
+  fetchCities,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
@@ -108,18 +109,22 @@ const SellerFormVehicle = ({
 
   const handleOnFocus = (e) => {
     setOverlayState(true);
+    setSuggestionBox(true);
   };
 
   const handleOnModelFocus = (e) => {
     setOverlayState(true);
+    setModelSuggestionBox(true);
   };
 
   const handleOnStateFocus = (e) => {
     setOverlayState(true);
+    setStatesSuggestionBox(true);
   };
 
   const handleOnCityFocus = (e) => {
     setOverlayState(true);
+    setCitySuggestionBox(true);
   };
 
   useEffect(() => {
@@ -202,6 +207,7 @@ const SellerFormVehicle = ({
                           key={index}
                           onClick={() => {
                             setStateId(state._id);
+                            fetchCities(state?._id);
                             setStateTitle(state.title);
                             setStatesSuggestionBox(false);
                           }}
@@ -320,7 +326,7 @@ const SellerFormVehicle = ({
                   Manufacturing Year <small style={{ color: "red" }}>*</small>
                 </label>
                 <div className="years">
-                  {yearsArray.map((years, index) => (
+                  {yearsArray.slice(0, 6).map((years, index) => (
                     <div
                       className={
                         isYearActive === index ? "year active" : "year"
@@ -348,7 +354,7 @@ const SellerFormVehicle = ({
                     />
                     {seeMoreSuggestion && (
                       <div className="see-more-years">
-                        {yearsArray.map((years, index) => (
+                        {yearsArray.slice(6, 7).map((years, index) => (
                           <p
                             key={years._id}
                             onClick={() => {

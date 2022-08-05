@@ -383,7 +383,9 @@ const VehicleListings = () => {
 
     if (searchInput.length > 0) {
       const res = await axios.get(
-        `${Constant.getUrls.getAllVehicles}?q=` + searchInput.toLowerCase()
+        `${Constant.getUrls.getAllVehicles}` +
+          `/searchSuggestion?q=` +
+          searchInput.toLowerCase()
       );
 
       setVehiclesArray(res.data.vehicle.docs);
@@ -441,7 +443,7 @@ const VehicleListings = () => {
     const apiUrl = queryString.stringify(location);
 
     const res = await axios.get(
-      `${Constant.getUrls.getAllVehicles}?status=approved&${apiUrl}`
+      `${Constant.getUrls.getAllVehicles}?status=published&${apiUrl}`
     );
 
     setVehicleObj(res.data.vehicle);
@@ -556,9 +558,6 @@ const VehicleListings = () => {
         }
       }
     }
-    console.log(location);
-
-    console.log(location);
 
     // manage cities data
     if (selectedStateIds.includes(id)) {
@@ -566,7 +565,6 @@ const VehicleListings = () => {
       selectedStateIds.splice(index, 1);
       setselectedStateIds(selectedStateIds);
       fetchCities(selectedStateIds);
-      console.log(selectedStateIds);
       if (selectedStateIds.length === 0) {
         setCitiesArray([]);
         delete location["city[]"];
@@ -921,7 +919,6 @@ const VehicleListings = () => {
 
   const fetchCities = async (stateIds) => {
     try {
-      console.log(stateIds);
       if (stateIds.length > 0) {
         let url = Constant.getUrls.getAllCity + "?";
         stateIds.forEach((id) => {

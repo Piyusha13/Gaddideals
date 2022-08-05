@@ -143,16 +143,6 @@ const SellerForm = () => {
   };
 
   const fetchStates = async () => {
-    // let statesArr = [];
-
-    // statecities.map((state) => {
-    //   if (statesArr.indexOf(state.State) === -1) {
-    //     statesArr.push(state.State);
-    //   }
-
-    //   return statesArr;
-    // });
-
     const res = await axios.get(
       Constant.getUrls.getAllStates + "?status=active&sort=true&limit=100"
     );
@@ -161,20 +151,10 @@ const SellerForm = () => {
     }
   };
 
-  const fetchCities = async () => {
-    // let citiesArr = [];
-
-    // if (stateTitle.length > 0) {
-    //   statecities.filter((city) => {
-    //     if (city.State === stateTitle) {
-    //       citiesArr.push(city.City);
-    //     }
-    //     return citiesArr;
-    //   });
-    // }
-
+  const fetchCities = async (id) => {
     const res = await axios.get(
-      Constant.getUrls.getAllCity + "?status=active&sort=true&limit=500"
+      Constant.getUrls.getAllCity +
+        `?status=active&sort=true&state=${id}&limit=500`
     );
     if (res.data) {
       setCitiesArray(res.data.getAllCities.docs);
@@ -242,48 +222,24 @@ const SellerForm = () => {
     fetchModels();
     fetchCatgory();
     fetchStates();
-    fetchCities();
+    // fetchCities();
     fetchBodyTypes();
   }, [stateTitle]);
 
   const handleBrandChange = (e) => {
     setBrandTitle(e.target.value);
-
-    if (e.target.value.length > 0) {
-      setSuggestionBox(true);
-    } else {
-      setSuggestionBox(false);
-    }
   };
 
   const handleModelChange = (e) => {
     setModelTitle(e.target.value);
-
-    if (e.target.value.length > 0) {
-      setModelSuggestionBox(true);
-    } else {
-      setModelSuggestionBox(false);
-    }
   };
 
   const handleStateChange = (e) => {
     setStateTitle(e.target.value);
-
-    if (e.target.value.length > 0) {
-      setStatesSuggestionBox(true);
-    } else {
-      setStatesSuggestionBox(false);
-    }
   };
 
   const handleCityChange = (e) => {
     setCityTitle(e.target.value);
-
-    if (e.target.value.length > 0) {
-      setCitySuggestionBox(true);
-    } else {
-      setCitySuggestionBox(false);
-    }
   };
 
   const filterStates = statesArray.filter((state) => {
@@ -353,18 +309,30 @@ const SellerForm = () => {
     if (step === 1) {
       if (stateTitle === "") {
         toast.error("State is required");
+      } else if (stateId === "") {
+        setStateTitle("");
+        toast.error("Please select state");
       } else if (!validateText.test(stateTitle)) {
         toast.error("Please enter valid state");
       } else if (cityTitle === "") {
         toast.error("City is required");
+      } else if (cityId === "") {
+        setCityTitle("");
+        toast.error("Please select city");
       } else if (!validateText.test(cityTitle)) {
         toast.error("Please enter valid city");
       } else if (brandTitle === "") {
         toast.error("Vehicle brand is required");
+      } else if (brandId === "") {
+        setBrandTitle("");
+        toast.error("Please select brand");
       } else if (!validateText.test(brandTitle)) {
         toast.error("Please enter vaild brand name");
       } else if (modelTitle === "") {
         toast.error("Vehicle model is required");
+      } else if (modelId === "") {
+        setModelTitle("");
+        toast.error("Please select model");
       } else if (!validateModel.test(modelTitle)) {
         toast.error("Please enter vaild model name");
       } else if (yearTitle === "") {
@@ -579,6 +547,7 @@ const SellerForm = () => {
     if (updateResponse.data.status === "success") {
       toast.success(updateResponse.data.message);
       setSaveLoading(false);
+      navigate("/UserVehicles");
     }
 
     console.log(updateResponse);
@@ -591,7 +560,7 @@ const SellerForm = () => {
     let fd = new FormData();
 
     // editVehicleObj?.category?._id || // editVehicleObj?.category?._id ||
-    fd.append("category", editVehicleObj?.category?._id);
+    fd.append("category", categoryId);
     fd.append("state", stateId);
     fd.append("city", cityId);
     fd.append("brand", brandId);
@@ -605,7 +574,7 @@ const SellerForm = () => {
       fd.append("no_of_hrs", formData.noofhrs || 0);
     }
     if (owner !== "") {
-      fd.append("no_of_owner", owner.toLowerCase());
+      fd.append("no_of_owner", owner);
     }
     fd.append("fuelType", fuel);
     if (formData.insurancevalidity) {
@@ -615,7 +584,7 @@ const SellerForm = () => {
       fd.append("tax_validity", formData.taxvalidity);
     }
     if (permit !== "") {
-      fd.append("vehicle_permit", permit.toLowerCase());
+      fd.append("vehicle_permit", permit);
     }
     if (formData.nooftyres) {
       fd.append("no_of_tyre", formData.nooftyres || 0);
@@ -626,7 +595,7 @@ const SellerForm = () => {
     if (formData.noofseats) {
       fd.append("no_of_seats", formData.noofseats || 0);
     }
-    fd.append("tyre_cond", tyreCondition.toLowerCase());
+    fd.append("tyre_cond", tyreCondition);
     fd.append("selling_price", formData.pricingvehicle);
     if (formData.fitnesscertificate) {
       fd.append("fitness_certificate", formData.fitnesscertificate);
@@ -634,7 +603,7 @@ const SellerForm = () => {
     if (bodyTypeId) {
       fd.append("bodyType", bodyTypeId);
     }
-    fd.append("rc_document", rc.toLowerCase());
+    fd.append("rc_document", rc);
     if (engImage) {
       fd.append("engine_pic", engImage);
     }
@@ -656,8 +625,8 @@ const SellerForm = () => {
     }
     fd.append("status", "published");
 
-    const publishResponse = await axios.put(
-      Constant.getUrls.getAllVehicles + `/${editVehicleObj?._id}`,
+    const publishResponse = await axios.post(
+      Constant.getUrls.getAllVehicles,
       fd,
       {
         headers: {
@@ -669,6 +638,7 @@ const SellerForm = () => {
     if (publishResponse.data.status === "success") {
       toast.success("Published Successfully");
       setpubLoading(false);
+      navigate("/UserVehicles");
     }
 
     console.log(publishResponse);
@@ -685,6 +655,7 @@ const SellerForm = () => {
             filterBrands={filterBrands}
             filterModels={filterModels}
             categoryTractorTitle={categoryTractorTitle}
+            fetchCities={fetchCities}
             handleOnChange={handleOnChange}
             setYearTitle={setYearTitle}
             setYear={setYear}

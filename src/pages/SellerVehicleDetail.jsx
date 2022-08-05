@@ -203,7 +203,7 @@ const SellerVehicleDetail = ({
                     width="90%"
                     effect="fadeInRight"
                     visible={showModal}
-                    onClickAway={setShowModal(false)}
+                    // onClickAway={setShowModal(!showModal)}
                   >
                     <div>Hello</div>
                   </Modal>
@@ -226,7 +226,9 @@ const SellerVehicleDetail = ({
               </div>
 
               <div className="vehicle-document" onClick={handleFrontsideInput}>
-                <h6>Front Side Picture</h6>
+                <h6>
+                  Front Side Picture <span className="front-req">*</span>
+                </h6>
                 <input
                   ref={frontsideInput}
                   type="file"

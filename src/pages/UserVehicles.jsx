@@ -26,6 +26,7 @@ import Constant from "../constants";
 import clipboard from "../assets/clipboard.png";
 import { toast } from "react-toastify";
 import { imgurl } from "../constants";
+import moment from "moment";
 
 function UserVehicles() {
   const defaultOptions = {
@@ -157,7 +158,7 @@ function UserVehicles() {
                 {vehicleData?.map((item) => (
                   <div className="card" key={item._id}>
                     <div className="card-wrapper-vehicles">
-                      <div className="card-img-wrapper">
+                      <div className="card-img-wrapper uservehicle">
                         <img src={imgurl + item.front_side_pic} alt="truck" />
                       </div>
                       <div className="card-info">
@@ -187,10 +188,25 @@ function UserVehicles() {
                               <img src={deleteIcon} alt="delete icon" />
                             </div>
                             <div className="card-publish-review">
-                              <div className="review">
-                                <strong>Under Review</strong>
-                              </div>
-                              <span>(Uploaded on Jun 01,2022)</span>
+                              {item?.inspection_status === "published" ? (
+                                <div className="review">
+                                  <strong>Under Review</strong>
+                                </div>
+                              ) : item?.inspection_status === "draft" ? (
+                                <div className="review">
+                                  <strong>Draft</strong>
+                                </div>
+                              ) : (
+                                <div className="review published">
+                                  <strong>Approved</strong>
+                                </div>
+                              )}
+
+                              <span>
+                                (Uploaded&nbsp;
+                                {moment(item?.createdAt).format("MMMM Do YYYY")}
+                                )
+                              </span>
                             </div>
                           </div>
                         </div>

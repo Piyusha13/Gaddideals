@@ -22,6 +22,7 @@ import Footer from "../components/Footer";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Constant from "../constants";
+import "swiper/css";
 
 import { toast } from "react-toastify";
 import { FaUserTie } from "react-icons/fa";
@@ -37,7 +38,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import { Navigation, Thumbs, FreeMode } from "swiper";
+import { Navigation, Thumbs, FreeMode, Autoplay } from "swiper";
 
 import Modal from "react-awesome-modal";
 import OtpInput from "react-otp-input";
@@ -75,17 +76,19 @@ const VehicleDetails = () => {
   const [getvehicledetails, setVehicleDetails] = useState({});
   let user_token = localStorage.getItem("Token");
   const [imageArray, setImageArray] = useState([]);
+  const [similarImageArr, setSimilarImageArr] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [mobThumbsSwiper, setMobThumbsSwiper] = useState(null);
 
   const [loadingDetails, setLoadingDetails] = useState(false);
 
   const [checkCategory, setCheckCategory] = useState("");
-  const [categoryTruck, setCategoryTruck] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [BuyerInput, setBuyerInput] = useState(false);
   const [BuyerOtp, setBuyerOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [SellerDetails, setSellerDetails] = useState(false);
+  const [similarVehicles, setSimilarVehicles] = useState([]);
 
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   const locationCity = useSelector(selectLocation);
@@ -187,6 +190,7 @@ const VehicleDetails = () => {
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
       setCheckCategory(res.data?.vehicle?.category?.title);
+      setCategoryId(res.data?.category?._id);
       setvehicleId(res.data?.vehicle?._id);
 
       console.log(res.data?.vehicle?._id);
@@ -212,7 +216,41 @@ const VehicleDetails = () => {
       setLoadingDetails(false);
     };
 
+    const getSimilarVehicles = async () => {
+      try {
+        const response = await axios.get(
+          Constant.getUrls.getAllVehicles + `?category=${categoryId}`
+        );
+
+        if (response.data) {
+          setSimilarVehicles(response?.data?.vehicle?.docs);
+
+          let frontBackArr = [];
+          frontBackArr.push(
+            response.data?.vehicle?.front_side_pic,
+            response.data?.vehicle?.back_side_pic
+          );
+          setSimilarImageArr(frontBackArr);
+
+          let frontTyreArr = [];
+          response.data?.vehicle?.front_tyre?.forEach((tyre) =>
+            frontTyreArr.push(tyre)
+          );
+          setSimilarImageArr((prevState) => [...prevState, ...frontTyreArr]);
+
+          let sidePicArr = [];
+          response.data?.vehicle?.side_pic_vehicle?.forEach((sidePic) =>
+            sidePicArr.push(sidePic)
+          );
+          setSimilarImageArr((prevState) => [...prevState, ...sidePicArr]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getSingleVehicleDetails();
+    getSimilarVehicles();
   }, []);
 
   const rupee_format = (str) => {
@@ -463,6 +501,8 @@ const VehicleDetails = () => {
   if (loadingDetails) {
     return "Loading...";
   }
+
+  console.log(similarVehicles);
 
   return (
     <>
@@ -1256,117 +1296,77 @@ const VehicleDetails = () => {
           </div>
 
           {/* Similar Vehicle */}
-
           <div className="similar-vehicles-container">
             <div className="title">
               <h1>similar vehicle</h1>
             </div>
             <div className="similar-vehicles-list">
-              <div className="similar-vehicle-card">
-                <div className="img-wrapper">
-                  <img src={similarTruck} alt="truck" />
-                </div>
+              <Swiper
+                spaceBetween={20}
+                slidesPerView={3}
+                grabCursor={true}
+                modules={[Autoplay]}
+              >
+                {similarVehicles.map((similar) => (
+                  <SwiperSlide key={similar._id}>
+                    <div className="similar-vehicle-card">
+                      <div className="img-wrapper">
+                        <a href={`/vehicledetails/${similar?._id}`}>
+                          <img
+                            src={imgurl + similar?.front_side_pic}
+                            alt={similar?.category?.title}
+                          />
+                        </a>
+                      </div>
 
-                <div className="vehicle-info">
-                  <div className="title">
-                    <h5>Tata Intra V30</h5>
-                    <div className="location">
-                      <img src={locationIcon} alt="location icon" />
-                      <span>Mumbai</span>
+                      <div className="vehicle-info">
+                        <div className="title">
+                          <h5>{similar?.brand?.title}</h5>
+                          <div className="location">
+                            <img src={locationIcon} alt="location icon" />
+                            <span>{similar?.city?.title}</span>
+                          </div>
+                        </div>
+                        <div className="price">
+                          <p>
+                            Selling Price&nbsp;
+                            <span>₹{similar?.selling_price}</span>
+                          </p>
+                        </div>
+                        {/* <div className="gallery">
+                          <Swiper
+                            className="swiper-latest"
+                            spaceBetween={20}
+                            slidesPerView={3}
+                            modules={[Autoplay, Navigation]}
+                          >
+                            <SwiperSlide
+                              className="swiper-slide-latest"
+                              key={similar._id}
+                            >
+                              {similarImageArr.map((thumb, index) => (
+                                <SwiperSlide key={index}>
+                                  <div className="thumb">
+                                    <img
+                                      src={
+                                        thumb
+                                          ? `${imgurl}${thumb}`
+                                          : `${imgPlaceHolder}`
+                                      }
+                                      alt="truck thumbnail"
+                                    />
+                                  </div>
+                                </SwiperSlide>
+                              ))}
+                            </SwiperSlide>
+                          </Swiper>
+                        </div> */}
+                        <button>Get Seller Details</button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="price">
-                    <p>
-                      Selling Price <span>₹4,65,000</span>
-                    </p>
-                  </div>
-                  <div className="gallery">
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                  </div>
-                  <button>Get Seller Details</button>
-                </div>
-              </div>
-
-              <div className="similar-vehicle-card">
-                <div className="img-wrapper">
-                  <img src={similarTruck} alt="truck" />
-                </div>
-                <div className="vehicle-info">
-                  <div className="title">
-                    <h5>Tata Intra V30</h5>
-                    <div className="location">
-                      <img src={locationIcon} alt="location icon" />
-                      <span>Mumbai</span>
-                    </div>
-                  </div>
-                  <div className="price">
-                    <p>
-                      Selling Price <span>₹4,65,000</span>
-                    </p>
-                  </div>
-                  <div className="gallery">
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                  </div>
-                  <button>Get Seller Details</button>
-                </div>
-              </div>
-
-              <div className="similar-vehicle-card">
-                <div className="img-wrapper">
-                  <img src={similarTruck} alt="truck" />
-                </div>
-                <div className="vehicle-info">
-                  <div className="title">
-                    <h5>Tata Intra V30</h5>
-                    <div className="location">
-                      <img src={locationIcon} alt="location icon" />
-                      <span>Mumbai</span>
-                    </div>
-                  </div>
-                  <div className="price">
-                    <p>
-                      Selling Price <span>₹4,65,000</span>
-                    </p>
-                  </div>
-                  <div className="gallery">
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                    <div className="thumb">
-                      <img src={similarTruckSmall} alt="truck" />
-                    </div>
-                  </div>
-                  <button>Get Seller Details</button>
-                </div>
-              </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </section>

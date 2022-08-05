@@ -279,6 +279,10 @@
   font-size: 15px;
   color: #050f56;
 }
+.row-one .vehicle-document h6 span {
+  display: inline-block;
+  color: red;
+}
 .row-one .vehicle-document .document {
   width: 120px;
   height: 120px;

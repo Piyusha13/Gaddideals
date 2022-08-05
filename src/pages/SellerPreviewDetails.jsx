@@ -371,11 +371,7 @@ const SellerPreviewDetails = ({
                   {saveLoading ? "Saving..." : "Save Now"}
                 </button>
               )}
-              <button
-                onClick={handlePublishPostData}
-                disabled={disableBtn}
-                style={{ opacity: disableBtn ? "20%" : "100%" }}
-              >
+              <button onClick={handlePublishPostData}>
                 {pubLoading ? "Publishing..." : "Publish"}
               </button>
             </div>
