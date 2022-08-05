@@ -886,7 +886,7 @@ const VehicleDetails = () => {
       )}
 
       {!loadingDetails && (
-        <section className="vehicle-details-container container">
+        <section className="vehicle-details-container gd_container">
           <div className="detail-pages-navigation">
             <Link to="/">
               <small>Home</small>

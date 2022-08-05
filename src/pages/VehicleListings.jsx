@@ -443,7 +443,7 @@ const VehicleListings = () => {
     const apiUrl = queryString.stringify(location);
 
     const res = await axios.get(
-      `${Constant.getUrls.getAllVehicles}?status=published&${apiUrl}`
+      `${Constant.getUrls.getAllVehicles}?status=approved&${apiUrl}`
     );
 
     setVehicleObj(res.data.vehicle);
@@ -1460,14 +1460,14 @@ const VehicleListings = () => {
           </div>
         </div>
       )}
-      <div className="pages-navigation container">
+      <div className="pages-navigation gd_container">
         <Link to="/">
           <small>Home</small>
         </Link>
         &nbsp; &#62; &nbsp;
         <small>Vehicle listing</small>
       </div>
-      <section className="vehicles-container container">
+      <section className="vehicles-container gd_container">
         <aside className="filter-sidebar">
           {/* Filter One */}
           <div className="filter-one">
@@ -1929,7 +1929,7 @@ const VehicleListings = () => {
         )}
       </section>
       {/*Truck Image  */}
-      <div className="truck-section container">
+      <div className="truck-section gd_container">
         <div className="image-wrapper">
           <img src={truckHomeImage} alt="truck" />
         </div>

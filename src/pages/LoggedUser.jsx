@@ -158,7 +158,7 @@ function LoggedUser() {
     <>
       <Navbar />
       <div className="outside-container">
-        <div className="profile-container container">
+        <div className="profile-container gd_container">
           <div className="left-profile-container">
             <div className="upper-div">
               <p className="hello-text">Hello</p>
@@ -168,7 +168,7 @@ function LoggedUser() {
               <div className="my-vehicle-div">
                 <img className="shipping-img" src={shipping} alt=""></img>
                 <Link to="/UserVehicles" className="my-vehicle-text">
-                  <span> My Vehicle</span>
+                  <span>My Vehicle</span>
                 </Link>
                 <Link to="/UserVehicles">
                   <img className="next-arrow-img" src={next_arrow} alt="" />
@@ -201,7 +201,6 @@ function LoggedUser() {
                       logoutAccount();
                     }}
                   >
-                    {" "}
                     Sign out
                   </span>
                 </Link>
