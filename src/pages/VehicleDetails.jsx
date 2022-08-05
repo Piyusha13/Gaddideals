@@ -204,6 +204,7 @@ const VehicleDetails = () => {
       );
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
+
       setpAmount(Math.round(res.data?.vehicle?.selling_price * 0.8));
       setdownPayment(Math.round(res.data?.vehicle?.selling_price * 0.2));
       setCheckCategory(res.data?.vehicle?.category?.title);
@@ -527,7 +528,7 @@ const VehicleDetails = () => {
       {EmiModal && (
         <Modal
           visible={EmiModal}
-          width={matches ? "85%" : "auto"}
+          width={matches ? "85%" : "100vw"}
           // height={matches ? "auto" : "91%"}
           effect="fadeInUp"
           onClickAway={() => {
@@ -538,7 +539,8 @@ const VehicleDetails = () => {
             <div className="emi-left-side-div">
               <div className="emi-left-top-div">
                 <p>
-                  <span className="selling-price"> ₹{emi} </span> per month
+                  <span className="selling-price"> ₹{rupee_format(emi)} </span>{" "}
+                  per month
                 </p>
               </div>
               <div className="emi-left-mid-div">
@@ -559,23 +561,25 @@ const VehicleDetails = () => {
                   <div className="pla-text">
                     <span className="cir1"></span>Principal Loan Amount
                   </div>
-                  <div className="pla-price"> ₹{pAmount}</div>
+                  <div className="pla-price"> ₹{rupee_format(pAmount)}</div>
                 </div>
                 {/* total interest payable div */}
                 <div className="pla-div">
                   <div className="pla-text">
                     <span className="cir2"></span>Total Interest Payable
                   </div>
-                  <div className="pla-price">₹{TotalAmountOfIntrest}</div>
+                  <div className="pla-price">
+                    ₹{rupee_format(TotalAmountOfIntrest)}
+                  </div>
                 </div>
               </div>
 
               <div className="emi-left-bottom-div">
-                <div className="pla-text">
+                <div className="pla-text Tap-img-text">
                   <img src={TapIcon} alt="" />
                   Total Amount Payable
                 </div>
-                <div className="pla-price">₹{totalAmt} </div>
+                <div className="pla-price">₹{rupee_format(totalAmt)} </div>
               </div>
             </div>
             {/* <div className="verticle-hr"></div> */}
@@ -605,9 +609,18 @@ const VehicleDetails = () => {
                       changeDownpament(c);
                     }}
                     defaultValue={pAmount}
-                    min={0}
+                    min={100000}
                     max={Math.round(getvehicledetails?.selling_price * 0.8)}
                   />
+                </div>
+                <div className="min-max">
+                  <p>₹1,00,000</p>
+                  <p>
+                    ₹
+                    {rupee_format(
+                      Math.round(getvehicledetails?.selling_price * 0.8)
+                    )}
+                  </p>
                 </div>
                 {/* <div className="selected-la pla-price">{pAmount}</div> */}
               </div>
@@ -615,7 +628,9 @@ const VehicleDetails = () => {
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Down Payment</div>
-                  <div className="la-price pla-price">₹{downPayment}</div>
+                  <div className="la-price pla-price">
+                    ₹{rupee_format(downPayment)}
+                  </div>
                 </div>
                 <div className="range-slider">
                   {/* slider 2 */}
@@ -632,8 +647,19 @@ const VehicleDetails = () => {
                     }}
                     defaultValue={downPayment}
                     min={Math.round(getvehicledetails?.selling_price * 0.2)}
-                    max={getvehicledetails?.selling_price}
+                    max={getvehicledetails?.selling_price - 100000}
                   />
+                </div>
+                <div className="min-max">
+                  <p>
+                    ₹
+                    {rupee_format(
+                      Math.round(getvehicledetails?.selling_price * 0.2)
+                    )}
+                  </p>
+                  <p>
+                    ₹{rupee_format(getvehicledetails?.selling_price - 100000)}
+                  </p>
                 </div>
                 {/* <div className="selected-la pla-price">₹{downPayment}</div> */}
               </div>
@@ -656,6 +682,10 @@ const VehicleDetails = () => {
                     min={1}
                     max={5}
                   />
+                </div>
+                <div className="min-max">
+                  <p>1 Year</p>
+                  <p>5 Year</p>
                 </div>
                 {/* <div className="selected-la pla-price">{duration} </div> */}
               </div>

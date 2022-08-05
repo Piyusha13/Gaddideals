@@ -2214,7 +2214,10 @@ hr {
   border-radius: 5px;
   display: flex;
   flex-direction: row;
+  width: 70vw;
   /* justify-content: center; */
+  /* justify-content: space-between; */
+  height: 80vh;
 }
 /* .verticle-hr{
   background-color: #00adef;
@@ -2226,17 +2229,26 @@ hr {
   display: flex;
   flex-direction: column;
   border-right: 1px solid #b1b1b1;
+  /* background-color: orange; */
+  width: 50%;
 }
 .emi-left-top-div {
-  padding: 20px;
+  padding: 10px;
   border-bottom: 1px solid #b1b1b1;
+  margin-top: 50px;
+  text-align: center;
+  color:  #050F56;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 15px;
 }
-.selling-price {
+.emi-left-top-div .selling-price {
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 500;
-  font-size: 50px;
-  line-height: 59px;
+  font-weight: 600;
+  font-size: 40px;
+  /* line-height: 59px; */
   color: #00adef;
 }
 .emi-left-mid-div {
@@ -2249,7 +2261,7 @@ hr {
 }
 .donut-graph {
   /* background-color: #00ADEF; */
-  width: 70%;
+  width: 40%;
   margin-bottom: 50px;
   /* height: 290px; */
   align-self: center !important;
@@ -2287,7 +2299,7 @@ hr {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 12px;
   color: #5f5f5f;
   display: flex;
   flex-direction: row;
@@ -2296,8 +2308,8 @@ hr {
 .pla-price {
   font-family: "Roboto";
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 15px;
   line-height: 28px;
   color: #00adef;
 }
@@ -2306,26 +2318,39 @@ hr {
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
+  /* background-color: orangered; */
   border-top: 1px solid #b1b1b1;
 }
+
+.Tap-img-text{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  /* background-color: orange; */
+}
 .emi-left-bottom-div img {
-  width: 5%;
+  width: 6%;
+  /* height: 20px; */
+  margin-right: 5px;
 }
 .emi-right-side-div {
   padding: 20px;
+  width: 50%;
   /* padding-bottom: 0px; */
   /* display: flex; */
   /* flex-direction: column; */
 }
 .emi-right-side-div img {
-  width: 10%;
+  width: 20px;
+  height: 20px;
   position: relative;
   float: right;
+  cursor: pointer;
 }
 .la-div {
   display: flex;
   flex-direction: column;
-  margin-top: 15%;
+  margin-top: 30px;
 }
 .la-top-div {
   display: flex;
@@ -2402,4 +2427,14 @@ hr {
   color: #ffffff;
   padding: 10px 0px;
   margin-top: 10px;
+}
+.min-max{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+color: #909090;
 }
