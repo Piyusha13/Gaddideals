@@ -104,12 +104,16 @@ const VehicleDetails = () => {
   const [downPayment, setdownPayment] = useState(50000);
   const maxValue = getvehicledetails?.selling_price - 50000;
   const initialPAmount = getvehicledetails?.selling_price - 50000;
-  const [pAmount, setpAmount] = useState(90000); //loan priciple amount
+  const [pAmount, setpAmount] = useState(100000); //loan priciple amount
   const [interest, setinterest] = useState(15);
   const [duration, setDuration] = useState(147);
   // const maxValue = getvehicledetails?.selling_price - downPayment;
   const intMax = 20; //maximum intrest
   const maxDuration = 360;
+  let b = pAmount;
+
+  const initalpAmount = getvehicledetails?.selling_price * 80 * 0.01;
+  // setpAmount(initalpAmount);
 
   const intr = interest / 1200;
   const emi = duration
@@ -120,6 +124,10 @@ const VehicleDetails = () => {
     (emi / intr) * (1 - Math.pow(1 + intr, -duration))
   );
   const TotalAmountOfIntrest = Math.round(totalAmt - TotalAmountOfCredit);
+
+  function changeDownpament(c) {
+    setdownPayment(downPayment + c);
+  }
 
   // const [volume,setvolume]=useState(0);
 
@@ -463,6 +471,7 @@ const VehicleDetails = () => {
         <Modal
           visible={EmiModal}
           width={matches ? "85%" : "auto"}
+          // height={matches ? "auto" : "91%"}
           effect="fadeInUp"
           onClickAway={() => {
             setEmiModal(!EmiModal);
@@ -526,29 +535,29 @@ const VehicleDetails = () => {
                 <div className="la-top-div">
                   <div className="la-text">Loan Amount</div>
                   <div className="la-price pla-price">
-                    ₹{rupee_format(getvehicledetails?.selling_price)}
+                    ₹{rupee_format(pAmount)}
                   </div>
                 </div>
                 <div className="range-slider">
                   {/* slider 1 */}
-                  {/* <Typography gutterBottom>Loan Amount</Typography> */}
                   <PrettoSlider
                     value={pAmount}
                     onChange={(event, vAmt) => {
                       setpAmount(vAmt);
-                      // setdownPayment(downPayment-vAmt);
+                      let c = b - vAmt;
+                      changeDownpament(c);
                     }}
                     defaultValue={initialPAmount}
                     max={maxValue}
                   />
                 </div>
-                <div className="selected-la pla-price">{pAmount}</div>
+                {/* <div className="selected-la pla-price">{pAmount}</div> */}
               </div>
               {/* down payment div */}
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Down Payment</div>
-                  <div className="la-price pla-price">₹4,65,000</div>
+                  <div className="la-price pla-price">₹{downPayment}</div>
                 </div>
                 <div className="range-slider">
                   {/* slider 2 */}
@@ -565,7 +574,7 @@ const VehicleDetails = () => {
                     max={getvehicledetails?.selling_price}
                   />
                 </div>
-                <div className="selected-la pla-price">₹{downPayment}</div>
+                {/* <div className="selected-la pla-price">₹{downPayment}</div> */}
               </div>
               {/* loan duration div */}
               <div className="la-div">
@@ -585,7 +594,7 @@ const VehicleDetails = () => {
                     max={maxDuration}
                   />
                 </div>
-                <div className="selected-la pla-price">{duration} </div>
+                {/* <div className="selected-la pla-price">{duration} </div> */}
               </div>
               {/* interest rate div */}
               <div className="ir-div">
