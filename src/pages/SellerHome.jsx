@@ -179,12 +179,12 @@ const SellerHome = () => {
           </div>
         </div>
       )}
-      <div className="how-it-works-section">
+      <div className="how-it-works-section container">
         <div className="header-title">
           <h1>How It Works</h1>
         </div>
 
-        <div className="how-cards-container container">
+        <div className="how-cards-container">
           <div className="how-card">
             <div className="how-card-title">
               <h5>Upload the required details of the vehicle</h5>
@@ -246,7 +246,7 @@ const SellerHome = () => {
         </div>
       </div>
 
-      <div className="our-categories-section">
+      <div className="our-categories-section container">
         <div className="our-categories-header">
           <h1>Our Categories</h1>
         </div>
@@ -265,7 +265,7 @@ const SellerHome = () => {
       </div>
 
       {/* Customer Review */}
-      <div className="customer-review-section">
+      <div className="customer-review-section container">
         <div className="customer-review-header">
           <h1>Customer Review</h1>
         </div>
@@ -340,7 +340,7 @@ const SellerHome = () => {
       </div>
 
       {/* Trusted Brands */}
-      <div className="trusted-brands-section">
+      <div className="trusted-brands-section container">
         <div className="trusted-brand-header">
           <h1>Trusted Brands</h1>
         </div>
@@ -383,7 +383,7 @@ const SellerHome = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="faq-section">
+      <div className="faq-section container">
         <div className="faq-header">
           <h1>Frequently Asked Questions</h1>
         </div>
@@ -400,7 +400,7 @@ const SellerHome = () => {
       </div>
 
       {/*Truck Image  */}
-      <div className="truck-section">
+      <div className="truck-section container">
         <Swiper
           grabCursor={true}
           modules={[Autoplay]}

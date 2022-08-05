@@ -1158,7 +1158,7 @@ const SellerHomePage = () => {
         </div>
       </div>
 
-      <div className="our-categories-section">
+      <div className="our-categories-section container">
         <div className="our-categories-header">
           <h1>Our Categories</h1>
         </div>
@@ -1183,7 +1183,7 @@ const SellerHomePage = () => {
       </div>
 
       {/* Customer Review */}
-      <div className="customer-review-section">
+      <div className="customer-review-section container">
         <div className="customer-review-header">
           <h1>Customer Reviews</h1>
         </div>
@@ -1258,7 +1258,7 @@ const SellerHomePage = () => {
       </div>
 
       {/* Trusted Brands */}
-      <div className="trusted-brands-section">
+      <div className="trusted-brands-section container">
         <div className="trusted-brand-header">
           <h1>Trusted Brands</h1>
         </div>
@@ -1301,7 +1301,7 @@ const SellerHomePage = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="faq-section">
+      <div className="faq-section container">
         <div className="faq-header">
           <h1>Frequently Asked Questions</h1>
         </div>
@@ -1318,7 +1318,7 @@ const SellerHomePage = () => {
       </div>
 
       {/*Truck Image  */}
-      <div className="truck-section">
+      <div className="truck-section container">
         <Swiper
           grabCursor={true}
           modules={[Autoplay]}

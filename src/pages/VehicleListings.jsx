@@ -1460,14 +1460,14 @@ const VehicleListings = () => {
           </div>
         </div>
       )}
-      <div className="pages-navigation">
+      <div className="pages-navigation container">
         <Link to="/">
           <small>Home</small>
         </Link>
         &nbsp; &#62; &nbsp;
         <small>Vehicle listing</small>
       </div>
-      <section className="vehicles-container">
+      <section className="vehicles-container container">
         <aside className="filter-sidebar">
           {/* Filter One */}
           <div className="filter-one">
@@ -1929,7 +1929,7 @@ const VehicleListings = () => {
         )}
       </section>
       {/*Truck Image  */}
-      <div className="truck-section">
+      <div className="truck-section container">
         <div className="image-wrapper">
           <img src={truckHomeImage} alt="truck" />
         </div>

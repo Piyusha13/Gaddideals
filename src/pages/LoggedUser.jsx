@@ -158,7 +158,7 @@ function LoggedUser() {
     <>
       <Navbar />
       <div className="outside-container">
-        <div className="profile-container">
+        <div className="profile-container container">
           <div className="left-profile-container">
             <div className="upper-div">
               <p className="hello-text">Hello</p>

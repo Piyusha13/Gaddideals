@@ -158,7 +158,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -755,7 +755,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -1130,7 +1130,7 @@
 .our-categories-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -1484,7 +1484,7 @@
 .customer-review-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -1729,7 +1729,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -1956,7 +1956,7 @@
 .faq-header h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 38px;
+  font-size: 30px;
   color: #050f56;
   text-transform: uppercase;
   position: relative;
@@ -1983,7 +1983,7 @@
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  padding: 34px;
+  padding: 14px 20px;
 }
 .faq .faq-question {
   display: flex;
@@ -1997,7 +1997,7 @@
 .faq .faq-question h2 {
   font-family: "Roboto";
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   color: #4a4a4a;
   align-self: baseline;
   display: inline-block;
@@ -2006,15 +2006,15 @@
 .faq .faq-question h3 {
   font-family: "Roboto";
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   color: #4a4a4a;
   /* padding: 0px 40px; */
 
   margin-left: 14px;
 }
 .faq .faq-question img {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   object-fit: cover;
 }
 .faq .answer p {

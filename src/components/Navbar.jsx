@@ -2446,7 +2446,7 @@ const Navbar = () => {
       </div>
 
       <nav className="navbar navbar-expand-lg nav-container">
-        <div className="container-fluid navar_div">
+        <div className="container navar_div">
           <div className="logo">
             <a href="/" className="navbar-brand">
               <img src={logoIcon} alt="logo" />

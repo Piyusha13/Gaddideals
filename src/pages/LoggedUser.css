@@ -1,20 +1,19 @@
-@media screen and (max-width : 1000px) {
-
-  .left-profile-container{
+@media screen and (max-width: 1000px) {
+  .left-profile-container {
     display: none !important;
   }
-  
-  .right-profile-container{
+
+  .right-profile-container {
     padding: 15px !important;
     width: 100% !important;
     position: relative !important;
   }
-  .back-to-home-screen{
+  .back-to-home-screen {
     display: inline-block !important;
     transform: rotate(180deg);
-    height: 2.5%;   
+    height: 2.5%;
     position: absolute;
-    top:3.5%;
+    top: 3.5%;
   }
   .user-profile-header {
     display: flex;
@@ -56,53 +55,53 @@
     border-radius: 5px;
     background-color: #fe620d;
   }
-  .profile-pic-div{
+  .profile-pic-div {
     display: flex;
     position: relative;
     justify-content: center;
     align-items: center;
     margin-bottom: 25px;
   }
-  .profile-pic-circle{
-    background: #ECECEC;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  height: 5rem !important;
-  width: 5rem !important;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items:center;
+  .profile-pic-circle {
+    background: #ececec;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    height: 5rem !important;
+    width: 5rem !important;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .userProfileImg{
+  .userProfileImg {
     height: 100%;
     width: 100%;
     border-radius: 50%;
   }
-  
-  .profile-initials{
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
-  color: #000000;
+
+  .profile-initials {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    color: #000000;
   }
-  .edit-img{
+  .edit-img {
     position: absolute;
     height: 20px;
     width: 20px;
     top: 5px !important;
     left: 52.5% !important;
   }
-  .name-lable{
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px !important;
-  line-height: 0px !important;
-  color: #050F56;
-  margin-bottom: 20px !important;
+  .name-lable {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px !important;
+    line-height: 0px !important;
+    color: #050f56;
+    margin-bottom: 20px !important;
   }
-  .user-name-input-div{
+  .user-name-input-div {
     width: 100%;
     height: 3.5rem !important;
     display: flex;
@@ -110,39 +109,37 @@
     align-items: center;
     position: relative;
     margin-bottom: 30px !important;
-    
   }
-  .user-name-right-input{
-    background: #FFFFFF;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-  height: 100%;
-  padding: 10px !important;
+  .user-name-right-input {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 10px !important;
+  }
+  .user-name-edit {
+    position: absolute;
+    right: 10px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px !important;
+    color: #00adef;
+    cursor: pointer;
+  }
 
+  .email-lable {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px !important;
+    line-height: 0px !important;
+    color: #050f56;
+    margin-bottom: 20px !important;
   }
-  .user-name-edit{
-    position: absolute;
-    right: 10px;
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px !important;
-  color: #00ADEF;
-  cursor: pointer;
-  }
-  
-  .email-lable{
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px !important;
-  line-height: 0px !important;
-  color: #050F56;
-  margin-bottom: 20px !important;
-  }
-  .user-email-input-div{
+  .user-email-input-div {
     width: 100%;
     height: 3.5rem !important;
     display: flex;
@@ -151,37 +148,36 @@
     position: relative;
     margin-bottom: 30px !important;
   }
-  .user-email-input{
-    background: #FFFFFF;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-  height: 100%;
-  padding: 10px !important;
+  .user-email-input {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 10px !important;
   }
-  .user-email-edit{
+  .user-email-edit {
     position: absolute;
     right: 10px;
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px !important;
-  color: #00ADEF;
-  cursor: pointer;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px !important;
+    color: #00adef;
+    cursor: pointer;
   }
-  
-  
-  .mobile-lable{
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px !important;
-  line-height: 0px !important;
-  color: #050F56;
-  margin-bottom: 20px !important;
+
+  .mobile-lable {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px !important;
+    line-height: 0px !important;
+    color: #050f56;
+    margin-bottom: 20px !important;
   }
-  .user-mobile-input-div{
+  .user-mobile-input-div {
     width: 100%;
     height: 3.5rem !important;
     display: flex;
@@ -190,37 +186,36 @@
     position: relative;
     margin-bottom: 40px !important;
   }
-  .user-mobile-input{
-    background: #FFFFFF;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-  height: 100%;
-  padding: 10px !important;
+  .user-mobile-input {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 10px !important;
   }
-  .user-mobile-edit{
+  .user-mobile-edit {
     position: absolute;
     right: 10px;
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px !important;
-  color: #00ADEF;
-  cursor: pointer;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px !important;
+    color: #00adef;
+    cursor: pointer;
   }
-  
-  
-  .subs-lable{
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-  color: #050F56;
-  margin-bottom: 2%;
+
+  .subs-lable {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #050f56;
+    margin-bottom: 2%;
   }
-  .user-subs-input-div{
+  .user-subs-input-div {
     width: 100%;
     height: 4rem;
     display: flex;
@@ -229,196 +224,196 @@
     position: relative;
     margin-bottom: 8%;
   }
-  .user-subs-input{
-    background: #FFFFFF;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  border: none;
-  width: 100%;
-  height: 100%;
+  .user-subs-input {
+    background: #ffffff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 100%;
   }
-  .user-subs-edit{
+  .user-subs-edit {
     position: absolute;
     right: 10px;
-    font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  color: #00ADEF;
-  cursor: pointer;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #00adef;
+    cursor: pointer;
   }
-  
-  .save-changes-button{
+
+  .save-changes-button {
     border: none;
-    background: #050F56;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px !important;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px !important;
-  color: #FFFFFF;
-  height: 3.5rem !important;
-  width: 100%;
-  margin-bottom: 20px !important;
+    background: #050f56;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px !important;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px !important;
+    color: #ffffff;
+    height: 3.5rem !important;
+    width: 100%;
+    margin-bottom: 20px !important;
   }
-  .input_img{
+  .input_img {
     position: absolute;
     top: 1rem;
     right: 13.2rem;
-    background-color: #00ADEF;
+    background-color: #00adef;
     width: 0.7rem;
     height: 0.7rem;
     z-index: 99999;
   }
 }
-.outside-container{
+.outside-container {
   display: flex;
   justify-content: center;
 }
-.profile-container{
+.profile-container {
   margin: 20px;
-  width: 75%;
+  /* width: 75%; */
   display: flex;
   /* background-color: red; */
   justify-content: space-between;
 }
-.left-profile-container{
-  display: flex;
-  flex-direction:column;
-  background: #FFFFFF;
-box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
-border-radius: 20px;
-width: 40%;
-height:fit-content;
-/* height: auto; */
-}
-.upper-div{
+.left-profile-container {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #DFDFDF;
+  background: #ffffff;
+  box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
+  border-radius: 20px;
+  width: 40%;
+  height: fit-content;
+  /* height: auto; */
+}
+.upper-div {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dfdfdf;
   padding: 25px;
 }
-.hello-text{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
-color: #989898;
-margin-bottom: 0;
+.hello-text {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  color: #989898;
+  margin-bottom: 0;
 }
-.user-name-left-div{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 19px;
-color: #1B1B1B;
-margin: 0;
-margin-bottom: -10px;
+.user-name-left-div {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 19px;
+  color: #1b1b1b;
+  margin: 0;
+  margin-bottom: -10px;
 }
-.options-div{
+.options-div {
   display: flex;
   flex-direction: column;
   padding: 25px;
 }
-.my-vehicle-div{
+.my-vehicle-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
 }
-.shipping-img{
+.shipping-img {
   width: 1.9rem;
-height: 1.9rem;
+  height: 1.9rem;
 }
-.my-vehicle-text{
+.my-vehicle-text {
   width: 75%;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-color: #4F4F4F;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #4f4f4f;
 
-/* background-color: red; */
+  /* background-color: red; */
 }
-.next-arrow-img{
+.next-arrow-img {
   width: 1.3rem;
-height: 1.3rem;
+  height: 1.3rem;
 }
-.my-order-div{
+.my-order-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
 }
-.clipboard-img{
+.clipboard-img {
   width: 1.9rem;
-height: 1.9rem;
+  height: 1.9rem;
 }
-.my-order-text{
+.my-order-text {
   width: 75%;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-color: #4F4F4F;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #4f4f4f;
 }
-.user-Faq-div{
+.user-Faq-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
 }
-.help-img{
+.help-img {
   width: 1.9rem;
-height: 1.9rem;
+  height: 1.9rem;
 }
-.user-Faq-text{
+.user-Faq-text {
   width: 75%;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-color: #4F4F4F;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #4f4f4f;
 }
-.sign-out-div{
+.sign-out-div {
   /* background-color: #818ace; */
- 
+
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 35px;
 }
-.logout-img{
+.logout-img {
   width: 1.9rem;
-height: 1.9rem;
+  height: 1.9rem;
 }
-.sign-out-text{
+.sign-out-text {
   width: 86%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  color: #4F4F4F;
+  color: #4f4f4f;
   padding-left: 1rem;
   /* display: inline-block; */
 }
 /* right side contaner */
-.back-to-home-screen{
+.back-to-home-screen {
   display: none;
 }
-.right-profile-container{
-  background: #FFFFFF;
-box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
-border-radius: 20px;
-width: 55%;
-padding: 30px;
-display: flex;
-flex-direction: column;
+.right-profile-container {
+  background: #ffffff;
+  box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
+  border-radius: 20px;
+  width: 55%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
 }
 .user-profile-header {
   display: flex;
@@ -434,7 +429,7 @@ flex-direction: column;
   margin-bottom: 30px;
   position: relative;
 }
-.user-profile-header h2{
+.user-profile-header h2 {
   display: none;
 }
 .user-profile-header h1::after {
@@ -447,53 +442,53 @@ flex-direction: column;
   border-radius: 5px;
   background-color: #fe620d;
 }
-.profile-pic-div{
+.profile-pic-div {
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
   margin-bottom: 25px;
 }
-.profile-pic-circle{
-  background: #ECECEC;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-height: 100px;
-width: 100px;
-border-radius: 50%;
-display: flex;
-justify-content: center;
-align-items:center;
+.profile-pic-circle {
+  background: #ececec;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.userProfileImg{
+.userProfileImg {
   height: 100%;
   width: 100%;
   border-radius: 50%;
 }
 
-.profile-initials{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 32px;
-color: #000000;
+.profile-initials {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  color: #000000;
 }
-.edit-img{
+.edit-img {
   position: absolute;
   height: 20px;
   width: 20px;
   top: 10px;
   left: 55%;
 }
-.name-lable{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 30px;
-color: #050F56;
-margin-bottom: 10px;
+.name-lable {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #050f56;
+  margin-bottom: 10px;
 }
-.user-name-input-div{
+.user-name-input-div {
   width: 100%;
   height: 4rem;
   display: flex;
@@ -502,36 +497,36 @@ margin-bottom: 10px;
   position: relative;
   margin-bottom: 4%;
 }
-.user-name-right-input{
-  background: #FFFFFF;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-border: none;
-padding: 10px;
-width: 100%;
-height: 100%;
+.user-name-right-input {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
 }
-.user-name-edit{
+.user-name-edit {
   position: absolute;
   right: 10px;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-color: #00ADEF;
-cursor: pointer;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #00adef;
+  cursor: pointer;
 }
 
-.email-lable{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 30px;
-color: #050F56;
-margin-bottom: 2%;
+.email-lable {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #050f56;
+  margin-bottom: 2%;
 }
-.user-email-input-div{
+.user-email-input-div {
   width: 100%;
   height: 4rem;
   display: flex;
@@ -540,37 +535,36 @@ margin-bottom: 2%;
   position: relative;
   margin-bottom: 4%;
 }
-.user-email-input{
-  background: #FFFFFF;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-border: none;
-width: 100%;
-height: 100%;
-padding: 10px;
+.user-email-input {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
-.user-email-edit{
+.user-email-edit {
   position: absolute;
   right: 10px;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-color: #00ADEF;
-cursor: pointer;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #00adef;
+  cursor: pointer;
 }
 
-
-.mobile-lable{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 30px;
-color: #050F56;
-margin-bottom: 2%;
+.mobile-lable {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #050f56;
+  margin-bottom: 2%;
 }
-.user-mobile-input-div{
+.user-mobile-input-div {
   width: 100%;
   height: 4rem;
   display: flex;
@@ -579,37 +573,36 @@ margin-bottom: 2%;
   position: relative;
   margin-bottom: 4%;
 }
-.user-mobile-input{
-  background: #FFFFFF;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-border: none;
-width: 100%;
-height: 100%;
-padding: 10px;
+.user-mobile-input {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
-.user-mobile-edit{
+.user-mobile-edit {
   position: absolute;
   right: 10px;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-color: #00ADEF;
-cursor: pointer;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #00adef;
+  cursor: pointer;
 }
 
-
-.subs-lable{
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-line-height: 30px;
-color: #050F56;
-margin-bottom: 2%;
+.subs-lable {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #050f56;
+  margin-bottom: 2%;
 }
-.user-subs-input-div{
+.user-subs-input-div {
   width: 100%;
   height: 4rem;
   display: flex;
@@ -618,43 +611,43 @@ margin-bottom: 2%;
   position: relative;
   margin-bottom: 8%;
 }
-.user-subs-input{
-  background: #FFFFFF;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-border: none;
-width: 100%;
-height: 100%;
+.user-subs-input {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 100%;
 }
-.user-subs-edit{
+.user-subs-edit {
   position: absolute;
   right: 10px;
-  font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 16px;
-color: #00ADEF;
-cursor: pointer;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #00adef;
+  cursor: pointer;
 }
 
-.save-changes-button{
+.save-changes-button {
   border: none;
-  background: #050F56;
-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 600;
-font-size: 20px;
-color: #FFFFFF;
-height: 4rem;
-width: 100%;
+  background: #050f56;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+  height: 4rem;
+  width: 100%;
 }
-.input_img{
+.input_img {
   position: absolute;
   top: 1rem;
   right: 13.2rem;
-  background-color: #00ADEF;
+  background-color: #00adef;
   width: 0.7rem;
   height: 0.7rem;
   z-index: 99999;
