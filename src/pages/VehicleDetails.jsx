@@ -104,19 +104,30 @@ const VehicleDetails = () => {
 
   const [editableIntrest, seteditableIntrest] = useState(true);
   const [EmiModal, setEmiModal] = useState(false);
-  const [downPayment, setdownPayment] = useState(50000);
-  const maxValue = getvehicledetails?.selling_price - 50000;
-  const initialPAmount = getvehicledetails?.selling_price - 50000;
-  const [pAmount, setpAmount] = useState(100000); //loan priciple amount
+  const [downPayment, setdownPayment] = useState();
+  // const maxValue = getvehicledetails?.selling_price - 50000;
+  const initialPAmount = getvehicledetails?.selling_price * 0.8;
+  const [pAmount, setpAmount] = useState(); //loan priciple amount
   const [interest, setinterest] = useState(15);
-  const [duration, setDuration] = useState(147);
-  // const maxValue = getvehicledetails?.selling_price - downPayment;
+  const [duration, setDuration] = useState(12);
+  const [years, setyears] = useState(1);
   const intMax = 20; //maximum intrest
-  const maxDuration = 360;
-  let b = pAmount;
 
-  const initalpAmount = getvehicledetails?.selling_price * 80 * 0.01;
-  // setpAmount(initalpAmount);
+  let b = pAmount;
+  let d = downPayment;
+  function changeDuration(vDur) {
+    if (vDur == 1) {
+      setDuration(12);
+    } else if (vDur == 2) {
+      setDuration(24);
+    } else if (vDur == 3) {
+      setDuration(36);
+    } else if (vDur == 4) {
+      setDuration(48);
+    } else if (vDur == 5) {
+      setDuration(60);
+    }
+  }
 
   const intr = interest / 1200;
   const emi = duration
@@ -130,6 +141,10 @@ const VehicleDetails = () => {
 
   function changeDownpament(c) {
     setdownPayment(downPayment + c);
+  }
+
+  function changepAmount(e) {
+    setpAmount(pAmount + e);
   }
 
   // const [volume,setvolume]=useState(0);
@@ -189,6 +204,8 @@ const VehicleDetails = () => {
       );
       // console.log(res.data.vehicle.user._id);
       setVehicleDetails(res.data.vehicle);
+      setpAmount(Math.round(res.data?.vehicle?.selling_price * 0.8));
+      setdownPayment(Math.round(res.data?.vehicle?.selling_price * 0.2));
       setCheckCategory(res.data?.vehicle?.category?.title);
       setCategoryId(res.data?.category?._id);
       setvehicleId(res.data?.vehicle?._id);
@@ -587,8 +604,9 @@ const VehicleDetails = () => {
                       let c = b - vAmt;
                       changeDownpament(c);
                     }}
-                    defaultValue={initialPAmount}
-                    max={maxValue}
+                    defaultValue={pAmount}
+                    min={0}
+                    max={Math.round(getvehicledetails?.selling_price * 0.8)}
                   />
                 </div>
                 {/* <div className="selected-la pla-price">{pAmount}</div> */}
@@ -607,10 +625,13 @@ const VehicleDetails = () => {
                     onChange={(event, vInt) => {
                       setdownPayment(vInt);
 
+                      let e = d - vInt;
+                      changepAmount(e);
+
                       // setpAmount(pAmount-vInt);
                     }}
                     defaultValue={downPayment}
-                    min={50000}
+                    min={Math.round(getvehicledetails?.selling_price * 0.2)}
                     max={getvehicledetails?.selling_price}
                   />
                 </div>
@@ -620,18 +641,20 @@ const VehicleDetails = () => {
               <div className="la-div">
                 <div className="la-top-div">
                   <div className="la-text">Duration of loan</div>
-                  <div className="la-price pla-price">{duration} months</div>
+                  <div className="la-price pla-price">{years} year</div>
                 </div>
                 <div className="range-slider">
                   {/* slider 3 */}
                   {/* <Typography gutterBottom>Duration</Typography> */}
                   <PrettoSlider
-                    value={duration}
+                    value={years}
                     onChange={(event, vDur) => {
-                      setDuration(vDur);
+                      setyears(vDur);
+                      changeDuration(vDur);
                     }}
-                    defaultValue={duration}
-                    max={maxDuration}
+                    defaultValue={years}
+                    min={1}
+                    max={5}
                   />
                 </div>
                 {/* <div className="selected-la pla-price">{duration} </div> */}
