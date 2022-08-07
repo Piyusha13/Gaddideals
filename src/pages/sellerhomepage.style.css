@@ -2305,7 +2305,7 @@
     color: #b5b5b5;
   }
 }
-.mob-menue-overlay {
+/* .mob-menue-overlay {
   background-color: rgba(106, 142, 35, 0.315) !important;
   width: 100vw !important;
   height: 100vh !important;
@@ -2314,4 +2314,4 @@
   left: 0%;
   z-index: 99;
   overflow-x: hidden;
-}
+} */
