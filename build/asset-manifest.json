@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.3d99d37c.css",
-    "main.js": "/static/js/main.af0d21a6.js",
+    "main.css": "/static/css/main.0f1abfca.css",
+    "main.js": "/static/js/main.f756426d.js",
     "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
     "static/media/vision-top-div.png": "/static/media/vision-top-div.2ada635796a8c5aae6d6.png",
     "static/media/vision-mid-div.png": "/static/media/vision-mid-div.baaf1414d0f103f372d7.png",
@@ -14,22 +14,22 @@
     "static/media/AboutUsTruck.png": "/static/media/AboutUsTruck.21aeb3e2e551f0423743.png",
     "static/media/location-home.png": "/static/media/location-home.46ce9bc14baa6728126b.png",
     "static/media/google-play.png": "/static/media/google-play.8cf302d860c3a32279b2.png",
-    "static/media/google_logo.svg": "/static/media/google_logo.655924bd021d8ad03b359f6e76dde1fe.svg",
+    "static/media/google_logo.svg": "/static/media/google_logo.be7d1916f055aa0adb3fdf285f38aaf5.svg",
     "static/media/app-store.png": "/static/media/app-store.4f45270a41d813712738.png",
     "static/media/gas-station.png": "/static/media/gas-station.84bf246eeb6edfc4bf0b.png",
     "static/media/user-icon.png": "/static/media/user-icon.8bd9ff31c80ca190589d.png",
     "static/media/overlay-img.png": "/static/media/overlay-img.d655614749ffdf19044c.png",
-    "static/media/facebook_logo.svg": "/static/media/facebook_logo.1729a1b1804b8e1ea35cf83b143a7056.svg",
-    "static/media/next_arrow.svg": "/static/media/next_arrow.8ac3280e3c97a0836445c4e823209bb0.svg",
+    "static/media/facebook_logo.svg": "/static/media/facebook_logo.77ef5d46f14e162ee315aba343633295.svg",
+    "static/media/next_arrow.svg": "/static/media/next_arrow.227b9fbcd97d57da2aea4eb136a98203.svg",
     "index.html": "/index.html",
-    "static/media/mobile-footer.svg": "/static/media/mobile-footer.312a3114bfaa511ffb06.svg",
-    "static/media/footer-bg.svg": "/static/media/footer-bg.5d085100533921c8e8ce.svg",
-    "main.3d99d37c.css.map": "/static/css/main.3d99d37c.css.map",
-    "main.af0d21a6.js.map": "/static/js/main.af0d21a6.js.map",
+    "static/media/footer-bg.svg": "/static/media/footer-bg.9bd9e830155421daf255.svg",
+    "static/media/mobile-footer.svg": "/static/media/mobile-footer.e95d932d30c962d5f344.svg",
+    "main.0f1abfca.css.map": "/static/css/main.0f1abfca.css.map",
+    "main.f756426d.js.map": "/static/js/main.f756426d.js.map",
     "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d99d37c.css",
-    "static/js/main.af0d21a6.js"
+    "static/css/main.0f1abfca.css",
+    "static/js/main.f756426d.js"
   ]
 }
