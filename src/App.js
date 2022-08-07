@@ -21,6 +21,8 @@ import { setCurrentCity } from "./store/location/location.action";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { Tooltip } from "bootstrap";
+
 import Geocode from "react-geocode";
 import axios from "axios";
 import Constant from "./constants";
@@ -95,6 +97,13 @@ function App() {
     if (!cookie.includes("googtrans")) {
       document.cookie = "googtrans=/auto/en";
     }
+
+    var tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new Tooltip(tooltipTriggerEl);
+    });
   }, []);
 
   // const cityMumbai = cities?.find((city) => city?.title === "Mumbai");

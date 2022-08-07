@@ -334,6 +334,7 @@
   cursor: pointer;
   width: 21.5%;
   height: 10%;
+  margin-left: -25px;
 }
 
 .row-two .vehicle-documents .document img {
@@ -373,6 +374,7 @@
   cursor: pointer;
   width: 21.5%;
   height: 10%;
+  margin-left: -25px;
 }
 
 .row-three .vehicle-documents .document img {
@@ -400,4 +402,37 @@
   font-family: "Roboto";
   width: 30%;
   text-align: center;
+}
+
+.reactEasyCrop_Container {
+  width: 800px;
+  height: 500px;
+  transform: translate(25%, 10%);
+}
+
+.modal-btns {
+  position: absolute;
+  width: 100%;
+  bottom: 3%;
+  left: 45%;
+  transform: translate(-50%), -50%;
+  display: flex;
+  gap: 10px;
+}
+
+.modal-btns button {
+  border: none;
+  background: #050f56;
+  border-radius: 5px;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 10px;
+}
+.modal-btns .cancel-modal-btn {
+  background-color: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  color: #050f56;
+  border: 1px solid #ff0000;
 }

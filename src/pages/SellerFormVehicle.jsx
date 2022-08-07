@@ -17,22 +17,22 @@ let tagsArray = [];
 
 const ownersArray = [
   {
-    owner: "First",
+    owner: "first",
   },
   {
-    owner: "Second",
+    owner: "second",
   },
   {
-    owner: "Third",
+    owner: "third",
   },
   {
-    owner: "Fourth",
+    owner: "fourth",
   },
   {
-    owner: "Fifth",
+    owner: "fifth",
   },
   {
-    owner: "Other",
+    owner: "other",
   },
 ];
 

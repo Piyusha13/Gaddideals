@@ -1,27 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.fb0a1747.css",
-    "main.js": "/static/js/main.8368dc29.js",
+    "main.css": "/static/css/main.3d99d37c.css",
+    "main.js": "/static/js/main.af0d21a6.js",
     "static/js/787.de6ccf83.chunk.js": "/static/js/787.de6ccf83.chunk.js",
+    "static/media/vision-top-div.png": "/static/media/vision-top-div.2ada635796a8c5aae6d6.png",
+    "static/media/vision-mid-div.png": "/static/media/vision-mid-div.baaf1414d0f103f372d7.png",
     "static/media/truck-home.png": "/static/media/truck-home.d21e6cbe13c16b374e57.png",
+    "static/media/vision-bottom-div.png": "/static/media/vision-bottom-div.889df2cb9c7f3cb85746.png",
+    "static/media/TACBanner.png": "/static/media/TACBanner.ba641d3800248c9ea13f.png",
     "static/media/trucks1.png": "/static/media/trucks1.630a49118a64a49e60d2.png",
+    "static/media/TAC_img.png": "/static/media/TAC_img.c3b0a0065c9e94e39641.png",
+    "static/media/PP_img.png": "/static/media/PP_img.450616e93344028ed554.png",
+    "static/media/AboutUsTruck.png": "/static/media/AboutUsTruck.21aeb3e2e551f0423743.png",
     "static/media/location-home.png": "/static/media/location-home.46ce9bc14baa6728126b.png",
     "static/media/google-play.png": "/static/media/google-play.8cf302d860c3a32279b2.png",
     "static/media/google_logo.svg": "/static/media/google_logo.655924bd021d8ad03b359f6e76dde1fe.svg",
     "static/media/app-store.png": "/static/media/app-store.4f45270a41d813712738.png",
     "static/media/gas-station.png": "/static/media/gas-station.84bf246eeb6edfc4bf0b.png",
     "static/media/user-icon.png": "/static/media/user-icon.8bd9ff31c80ca190589d.png",
+    "static/media/overlay-img.png": "/static/media/overlay-img.d655614749ffdf19044c.png",
     "static/media/facebook_logo.svg": "/static/media/facebook_logo.1729a1b1804b8e1ea35cf83b143a7056.svg",
     "static/media/next_arrow.svg": "/static/media/next_arrow.8ac3280e3c97a0836445c4e823209bb0.svg",
     "index.html": "/index.html",
     "static/media/mobile-footer.svg": "/static/media/mobile-footer.312a3114bfaa511ffb06.svg",
     "static/media/footer-bg.svg": "/static/media/footer-bg.5d085100533921c8e8ce.svg",
-    "main.fb0a1747.css.map": "/static/css/main.fb0a1747.css.map",
-    "main.8368dc29.js.map": "/static/js/main.8368dc29.js.map",
+    "main.3d99d37c.css.map": "/static/css/main.3d99d37c.css.map",
+    "main.af0d21a6.js.map": "/static/js/main.af0d21a6.js.map",
     "787.de6ccf83.chunk.js.map": "/static/js/787.de6ccf83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb0a1747.css",
-    "static/js/main.8368dc29.js"
+    "static/css/main.3d99d37c.css",
+    "static/js/main.af0d21a6.js"
   ]
 }

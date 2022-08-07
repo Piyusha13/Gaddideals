@@ -41,7 +41,14 @@ const SellerPreviewDetails = ({
   documentSidePicLeft,
   documentSidePicRight,
   vehicleID,
-  disableBtn,
+  handlePublishPutData,
+  frontsideCropImg,
+  backsideCropImg,
+  engCropImg,
+  fronttyreLeftCropImg,
+  fronttyreRightCropImg,
+  sidePicLeftCropImg,
+  sidePicRightCropImg,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -227,7 +234,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentFrontSideImg
-                        ? URL.createObjectURL(frontSideImg)
+                        ? frontsideCropImg
                         : frontSideImg
                         ? imgurl + frontSideImg
                         : cloudIcon
@@ -246,7 +253,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentBackSideImg
-                        ? URL.createObjectURL(backSideImg)
+                        ? backsideCropImg
                         : backSideImg
                         ? imgurl + backSideImg
                         : cloudIcon
@@ -265,7 +272,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentEngImg
-                        ? URL.createObjectURL(engImage)
+                        ? engCropImg
                         : engImage
                         ? imgurl + engImage
                         : cloudIcon
@@ -290,7 +297,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentFronttyreLeft
-                        ? URL.createObjectURL(fronttyreLeftImg)
+                        ? fronttyreLeftCropImg
                         : fronttyreLeftImg
                         ? imgurl + fronttyreLeftImg
                         : cloudIcon
@@ -308,7 +315,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentFronttyreRight
-                        ? URL.createObjectURL(fronttyreRightImg)
+                        ? fronttyreRightCropImg
                         : fronttyreRightImg
                         ? imgurl + fronttyreRightImg
                         : cloudIcon
@@ -329,7 +336,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentSidePicLeft
-                        ? URL.createObjectURL(sidePicLeft)
+                        ? sidePicLeftCropImg
                         : sidePicLeft
                         ? imgurl + sidePicLeft
                         : cloudIcon
@@ -347,7 +354,7 @@ const SellerPreviewDetails = ({
                   <img
                     src={
                       documentSidePicRight
-                        ? URL.createObjectURL(sidePicRight)
+                        ? sidePicRightCropImg
                         : sidePicRight
                         ? imgurl + sidePicRight
                         : cloudIcon
@@ -371,9 +378,16 @@ const SellerPreviewDetails = ({
                   {saveLoading ? "Saving..." : "Save Now"}
                 </button>
               )}
-              <button onClick={handlePublishPostData}>
-                {pubLoading ? "Uploading..." : "Upload Vehicle"}
-              </button>
+
+              {vehicleID ? (
+                <button onClick={handlePublishPutData}>
+                  {pubLoading ? "Uploading..." : "Upload Vehicle"}
+                </button>
+              ) : (
+                <button onClick={handlePublishPostData}>
+                  {pubLoading ? "Uploading..." : "Upload Vehicle"}
+                </button>
+              )}
             </div>
           </div>
         </div>

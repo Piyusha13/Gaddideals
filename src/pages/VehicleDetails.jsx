@@ -244,7 +244,8 @@ const VehicleDetails = () => {
     const getSimilarVehicles = async () => {
       try {
         const response = await axios.get(
-          Constant.getUrls.getAllVehicles + `?category=${categoryId}`
+          Constant.getUrls.getAllVehicles +
+            `?category=${categoryId}&status=approved`
         );
 
         if (response.data) {

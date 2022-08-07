@@ -68,24 +68,31 @@ const SellerForm = () => {
 
   const [documentEngImg, setDocumentEngImg] = useState(false);
   const [engImage, setEngImage] = useState();
+  const [engCropImg, setEngCropImg] = useState(null);
 
   const [documentFrontSideImg, setDocumentFrontSideImg] = useState(false);
-  const [frontSideImg, setFrontSideImg] = useState("");
+  const [frontSideImg, setFrontSideImg] = useState(null);
+  const [frontsideCropImg, setFrontsideCropImg] = useState(null);
 
   const [documentBackSideImg, setDocumentBackSideImg] = useState(false);
-  const [backSideImg, setBackSideImg] = useState("");
+  const [backSideImg, setBackSideImg] = useState(null);
+  const [backsideCropImg, setBackSideCropImg] = useState(null);
 
   const [documentFronttyreLeft, setDocumentFronttyreLeft] = useState(false);
-  const [fronttyreLeftImg, setFronttyreLeftImg] = useState("");
+  const [fronttyreLeftImg, setFronttyreLeftImg] = useState(null);
+  const [fronttyreLeftCropImg, setFronttyreLeftCropImg] = useState(null);
 
   const [documentFronttyreRight, setDocumentFronttyreRight] = useState(false);
-  const [fronttyreRightImg, setFronttyreRightImg] = useState("");
+  const [fronttyreRightImg, setFronttyreRightImg] = useState(null);
+  const [fronttyreRightCropImg, setFronttyreRightCropImg] = useState(null);
 
   const [documentSidePicLeft, setDocumentSidePicLeft] = useState(false);
-  const [sidePicLeft, setSidePicLeft] = useState("");
+  const [sidePicLeft, setSidePicLeft] = useState(null);
+  const [sidePicLeftCropImg, setSidePicLeftCropImg] = useState(null);
 
   const [documentSidePicRight, setDocumentSidePicRight] = useState(false);
-  const [sidePicRight, setSidePicRight] = useState("");
+  const [sidePicRight, setSidePicRight] = useState(null);
+  const [sidePicRightCropImg, setSidePicRightCropImg] = useState(null);
 
   const [suggestionBox, setSuggestionBox] = useState(false);
   const [statesSuggestionBox, setStatesSuggestionBox] = useState(false);
@@ -205,12 +212,19 @@ const SellerForm = () => {
       setBodyTypeTitle(response?.data?.vehicle?.bodyType?.title);
       setRC(response?.data?.vehicle?.rc_document);
       setPermit(response?.data?.vehicle?.vehicle_permit);
+      setEngCropImg(response?.data?.vehicle?.engine_pic);
       setEngImage(response?.data?.vehicle?.engine_pic);
+      setFrontsideCropImg(response?.data?.vehicle?.front_side_pic);
       setFrontSideImg(response?.data?.vehicle?.front_side_pic);
+      setBackSideCropImg(response?.data?.vehicle?.back_side_pic);
       setBackSideImg(response?.data?.vehicle?.back_side_pic);
+      setFronttyreLeftCropImg(response?.data?.vehicle?.front_tyre[0]);
       setFronttyreLeftImg(response?.data?.vehicle?.front_tyre[0]);
+      setFronttyreRightCropImg(response?.data?.vehicle?.front_tyre[1]);
       setFronttyreRightImg(response?.data?.vehicle?.front_tyre[1]);
+      setSidePicLeftCropImg(response?.data?.vehicle?.side_pic_vehicle[0]);
       setSidePicLeft(response?.data?.vehicle?.side_pic_vehicle[0]);
+      setSidePicRightCropImg(response?.data?.vehicle?.side_pic_vehicle[1]);
       setSidePicRight(response?.data?.vehicle?.side_pic_vehicle[1]);
     }
   };
@@ -260,13 +274,13 @@ const SellerForm = () => {
 
   const permitsArray = [
     {
-      permit: "National",
+      permit: "national",
     },
     {
-      permit: "State",
+      permit: "state",
     },
     {
-      permit: "No",
+      permit: "no",
     },
   ];
 
@@ -361,7 +375,7 @@ const SellerForm = () => {
     }
 
     if (step === 3) {
-      if (frontSideImg.length <= 0) {
+      if (frontsideCropImg === null) {
         toast.error("Forntside Image is required");
       } else {
         setStep(step + 1);
@@ -382,6 +396,73 @@ const SellerForm = () => {
 
   const handlePostData = async () => {
     setSaveLoading(true);
+
+    // front blob
+    const frontSideFile = await fetch(frontsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], frontsideCropImg, { type: blobFile.type })
+      );
+
+    // backside blob
+    const backSideFile = await fetch(backsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], backsideCropImg, { type: blobFile.type })
+      );
+
+    // engine blob
+    const engFile = await fetch(engCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], engCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre left blob
+    const fronttyreLeftFile = await fetch(fronttyreLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre right blob
+    const fronttyreRightFile = await fetch(fronttyreRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic left blob
+    const sidePicLeftFile = await fetch(sidePicLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic right blob
+    const sidePicRightFile = await fetch(sidePicRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
     let fd = new FormData();
 
     fd.append("category", categoryId);
@@ -429,23 +510,23 @@ const SellerForm = () => {
     }
     fd.append("rc_document", rc.toLowerCase());
     if (engImage) {
-      fd.append("engine_pic", engImage);
+      fd.append("engine_pic", engFile);
     }
-    fd.append("front_side_pic", frontSideImg);
+    fd.append("front_side_pic", frontSideFile);
     if (backSideImg) {
-      fd.append("back_side_pic", backSideImg);
+      fd.append("back_side_pic", backSideFile);
     }
     if (fronttyreLeftImg) {
-      fd.append("front_tyre", fronttyreLeftImg);
+      fd.append("front_tyre", fronttyreLeftFile);
     }
     if (fronttyreRightImg) {
-      fd.append("front_tyre", fronttyreRightImg);
+      fd.append("front_tyre", fronttyreRightFile);
     }
     if (sidePicLeft) {
-      fd.append("side_pic_vehicle", sidePicLeft);
+      fd.append("side_pic_vehicle", sidePicLeftFile);
     }
     if (sidePicRight) {
-      fd.append("side_pic_vehicle", sidePicRight);
+      fd.append("side_pic_vehicle", sidePicRightFile);
     }
 
     const userToken = localStorage.getItem("Token");
@@ -469,6 +550,72 @@ const SellerForm = () => {
 
   const handleUpdateData = async () => {
     setSaveLoading(true);
+    // front blob
+    const frontSideFile = await fetch(frontsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], frontsideCropImg, { type: blobFile.type })
+      );
+
+    // backside blob
+    const backSideFile = await fetch(backsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], backsideCropImg, { type: blobFile.type })
+      );
+
+    // engine blob
+    const engFile = await fetch(engCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], engCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre left blob
+    const fronttyreLeftFile = await fetch(fronttyreLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre right blob
+    const fronttyreRightFile = await fetch(fronttyreRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic left blob
+    const sidePicLeftFile = await fetch(sidePicLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic right blob
+    const sidePicRightFile = await fetch(sidePicRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
     let fd = new FormData();
 
     fd.append("category", editVehicleObj?.category?._id);
@@ -485,7 +632,7 @@ const SellerForm = () => {
       fd.append("no_of_hrs", formData.noofhrs || 0);
     }
     if (owner !== "") {
-      fd.append("no_of_owner", owner.toLowerCase());
+      fd.append("no_of_owner", owner);
     }
     fd.append("fuelType", fuel);
     if (formData.insurancevalidity) {
@@ -495,7 +642,7 @@ const SellerForm = () => {
       fd.append("tax_validity", formData.taxvalidity);
     }
     if (permit !== "") {
-      fd.append("vehicle_permit", permit.toLowerCase());
+      fd.append("vehicle_permit", permit);
     }
     if (formData.nooftyres) {
       fd.append("no_of_tyre", formData.nooftyres || 0);
@@ -515,24 +662,24 @@ const SellerForm = () => {
       fd.append("bodyType", bodyTypeId);
     }
     fd.append("rc_document", rc.toLowerCase());
-    if (engImage) {
-      fd.append("engine_pic", engImage);
+    if (engCropImg) {
+      fd.append("engine_pic", engCropImg);
     }
-    fd.append("front_side_pic", frontSideImg);
-    if (backSideImg) {
-      fd.append("back_side_pic", backSideImg);
+    fd.append("front_side_pic", frontsideCropImg);
+    if (backsideCropImg) {
+      fd.append("back_side_pic", backsideCropImg);
     }
-    if (fronttyreLeftImg) {
-      fd.append("front_tyre", fronttyreLeftImg);
+    if (fronttyreLeftCropImg) {
+      fd.append("front_tyre", fronttyreLeftCropImg);
     }
-    if (fronttyreRightImg) {
-      fd.append("front_tyre", fronttyreRightImg);
+    if (fronttyreRightCropImg) {
+      fd.append("front_tyre", fronttyreRightCropImg);
     }
-    if (sidePicLeft) {
-      fd.append("side_pic_vehicle", sidePicLeft);
+    if (sidePicLeftCropImg) {
+      fd.append("side_pic_vehicle", sidePicLeftCropImg);
     }
-    if (sidePicRight) {
-      fd.append("side_pic_vehicle", sidePicRight);
+    if (sidePicRightCropImg) {
+      fd.append("side_pic_vehicle", sidePicRightCropImg);
     }
 
     const userToken = localStorage.getItem("Token");
@@ -551,14 +698,82 @@ const SellerForm = () => {
       toast.success(updateResponse.data.message);
       setSaveLoading(false);
       navigate("/UserVehicles");
+    } else if (updateResponse.data.status === "failed") {
+      toast.error(updateResponse.data.message);
+      setSaveLoading(false);
     }
-
     console.log(updateResponse);
   };
 
   const handlePublishPostData = async () => {
     setpubLoading(true);
     const userToken = localStorage.getItem("Token");
+
+    // front blob
+    const frontSideFile = await fetch(frontsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], frontsideCropImg, { type: blobFile.type })
+      );
+
+    // backside blob
+    const backSideFile = await fetch(backsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], backsideCropImg, { type: blobFile.type })
+      );
+
+    // engine blob
+    const engFile = await fetch(engCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], engCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre left blob
+    const fronttyreLeftFile = await fetch(fronttyreLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre right blob
+    const fronttyreRightFile = await fetch(fronttyreRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic left blob
+    const sidePicLeftFile = await fetch(sidePicLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic right blob
+    const sidePicRightFile = await fetch(sidePicRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicRightCropImg, {
+            type: blobFile.type,
+          })
+      );
 
     let fd = new FormData();
 
@@ -608,28 +823,122 @@ const SellerForm = () => {
     }
     fd.append("rc_document", rc);
     if (engImage) {
-      fd.append("engine_pic", engImage);
+      fd.append("engine_pic", engFile);
     }
-    fd.append("front_side_pic", frontSideImg);
+    fd.append("front_side_pic", frontSideFile);
     if (backSideImg) {
-      fd.append("back_side_pic", backSideImg);
+      fd.append("back_side_pic", backSideFile);
     }
     if (fronttyreLeftImg) {
-      fd.append("front_tyre", fronttyreLeftImg);
+      fd.append("front_tyre", fronttyreLeftFile);
     }
     if (fronttyreRightImg) {
-      fd.append("front_tyre", fronttyreRightImg);
+      fd.append("front_tyre", fronttyreRightFile);
     }
     if (sidePicLeft) {
-      fd.append("side_pic_vehicle", sidePicLeft);
+      fd.append("side_pic_vehicle", sidePicLeftFile);
     }
     if (sidePicRight) {
-      fd.append("side_pic_vehicle", sidePicRight);
+      fd.append("side_pic_vehicle", sidePicRightFile);
     }
     fd.append("status", "published");
 
     const publishResponse = await axios.post(
       Constant.getUrls.getAllVehicles,
+      fd,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+
+    if (publishResponse.data.status === "success") {
+      toast.success("Published Successfully");
+      setpubLoading(false);
+      navigate("/UserVehicles");
+    } else if (publishResponse.data.status === "failed") {
+      toast.error(publishResponse.data.message);
+      setpubLoading(false);
+    }
+
+    console.log(publishResponse);
+  };
+
+  const handlePublishPutData = async () => {
+    setpubLoading(true);
+    const userToken = localStorage.getItem("Token");
+
+    let fd = new FormData();
+
+    // editVehicleObj?.category?._id || // editVehicleObj?.category?._id ||
+    fd.append("category", editVehicleObj?.category?._id);
+    fd.append("state", stateId);
+    fd.append("city", cityId);
+    fd.append("brand", brandId);
+    fd.append("model", modelId);
+    fd.append("years", year);
+    fd.append("reg_no", formData.vehiclenumber);
+    if (formData.kmsdriven) {
+      fd.append("km_driven", formData.kmsdriven || 0);
+    }
+    if (formData.noofhrs) {
+      fd.append("no_of_hrs", formData.noofhrs || 0);
+    }
+    if (owner !== "") {
+      fd.append("no_of_owner", owner);
+    }
+    fd.append("fuelType", fuel);
+    if (formData.insurancevalidity) {
+      fd.append("insurance", formData.insurancevalidity);
+    }
+    if (formData.taxvalidity) {
+      fd.append("tax_validity", formData.taxvalidity);
+    }
+    if (permit !== "") {
+      fd.append("vehicle_permit", permit);
+    }
+    if (formData.nooftyres) {
+      fd.append("no_of_tyre", formData.nooftyres || 0);
+    }
+    if (formData.horsepower) {
+      fd.append("horse_power", formData.horsepower || 0);
+    }
+    if (formData.noofseats) {
+      fd.append("no_of_seats", formData.noofseats || 0);
+    }
+    fd.append("tyre_cond", tyreCondition.toLowerCase());
+    fd.append("selling_price", formData.pricingvehicle);
+    if (formData.fitnesscertificate) {
+      fd.append("fitness_certificate", formData.fitnesscertificate);
+    }
+    if (bodyTypeId) {
+      fd.append("bodyType", bodyTypeId);
+    }
+    fd.append("rc_document", rc.toLowerCase());
+    if (engCropImg) {
+      fd.append("engine_pic", engCropImg);
+    }
+    fd.append("front_side_pic", frontsideCropImg);
+    if (backsideCropImg) {
+      fd.append("back_side_pic", backsideCropImg);
+    }
+    if (fronttyreLeftCropImg) {
+      fd.append("front_tyre", fronttyreLeftCropImg);
+    }
+    if (fronttyreRightCropImg) {
+      fd.append("front_tyre", fronttyreRightCropImg);
+    }
+    if (sidePicLeftCropImg) {
+      fd.append("side_pic_vehicle", sidePicLeftCropImg);
+    }
+    if (sidePicRightCropImg) {
+      fd.append("side_pic_vehicle", sidePicRightCropImg);
+    }
+    fd.append("status", "published");
+
+    const publishResponse = await axios.put(
+      Constant.getUrls.getAllVehicles + `/${editVehicleObj?._id}`,
       fd,
       {
         headers: {
@@ -758,10 +1067,16 @@ const SellerForm = () => {
             setDocumentEngImg={setDocumentEngImg}
             engImage={engImage}
             setEngImage={setEngImage}
+            engCropImg={engCropImg}
+            setEngCropImg={setEngCropImg}
             documentFrontSideImg={documentFrontSideImg}
             setDocumentFrontSideImg={setDocumentFrontSideImg}
             frontSideImg={frontSideImg}
+            frontsideCropImg={frontsideCropImg}
+            setFrontsideCropImg={setFrontsideCropImg}
             setFrontSideImg={setFrontSideImg}
+            backsideCropImg={backsideCropImg}
+            setBackSideCropImg={setBackSideCropImg}
             documentBackSideImg={documentBackSideImg}
             setDocumentBackSideImg={setDocumentBackSideImg}
             backSideImg={backSideImg}
@@ -770,18 +1085,26 @@ const SellerForm = () => {
             setDocumentFronttyreLeft={setDocumentFronttyreLeft}
             fronttyreLeftImg={fronttyreLeftImg}
             setFronttyreLeftImg={setFronttyreLeftImg}
+            fronttyreLeftCropImg={fronttyreLeftCropImg}
+            setFronttyreLeftCropImg={setFronttyreLeftCropImg}
             documentFronttyreRight={documentFronttyreRight}
             setDocumentFronttyreRight={setDocumentFronttyreRight}
             fronttyreRightImg={fronttyreRightImg}
             setFronttyreRightImg={setFronttyreRightImg}
+            fronttyreRightCropImg={fronttyreRightCropImg}
+            setFronttyreRightCropImg={setFronttyreRightCropImg}
             documentSidePicLeft={documentSidePicLeft}
             setDocumentSidePicLeft={setDocumentSidePicLeft}
             sidePicLeft={sidePicLeft}
             setSidePicLeft={setSidePicLeft}
+            sidePicLeftCropImg={sidePicLeftCropImg}
+            setSidePicLeftCropImg={setSidePicLeftCropImg}
             documentSidePicRight={documentSidePicRight}
             setDocumentSidePicRight={setDocumentSidePicRight}
             sidePicRight={sidePicRight}
             setSidePicRight={setSidePicRight}
+            sidePicRightCropImg={sidePicRightCropImg}
+            setSidePicRightCropImg={setSidePicRightCropImg}
             nextStep={nextStep}
             prevStep={prevStep}
           />
@@ -799,6 +1122,7 @@ const SellerForm = () => {
             sidePicLeft={sidePicLeft}
             sidePicRight={sidePicRight}
             handlePostData={handlePostData}
+            handlePublishPutData={handlePublishPutData}
             handlePublishPostData={handlePublishPostData}
             brandTitle={brandTitle}
             modelTitle={modelTitle}
@@ -822,6 +1146,13 @@ const SellerForm = () => {
             documentSidePicLeft={documentSidePicLeft}
             documentSidePicRight={documentSidePicRight}
             disableBtn={disableBtn}
+            frontsideCropImg={frontsideCropImg}
+            backsideCropImg={backsideCropImg}
+            engCropImg={engCropImg}
+            fronttyreLeftCropImg={fronttyreLeftCropImg}
+            fronttyreRightCropImg={fronttyreRightCropImg}
+            sidePicLeftCropImg={sidePicLeftCropImg}
+            sidePicRightCropImg={sidePicRightCropImg}
           />
         </>
       );

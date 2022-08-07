@@ -187,7 +187,7 @@ function UserVehicles() {
                           </div>
 
                           <div className="review-container">
-                            <div
+                            {/* <div
                               className="review-action"
                               onClick={() =>
                                 navigate(`/sellerform/${item._id}`)
@@ -200,7 +200,9 @@ function UserVehicles() {
                               onClick={() => handleVehicleDelete(item._id)}
                             >
                               <img src={deleteIcon} alt="delete icon" />
-                            </div>
+                            </div> */}
+                            <div className="sold-btn">Mark as Sold</div>
+
                             <div className="card-publish-review">
                               {item?.inspection_status === "published" ? (
                                 <div className="review">
@@ -248,7 +250,7 @@ function UserVehicles() {
                     </div>
                     <div className="card-btns">
                       <button>Book for Inspection</button>
-                      {/* <button
+                      <button
                         onClick={() => navigate(`/sellerform/${item._id}`)}
                       >
                         Edit
@@ -258,7 +260,7 @@ function UserVehicles() {
                         onClick={() => handleVehicleDelete(item._id)}
                       >
                         Delete
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 ))}

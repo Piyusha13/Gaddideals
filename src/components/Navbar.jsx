@@ -24,6 +24,8 @@ import facebookLogo from "../assets/facebook_logo.svg";
 import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
 
+import Tooltip from "@material-ui/core/Tooltip";
+
 import statecities from "../state-cities.json";
 
 import { toast } from "react-toastify";
@@ -2571,32 +2573,30 @@ const Navbar = () => {
 
           <div className="brand-categories">
             {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
-              <a
-                href={
-                  "/vehiclelistings?category=" +
-                  catgeoryIcon._id +
-                  `&city=${locationCity}`
-                }
-                className={`${
-                  activeCategory === catgeoryIcon._id
-                    ? "brand-category active"
-                    : "brand-category"
-                }`}
-                onClick={() => {
-                  setActiveCategory(index);
-                  // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
-                }}
-                key={catgeoryIcon._id}
-                // title={catgeoryIcon.title}
-                data-bs-toggle="tooltip"
-                data-bs-placement="bottom"
-                data-bs-title={catgeoryIcon.title}
-              >
-                <img
-                  src={`${imgurl}${catgeoryIcon.icon}`}
-                  alt={catgeoryIcon.title}
-                />
-              </a>
+              <Tooltip title={catgeoryIcon?.title} placement="bottom" arrow>
+                <a
+                  href={
+                    "/vehiclelistings?category=" +
+                    catgeoryIcon._id +
+                    `&city=${locationCity}`
+                  }
+                  className={`${
+                    activeCategory === catgeoryIcon._id
+                      ? "brand-category active"
+                      : "brand-category"
+                  }`}
+                  onClick={() => {
+                    setActiveCategory(index);
+                    // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
+                  }}
+                  key={catgeoryIcon._id}
+                >
+                  <img
+                    src={`${imgurl}${catgeoryIcon.icon}`}
+                    alt={catgeoryIcon.title}
+                  />
+                </a>
+              </Tooltip>
             ))}
           </div>
 
@@ -2625,6 +2625,8 @@ const Navbar = () => {
                         ? `/vehiclelistings?category=${modelbrand.category}`
                         : `/vehiclelistings?category=${modelbrand.category}&brand[]=${modelbrand.brand}`
                     }
+                    data-bs-toggle="tooltip"
+                    data-bs-title="Default tooltip"
                   >
                     <p
                       onClick={() => {

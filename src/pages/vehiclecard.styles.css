@@ -253,6 +253,20 @@
   display: flex;
   gap: 10px;
 }
+.card .card-info .card-info-header .review-container .sold-btn {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+  padding: 0px 15px;
+  display: flex;
+  justify-content: center;
+  color: #050f56;
+  align-items: center;
+  font-family: "Poppins";
+  font-weight: bold;
+  font-size: 10px;
+  cursor: pointer;
+}
 .card .card-info .card-info-header .review-container .review-action {
   display: flex;
   justify-content: center;
@@ -342,9 +356,12 @@
 .card .card-info .card-stats {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: flex-start;
   text-align: center;
-  margin-top: 10px;
+  gap: 11%;
+  margin-top: 50px;
+  width: 100%;
 }
 .card .card-info .card-stats .stat {
   background: #ffffff;
@@ -381,6 +398,20 @@
   background: #050f56;
   border-radius: 5px;
   color: #ffffff;
+}
+
+.vehicle-card-container .card button:nth-child(2) {
+  width: 20%;
+  background: #ffffff;
+  color: #050f56;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  font-weight: bold;
+}
+.vehicle-card-container .card button:nth-child(3) {
+  width: 20%;
+  border: 1px solid #ff0000;
+  background: #ffffff;
+  color: #ff0000;
 }
 
 .vehicle-card-container .card .del-btn {

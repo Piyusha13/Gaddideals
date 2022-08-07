@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import "./sellervehicledetail.style.css";
 import { FiCheckCircle } from "react-icons/fi";
 import cloudIcon from "../assets/cloud.png";
@@ -8,9 +8,12 @@ import { imgurl } from "../constants";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-import ReactCrop, { Crop } from "react-image-crop";
+import Cropper from "react-easy-crop";
+import getCroppedImg from "../Helpers/cropImage";
+
 import Modal from "react-awesome-modal";
 import "react-image-crop/dist/ReactCrop.css";
+import { set } from "react-hook-form";
 
 const SellerVehicleDetail = ({
   prevStep,
@@ -47,8 +50,21 @@ const SellerVehicleDetail = ({
   setDocumentSidePicRight,
   sidePicRight,
   setSidePicRight,
+  frontsideCropImg,
+  setFrontsideCropImg,
+  backsideCropImg,
+  setBackSideCropImg,
+  engCropImg,
+  setEngCropImg,
+  fronttyreLeftCropImg,
+  setFronttyreLeftCropImg,
+  fronttyreRightCropImg,
+  setFronttyreRightCropImg,
+  sidePicLeftCropImg,
+  setSidePicLeftCropImg,
+  sidePicRightCropImg,
+  setSidePicRightCropImg,
 }) => {
-  const fileInput = useRef();
   const engineInput = useRef();
   const frontsideInput = useRef();
   const backsideInput = useRef();
@@ -57,15 +73,119 @@ const SellerVehicleDetail = ({
   const sidePicLeftInput = useRef();
   const sidePicRightInput = useRef();
 
-  const [crop, setCrop] = useState({ aspect: 16 / 9 });
-  const [showModal, setShowModal] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [backShowModal, setBackShowModal] = useState(false);
+  const [engShowModal, setEngShowModal] = useState(false);
+  const [frontTyreLeftShowModal, setFronttyreLeftShowModal] = useState(false);
+  const [fronttyreRightShowModal, setFronttyreRightShowModal] = useState(false);
+  const [sidePicLeftShowModal, setSidePicLeftShowModal] = useState(false);
+  const [sidePicRightShowModal, setSidePicRightShowModal] = useState(false);
 
-  const handleFileInput = () => {
-    fileInput.current.click();
-  };
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [backCrop, setBackCrop] = useState({ x: 0, y: 0 });
+  const [engCrop, setEngCrop] = useState({ x: 0, y: 0 });
+  const [fronttyreLeftCrop, setFronttyreLeftCrop] = useState({ x: 0, y: 0 });
+  const [fronttyreRightCrop, setFronttyreRightCrop] = useState({ x: 0, y: 0 });
+  const [sidePicLeftCrop, setSidePicLeftCrop] = useState({ x: 0, y: 0 });
+  const [sidePicRightCrop, setSidePicRightCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  // frontside cropped
+  const showCroppedImage = useCallback(async () => {
+    setShowModal(!showModal);
+    try {
+      const croppedImage = await getCroppedImg(frontSideImg, croppedAreaPixels);
+      console.log("donee", { croppedImage });
+      setFrontsideCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // backside cropped
+  const backCroppedImage = useCallback(async () => {
+    setBackShowModal(!backShowModal);
+    try {
+      const croppedImage = await getCroppedImg(backSideImg, croppedAreaPixels);
+      console.log("donee", { croppedImage });
+      setBackSideCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // Eng Cropped
+  const engCroppedImage = useCallback(async () => {
+    setEngShowModal(!engShowModal);
+    try {
+      const croppedImage = await getCroppedImg(engImage, croppedAreaPixels);
+      console.log("donee", { croppedImage });
+      setEngCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // fronttyre left cropped
+  const fronttyreCroppedImage = useCallback(async () => {
+    setFronttyreLeftShowModal(!frontTyreLeftShowModal);
+    try {
+      const croppedImage = await getCroppedImg(
+        fronttyreLeftImg,
+        croppedAreaPixels
+      );
+      console.log("donee", { croppedImage });
+      setFronttyreLeftCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // fronttyre right cropped
+  const fronttyreRightCroppedImage = useCallback(async () => {
+    setFronttyreRightShowModal(!fronttyreRightShowModal);
+    try {
+      const croppedImage = await getCroppedImg(
+        fronttyreRightImg,
+        croppedAreaPixels
+      );
+      console.log("donee", { croppedImage });
+      setFronttyreRightCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // sidepic left cropped
+  const sidePicLeftCroppedImage = useCallback(async () => {
+    setSidePicLeftShowModal(!sidePicLeftShowModal);
+    try {
+      const croppedImage = await getCroppedImg(sidePicLeft, croppedAreaPixels);
+      console.log("donee", { croppedImage });
+      setSidePicLeftCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
+
+  // sidepic Right cropped
+  const sidePicRightCroppedImage = useCallback(async () => {
+    setSidePicRightShowModal(!sidePicRightShowModal);
+    try {
+      const croppedImage = await getCroppedImg(sidePicRight, croppedAreaPixels);
+      console.log("donee", { croppedImage });
+      setSidePicRightCropImg(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels]);
 
   const handleEngineInput = () => {
-    // setShowModal(true);
     engineInput.current.click();
   };
 
@@ -103,39 +223,82 @@ const SellerVehicleDetail = ({
 
   const handleImageChange = (e) => {
     // console.log(e.target.name);
-    if (e.target.files[0]) {
-      if (e.target.name === "rc") {
-        setRCImage(e.target.files[0]);
-        setDocumentRCImg(true);
-      }
-      if (e.target.name === "engine") {
-        setEngImage(e.target.files[0]);
-        setDocumentEngImg(true);
-      }
-      if (e.target.name === "frontside") {
-        setFrontSideImg(e.target.files[0]);
-        setDocumentFrontSideImg(true);
-      }
-      if (e.target.name === "backside") {
-        setBackSideImg(e.target.files[0]);
-        setDocumentBackSideImg(true);
-      }
-      if (e.target.name === "fronttyreleft") {
-        setFronttyreLeftImg(e.target.files[0]);
-        setDocumentFronttyreLeft(true);
-      }
-      if (e.target.name === "fronttyreright") {
-        setFronttyreRightImg(e.target.files[0]);
-        setDocumentFronttyreRight(true);
-      }
-      if (e.target.name === "sidepicleft") {
-        setSidePicLeft(e.target.files[0]);
-        setDocumentSidePicLeft(true);
-      }
-      if (e.target.name === "sidepicright") {
-        setSidePicRight(e.target.files[0]);
-        setDocumentSidePicRight(true);
-      }
+    // if (e.target.files[0]) {
+    //   if (e.target.name === "rc") {
+    //     setRCImage(e.target.files[0]);
+    //     setDocumentRCImg(true);
+    //   }
+    //   if (e.target.name === "engine") {
+    //     setEngImage(e.target.files[0]);
+    //     setDocumentEngImg(true);
+    //   }
+    //   if (e.target.name === "frontside") {
+    //     // setFrontSideImg(e.target.files[0]);
+    //     setSrc(URL.createObjectURL(e.target.files[0]));
+    //     // setDocumentFrontSideImg(true);
+    //     setShowModal(true);
+    //   }
+    //   if (e.target.name === "backside") {
+    //     setBackSideImg(e.target.files[0]);
+    //     setDocumentBackSideImg(true);
+    //   }
+    //   if (e.target.name === "fronttyreleft") {
+    //     setFronttyreLeftImg(e.target.files[0]);
+    //     setDocumentFronttyreLeft(true);
+    //   }
+    //   if (e.target.name === "fronttyreright") {
+    //     setFronttyreRightImg(e.target.files[0]);
+    //     setDocumentFronttyreRight(true);
+    //   }
+    //   if (e.target.name === "sidepicleft") {
+    //     setSidePicLeft(e.target.files[0]);
+    //     setDocumentSidePicLeft(true);
+    //   }
+    //   if (e.target.name === "sidepicright") {
+    //     setSidePicRight(e.target.files[0]);
+    //     setDocumentSidePicRight(true);
+    //   }
+    // }
+
+    if (e.target.name === "frontside") {
+      setShowModal(true);
+      setFrontSideImg(URL.createObjectURL(e.target.files[0]));
+      setDocumentFrontSideImg(true);
+    }
+
+    if (e.target.name === "backside") {
+      setBackShowModal(true);
+      setBackSideImg(URL.createObjectURL(e.target.files[0]));
+      setDocumentBackSideImg(true);
+    }
+
+    if (e.target.name === "engine") {
+      setEngShowModal(true);
+      setEngImage(URL.createObjectURL(e.target.files[0]));
+      setDocumentEngImg(true);
+    }
+
+    if (e.target.name === "fronttyreleft") {
+      setFronttyreLeftShowModal(true);
+      setFronttyreLeftImg(URL.createObjectURL(e.target.files[0]));
+      setDocumentFronttyreLeft(true);
+    }
+
+    if (e.target.name === "fronttyreright") {
+      setFronttyreRightShowModal(true);
+      setFronttyreRightImg(URL.createObjectURL(e.target.files[0]));
+      setDocumentFronttyreRight(true);
+    }
+
+    if (e.target.name === "sidepicleft") {
+      setSidePicLeftShowModal(true);
+      setSidePicLeft(URL.createObjectURL(e.target.files[0]));
+      setDocumentSidePicLeft(true);
+    }
+    if (e.target.name === "sidepicright") {
+      setSidePicRightShowModal(true);
+      setSidePicRight(URL.createObjectURL(e.target.files[0]));
+      setDocumentSidePicRight(true);
     }
   };
 
@@ -187,10 +350,11 @@ const SellerVehicleDetail = ({
           </div>
           <div className="container-wrapper">
             <div className="row-one">
-              <div className="vehicle-document" onClick={handleFrontsideInput}>
+              <div className="vehicle-document">
                 <h6>
                   Front Side Picture <span className="front-req">*</span>
                 </h6>
+
                 <input
                   ref={frontsideInput}
                   type="file"
@@ -199,8 +363,41 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={showModal}
+                  onClickAway={() => {
+                    setShowModal(!showModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={frontSideImg}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={showCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() => setShowModal(!showModal)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
+                  onClick={handleFrontsideInput}
                   style={
                     frontSideImg ? { padding: "0px" } : { padding: "40px" }
                   }
@@ -208,7 +405,7 @@ const SellerVehicleDetail = ({
                   <img
                     src={
                       documentFrontSideImg
-                        ? URL.createObjectURL(frontSideImg)
+                        ? frontsideCropImg
                         : frontSideImg
                         ? imgurl + frontSideImg
                         : cloudIcon
@@ -218,7 +415,7 @@ const SellerVehicleDetail = ({
                 </div>
               </div>
 
-              <div className="vehicle-document" onClick={handleBacksideInput}>
+              <div className="vehicle-document">
                 <h6>Back Side Picture</h6>
                 <input
                   ref={backsideInput}
@@ -228,14 +425,47 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={backShowModal}
+                  onClickAway={() => {
+                    setShowModal(!backShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={backSideImg}
+                      crop={backCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setBackCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={backCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() => setBackShowModal(!backShowModal)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
+                  onClick={handleBacksideInput}
                   style={backSideImg ? { padding: "0px" } : { padding: "40px" }}
                 >
                   <img
                     src={
                       documentBackSideImg
-                        ? URL.createObjectURL(backSideImg)
+                        ? backsideCropImg
                         : backSideImg
                         ? imgurl + backSideImg
                         : cloudIcon
@@ -245,7 +475,7 @@ const SellerVehicleDetail = ({
                 </div>
               </div>
 
-              <div className="vehicle-document" onClick={handleEngineInput}>
+              <div className="vehicle-document">
                 <h6>Engine Picture</h6>
                 <input
                   ref={engineInput}
@@ -256,14 +486,46 @@ const SellerVehicleDetail = ({
                   hidden
                 />
 
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={engShowModal}
+                  onClickAway={() => {
+                    setEngShowModal(!engShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={engImage}
+                      crop={engCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setEngCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={engCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() => setEngShowModal(!engShowModal)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
+                  onClick={handleEngineInput}
                   style={engImage ? { padding: "0px" } : { padding: "40px" }}
                 >
                   <img
                     src={
                       documentEngImg
-                        ? URL.createObjectURL(engImage)
+                        ? engCropImg
                         : engImage
                         ? imgurl + engImage
                         : cloudIcon
@@ -287,6 +549,40 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={frontTyreLeftShowModal}
+                  onClickAway={() => {
+                    setFronttyreLeftShowModal(!frontTyreLeftShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={fronttyreLeftImg}
+                      crop={fronttyreLeftCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setFronttyreLeftCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={fronttyreCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() =>
+                        setFronttyreLeftShowModal(!frontTyreLeftShowModal)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
                   style={
@@ -297,7 +593,7 @@ const SellerVehicleDetail = ({
                   <img
                     src={
                       documentFronttyreLeft
-                        ? URL.createObjectURL(fronttyreLeftImg)
+                        ? fronttyreLeftCropImg
                         : fronttyreLeftImg
                         ? imgurl + fronttyreLeftImg
                         : cloudIcon
@@ -314,6 +610,40 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={fronttyreRightShowModal}
+                  onClickAway={() => {
+                    setFronttyreRightShowModal(!fronttyreRightShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={fronttyreRightImg}
+                      crop={fronttyreRightCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setFronttyreRightCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={fronttyreRightCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() =>
+                        setFronttyreRightShowModal(!fronttyreRightShowModal)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
                   style={
@@ -324,7 +654,7 @@ const SellerVehicleDetail = ({
                   <img
                     src={
                       documentFronttyreRight
-                        ? URL.createObjectURL(fronttyreRightImg)
+                        ? fronttyreRightCropImg
                         : fronttyreRightImg
                         ? imgurl + fronttyreRightImg
                         : cloudIcon
@@ -346,6 +676,40 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={sidePicLeftShowModal}
+                  onClickAway={() => {
+                    setSidePicLeftShowModal(!sidePicLeftShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={sidePicLeft}
+                      crop={sidePicLeftCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setSidePicLeftCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={sidePicLeftCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() =>
+                        setSidePicLeftShowModal(!sidePicLeftShowModal)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
                   style={sidePicLeft ? { padding: "0px" } : { padding: "40px" }}
@@ -354,7 +718,7 @@ const SellerVehicleDetail = ({
                   <img
                     src={
                       documentSidePicLeft
-                        ? URL.createObjectURL(sidePicLeft)
+                        ? sidePicLeftCropImg
                         : sidePicLeft
                         ? imgurl + sidePicLeft
                         : cloudIcon
@@ -371,6 +735,40 @@ const SellerVehicleDetail = ({
                   accept="image/*"
                   hidden
                 />
+
+                <Modal
+                  width="90%"
+                  height="100%"
+                  effect="fadeInUp"
+                  visible={sidePicRightShowModal}
+                  onClickAway={() => {
+                    setSidePicRightShowModal(!sidePicRightShowModal);
+                  }}
+                >
+                  <div>
+                    <Cropper
+                      image={sidePicRight}
+                      crop={sidePicRightCrop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setSidePicRightCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+                  <div className="modal-btns">
+                    <button onClick={sidePicRightCroppedImage}>Save</button>
+                    <button
+                      className="cancel-modal-btn"
+                      onClick={() =>
+                        setSidePicRightShowModal(!sidePicRightShowModal)
+                      }
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Modal>
+
                 <div
                   className="document"
                   style={
@@ -381,7 +779,7 @@ const SellerVehicleDetail = ({
                   <img
                     src={
                       documentSidePicRight
-                        ? URL.createObjectURL(sidePicRight)
+                        ? sidePicRightCropImg
                         : sidePicRight
                         ? imgurl + sidePicRight
                         : cloudIcon
