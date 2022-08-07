@@ -24,6 +24,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Geocode from "react-geocode";
 import axios from "axios";
 import Constant from "./constants";
+import AboutUs from "./pages/AboutUs";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryString = require("query-string");
 
@@ -133,6 +136,9 @@ function App() {
         <Route element={<SellerForm />} path="/sellerform/:categoryId" />
         <Route element={<VehicleCard />} path="/VehicleCard" />
         <Route element={<DirectSignup />} path="/DirectSignup" />
+        <Route element={<AboutUs />} path="/AboutUs" />
+        <Route element={<TermsAndConditions />} path="/termsandconditions" />
+        <Route element={<PrivacyPolicy />} path="/PrivacyPolicy" />
       </Routes>
       <ToastContainer autoClose={3000} />
     </>

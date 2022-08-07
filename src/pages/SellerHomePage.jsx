@@ -8,6 +8,8 @@ import FAQToggle from "../components/FAQToggle";
 import Footer from "../components/Footer";
 import Constant, { imgurl } from "../constants";
 
+import statecities from "../state-cities.json";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper";
 import "swiper/css";
@@ -67,6 +69,7 @@ const SellerHomePage = () => {
   const [faqs, setFAQS] = useState([]);
   const [vehicleId, setvehicleId] = useState("");
   const [token, settoken] = useState(localStorage.getItem("Token"));
+  const [locationDropDown, setlocationDropDown] = useState(false);
 
   const locationCity = useSelector(selectLocation);
 
@@ -220,6 +223,10 @@ const SellerHomePage = () => {
     }
   };
 
+  const filterCurentCities = statecities.filter((data) =>
+    data.City.toLowerCase().includes(city.toLowerCase())
+  );
+
   // function loadGoogleTranslate(){
   //   FaGoogle.translate.TranslateElement("intro-title");
   // }
@@ -235,6 +242,10 @@ const SellerHomePage = () => {
     }
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
+      return false;
+    }
+    if (city === "") {
+      toast.error("please enter location");
       return false;
     }
     if (!validateEmail.test(email)) {
@@ -329,8 +340,9 @@ const SellerHomePage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log("here" + res.data.user.city);
         // console.log(res.data.user);
+        setcity(res.data.user.city);
         setname(res.data.user.name);
         setemail(res.data.user.email);
         setmob_no(res.data.user.mob_no);
@@ -642,8 +654,25 @@ const SellerHomePage = () => {
                   }}
                   value={city}
                   placeholder="Location"
+                  onFocus={() => {
+                    setlocationDropDown(!locationDropDown);
+                  }}
                 ></input>
-                <img src={downArrow} alt=""></img>
+                <img src={downArrow} alt="" />
+                {locationDropDown && (
+                  <div className="sign-up-loaction-drop-down">
+                    {filterCurentCities.map((data) => (
+                      <p
+                        onClick={() => {
+                          setcity(data.City);
+                          setlocationDropDown(false);
+                        }}
+                      >
+                        {data.City}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="dealerType">
@@ -1336,6 +1365,14 @@ const SellerHomePage = () => {
 
       {/* Footer */}
       <Footer />
+      {locationDropDown && (
+        <div
+          className="mob-menue-overlay"
+          onClick={() => {
+            setlocationDropDown(false);
+          }}
+        ></div>
+      )}
     </div>
   );
 };

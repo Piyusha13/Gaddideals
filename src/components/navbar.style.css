@@ -1,17 +1,29 @@
 @media screen and (min-width: 768px) and (max-width: 990px) {
+
+  .language-1{
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .language-2{
+    border-bottom: 1px solid #e6e6e6;
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+ 
+  .languages-container {
+    display: none !important;
+  }
   .location-and-icon {
     display: flex !important;
     /* justify-content: space-around !important; */
     width: 100% !important;
   }
   .location-container {
-    /* display: none !important; */
-    display: block !important;
-    background: #ffffff;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    justify-content: space-between !important;
-    /* background-color: #00adef !important; */
+    display: none !important;
   }
   .sm-device {
     display: none !important;
@@ -157,29 +169,56 @@
     border: none;
   }
   .location-container {
-    /* display: none !important; */
+    display: none !important;
   }
   .user {
     display: none !important;
   }
-  .languages-container {
-    display: none !important;
+  .mob-languages-container {
+    display: block !important;
+    background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+padding: 10px;
+position: relative;
+margin: 10px;
+  }
+  .mob-languages-container .language{
+    width: 100% !important;
+  }
+  .mob-languages-container .language-arrow-icon{
+    position: absolute;
+    right: 5%;
+    top: 20%;
+  }
+  .mob-languages-container .language-arrow-icon img{
+    width: 20px;
   }
 }
 @media screen and (min-width: 991px) and (max-width: 1000px) {
+  .language-1{
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .language-2{
+    border-bottom: 1px solid #e6e6e6;
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .languages-container {
+    display: none !important;
+  }
   .location-and-icon {
     display: flex !important;
     /* justify-content: space-around !important; */
     width: 100% !important;
   }
   .location-container {
-    /* display: none !important; */
-    display: block !important;
-    background: #ffffff;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    justify-content: space-between !important;
-    /* background-color: #00adef !important; */
+    display: none !important;
   }
   .sm-device {
     display: none !important;
@@ -325,16 +364,49 @@
     border: none;
   }
   .location-container {
-    /* display: none !important; */
+    display: none !important;
   }
   .user {
     display: none !important;
   }
-  .languages-container {
-    display: none !important;
+  .mob-languages-container {
+    display: block !important;
+    background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+padding: 10px;
+position: relative;
+margin: 10px;
+  }
+  .mob-languages-container .language{
+    width: 100% !important;
+  }
+  .mob-languages-container .language-arrow-icon{
+    position: absolute;
+    right: 5%;
+    top: 20%;
+  }
+  .mob-languages-container .language-arrow-icon img{
+    width: 20px;
   }
 }
 @media screen and (min-width: 1001px) and (max-width: 1236px) {
+  .language-1{
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .language-2{
+    border-bottom: 1px solid #e6e6e6;
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .languages-container {
+    display: none !important;
+  }
   /* .location-and-icon{
     display: flex !important;
     width: 100% !important;
@@ -577,13 +649,7 @@
     width: 100% !important;
   }
   .location-container {
-    /* display: none !important; */
-    display: block !important;
-    background: #ffffff;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    justify-content: space-between !important;
-    /* background-color: #00adef !important; */
+    display: none !important;
   }
   .sm-device {
     display: none !important;
@@ -766,8 +832,24 @@
 }
 
 @media screen and (max-width: 768px) {
+  .language-1{
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
+  .language-2{
+    border-bottom: 1px solid #e6e6e6;
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    padding-bottom: 0% !important;
+    margin-bottom: 0% !important;
+  }
   .location-container {
-    display: none;
+    display: none !important;
+  }
+  .languages-container {
+    display: none !important;
   }
 }
 
@@ -799,8 +881,25 @@
   object-fit: cover;
 }
 @media screen and (max-width: 767px) {
-  .languages-container {
-    display: none !important;
+  .mob-languages-container {
+    display: block !important;
+    background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+border-radius: 4px;
+padding: 10px;
+position: relative;
+margin: 10px;
+  }
+  .mob-languages-container .language{
+    width: 100% !important;
+  }
+  .mob-languages-container .language-arrow-icon{
+    position: absolute;
+    right: 5%;
+    top: 20%;
+  }
+  .mob-languages-container .language-arrow-icon img{
+    width: 20px;
   }
 }
 
@@ -1052,6 +1151,7 @@ a {
   cursor: pointer;
 }
 .signup-main_parent {
+  
   width: 100%;
   height: 100%;
   position: fixed;
@@ -1442,4 +1542,26 @@ a {
   /* transform: translateY(20px) !important; */
   display: inline !important;
   /* margin-top: 20px !important; */
+}
+.sign-up-loaction-drop-down{
+  overflow-y: scroll;
+  position: absolute;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.22);
+  /* background-color: orange; */
+  top: 95%;
+  width: 100%;
+  height: 200px;
+  z-index: 9999999;
+}
+.mob-menue-overlay {
+  background-color:transparent !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  position: absolute !important;
+  top: 0% !important;
+  z-index: 99;
+  left: 0%;
+  overflow-x: hidden;
 }

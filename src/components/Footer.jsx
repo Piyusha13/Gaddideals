@@ -62,13 +62,13 @@ const Footer = () => {
                   <a href="#contactus">Contact Us</a>
                 </li>
                 <li>
-                  <a href="#aboutus">About Us</a>
+                  <a href="/AboutUs">About Us</a>
                 </li>
                 <li>
-                  <a href="#privacypolicy">Privacy Policy</a>
+                  <a href="/PrivacyPolicy">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="#terms&conditions">Terms & Condition</a>
+                  <a href="/termsandconditions">Terms & Condition</a>
                 </li>
               </ul>
             </div>
@@ -76,9 +76,9 @@ const Footer = () => {
             {/* footer Sitemap two  */}
             <div className="footer-sitemap-two">
               <ul>
-                <li>
+                {/* <li>
                   <a href="#blog">Blog</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="#customerservices">Customer Services</a>
                 </li>
@@ -273,13 +273,13 @@ const Footer = () => {
                   <a href="#contactus">Contact Us</a>
                 </li>
                 <li>
-                  <a href="#aboutus">About Us</a>
+                  <a href="/AboutUs">About Us</a>
                 </li>
                 <li>
-                  <a href="#privacypolicy">Privacy Policy</a>
+                  <a href="/PrivacyPolicy">Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="#terms&conditions">Term's & Condition</a>
+                  <a href="/termsandconditions">Term's & Condition</a>
                 </li>
               </ul>
             </div>
@@ -287,9 +287,9 @@ const Footer = () => {
             {/* footer Sitemap two  */}
             <div className="mobile-footer-sitemap-two">
               <ul>
-                <li>
+                {/* <li>
                   <a href="#blog">Blog</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="#customerservices">Customer Services</a>
                 </li>

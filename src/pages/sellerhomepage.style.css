@@ -2092,3 +2092,226 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+@media screen and (max-width: 1000px) {
+  
+  /* buyer details container */
+
+  .buyer-dtails-container {
+    /* background-color: orange !important; */
+
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+  }
+  .buyer-dtails-container img {
+    width: 8% !important;
+    float: right !important;
+  }
+  .buyer-dtails-container h1 {
+    margin-top: 30px !important;
+    position: relative;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px !important;
+    color: #050f56;
+    margin-bottom: 30px !important;
+  }
+  .buyer-dtails-container h1::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 118px !important;
+    height: 2px !important;
+    border-radius: 5px;
+    background-color: #fe620d;
+  }
+  .buyer-dtails-container input {
+    border: 1px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    width: 100% !important;
+    padding: 10px !important;
+    margin-bottom: 20px !important;
+  }
+  .buyer-dtails-container input::placeholder {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px !important;
+    color: #b5b5b5;
+  }
+  .buyer-dtails-container button {
+    width: 100% !important;
+    padding: 10px !important;
+    background: #050f56;
+    border: 1px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px !important;
+    color: #ffffff;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+    border: none !important;
+  }
+
+  /* buyer otp container */
+  .buyer-otp-container {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px !important;
+  }
+  .buyer-otp-container img {
+    width: 8% !important;
+    float: right !important;
+  }
+  .buyer-otp-container .instruction-text {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px !important;
+    color: #7e7e7e;
+    margin-top: 30px !important;
+    margin-bottom: 15px !important;
+  }
+  .buyer-phone-number-input {
+    position: relative !important;
+    border: none;
+    margin-bottom: 15px !important;
+  }
+  .buyer-phone-number-input input {
+    width: 100% !important;
+    border: 1px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    padding: 10px !important;
+  }
+  .buyer-phone-number-input input::placeholder {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: rgba(78, 78, 78, 0.76);
+  }
+  .buyer-phone-number-input img {
+    position: absolute !important;
+    right: 5% !important;
+    width: 6% !important;
+    top: 20%;
+  }
+  .enter-otp-text {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px !important;
+    color: #050f56;
+    margin-top: 20px !important;
+    margin-bottom: 15px !important;
+  }
+  .new-otp-text {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #c4c4c4;
+    text-align: center !important;
+    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .buyer-otp-container button {
+    width: 100% !important;
+    padding: 10px !important;
+    background: #050f56;
+    border: 1px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px !important;
+    color: #ffffff;
+    border: none !important;
+    margin-bottom: 20px !important;
+  }
+  .otpStyle {
+    /* background-color: orangered !important; */
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    height: 50px !important;
+  }
+  .otBoxStyle {
+    /* background-color: orange !important; */
+    width: 75% !important;
+    border: 2px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    height: 100% !important;
+  }
+  /* seller detail container */
+
+  .sellerDetailsContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 20px !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .sellerDetailsContainer img {
+    float: right !important;
+    margin-left: 95% !important;
+    width: 8% !important;
+  }
+  .sellerDetailsContainer .userProfilePic {
+    height: 80px !important;
+    width: 80px !important;
+    border-radius: 50% !important;
+    /* background-color: orange !important; */
+    margin: 10px !important;
+
+    border: 2px solid #050f56;
+  }
+  .sellerDetailsContainer .userProfilePic img {
+    height: 100%;
+  }
+
+  .sellerDetailsContainer .userName {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 0px !important;
+  }
+  hr {
+    width: 350px !important;
+    border: 1.5px solid #e1e1e1;
+    margin-bottom: 20px !important;
+  }
+
+  .sellerDetailsContainer input {
+    width: 100% !important;
+    border: 1px solid rgba(5, 15, 86, 0.1);
+    border-radius: 5px;
+    padding: 10px !important;
+    margin-bottom: 15px !important;
+  }
+  .sellerDetailsContainer input::placeholder {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    color: #b5b5b5;
+  }
+}
+.mob-menue-overlay {
+  background-color: rgba(106, 142, 35, 0.315) !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  position: absolute !important;
+  top: 0% !important;
+  left: 0%;
+  z-index: 99;
+  overflow-x: hidden;
+}

@@ -1,4 +1,6 @@
 import "./vehicledetails.style.css";
+import statecities from "../state-cities.json";
+
 import locationIcon from "../assets/location.png";
 import calculatorIcon from "../assets/calculator.png";
 import shareIcon from "../assets/share.png";
@@ -74,6 +76,8 @@ const PrettoSlider = withStyles({
 const VehicleDetails = () => {
   const { id } = useParams();
   const [getvehicledetails, setVehicleDetails] = useState({});
+  const [locationDropDown, setlocationDropDown] = useState(false);
+
   let user_token = localStorage.getItem("Token");
   const [imageArray, setImageArray] = useState([]);
   const [similarImageArr, setSimilarImageArr] = useState([]);
@@ -163,6 +167,9 @@ const VehicleDetails = () => {
   //   }
   // });
 
+  const filterCurentCities = statecities.filter((data) =>
+    data.City.toLowerCase().includes(city.toLowerCase())
+  );
   function valuetext(value: number) {
     return `${value}°C`;
   }
@@ -334,6 +341,7 @@ const VehicleDetails = () => {
       .then((res) => {
         console.log(res);
         // console.log(res.data.user);
+        setcity(res.data.user.city);
         setname(res.data.user.name);
         setemail(res.data.user.email);
         setmob_no(res.data.user.mob_no);
@@ -354,6 +362,10 @@ const VehicleDetails = () => {
     }
     if (!validateMobNo.test(mob_no)) {
       toast.error("please enter valid mobile number");
+      return false;
+    }
+    if (city === "") {
+      toast.error("please enter location");
       return false;
     }
     if (!validateEmail.test(email)) {
@@ -777,8 +789,25 @@ const VehicleDetails = () => {
                   }}
                   value={city}
                   placeholder="Location"
+                  onFocus={() => {
+                    setlocationDropDown(!locationDropDown);
+                  }}
                 ></input>
                 <img src={downArrow} alt=""></img>
+                {locationDropDown && (
+                  <div className="sign-up-loaction-drop-down">
+                    {filterCurentCities.map((data) => (
+                      <p
+                        onClick={() => {
+                          setcity(data.City);
+                          setlocationDropDown(false);
+                        }}
+                      >
+                        {data.City}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="dealerType">

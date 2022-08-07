@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
+import statecities from "../state-cities.json";
+
 import { imgurl } from "../constants";
 import imgPlaceholder from "../assets/img-not-available.jpg";
 
@@ -48,6 +50,7 @@ const queryString = require("query-string");
 const VehicleListings = () => {
   const location = queryString.parse(window.location.search);
   let user_token = localStorage.getItem("Token");
+  const [locationDropDown, setlocationDropDown] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [vehiclesArray, setVehiclesArray] = useState([]);
@@ -110,6 +113,9 @@ const VehicleListings = () => {
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
   );
+  const filterCurentCities = statecities.filter((data) =>
+    data.City.toLowerCase().includes(city.toLowerCase())
+  );
 
   function getSingleUserInfo() {
     let user_token = localStorage.getItem("Token");
@@ -122,6 +128,7 @@ const VehicleListings = () => {
       .then((res) => {
         console.log(res);
         // console.log(res.data.user);
+        setcity(res.data.user.city);
         setname(res.data.user.name);
         setemail(res.data.user.email);
         setmob_no(res.data.user.mob_no);
@@ -259,6 +266,10 @@ const VehicleListings = () => {
     }
     if (!validateEmail.test(email)) {
       toast.error("please enter valid email id");
+      return false;
+    }
+    if (city === "") {
+      toast.error("please enter location");
       return false;
     }
     if (user_type === "") {
@@ -1000,8 +1011,25 @@ const VehicleListings = () => {
                   }}
                   value={city}
                   placeholder="Location"
+                  onFocus={() => {
+                    setlocationDropDown(!locationDropDown);
+                  }}
                 ></input>
                 <img src={downArrow} alt=""></img>
+                {locationDropDown && (
+                  <div className="sign-up-loaction-drop-down">
+                    {filterCurentCities.map((data) => (
+                      <p
+                        onClick={() => {
+                          setcity(data.City);
+                          setlocationDropDown(false);
+                        }}
+                      >
+                        {data.City}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="dealerType">

@@ -1,0 +1,522 @@
+
+@media screen and (max-width: 1000px){
+    .banner-div{
+        width: 100% !important;
+        /* height: 550px; */
+        height: 85vh !important;
+        /* background-image: url("../assets/TACBanner.png"); */
+        background-repeat: no-repeat;
+        /* background-color: orange; */
+        overflow-y:hidden !important;
+        position: relative;
+        overflow-x: hidden !important;
+        display: flex;
+        justify-content: center;
+    }
+    .banner-div .tac-banner-img{
+     width: 100%;
+     height: 73% !important;   
+    }
+    .heading-TAC{
+        position: absolute;
+        top: 59%;
+        /* z-index: 99999999999999; */
+        /* left: 30%; */
+    border: none;
+    background: #050F56;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    padding: 30px 50px;
+    width: 40%;
+    text-align: center;
+    }
+    .heading-TAC span{
+        text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+                              1.5px 1.5px 0 rgb(255, 255, 255),
+                             1.5px -1.5px 0 rgb(255, 255, 255),
+                            -1.5px -1.5px 0 rgb(255, 255, 255);
+        /* border: 2px solid #FFFFFF; */
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 55px;
+        letter-spacing: 0.1em;
+        color:#050F56;
+    }
+    .cotent-div{
+        padding: 0px 30px;
+        margin-top: -50px;
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    /* line-height: 45px; */
+    display: flex;
+    align-items: center;
+    /* background-color: orange; */
+    color: #696969;
+    }
+    
+    .aut_bottom-img{
+        margin-top: 20px !important;
+        width: 100%;
+        /* background-color: orange; */
+        display: flex;
+        justify-content: flex-end;
+        padding: 30px;
+        /* right: 0%; */
+    }
+    .aut_bottom-img img{
+        
+        /* float: right !important; */
+        /* position: relative; */
+        /* right: 0%; */
+        width: 70% !important;
+        /* background-color: #050F56; */
+    }
+    /* .gp-img{
+        position: absolute;
+        height: 100px !important;
+    }
+    .ap-img{
+        position: absolute;
+        height: 100px !important;
+    } */
+    .downloads-div{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        /* background-color: palegreen; */
+        width: 170px;
+        top: 45%;
+        right: 5%;
+    }
+    .vision-top-div{
+        width: 100%;
+        /* overflow-x: hidden; */
+        background-image: url("../assets/vision-top-div.png");
+        position: relative;
+        background-size: cover;
+        /* opacity: 0.7; */
+        /* padding: 20px !important; */
+        height: 30vh !important;
+    }
+    .vision-top-div-text{
+        position: absolute;
+        top: 10% !important;
+        left: 5% !important;
+        width: 95% !important;
+        color: white;
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px !important;
+    text-align: left;
+    /* line-height: 35px; */
+    }
+    .blue{
+        color: #00ADEF !important;
+    }
+    .overlay-img{
+        position: absolute;
+        left: 0% !important;
+        height: 70vh !important;
+        width: 100% !important;
+    }
+    .vision-mid-div{
+        position: absolute;
+        z-index: 999;
+        width: 75% !important;
+        right: 0%;
+        top: 75% !important;
+    }
+    .vision-bottom-div{
+        position: relative;
+        background-color: #DFE2F6;
+        /* background-image: url("../assets/vision-bottom-div.png"); */
+        width: 100%;
+        height: 55vh !important;
+        /* background-size: cover; */
+        /* height: 100vh !important; */
+    }
+    .vision-bottom-div-bg-img{
+        position: absolute;
+        bottom: -0.5% !important;
+        left: 0% !important;
+        width: 60% !important;
+        /* height: 70% !important; */
+    }
+    .vision-main-div
+    {
+        position: absolute;
+        top:15% !important;
+        left: 5% !important;
+        width: 83% !important;
+        height: 55% !important;
+        z-index: 999;
+        /* background: rgba(5, 14, 86, 0.651); */
+        background-color: #050F56;
+        opacity: 0.7;
+    border-radius: 10px;
+    padding: 10px !important;
+    padding-top: 30px !important ;
+    }
+    .vision-heading-1{
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px !important;
+    letter-spacing: 0.12em;
+    text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px -1.5px 0 rgb(255, 255, 255),
+    -1.5px -1.5px 0 rgb(255, 255, 255);
+    color: #050F56;
+    opacity: 1;
+    /* z-index: 99999; */
+    }
+    .vision-heading-2{
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px !important;
+    letter-spacing: 0.12em;
+    text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px -1.5px 0 rgb(255, 255, 255),
+    -1.5px -1.5px 0 rgb(255, 255, 255);
+    color: #050F56;
+    opacity: 1;
+    margin-top: -25px;
+    /* z-index: 99999; */
+    }
+    .vision-content{
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px !important;
+    /* line-height: 45px; */
+    display: flex;
+    /* align-items: fl; */
+    text-align: left;
+    color: #FFFFFF;
+    width: 100% !important;
+    }
+    .OurValues-div{
+        position: absolute;
+        top:90%;
+        left: 22% !important;
+        width: 55% !important;
+        height: auto !important;
+        background: rgba(5, 15, 86, 0.88);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    letter-spacing: 0.12em;
+    text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px 1.5px 0 rgb(255, 255, 255),
+    1.5px -1.5px 0 rgb(255, 255, 255),
+    -1.5px -1.5px 0 rgb(255, 255, 255);
+    color:  rgba(5, 15, 86, 0.88);
+    font-size: 24px !important;
+    text-align: center;
+    padding: 20px !important;
+    }
+    .values{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-top: 70px !important;
+    justify-content: space-around;
+    /* background-color: #050F56 !important; */
+    }
+    .value-div{
+        width: 20% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px !important;
+        /* background-color: orange; */
+    }
+    .value-1{
+        background: #D3F1FD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    width: 50px !important;
+    height: 50px !important;
+    padding: 15px !important;
+    }
+    .value-1 img{
+        width: 100% !important;
+    }
+    .value-div p{
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px !important;
+    
+    color: #050F56;
+    }
+}
+.banner-div{
+    width: 100% !important;
+    /* height: 550px; */
+    height: 85vh !important;
+    /* background-image: url("../assets/TACBanner.png"); */
+    background-repeat: no-repeat;
+    /* background-color: orange; */
+    overflow-y:hidden !important;
+    position: relative;
+    overflow-x: hidden !important;
+    display: flex;
+    justify-content: center;
+}
+.banner-div .tac-banner-img{
+ width: 100%;
+ height: 73% !important;   
+}
+.heading-TAC{
+    position: absolute;
+    top: 59%;
+    /* z-index: 99999999999999; */
+    /* left: 30%; */
+border: none;
+background: #050F56;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+border-radius: 13px;
+padding: 30px 50px;
+width: 40%;
+text-align: center;
+}
+.heading-TAC span{
+    text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+                          1.5px 1.5px 0 rgb(255, 255, 255),
+                         1.5px -1.5px 0 rgb(255, 255, 255),
+                        -1.5px -1.5px 0 rgb(255, 255, 255);
+    /* border: 2px solid #FFFFFF; */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 55px;
+    letter-spacing: 0.1em;
+    color:#050F56;
+}
+.cotent-div{
+    padding: 0px 30px;
+    margin-top: -50px;
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+/* line-height: 45px; */
+display: flex;
+align-items: center;
+/* background-color: orange; */
+color: #696969;
+}
+
+.aut_bottom-img{
+    margin-top: 80px;
+    width: 100%;
+    /* background-color: orange; */
+    display: flex;
+    justify-content: flex-end;
+    padding: 30px;
+    /* right: 0%; */
+}
+.aut_bottom-img img{
+    
+    /* float: right !important; */
+    /* position: relative; */
+    /* right: 0%; */
+    width: 35%;
+    /* background-color: #050F56; */
+}
+/* .gp-img{
+    position: absolute;
+    height: 100px !important;
+}
+.ap-img{
+    position: absolute;
+    height: 100px !important;
+} */
+.downloads-div{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    /* background-color: palegreen; */
+    width: 170px;
+    top: 45%;
+    right: 5%;
+}
+.vision-top-div{
+    width: 100%;
+    /* overflow-x: hidden; */
+    background-image: url("../assets/vision-top-div.png");
+    position: relative;
+    background-size: cover;
+    /* opacity: 0.7; */
+    
+    height: 70vh;
+}
+.vision-top-div-text{
+    position: absolute;
+    top: 18%;
+    left: 2%;
+    width: 38%;
+    color: white;
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 26px;
+text-align: left;
+/* line-height: 35px; */
+}
+.blue{
+    color: #00ADEF !important;
+}
+.overlay-img{
+    position: absolute;
+    left: 0% !important;
+    height: 70vh !important;
+    width: 100% !important;
+}
+.vision-mid-div{
+    position: absolute;
+    z-index: 999;
+    width: 55% ;
+    right: 0%;
+    top: 45%;
+}
+.vision-bottom-div{
+    position: relative;
+    background-color: #DFE2F6;
+    /* background-image: url("../assets/vision-bottom-div.png"); */
+    width: 100%;
+    height: 100vh;
+    /* background-size: cover; */
+    /* height: 100vh !important; */
+}
+.vision-bottom-div-bg-img{
+    left: 0% !important;
+    position: absolute;
+    bottom: -1.5%;
+    width: 45%;
+    /* height: 70% !important; */
+}
+.vision-main-div
+{
+    position: absolute;
+    top:-13%;
+    right: 3%;
+    width: 63%;
+    height: 69%;
+    z-index: 999;
+    /* background: rgba(5, 14, 86, 0.651); */
+    background-color: #050F56;
+    opacity: 0.7;
+border-radius: 10px;
+padding: 40px;
+padding-top: 30px ;
+}
+.vision-heading-1{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 58px;
+letter-spacing: 0.12em;
+text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px -1.5px 0 rgb(255, 255, 255),
+-1.5px -1.5px 0 rgb(255, 255, 255);
+color: #050F56;
+opacity: 1;
+/* z-index: 99999; */
+}
+.vision-heading-2{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 74px;
+letter-spacing: 0.12em;
+text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px -1.5px 0 rgb(255, 255, 255),
+-1.5px -1.5px 0 rgb(255, 255, 255);
+color: #050F56;
+opacity: 1;
+margin-top: -25px;
+/* z-index: 99999; */
+}
+.vision-content{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 26px;
+/* line-height: 45px; */
+display: flex;
+/* align-items: fl; */
+text-align: left;
+color: #FFFFFF;
+width: 90%;
+}
+.OurValues-div{
+    position: absolute;
+    top:90%;
+    left: 28%;
+    width: 45%;
+    height: 25%;
+    background: rgba(5, 15, 86, 0.88);
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+border-radius: 13px;
+letter-spacing: 0.12em;
+text-shadow: -1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px 1.5px 0 rgb(255, 255, 255),
+1.5px -1.5px 0 rgb(255, 255, 255),
+-1.5px -1.5px 0 rgb(255, 255, 255);
+color:  rgba(5, 15, 86, 0.88);
+font-size: 64px;
+text-align: center;
+padding: 30px;
+}
+.values{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 200px;
+justify-content: space-around;
+/* background-color: #050F56; */
+}
+.value-div{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* background-color: orange; */
+}
+.value-1{
+    background: #D3F1FD;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 6px;
+width: 80% ;
+height: 80%;
+padding: 30px;
+}
+.value-1 img{
+    width: 100%;
+}
+.value-div p{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+
+color: #050F56;
+}
+/* 
+.value-div:hover~.value-div p{
+    color: #050F56;
+} */
+

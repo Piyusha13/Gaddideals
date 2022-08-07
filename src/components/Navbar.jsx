@@ -59,6 +59,9 @@ const Navbar = () => {
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
   const [hamburgervisile, sethamburgervisile] = useState(false);
+  const [locationDropDown, setlocationDropDown] = useState(false);
+
+  const [city, setcity] = useState("");
 
   const [searchValue, setSearchValue] = useState("");
   const [searchArray, setSearchArray] = useState([]);
@@ -116,6 +119,7 @@ const Navbar = () => {
 
     if (response.data) {
       setCities(response.data.getAllCities.docs);
+      // console.log(response.data.getAllCities.docs.title);
     }
   };
 
@@ -159,6 +163,10 @@ const Navbar = () => {
     city.title.toLowerCase().includes(citySearch.toLowerCase())
   );
 
+  const filterCurentCities = statecities.filter((data) =>
+    data.City.toLowerCase().includes(city.toLowerCase())
+  );
+
   const filterBrandsModel = searchArray.filter((modbrd) => {
     return (
       modbrd?.title?.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -176,7 +184,7 @@ const Navbar = () => {
   const [otp, setotp] = useState("");
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
-  const [city, setcity] = useState("");
+
   const [password, setpassword] = useState("");
   const [confirm_password, setconfirm_password] = useState("");
   const [eye, seteye] = useState(false);
@@ -463,7 +471,7 @@ const Navbar = () => {
   React.useEffect(() => {
     const timer =
       counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    if (counter == 0) {
+    if (counter === 0) {
       setEnableResendOtp(true);
     }
     return () => clearInterval(timer);
@@ -483,74 +491,67 @@ const Navbar = () => {
 
   //responsive otp modal
   function saveMobileUser() {
-    console.warn({ mob_no });
-    let payload = { mob_no, hash: "ekxpmAB8m9v" };
-    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
-      console.log("result", result);
-      if (mob_no === "") {
-        // notify();
-        toast.error("enter moile number");
-      } else if (result.data.status === "failed") {
-        toast.error(result.data.message);
-      } else {
-        if (result.data.status === "success") {
-          toast.success(result.data.message);
-          // setotp(result.data.otp);
-          setshowOtp(!showOtp);
-          setshowsignup(!showsignup);
-          setCounter(59);
+    if (validateFeildsForSignIn()) {
+      console.warn({ mob_no });
+      let payload = { mob_no, hash: "ekxpmAB8m9v" };
+      axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
+        console.log("result", result);
+        if (mob_no === "") {
+          // notify();
+          toast.error("enter moile number");
+        } else if (result.data.status === "failed") {
+          toast.error(result.data.message);
+        } else {
+          if (result.data.status === "success") {
+            toast.success(result.data.message);
+            // setotp(result.data.otp);
+            setshowOtp(!showOtp);
+            setshowsignup(!showsignup);
+            setCounter(59);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   //responsive sign in page
   function setMobileSignup() {
-    console.log("otp verified");
-    console.warn({
-      name,
-      email,
-      mob_no,
-      city,
-      password,
-      confirm_password,
-    });
-    let payload = {
-      name,
-      email,
-      mob_no,
-      city,
-      password,
-      confirm_password,
-    };
-    axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
-      console.log("res", res);
-      if (
-        name === "" ||
-        email === "" ||
-        mob_no === "" ||
-        city === "" ||
-        password === "" ||
-        confirm_password === ""
-      ) {
-        toast.error("required feilds are empty");
-      } else if (!email.match("@gmail.com")) {
-        toast.error("enter valid mail id");
-      } else if (password !== confirm_password) {
-        toast.error("password and confirm password don't match");
-      } else {
-        if (res.data.status === "success") {
-          toast.success(res.data.message);
+    if (validateFeilds()) {
+      console.log("otp verified");
+      console.warn({
+        name,
+        email,
+        mob_no,
+        city,
+        password,
+        confirm_password,
+      });
+      let payload = {
+        name,
+        email,
+        mob_no,
+        city,
+        password,
+        confirm_password,
+      };
+      axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
+        console.log("res", res);
+        if (password !== confirm_password) {
+          toast.error("password and confirm password don't match");
+        } else {
+          if (res.data.status === "success") {
+            toast.success(res.data.message);
 
-          setmob_no(res.data.mob_no);
-          setshowSignIn(!showSignIn);
-          saveMoilePhoneOtp();
-          setshowOtp(!showOtp);
-        } else if (res.data.status === "failed") {
-          toast.error(res.data.message);
+            setmob_no(res.data.mob_no);
+            setshowSignIn(!showSignIn);
+            saveMoilePhoneOtp();
+            setshowOtp(!showOtp);
+          } else if (res.data.status === "failed") {
+            toast.error(res.data.message);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   //responsive otp veriication
@@ -1439,6 +1440,14 @@ const Navbar = () => {
 
       {visibleSignUp && (
         <div className="signup-main_parent">
+          {/* {locationDropDown && (
+            <div
+              className="mob-menue-overlay"
+              onClick={() => {
+                setlocationDropDown(false);
+              }}
+            ></div>
+          )} */}
           <div
             className="signup-parent"
             className={onclose ? "parent" : "slideBack"}
@@ -1586,6 +1595,9 @@ const Navbar = () => {
                 onChange={(e) => {
                   setcity(e.target.value);
                 }}
+                onFocus={() => {
+                  setlocationDropDown(!locationDropDown);
+                }}
                 value={city}
                 type="text"
                 className="signup-location-input"
@@ -1594,44 +1606,58 @@ const Navbar = () => {
               <img
                 className="Singup-location-Icon"
                 src={SinguplocationIcon}
-                alt=""
-              ></img>
+                alt="location icon"
+              />
+              {locationDropDown && (
+                <div className="sign-up-loaction-drop-down">
+                  {filterCurentCities.map((data) => (
+                    <p
+                      onClick={() => {
+                        setcity(data.City);
+                        setlocationDropDown(false);
+                      }}
+                    >
+                      {data.City}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
-            {hidePassword ? null : (
-              <>
-                <input
-                  onChange={(e) => {
-                    setpassword(e.target.value);
-                  }}
-                  value={password}
-                  type="password"
-                  className="signup-phone-no-input"
-                  placeholder="Password "
-                />
-                {/* <p className="password-guide">
+            {/* {hidePassword ? null : (
+              <> */}
+            <input
+              onChange={(e) => {
+                setpassword(e.target.value);
+              }}
+              value={password}
+              type="password"
+              className="signup-phone-no-input"
+              placeholder="Password "
+            />
+            {/* <p className="password-guide">
                   Password length must be less than 10 characters
                 </p> */}
-                <div className="SingupEyeIconDiv">
-                  <input
-                    onChange={(e) => {
-                      setconfirm_password(e.target.value);
-                    }}
-                    value={confirm_password}
-                    type={eye ? "text" : "password"}
-                    className="signup-location-input"
-                    placeholder="Confirm Password"
-                  />
-                  <img
-                    alt=""
-                    onClick={() => {
-                      seteye(!eye);
-                    }}
-                    className="Singup-eye-Icon"
-                    src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-                  ></img>
-                </div>
-              </>
-            )}
+            <div className="SingupEyeIconDiv">
+              <input
+                onChange={(e) => {
+                  setconfirm_password(e.target.value);
+                }}
+                value={confirm_password}
+                type={eye ? "text" : "password"}
+                className="signup-location-input"
+                placeholder="Confirm Password"
+              />
+              <img
+                alt=""
+                onClick={() => {
+                  seteye(!eye);
+                }}
+                className="Singup-eye-Icon"
+                src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+              ></img>
+            </div>
+            {/* </>
+            )} */}
             <button
               onClick={() => {
                 setSignup();
@@ -1865,9 +1891,75 @@ const Navbar = () => {
       {hamburgervisile && (
         <div className="mob-menue-container">
           <div className="mob-top-div">
+            <div className="mob-languages-container">
+              <div className="language">
+                <span className="SelectedLanguageDecoration notranslate">
+                  {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
+                </span>
+              </div>
+              <div className="language-arrow-icon">
+                <img
+                  onClick={() => {
+                    setdropdown(!dropdown);
+                  }}
+                  src={dropdown ? upArrowIcon : downArrow}
+                  alt="down arrow"
+                />
+              </div>
+              {dropdown && (
+                <div className="drop-down">
+                  <p
+                    onClick={() => {
+                      // window.location.reload();
+                      // updateLanguage("en");
+                      setselectedLanguage("en");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "en";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "en");
+                      // return console.log(a.value)
+                      // window.location.reload();
+                      location.lang = "en";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-1 notranslate"
+                  >
+                    English
+                  </p>
+                  <p
+                    onClick={() => {
+                      setselectedLanguage("hi");
+                      // updateLanguage("hi");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "hi";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "hi");
+                      // window.location.reload();
+                      // return console.log(a.value);
+
+                      location.lang = "hi";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-2 notranslate"
+                  >
+                    हिन्दी
+                  </p>
+                </div>
+              )}
+            </div>
             {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
-            <div className="location-container">
+            {/* <div className="location-container">
               <div
                 className="location"
                 onClick={() => setLangDropdown(!langDropdown)}
@@ -1919,7 +2011,7 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
 
           <div className="mob-middle-div">
@@ -1963,56 +2055,69 @@ const Navbar = () => {
           <div className="mob-top-div">
             {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
-            <div className="location-container">
-              <div
-                className="location"
-                onClick={() => setLangDropdown(!langDropdown)}
-              >
-                <div className="location-and-icon">
-                  <img src={locationIcon} alt="location" />
-                  <span>
-                    {locationCity !== undefined ? locationCity : "Location"}
-                  </span>
-                </div>
-                <div className="arrow-icon">
-                  <img src={downArrow} alt="down arrow" />
-                </div>
+            <div className="mob-languages-container">
+              <div className="language">
+                <span className="SelectedLanguageDecoration notranslate">
+                  {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
+                </span>
               </div>
+              <div className="language-arrow-icon">
+                <img
+                  onClick={() => {
+                    setdropdown(!dropdown);
+                  }}
+                  src={dropdown ? upArrowIcon : downArrow}
+                  alt="down arrow"
+                />
+              </div>
+              {dropdown && (
+                <div className="drop-down">
+                  <p
+                    onClick={() => {
+                      // window.location.reload();
+                      // updateLanguage("en");
+                      setselectedLanguage("en");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "en";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "en");
+                      // return console.log(a.value)
+                      // window.location.reload();
+                      location.lang = "en";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-1 notranslate"
+                  >
+                    English
+                  </p>
+                  <p
+                    onClick={() => {
+                      setselectedLanguage("hi");
+                      // updateLanguage("hi");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "hi";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "hi");
+                      // window.location.reload();
+                      // return console.log(a.value);
 
-              {langDropdown && (
-                <div className="lang-dropdown">
-                  <div className="lang-input">
-                    <input
-                      type="text"
-                      placeholder="Enter City here..."
-                      onChange={handleCityChange}
-                      onFocus={handleLangFocus}
-                      value={citySearch}
-                    />
-
-                    {langSuggestion && (
-                      <div className="lang-suggetion">
-                        {filterCities.slice(0, 7).map((city, index) => (
-                          <p
-                            key={index}
-                            onClick={() => {
-                              setCitySearch(city);
-                              dispatch(setCurrentCity(city));
-                              setLangDropdown(false);
-                              if (location.city) {
-                                location.city = city;
-                                let prevUrl = queryString.stringify(location);
-                                window.location.href =
-                                  window.location.pathname + "?" + prevUrl;
-                              }
-                            }}
-                          >
-                            {city}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                      location.lang = "hi";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-2 notranslate"
+                  >
+                    हिन्दी
+                  </p>
                 </div>
               )}
             </div>
@@ -2068,13 +2173,19 @@ const Navbar = () => {
             effect="fadeInRight"
             className="modal"
             visible={showsignup}
-            onClickAway={closeModal}
+            onClickAway={() => {
+              setshowsignup(!showsignup);
+              clearAllStates();
+            }}
           >
             {/* for CSS check  MobileRespSignInPage.style.css */}
             <div className="mob-signin-resp">
               <img
                 className="mob-resp-closing-arrow"
-                onClick={closeModal}
+                onClick={() => {
+                  setshowsignup(!showsignup);
+                  clearAllStates();
+                }}
                 src={closingArrow}
                 alt=""
               ></img>
@@ -2117,7 +2228,7 @@ const Navbar = () => {
                   <FacebookLogin
                     appId="615601846567774"
                     autoLoad={false}
-                    callback={mobResponseFacebook}
+                    callback={responseFacebook}
                     cssClass="my-facebook-button-class"
                     fields="name,email"
                     render={(renderProps) => (
@@ -2145,7 +2256,7 @@ const Navbar = () => {
                       ></button>
                     )}
                     clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                    onSuccess={mobResponseGoogle}
+                    onSuccess={responseGoogle}
                     onFailure={responseFailedGoogle}
                     cookiePolicy={"single_host_origin"}
                   />
@@ -2172,13 +2283,19 @@ const Navbar = () => {
             effect="fadeInRight"
             className="modal"
             visible={showSignIn}
-            onClickAway={closeSignIn}
+            onClickAway={() => {
+              setshowSignIn(!showSignIn);
+              clearAllStates();
+            }}
           >
             {/* for CSS check  MobileRespSignInPage.style.css */}
             <div className="mob-signin-resp">
               <img
                 className="mob-resp-closing-arrow"
-                onClick={closeSignIn}
+                onClick={() => {
+                  setshowSignIn(!showSignIn);
+                  clearAllStates();
+                }}
                 src={closingArrow}
                 alt=""
               ></img>
@@ -2201,8 +2318,7 @@ const Navbar = () => {
                 }}
                 value={mob_no}
                 maxLength={10}
-                placeholder="M
-                obile number "
+                placeholder="Mobile number "
               />
               <input
                 className="mob-resp-name-input"

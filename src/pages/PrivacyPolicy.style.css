@@ -1,0 +1,165 @@
+@media screen and (max-width: 1000px) {
+    .banner-div{
+        width: 100% !important;
+        /* height: 550px; */
+        height: 35vh !important;
+        /* background-image: url("../assets/TACBanner.png"); */
+        background-repeat: no-repeat;
+        /* background-color: orange; */
+        overflow-y:hidden !important;
+        position: relative;
+        overflow-x: hidden !important;
+        display: flex;
+        justify-content: center;
+    }
+    .banner-div .tac-banner-img{
+     width: 100%;
+     height: 73% !important;   
+    }
+    .heading-PP{
+        position: absolute;
+        top: 59%;
+        /* z-index: 99999999999999; */
+        /* left: 30%; */
+    border: none;
+    background: #050F56;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    padding: 20px 20px !important;
+    }
+    .heading-PP span{
+        text-shadow: -1px 1px 0 rgb(255, 255, 255),
+                              1px 1px 0 rgb(255, 255, 255),
+                             1px -1px 0 rgb(255, 255, 255),
+                            -1px -1px 0 rgb(255, 255, 255);
+        /* border: 2px solid #FFFFFF; */
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px !important;
+        letter-spacing: 0.1em;
+        color:#050F56;
+    }
+    .cotent-div{
+        padding: 0px 30px;
+        margin-top: -20px !important;
+        font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px !important;
+    /* line-height: 45px; */
+    display: flex;
+    align-items: center;
+    /* background-color: orange; */
+    color: #696969;
+    }
+    
+    .pp_bottom-img{
+        margin-top: 60px !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .pp_bottom-img img{
+        width: 75% !important;
+    }
+    /* .gp-img{
+        position: absolute;
+        height: 100px !important;
+    }
+    .ap-img{
+        position: absolute;
+        height: 100px !important;
+    } */
+    .downloads-div{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        /* background-color: palegreen; */
+        width: 90px !important;
+        top: 45% !important;
+        right: 1% !important;
+    }
+}
+
+.banner-div{
+    width: 100% !important;
+    /* height: 550px; */
+    height: 85vh ;
+    /* background-image: url("../assets/TACBanner.png"); */
+    background-repeat: no-repeat;
+    /* background-color: orange; */
+    overflow-y:hidden !important;
+    position: relative;
+    overflow-x: hidden !important;
+    display: flex;
+    justify-content: center;
+}
+.banner-div .tac-banner-img{
+ width: 100%;
+ height: 73% !important;   
+}
+.heading-PP{
+    position: absolute;
+    top: 59%;
+    /* z-index: 99999999999999; */
+    /* left: 30%; */
+border: none;
+background: #050F56;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+border-radius: 13px;
+padding: 30px 50px;
+}
+.heading-PP span{
+    text-shadow: -1px 1px 0 rgb(255, 255, 255),
+                          1px 1px 0 rgb(255, 255, 255),
+                         1px -1px 0 rgb(255, 255, 255),
+                        -1px -1px 0 rgb(255, 255, 255);
+    /* border: 2px solid #FFFFFF; */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 55px;
+    letter-spacing: 0.1em;
+    color:#050F56;
+}
+.cotent-div{
+    padding: 0px 30px;
+    margin-top: -50px;
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+/* line-height: 45px; */
+display: flex;
+align-items: center;
+/* background-color: orange; */
+color: #696969;
+}
+
+.pp_bottom-img{
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.pp_bottom-img img{
+    width: 45%;
+}
+/* .gp-img{
+    position: absolute;
+    height: 100px !important;
+}
+.ap-img{
+    position: absolute;
+    height: 100px !important;
+} */
+.downloads-div{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    /* background-color: palegreen; */
+    width: 170px;
+    top: 45%;
+    right: 5%;
+}
