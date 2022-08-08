@@ -47,11 +47,11 @@ function LoggedUser() {
       axios
         .get("https://gaddideals.brokerinvoice.co.in/api/user")
         .then((res) => {
-          setname(res.data.user);
-          setemail(res.data.user);
-          setmob_no(res.data.user);
-          setprofileimgstate(res.data.user);
-          setPriviousNum(res.data.user.mob_no);
+          setname(res?.data?.user);
+          setemail(res?.data?.user);
+          setmob_no(res?.data?.user);
+          setprofileimgstate(res?.data?.user);
+          setPriviousNum(res?.data?.user?.mob_no);
         });
     }
   };
@@ -71,8 +71,8 @@ function LoggedUser() {
           },
         })
         .then((res) => {
-          console.log(res.data.message);
-          if (res.data.message === "Updated Successfully") {
+          console.log(res?.data?.message);
+          if (res?.data?.message === "Updated Successfully") {
             setImgstate(true);
             getDetails();
           }
@@ -162,7 +162,7 @@ function LoggedUser() {
           <div className="left-profile-container">
             <div className="upper-div">
               <p className="hello-text">Hello</p>
-              <p className="user-name-left-div">{name.name} </p>
+              <p className="user-name-left-div">{name?.name} </p>
             </div>
             <div className="options-div">
               <div className="my-vehicle-div">
@@ -226,8 +226,8 @@ function LoggedUser() {
                 <img
                   className="userProfileImg"
                   src={
-                    profileimgstate.profile_pic_url
-                      ? imgurl + profileimgstate.profile_pic_url
+                    profileimgstate?.profile_pic_url
+                      ? imgurl + profileimgstate?.profile_pic_url
                       : profileImg
                   }
                   alt=""
@@ -259,7 +259,7 @@ function LoggedUser() {
                 <div className="user-name-input-div">
                   <input
                     readOnly={editablename}
-                    value={name.name}
+                    value={name?.name}
                     name="name"
                     className="user-name-right-input"
                     onChange={(e) => {
@@ -286,7 +286,7 @@ function LoggedUser() {
                 <div className="user-email-input-div">
                   <input
                     readOnly={editableEmail}
-                    value={email.email}
+                    value={email?.email}
                     name="email"
                     className="user-email-input"
                     onChange={(e) => {
@@ -310,7 +310,7 @@ function LoggedUser() {
                   <input
                     type="number"
                     readOnly={editableMob}
-                    value={mob_no.mob_no}
+                    value={mob_no?.mob_no}
                     name="mob_no"
                     className="user-mobile-input"
                     onChange={(e) => {

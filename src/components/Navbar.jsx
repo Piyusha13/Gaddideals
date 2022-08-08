@@ -62,8 +62,18 @@ const Navbar = () => {
   const [activeCategory, setActiveCategory] = useState(location.category);
   const [hamburgervisile, sethamburgervisile] = useState(false);
   const [locationDropDown, setlocationDropDown] = useState(false);
-
+  const [MobGSignUp, setMobGSignUp] = useState(false);
   const [city, setcity] = useState("");
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(max-width: 1000px)").matches
+  );
+
+  useEffect(() => {
+    window
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  }, []);
 
   const [searchValue, setSearchValue] = useState("");
   const [searchArray, setSearchArray] = useState([]);
@@ -120,7 +130,7 @@ const Navbar = () => {
     );
 
     if (response.data) {
-      setCities(response.data.getAllCities.docs);
+      setCities(response?.data?.getAllCities?.docs);
       // console.log(response.data.getAllCities.docs.title);
     }
   };
@@ -135,17 +145,17 @@ const Navbar = () => {
     }
     const fetchIcons = async () => {
       const response = await axios.get(Constant.getUrls.getAllCategories);
-      setNavIcons(response.data.category.docs);
+      setNavIcons(response?.data?.category?.docs);
     };
 
     const fetchSearchBrandsModelArray = async () => {
       const response = await axios.get(
         Constant.getUrls.getAllSearchSuggestions
       );
-      setSearchArray(response.data.search.brand);
+      setSearchArray(response?.data?.search?.brand);
 
       let modelArray = [];
-      modelArray.push(response.data.search.model);
+      modelArray.push(response?.data?.search?.model);
       setSearchArray((prevState) => [...prevState, ...modelArray[0]]);
     };
 
@@ -218,11 +228,11 @@ const Navbar = () => {
         console.log("result", result);
         if (mob_no === "") {
           toast.error("enter mobile number");
-        } else if (result.data.status === "failed") {
-          toast.error(result.data.message);
+        } else if (result?.data?.status === "failed") {
+          toast.error(result?.data?.message);
         } else {
-          if (result.data.status === "success") {
-            toast.success(result.data.message);
+          if (result?.data?.status === "success") {
+            toast.success(result?.data?.message);
             // setotp(result.data.otp);
             setmob_no(mob_no);
             setvisibleOTP(!visibleOTP);
@@ -242,13 +252,14 @@ const Navbar = () => {
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
         console.log(res);
-        localStorage.setItem("Token", res.data.user.accessToken);
-        window.location.href = "/loggeduser";
+
         // if (res.data.status == "failed") {
         if (res.data.status === "failed") {
           toast.error("incorrect otp");
         } else if (res.data.status === "Success") {
           toast.success(res.data.message);
+          localStorage.setItem("Token", res?.data?.user?.accessToken);
+          window.location.href = "/loggeduser";
           setvisibleOTP(false);
         }
       });
@@ -277,14 +288,15 @@ const Navbar = () => {
       let payload = { email, password };
       axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
         console.log("hey" + res);
-        localStorage.setItem("Token", res.data.user.accessToken);
-        window.location.href = "/loggeduser";
+
         // if (res.data.status == "failed") {
-        if (res.data.status === "failed") {
+        if (res?.data?.status === "failed") {
           toast.error("incorrect password");
-        } else if (res.data.status === "Success") {
-          toast.success(res.data.message);
+        } else if (res?.data?.status === "Success") {
+          toast.success(res?.data?.message);
           // setvisibleOTP(false);
+          localStorage.setItem("Token", res?.data?.user?.accessToken);
+          window.location.href = "/loggeduser";
           setvisibleMailSigIn(!visibleMailSigIn);
         }
       });
@@ -306,13 +318,13 @@ const Navbar = () => {
     axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
       console.log("res", res);
 
-      if (res.data.status === "success") {
-        toast.success(res.data.message);
-        localStorage.setItem("Token", res.data.user.accessToken);
+      if (res?.data?.status === "success") {
+        toast.success(res?.data?.message);
+        localStorage.setItem("Token", res?.data?.user?.accessToken);
         window.location.href = "/loggeduser";
-      } else if (res.data.status === "failed") {
-        toast.error(res.data.message);
-        log.console(res.data.message);
+      } else if (res?.data?.status === "failed") {
+        toast.error(res?.data?.message);
+        log.console(res?.data?.message);
       }
     });
   }
@@ -347,15 +359,15 @@ const Navbar = () => {
         toast.error("password and confirm password don't match");
       } else {
         if (res.data.status === "success") {
-          toast.success(res.data.message);
+          toast.success(res?.data?.message);
           // setvisibleSignUp(false);
           setFaceookSignIn(false);
-          setmob_no(res.data.mob_no);
+          setmob_no(res?.data?.mob_no);
           // setotp(res.data.otp);
           savePhoneOtp();
           setvisibleOTP(true);
-        } else if (res.data.status === "failed") {
-          toast.error(res.data.message);
+        } else if (res?.data?.status === "failed") {
+          toast.error(res?.data?.message);
         }
       }
     });
@@ -390,15 +402,15 @@ const Navbar = () => {
       axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
         console.log("res", res);
         // toast.success("working");
-        if (res.data.status === "success") {
+        if (res?.data?.status === "success") {
           // toast.success(res.data.message);
           setmob_no(mob_no);
           setGSignUp(false);
           saveUser();
           setvisibleOTP(true);
           setCounter(59);
-        } else if (res.data.status === "failed") {
-          toast.error(res.data.message);
+        } else if (res?.data?.status === "failed") {
+          toast.error(res?.data?.message);
         }
       });
     }
@@ -432,16 +444,16 @@ const Navbar = () => {
         if (password !== confirm_password) {
           toast.error("password and confirm password doesn't match");
         } else {
-          if (res.data.status === "success") {
-            toast.success(res.data.message);
+          if (res?.data?.status === "success") {
+            toast.success(res?.data?.message);
             // setmob_no(res.data.mob_no);
             // console.log(res);
             setmob_no(mob_no);
             setvisibleSignUp(false);
             setvisibleOTP(true);
             setCounter(59);
-          } else if (res.data.status === "failed") {
-            toast.error(res.data.message);
+          } else if (res?.data?.status === "failed") {
+            toast.error(res?.data?.message);
           }
         }
       });
@@ -455,12 +467,12 @@ const Navbar = () => {
       console.log("result", result);
       if (mob_no === "") {
         toast.error("enter moile number");
-      } else if (result.data.status === "failed") {
-        toast.error(result.data.message);
+      } else if (result?.data?.status === "failed") {
+        toast.error(result?.data?.message);
       } else {
-        if (result.data.status === "success") {
+        if (result?.data?.status === "success") {
           setEnableResendOtp(false);
-          toast.success(result.data.message);
+          toast.success(result?.data?.message);
           // setotp(result.data.otp);
           setCounter(59);
         }
@@ -501,11 +513,11 @@ const Navbar = () => {
         if (mob_no === "") {
           // notify();
           toast.error("enter moile number");
-        } else if (result.data.status === "failed") {
-          toast.error(result.data.message);
+        } else if (result?.data?.status === "failed") {
+          toast.error(result?.data?.message);
         } else {
-          if (result.data.status === "success") {
-            toast.success(result.data.message);
+          if (result?.data?.status === "success") {
+            toast.success(result?.data?.message);
             // setotp(result.data.otp);
             setshowOtp(!showOtp);
             setshowsignup(!showsignup);
@@ -538,18 +550,31 @@ const Navbar = () => {
       };
       axios.post(Constant.postUrls.postAllSignups, payload).then((res) => {
         console.log("res", res);
-        if (password !== confirm_password) {
-          toast.error("password and confirm password don't match");
-        } else {
-          if (res.data.status === "success") {
-            toast.success(res.data.message);
+        if (MobGSignUp) {
+          if (res?.data?.status === "success") {
+            toast.success(res?.data?.message);
 
-            setmob_no(res.data.mob_no);
+            setmob_no(res?.data?.mob_no);
             setshowSignIn(!showSignIn);
             saveMoilePhoneOtp();
             setshowOtp(!showOtp);
-          } else if (res.data.status === "failed") {
-            toast.error(res.data.message);
+          } else if (res?.data?.status === "failed") {
+            toast.error(res?.data?.message);
+          }
+        } else {
+          if (password !== confirm_password) {
+            toast.error("password and confirm password don't match");
+          } else {
+            if (res?.data?.status === "success") {
+              toast.success(res?.data?.message);
+
+              setmob_no(res?.data?.mob_no);
+              setshowSignIn(!showSignIn);
+              saveMoilePhoneOtp();
+              setshowOtp(!showOtp);
+            } else if (res?.data?.status === "failed") {
+              toast.error(res?.data?.message);
+            }
           }
         }
       });
@@ -563,15 +588,16 @@ const Navbar = () => {
     let payload = { mob_no, otp };
     axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
       console.log(res);
-      localStorage.setItem("Token", res.data.user.accessToken);
-      window.location.href = "/loggeduser";
+
       // if (res.data.status == "failed") {
-      if (res.data.status === "failed") {
+      if (res?.data?.status === "failed") {
         toast.error("incorrect otp");
-      } else if (res.data.status === "Success") {
+      } else if (res?.data?.status === "Success") {
         setloginsuccess(!loginsuccess);
-        toast.success(res.data.message);
+        toast.success(res?.data?.message);
         // setvisibleOTP(false);
+        localStorage.setItem("Token", res?.data?.user?.accessToken);
+        window.location.href = "/loggeduser";
         setshowOtp(!showOtp);
       }
     });
@@ -648,9 +674,27 @@ const Navbar = () => {
 
     if (response) {
       //function for google sign up wbesite
+
       sethidePassword(true);
       setGSignUp(true);
       setvisibleSignUp(false);
+    }
+  }
+
+  //moile sign up with google
+  function MobresponseGoogleSignup(response) {
+    console.log("google response", response);
+    setsocial_token(response?.accessToken);
+    setemail(response?.profileObj?.email);
+    setname(response?.profileObj?.name);
+    console.log(response?.profileObj?.name);
+
+    if (response?.accessToken) {
+      //function for google sign up wbesite
+      setshowSignIn(false);
+      setMobGSignUp(true);
+
+      console.log("status" + MobGSignUp);
     }
   }
 
@@ -693,7 +737,7 @@ const Navbar = () => {
   //wesite faceook sign up
   const responseFacebookSignup = (response) => {
     console.log(response);
-    console.log("hey " + response.name);
+    console.log("hey " + response?.name);
     setsocial_token(response?.accessToken);
     setname(response?.name);
     setemail(response?.email);
@@ -710,10 +754,26 @@ const Navbar = () => {
     }
   };
 
+  //mobile faceook sign up
+  const MobresponseFacebookSignup = (response) => {
+    console.log(response);
+    console.log("hey " + response?.name);
+    setsocial_token(response?.accessToken);
+    setname(response?.name);
+    setemail(response?.email);
+    sethidePassword(true);
+
+    if (response?.accessToken) {
+      //function for google sign up wbesite
+      setshowSignIn((prevstate) => !prevstate);
+      setMobGSignUp(true);
+    }
+  };
+
   //website sign in with fb response
   const responseFacebook = (response) => {
     console.log(response);
-    console.log("hey " + response.name);
+    console.log("hey " + response?.name);
     setsocial_token(response?.accessToken);
     setname(response?.name);
     setemail(response?.email);
@@ -731,7 +791,7 @@ const Navbar = () => {
   //responsive sign in with fb response
   const mobResponseFacebook = (response) => {
     console.log(response);
-    console.log("hey " + response.name);
+    console.log("hey " + response?.name);
     setsocial_token(response?.accessToken);
     setname(response?.name);
     setemail(response?.email);
@@ -747,15 +807,16 @@ const Navbar = () => {
     let payload = { email, password };
     axios.post(Constant.postUrls.postAllSignins, payload).then((res) => {
       console.log(res);
-      localStorage.setItem("Token", res.data.user.accessToken);
-      window.location.href = "/loggeduser";
+
       // if (res.data.status == "failed") {
-      if (res.data.status === "failed") {
+      if (res?.data?.status === "failed") {
         toast.error("incorrect password");
-      } else if (res.data.status === "Success") {
+      } else if (res?.data?.status === "Success") {
         toast.success("Sign in successfully");
         // setvisibleOTP(false);
         // setvisibleMailSigIn(!visibleMailSigIn);
+        localStorage.setItem("Token", res?.data?.user?.accessToken);
+        window.location.href = "/loggeduser";
         setshowMailSigIn(!showMailSigIn);
       }
     });
@@ -826,6 +887,111 @@ const Navbar = () => {
 
   return (
     <header className="header-container">
+      {/* signup with google in mobile */}
+      {MobGSignUp && (
+        <div>
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={MobGSignUp}
+            onClickAway={() => {
+              setMobGSignUp(!MobGSignUp);
+              clearAllStates();
+            }}
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={() => {
+                  setMobGSignUp(!MobGSignUp);
+                  clearAllStates();
+                }}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-signin-text">
+                Sign up to<span className="text-color-blue"> Gaddideals </span>
+              </p>
+
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setname(e.target.value);
+                }}
+                value={name}
+                type="text"
+                placeholder="Name "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+                value={mob_no}
+                maxLength={10}
+                placeholder="Mobile number "
+              />
+              <input
+                className="mob-resp-name-input"
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
+                value={email}
+                type="email"
+                placeholder="Email "
+              />
+              <div className="mob-resp-location-div">
+                <input
+                  className="mob-resp-location-input"
+                  onChange={(e) => {
+                    setcity(e.target.value);
+                  }}
+                  value={city}
+                  type="text"
+                  placeholder="Location "
+                  onFocus={() => {
+                    setlocationDropDown(!locationDropDown);
+                  }}
+                />
+                <img src={locationIcon} alt=""></img>
+                {locationDropDown && (
+                  <div className="sign-up-loaction-drop-down">
+                    {filterCurentCities.map((data) => (
+                      <p
+                        onClick={() => {
+                          setcity(data.City);
+                          setlocationDropDown(false);
+                        }}
+                      >
+                        {data.City}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button
+                className="mob-resp-next-button"
+                onClick={() => {
+                  setMobileSignup();
+                }}
+              >
+                SIGN UP
+              </button>
+              <p
+                className="mob-resp-already-a-member-text"
+                onClick={() => {
+                  setshowSignIn(!showSignIn); //closing signup page
+                  setshowsignup(!showsignup); //opening signin page
+                }}
+              >
+                <span className="text-color-blue">Already a user? SIGN IN</span>
+              </p>
+            </div>
+          </Modal>
+        </div>
+      )}
       {/* signup with google */}
       {GSignUp && (
         <div className="signup-main_parent">
@@ -1377,7 +1543,8 @@ const Navbar = () => {
               /> */}
               <FacebookLogin
                 appId="615601846567774"
-                autoLoad={false}
+                // autoLoad={false}
+
                 callback={responseFacebook}
                 cssClass="my-facebook-button-class"
                 fields="name,email"
@@ -1540,7 +1707,7 @@ const Navbar = () => {
                 {/* <img className="website-fb-signup-img" src={mobFbIcon} alt="" /> */}
                 <FacebookLogin
                   appId="615601846567774"
-                  autoLoad={false}
+                  // autoLoad={false}
                   callback={responseFacebookSignup}
                   cssClass="website-facebook-sign-up-button-class"
                   fields="name,email"
@@ -2021,6 +2188,7 @@ const Navbar = () => {
               className="mob-login-button"
               onClick={() => {
                 setshowsignup(!showsignup);
+                sethamburgervisile(!hamburgervisile);
               }}
             >
               {" "}
@@ -2030,6 +2198,7 @@ const Navbar = () => {
               className="mob-register-button"
               onClick={() => {
                 setshowSignIn(!showSignIn);
+                sethamburgervisile(!hamburgervisile);
               }}
             >
               Register
@@ -2229,7 +2398,7 @@ const Navbar = () => {
                 <>
                   <FacebookLogin
                     appId="615601846567774"
-                    autoLoad={false}
+                    // autoLoad={false}
                     callback={responseFacebook}
                     cssClass="my-facebook-button-class"
                     fields="name,email"
@@ -2304,6 +2473,66 @@ const Navbar = () => {
               <p className="mob-resp-signin-text">
                 Sign up to<span className="text-color-blue"> Gaddideals </span>
               </p>
+              <div className="signup-other-option-div">
+                <div className="box-1">
+                  <GoogleLogin
+                    render={(renderProps) => (
+                      <button
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "transparent",
+                          border: "none",
+                          fontFamily: "Poppins",
+                          fontStyle: "normal",
+                          fontWeight: 500,
+                          fontSize: "1vw",
+                          color: "#cfcfcf",
+                        }}
+                      >
+                        <img
+                          className="website-google-signup-img"
+                          src={mobGmailIcon}
+                          alt=""
+                        />
+                        Google
+                        {/* Sign in with Google */}
+                      </button>
+                    )}
+                    clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                    onSuccess={MobresponseGoogleSignup}
+                    onFailure={responseFailedGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </div>
+                <div className="box-2">
+                  <FacebookLogin
+                    appId="615601846567774"
+                    callback={MobresponseFacebookSignup}
+                    cssClass="website-facebook-sign-up-button-class"
+                    fields="name,email"
+                    // onClick={(renderProps) => renderProps.onClick}
+                    render={(renderProps) => (
+                      <button onClick={renderProps.onClick}>
+                        <img
+                          className="website-fb-signup-img"
+                          src={mobFbIcon}
+                          alt=""
+                        />{" "}
+                      </button>
+                    )}
+                  />
+                  <p className="paddingTop-5">Facebook</p>
+                </div>
+              </div>
+
+              <div className="or-div">
+                <hr></hr>
+                <span className="or">or</span>
+                <hr></hr>
+              </div>
+
               <input
                 className="mob-resp-name-input"
                 onChange={(e) => {
@@ -2340,8 +2569,25 @@ const Navbar = () => {
                   value={city}
                   type="text"
                   placeholder="Location "
+                  onFocus={() => {
+                    setlocationDropDown(!locationDropDown);
+                  }}
                 />
                 <img src={locationIcon} alt=""></img>
+                {locationDropDown && (
+                  <div className="sign-up-loaction-drop-down">
+                    {filterCurentCities.map((data) => (
+                      <p
+                        onClick={() => {
+                          setcity(data.City);
+                          setlocationDropDown(false);
+                        }}
+                      >
+                        {data.City}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
               {hidePassword ? null : (
                 <>

@@ -542,7 +542,7 @@ const VehicleDetails = () => {
         <Modal
           visible={EmiModal}
           width={matches ? "85%" : "100vw"}
-          // height={matches ? "auto" : "91%"}
+          height={matches ? "auto" : "100%"}
           effect="fadeInUp"
           onClickAway={() => {
             setEmiModal(!EmiModal);
