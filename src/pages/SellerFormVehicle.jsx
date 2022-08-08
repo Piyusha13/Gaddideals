@@ -15,6 +15,8 @@ import Footer from "../components/Footer";
 
 let tagsArray = [];
 
+const currentYear = new Date().getFullYear();
+
 const ownersArray = [
   {
     owner: "first",
@@ -98,7 +100,10 @@ const SellerFormVehicle = ({
   };
 
   const fetchVehiclesArray = async () => {
-    const response = await axios.get(Constant.getUrls.getAllYears);
+    const response = await axios.get(
+      Constant.getUrls.getAllYears +
+        "?limit=500&year=true&status=active&flag=web"
+    );
     setYearsArray(response.data._yrs.docs);
   };
 
@@ -326,21 +331,31 @@ const SellerFormVehicle = ({
                   Manufacturing Year <small style={{ color: "red" }}>*</small>
                 </label>
                 <div className="years">
-                  {yearsArray.slice(0, 6).map((years, index) => (
-                    <div
-                      className={
-                        isYearActive === index ? "year active" : "year"
-                      }
-                      onClick={() => {
-                        setYear(years._id);
-                        setYearTitle(years.year);
-                        setIsYearActive(index);
-                        tagsArray.push(years.year);
-                      }}
-                      key={years._id}
-                    >
-                      <span>{years.year}</span>
+                  {isYearActive > 5 && (
+                    <div className={"year active"}>
+                      <span>{yearTitle}</span>
                     </div>
+                  )}
+                  {yearsArray.slice(0, 6).map((years, index) => (
+                    <>
+                      {years.year <= currentYear && (
+                        <div
+                          className={
+                            isYearActive === index ? "year active" : "year"
+                          }
+                          onClick={() => {
+                            setYear(years._id);
+                            setYearTitle(years.year);
+                            setIsYearActive(index);
+                            tagsArray.push(years.year);
+                            console.log(index);
+                          }}
+                          key={years._id}
+                        >
+                          <span>{years.year}</span>
+                        </div>
+                      )}
+                    </>
                   ))}
 
                   <div
@@ -354,19 +369,22 @@ const SellerFormVehicle = ({
                     />
                     {seeMoreSuggestion && (
                       <div className="see-more-years">
-                        {yearsArray.slice(6, 7).map((years, index) => (
-                          <p
-                            key={years._id}
-                            onClick={() => {
-                              setYear(years._id);
-                              setYearTitle(years.year);
-                              setIsYearActive(index);
-                              tagsArray.push(years.year);
-                            }}
-                          >
-                            {years.year}
-                          </p>
-                        ))}
+                        {yearsArray.slice(6).map(
+                          (years, index) =>
+                            years.year <= currentYear && (
+                              <p
+                                key={years._id}
+                                onClick={() => {
+                                  setYear(years._id);
+                                  setYearTitle(years.year);
+                                  setIsYearActive(index + 6);
+                                  tagsArray.push(years.year);
+                                }}
+                              >
+                                {years.year}
+                              </p>
+                            )
+                        )}
                       </div>
                     )}
                   </div>

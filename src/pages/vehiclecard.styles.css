@@ -291,17 +291,19 @@
   flex-direction: column;
 }
 .card .card-info .card-info-header .card-publish-review .review {
-  background: rgba(254, 98, 13, 0.15);
+  border: 1px solid #fe620d;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
   border-radius: 5px;
   padding: 5px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fe620d;
 }
 .card .card-info .card-info-header .card-publish-review .review.published {
   background: rgba(0, 177, 39, 0.14);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.24);
+  border: none;
   border-radius: 5px;
   padding: 5px 15px;
   display: flex;
@@ -349,21 +351,21 @@
   font-family: "Roboto";
   font-style: normal;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 24px;
   color: #00adef;
 }
 
 .card .card-info .card-stats {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   text-align: center;
-  gap: 11%;
   margin-top: 50px;
-  width: 100%;
+  width: 82%;
 }
 .card .card-info .card-stats .stat {
+  width: 30%;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;

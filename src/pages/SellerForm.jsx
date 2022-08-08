@@ -462,6 +462,8 @@ const SellerForm = () => {
             type: blobFile.type,
           })
       );
+    // console.log(frontSideFile);
+    // return;
 
     let fd = new FormData();
 
@@ -615,7 +617,9 @@ const SellerForm = () => {
             type: blobFile.type,
           })
       );
+    // console.log(frontSideFile);
 
+    // return;
     let fd = new FormData();
 
     fd.append("category", editVehicleObj?.category?._id);
@@ -662,24 +666,26 @@ const SellerForm = () => {
       fd.append("bodyType", bodyTypeId);
     }
     fd.append("rc_document", rc.toLowerCase());
-    if (engCropImg) {
-      fd.append("engine_pic", engCropImg);
+    if (documentEngImg) {
+      fd.append("engine_pic", engFile);
     }
-    fd.append("front_side_pic", frontsideCropImg);
-    if (backsideCropImg) {
-      fd.append("back_side_pic", backsideCropImg);
+    if (documentFrontSideImg) {
+      fd.append("front_side_pic", frontSideFile);
     }
-    if (fronttyreLeftCropImg) {
-      fd.append("front_tyre", fronttyreLeftCropImg);
+    if (documentBackSideImg) {
+      fd.append("back_side_pic", backSideFile);
     }
-    if (fronttyreRightCropImg) {
-      fd.append("front_tyre", fronttyreRightCropImg);
+    if (documentFronttyreLeft) {
+      fd.append("front_tyre", fronttyreLeftFile);
     }
-    if (sidePicLeftCropImg) {
-      fd.append("side_pic_vehicle", sidePicLeftCropImg);
+    if (documentFronttyreRight) {
+      fd.append("front_tyre", fronttyreRightFile);
     }
-    if (sidePicRightCropImg) {
-      fd.append("side_pic_vehicle", sidePicRightCropImg);
+    if (documentSidePicLeft) {
+      fd.append("side_pic_vehicle", sidePicLeftFile);
+    }
+    if (documentSidePicRight) {
+      fd.append("side_pic_vehicle", sidePicRightFile);
     }
 
     const userToken = localStorage.getItem("Token");
@@ -869,6 +875,72 @@ const SellerForm = () => {
     setpubLoading(true);
     const userToken = localStorage.getItem("Token");
 
+    // front blob
+    const frontSideFile = await fetch(frontsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], frontsideCropImg, { type: blobFile.type })
+      );
+
+    // backside blob
+    const backSideFile = await fetch(backsideCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], backsideCropImg, { type: blobFile.type })
+      );
+
+    // engine blob
+    const engFile = await fetch(engCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], engCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre left blob
+    const fronttyreLeftFile = await fetch(fronttyreLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // fronttyre right blob
+    const fronttyreRightFile = await fetch(fronttyreRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], fronttyreRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic left blob
+    const sidePicLeftFile = await fetch(sidePicLeftCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicLeftCropImg, {
+            type: blobFile.type,
+          })
+      );
+
+    // side Pic right blob
+    const sidePicRightFile = await fetch(sidePicRightCropImg)
+      .then((r) => r.blob())
+      .then(
+        (blobFile) =>
+          new File([blobFile], sidePicRightCropImg, {
+            type: blobFile.type,
+          })
+      );
+
     let fd = new FormData();
 
     // editVehicleObj?.category?._id || // editVehicleObj?.category?._id ||
@@ -916,24 +988,26 @@ const SellerForm = () => {
       fd.append("bodyType", bodyTypeId);
     }
     fd.append("rc_document", rc.toLowerCase());
-    if (engCropImg) {
-      fd.append("engine_pic", engCropImg);
+    if (documentEngImg) {
+      fd.append("engine_pic", engFile);
     }
-    fd.append("front_side_pic", frontsideCropImg);
-    if (backsideCropImg) {
-      fd.append("back_side_pic", backsideCropImg);
+    if (documentFrontSideImg) {
+      fd.append("front_side_pic", frontSideFile);
     }
-    if (fronttyreLeftCropImg) {
-      fd.append("front_tyre", fronttyreLeftCropImg);
+    if (documentBackSideImg) {
+      fd.append("back_side_pic", backSideFile);
     }
-    if (fronttyreRightCropImg) {
-      fd.append("front_tyre", fronttyreRightCropImg);
+    if (documentFronttyreLeft) {
+      fd.append("front_tyre", fronttyreLeftFile);
     }
-    if (sidePicLeftCropImg) {
-      fd.append("side_pic_vehicle", sidePicLeftCropImg);
+    if (documentFronttyreRight) {
+      fd.append("front_tyre", fronttyreRightFile);
     }
-    if (sidePicRightCropImg) {
-      fd.append("side_pic_vehicle", sidePicRightCropImg);
+    if (documentSidePicLeft) {
+      fd.append("side_pic_vehicle", sidePicLeftFile);
+    }
+    if (documentSidePicRight) {
+      fd.append("side_pic_vehicle", sidePicRightFile);
     }
     fd.append("status", "published");
 

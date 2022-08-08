@@ -165,8 +165,8 @@ const SellerHomePage = () => {
   };
 
   const fetchBrands = async () => {
-    const response = await axios.get(Constant.getUrls.getAllBrands);
-    setBrandsData(response.data.brand.docs);
+    const response = await axios.get(Constant.getUrls.getAllTrustedClients);
+    setBrandsData(response.data.getAllClients.docs);
   };
 
   const fetchLatestTrucks = async () => {
@@ -1289,7 +1289,7 @@ const SellerHomePage = () => {
       {/* Trusted Brands */}
       <div className="trusted-brands-section gd_container">
         <div className="trusted-brand-header">
-          <h1>Trusted Brands</h1>
+          <h1>Trusted Clients</h1>
         </div>
 
         <div className="trusted-brands-container">
@@ -1321,7 +1321,7 @@ const SellerHomePage = () => {
             {brandsData.map((brand) => (
               <SwiperSlide key={brand._id} className="brands-swiper-slide">
                 <div className="brand-wrapper">
-                  <img src={`${imgurl}${brand.image}`} alt={brand?.title} />
+                  <img src={`${imgurl}${brand?.image}`} alt={brand?.name} />
                 </div>
               </SwiperSlide>
             ))}

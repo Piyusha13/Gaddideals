@@ -2821,11 +2821,7 @@ const Navbar = () => {
             {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
               <Tooltip title={catgeoryIcon?.title} placement="bottom" arrow>
                 <a
-                  href={
-                    "/vehiclelistings?category=" +
-                    catgeoryIcon._id +
-                    `&city=${locationCity}`
-                  }
+                  href={"/vehiclelistings?category=" + catgeoryIcon._id}
                   className={`${
                     activeCategory === catgeoryIcon._id
                       ? "brand-category active"

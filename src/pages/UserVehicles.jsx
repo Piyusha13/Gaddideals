@@ -28,6 +28,15 @@ import { toast } from "react-toastify";
 import { imgurl } from "../constants";
 import moment from "moment";
 
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@material-ui/core";
+
 function UserVehicles() {
   const defaultOptions = {
     loop: true,
@@ -54,6 +63,7 @@ function UserVehicles() {
   const [vehicleData, setvehicleData] = useState([]);
   const [vehicleName, setvehicleName] = useState("");
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
+  const [openDialog, setOpenDialog] = useState(false);
   //for vehicle data
 
   const getMyVehicleDetails = async () => {
@@ -103,6 +113,26 @@ function UserVehicles() {
       return res;
     } else {
       return;
+    }
+  };
+
+  const handleMarkAsSold = () => {
+    setOpenDialog((prevState) => !prevState);
+  };
+
+  const dialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleMarkAsSoldPut = async (id) => {
+    const response = await axios.put(
+      Constant.getUrls.getAllVehicles + `/markAsSold/${id}`
+    );
+
+    if (response.data.status === "success") {
+      toast.success(response.data.message);
+      setOpenDialog(false);
+      getMyVehicleDetails();
     }
   };
 
@@ -201,7 +231,45 @@ function UserVehicles() {
                             >
                               <img src={deleteIcon} alt="delete icon" />
                             </div> */}
-                            <div className="sold-btn">Mark as Sold</div>
+                            {item?.is_sold === "yes" ? (
+                              <div className="sold-btn">Sold</div>
+                            ) : (
+                              <div className="sold-btn">
+                                <div onClick={handleMarkAsSold}>
+                                  Mark as Sold
+                                </div>
+
+                                <Dialog
+                                  open={openDialog}
+                                  onClose={dialogClose}
+                                  aria-labelledby="alert-dialog-title"
+                                  aria-describedby="alert-dialog-description"
+                                >
+                                  <DialogTitle id="alert-dialog-title">
+                                    {
+                                      "Are you sure you want to mark as sold a vehicle ?"
+                                    }
+                                  </DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                      {/* Let Google help apps determine location.
+                                      This means sending anonymous location data
+                                      to Google, even when no apps are running. */}
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogActions>
+                                    <Button
+                                      onClick={() => {
+                                        handleMarkAsSoldPut(item?._id);
+                                      }}
+                                    >
+                                      Yes
+                                    </Button>
+                                    <Button onClick={dialogClose}>No</Button>
+                                  </DialogActions>
+                                </Dialog>
+                              </div>
+                            )}
 
                             <div className="card-publish-review">
                               {item?.inspection_status === "published" ? (
