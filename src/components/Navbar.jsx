@@ -50,19 +50,32 @@ import FacebookLogin from "react-facebook-login";
 import { updateLanguage } from "./../Helpers/helper";
 import { selectLocation } from "../store/location/location.selector";
 import { setCurrentCity } from "../store/location/location.action";
+import {
+  setMobSignInValue,
+  setSignUpValue,
+} from "../store/signup/signup.action";
+import {
+  selectSignUpValue,
+  selectMobSignInValue,
+} from "../store/signup/signup.selector";
 import loadGT from "../Helpers/gtt_loader";
-import { log } from "util";
 
 const queryString = require("query-string");
 
 const Navbar = () => {
-  const locationCity = useSelector(selectLocation);
+  const displaySignIn = useSelector(selectSignUpValue);
+  const mobDisplaySignIn = useSelector(selectMobSignInValue);
+
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
   const [hamburgervisile, sethamburgervisile] = useState(false);
   const [locationDropDown, setlocationDropDown] = useState(false);
   const [MobGSignUp, setMobGSignUp] = useState(false);
+  const [visible, setvisible] = useState(false);
+  const [onclose, setonclose] = useState(false);
+  const [onDisplayClose, setOnDisplayClose] = useState(true);
+
   const [city, setcity] = useState("");
 
   const [matches, setMatches] = useState(
@@ -187,7 +200,6 @@ const Navbar = () => {
   });
 
   // const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [visible, setvisible] = useState(false);
   const [visibleSignUp, setvisibleSignUp] = useState(false);
   const [visibleOTP, setvisibleOTP] = useState(false);
   const [visibleMailSigIn, setvisibleMailSigIn] = useState(false);
@@ -201,7 +213,6 @@ const Navbar = () => {
   const [confirm_password, setconfirm_password] = useState("");
   const [eye, seteye] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
-  const [onclose, setonclose] = useState(false);
   const [dropdown, setdropdown] = useState(false);
   const [token, settoken] = useState(localStorage.getItem("Token"));
   const [hidePassword, sethidePassword] = useState(false); //hiding password and confirm password for social token
@@ -324,7 +335,7 @@ const Navbar = () => {
         window.location.href = "/loggeduser";
       } else if (res?.data?.status === "failed") {
         toast.error(res?.data?.message);
-        log.console(res?.data?.message);
+        console.log(res?.data?.message);
       }
     });
   }
@@ -858,6 +869,10 @@ const Navbar = () => {
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
+    const cityExists = statecities.find(
+      (cityJson) => city.toLowerCase() === cityJson.City.toLowerCase()
+    );
+
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
       return false;
@@ -879,6 +894,10 @@ const Navbar = () => {
         return false;
       } else if (password.length < 4) {
         toast.error("please enter password of 4 characters or more");
+        return false;
+      }
+      if (!cityExists) {
+        toast.error("Please select a city");
         return false;
       }
     }
@@ -1450,6 +1469,166 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* seller display sign in */}
+      {displaySignIn && (
+        <div className="main_parent">
+          <div
+            className={onDisplayClose ? "parent" : "slideBack"}
+            onClick={() => {
+              clearAllStates();
+              setOnDisplayClose(false);
+              setTimeout(() => {
+                setvisible(false);
+                dispatch(setSignUpValue(false));
+                setOnDisplayClose(onDisplayClose);
+              }, 300);
+            }}
+          ></div>
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "30px",
+              paddingLeft: "40px",
+              fontFamily: "Arial",
+              width: "35%",
+              float: "right",
+              height: "100%",
+              position: "fixed",
+              top: 0,
+              zIndex: 99999999999999999999,
+              right: 0,
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: "30px 0px 0px 30px",
+            }}
+            className={onDisplayClose ? "DivSignInWithOptions" : "slideBack"}
+          >
+            <img
+              className="closing-arrow"
+              onClick={() => {
+                clearAllStates();
+                setOnDisplayClose(false);
+                setTimeout(() => {
+                  setvisible(false);
+                  dispatch(setSignUpValue(false));
+                  setOnDisplayClose(onDisplayClose);
+                }, 300);
+              }}
+              src={closingArrow}
+              alt=""
+            />
+
+            <p className="sign-in-title">
+              Sign in to<span className="text-color-blue"> Gaddideals </span>
+            </p>
+            <p className="sign-in-welcome-text">
+              Welcome back! Sign in with your data that you entered during
+              registration
+            </p>
+            <div class="sign-in-google">
+              <img src={googleLogo} alt=""></img>
+
+              <GoogleLogin
+                // uxMode="popup"
+                render={(renderProps) => (
+                  <button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      fontFamily: "Poppins",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      fontSize: "1vw",
+                      color: "#cfcfcf",
+                    }}
+                  >
+                    Sign in with Google
+                  </button>
+                )}
+                clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                onSuccess={responseGoogle}
+                onFailure={responseFailedGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </div>
+            <button className="sign-in-fb">
+              <img src={facebookLogo} alt=""></img>
+              {/* Sign in with Facebook */}
+              {/* <FacebookLogin
+                appId="615601846567774"
+                autoLoad={false}
+                fields="name,email,picture"
+                onClick={componentClicked}
+                callback={responseFacebook}
+              /> */}
+              <FacebookLogin
+                appId="615601846567774"
+                // autoLoad={false}
+
+                callback={responseFacebook}
+                cssClass="my-facebook-button-class"
+                fields="name,email"
+                render={(renderProps) => (
+                  <button onClick={renderProps.onClick}>
+                    This is my custom FB button
+                  </button>
+                )}
+              />
+            </button>
+            <button
+              className="sign-in-email"
+              onClick={() => {
+                setvisibleMailSigIn(!visibleMailSigIn);
+                // setvisible(false);
+              }}
+            >
+              <img src={gmailLogo} alt=""></img>
+              Sign in with Email & Password
+            </button>
+            <div className="or-div">
+              <hr></hr>
+              <span className="or">or</span>
+              <hr></hr>
+            </div>
+            <input
+              // type="tel"
+              maxLength="10"
+              // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+              className="phone-no-input"
+              placeholder="Phone number "
+              name="mob_no"
+              value={mob_no}
+              onChange={(e) => {
+                setmob_no(e.target.value);
+              }}
+            />
+            <button
+              onClick={() => {
+                saveUser();
+              }}
+              className="sign-in-button"
+            >
+              SIGN IN
+            </button>
+
+            <p
+              onClick={() => {
+                setvisibleSignUp(!visibleSignUp);
+                setvisible(false);
+                // setvisibleOTP(true);
+              }}
+              className="create-account"
+            >
+              Sign Up or Create Account
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* sign IN */}
       {visible && (
         <div className="main_parent">
@@ -2327,6 +2506,15 @@ const Navbar = () => {
             >
               My Enquiries
             </p>
+            <p
+              className="mob-lower-div-text"
+              onClick={() => {
+                window.location.href = "/myvehicleenq";
+              }}
+            >
+              My Vehicle Enquiries
+            </p>
+            <p className="mob-lower-div-text">My Order</p>
           </div>
           <div className="mob-lower-div">
             <Link to="/AboutUs">
@@ -2354,6 +2542,117 @@ const Navbar = () => {
               Sign out
             </p>
           </div>
+        </div>
+      )}
+
+      {/* seller mobile dispatch */}
+      {mobDisplaySignIn && (
+        <div>
+          <Modal
+            width="90%"
+            effect="fadeInRight"
+            className="modal"
+            visible={mobDisplaySignIn}
+            onClickAway={() => {
+              dispatch(setMobSignInValue(false));
+              clearAllStates();
+            }}
+          >
+            {/* for CSS check  MobileRespSignInPage.style.css */}
+            <div className="mob-signin-resp">
+              <img
+                className="mob-resp-closing-arrow"
+                onClick={() => {
+                  dispatch(setMobSignInValue(false));
+                  clearAllStates();
+                }}
+                src={closingArrow}
+                alt=""
+              ></img>
+              <p className="mob-resp-signin-text">
+                Sign in to<span className="text-color-blue"> Gaddideals </span>
+              </p>
+              <p className="mob-resp-welcome-text">
+                Welcome back! Sign in with your data that you entered during
+                registration
+              </p>
+              <input
+                className="mob-resp-moile-input"
+                placeholder="Phone Number"
+                name="mob_no"
+                value={mob_no}
+                onChange={(e) => {
+                  setmob_no(e.target.value);
+                }}
+              />
+              <p
+                className="mob-resp-not-a-member-text"
+                onClick={() => {
+                  setshowSignIn(!showSignIn); //opening signup page
+                  dispatch(setMobSignInValue(false)); //closing signin page
+                }}
+              >
+                Not a member?{" "}
+                <span className="text-color-blue">Create Account</span>
+              </p>
+              <button
+                className="mob-resp-next-button"
+                onClick={() => {
+                  saveMobileUser();
+                }}
+              >
+                NEXT
+              </button>
+              <div className="mob-resp-multiple-signin">
+                <>
+                  <FacebookLogin
+                    appId="615601846567774"
+                    // autoLoad={false}
+                    callback={responseFacebook}
+                    cssClass="my-facebook-button-class"
+                    fields="name,email"
+                    render={(renderProps) => (
+                      <button onClick={renderProps.onClick}></button>
+                    )}
+                  />
+                </>
+                <>
+                  <GoogleLogin
+                    render={(renderProps) => (
+                      <button
+                        className="my-google-button-class"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "transparent",
+                          border: "none",
+                          fontFamily: "Poppins",
+                          fontStyle: "normal",
+                          fontWeight: 0,
+                          fontSize: "1vw",
+                          color: "#cfcfcf",
+                        }}
+                      ></button>
+                    )}
+                    clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                    onSuccess={responseGoogle}
+                    onFailure={responseFailedGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </>
+                <img
+                  className="mob-resp-mail-signin"
+                  src={mobMailIcon}
+                  alt=""
+                  onClick={() => {
+                    setshowMailSigIn(!showMailSigIn);
+                    dispatch(setMobSignInValue(false));
+                  }}
+                ></img>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
 
@@ -2965,6 +3264,7 @@ const Navbar = () => {
                 {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
               </span>
             </div>
+
             <div className="language-arrow-icon">
               <img
                 onClick={() => {
