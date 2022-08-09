@@ -302,6 +302,7 @@ text-align: center;
     color:#050F56;
 }
 .cotent-div{
+    text-align: justify !important;
     padding: 0px 30px;
     margin-top: -50px;
     font-family: 'Poppins';

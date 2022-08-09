@@ -173,11 +173,11 @@ function UserVehicles() {
               <h1>My Enquiry</h1>
             </div>
             {dataAvailable ? (
-              <div className="vehicle-card-container">
+              <div className="vehicle-card-container mobile-enquiry-view">
                 {vehicleData?.map((item) => (
                   <div className="card" key={item._id}>
                     <div className="card-wrapper-vehicles">
-                      <div className="card-img-wrapper">
+                      <div className=" mobile-enquiry-img">
                         <img src={imgurl + vehicleImg} alt="truck" />
                       </div>
                       <div className="card-info">
@@ -196,7 +196,7 @@ function UserVehicles() {
                             </div>
                             <span>(Uploaded on Jun 01,2022)</span>
                           </div> */}
-                          <div className="card-price">
+                          <div className="card-price mobile-enquiry-price">
                             <h3>
                               ₹{rupee_format(item?.vehicle_id?.selling_price)}{" "}
                             </h3>

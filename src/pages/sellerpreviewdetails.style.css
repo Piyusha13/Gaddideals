@@ -480,7 +480,7 @@
   .row .detail h6 {
     font-family: "Poppins";
     font-weight: bold;
-    font-size: 15px;
+    font-size: 12px !important;
     color: #050f56;
     margin: 0;
   }
@@ -496,7 +496,8 @@
     display: flex;
     align-items: center;
     margin-top: 20px;
-    /* justify-content: space-between; */
+    justify-content: space-between !important;
+    /* background-color: orange !important; */
     margin-left: -10px;
   }
   .preview-row-one .preview-vehicle-document {
@@ -613,11 +614,11 @@
   }
   .preview-btns button {
     border: none;
-    padding: 10px 20px;
+    padding: 5px 10px !important;
     background: #050f56;
     border-radius: 5px !important;
     color: #ffffff;
-    font-size: 15px !important;
+    font-size: 9px !important;
     font-family: "Roboto";
     width: 30% !important;
   }
@@ -632,7 +633,7 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     color: #000000;
-    padding: 10px 0px !important;
+    padding: 5px 10px !important;
   }
   
 

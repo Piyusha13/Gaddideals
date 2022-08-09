@@ -739,7 +739,14 @@ const SellerHomePage = () => {
                   }}
                   value={mob_no}
                 ></input>
-                <img src={Edit} alt=""></img>
+                <img
+                  src={Edit}
+                  alt=""
+                  onClick={() => {
+                    setBuyerInput(!BuyerInput);
+                    setBuyerOtp(!BuyerOtp);
+                  }}
+                ></img>
               </div>
               <div className="enter-otp-text">Enter OTP to verify</div>
               <OtpInput
@@ -1232,11 +1239,11 @@ const SellerHomePage = () => {
             grabCursor={true}
             breakpoints={{
               50: {
-                slidesPerView: 1.8,
+                slidesPerView: "auto",
                 spaceBetween: 10,
               },
               820: {
-                slidesPerView: 2.7,
+                slidesPerView: "auto",
                 spaceBetween: 25,
               },
               1368: {

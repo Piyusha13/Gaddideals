@@ -1096,7 +1096,14 @@ const VehicleListings = () => {
                   }}
                   value={mob_no}
                 ></input>
-                <img src={Edit} alt=""></img>
+                <img
+                  src={Edit}
+                  alt=""
+                  onClick={() => {
+                    setBuyerInput(!BuyerInput);
+                    setBuyerOtp(!BuyerOtp);
+                  }}
+                ></img>
               </div>
               <div className="enter-otp-text">Enter OTP to verify</div>
               <OtpInput
@@ -1399,6 +1406,63 @@ const VehicleListings = () => {
                 </div>
               ))}
             </ToggleCategory>
+            <ToggleCategory categoryTitle="State">
+              <div className="states">
+                {statesArray.map((state) => (
+                  <div className="list" key={state?._id}>
+                    <div
+                      className="list-content"
+                      onClick={() => {
+                        handleStateType(state?._id, state?.title);
+                      }}
+                    >
+                      {isStateChecked(state?._id) ? (
+                        <MdOutlineCheckBox color="#050F56" size={25} />
+                      ) : (
+                        <MdOutlineCheckBoxOutlineBlank
+                          color="#050F56"
+                          size={25}
+                        />
+                      )}
+                      <p>{state?.title}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ToggleCategory>
+
+            {citiesArray.length > 0 && (
+              <ToggleCategory categoryTitle="City">
+                <div className="city">
+                  {citiesArray.length > 0 ? (
+                    <>
+                      {citiesArray.map((city) => (
+                        <div className="list" key={city?._id}>
+                          <div
+                            className="list-content"
+                            onClick={() => {
+                              handleCityType(city?._id, city?.title);
+                            }}
+                          >
+                            {isCityChecked(city?._id) ? (
+                              <MdOutlineCheckBox color="#050F56" size={25} />
+                            ) : (
+                              <MdOutlineCheckBoxOutlineBlank
+                                color="#050F56"
+                                size={25}
+                              />
+                            )}
+                            <p>{city?.title}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    "No Cities Available"
+                  )}
+                </div>
+              </ToggleCategory>
+            )}
           </div>
         </div>
       )}

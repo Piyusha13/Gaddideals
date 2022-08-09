@@ -23,6 +23,12 @@
     padding: 0px !important;
     display: flex;
     flex-direction: column;
+    /* background-color: #fe620d !important; */
+  }
+  .card-wrapper-vehicles{
+    /* background-color: #fe620d; */
+    /* height: 400px; */
+    padding: 0px;
   }
 }
 .user-vehicle-header {

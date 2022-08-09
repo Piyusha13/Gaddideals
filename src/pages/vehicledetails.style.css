@@ -748,6 +748,12 @@
     width: 100%;
     height: auto;
   }
+  .similar-vehicles-container
+    .similar-vehicles-list
+    .similar-vehicle-card
+    .img-wrapper{
+      width: 100% !important;
+    }
 
   .similar-vehicles-container
     .similar-vehicles-list
@@ -790,6 +796,7 @@
     font-family: "Poppins", sans-serif;
     font-style: normal;
     color: #050f56;
+    font-size: 15px !important;
   }
 
   .similar-vehicles-container
@@ -811,8 +818,8 @@
     .title
     .location
     img {
-    width: 100%;
-    height: 100%;
+    width: 10px !important;
+    height: 10px !important;
     object-fit: cover;
   }
 
@@ -826,7 +833,7 @@
     display: inline-block;
     font-family: "Roboto", sans-serif;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 10px !important;
     color: #121212;
   }
 
@@ -883,8 +890,8 @@
     background: #050f56;
     border-radius: 6px;
     width: 100%;
-    font-size: 16px;
-    padding: 12px 20px;
+    font-size: 10px !important;
+    padding: 8px 10px !important;
     color: #ffffff;
   }
 
@@ -1098,6 +1105,45 @@
     color: #b5b5b5;
   }
 }
+
+@media screen and (max-width: 1100px){
+  .vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .selling-detail-container
+  .agree-terms {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  
+  /* margin-bottom: 10px; */
+}
+
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .selling-detail-container
+  .agree-terms
+  span {
+  margin-left: 5px;
+  display: inline-block;
+  font-family: "Roboto";
+  font-size: 12px !important;
+  color: #9b9b9b;
+}
+
+.vehicle-details-container
+  .vehicle-detail
+  .vehicle-info
+  .selling-detail-container
+  .agree-terms
+  strong {
+  color: #050f56;
+}
+
+
+}
+
 
 .mob-overview-container {
   display: none;
@@ -2100,6 +2146,7 @@
   right: 5% !important;
   width: 6% !important;
   top: 20%;
+  cursor: pointer;
 }
 .enter-otp-text {
   font-family: "Roboto";

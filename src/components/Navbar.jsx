@@ -628,25 +628,25 @@ const Navbar = () => {
 
   const [goingUp, setGoingUp] = useState(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (prevScrollY.current < currentScrollY && goingUp) {
-        setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
-        setGoingUp(false);
-      }
-      if (prevScrollY.current > currentScrollY && !goingUp) {
-        setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
-        setGoingUp(true);
-      }
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollY = window.scrollY;
+  //     if (prevScrollY.current < currentScrollY && goingUp) {
+  //       setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
+  //       setGoingUp(false);
+  //     }
+  //     if (prevScrollY.current > currentScrollY && !goingUp) {
+  //       setsellBuyContainerOnScroll(!sellBuyContainerOnScroll);
+  //       setGoingUp(true);
+  //     }
 
-      prevScrollY.current = currentScrollY;
-      // console.log(goingUp, currentScrollY);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+  //     prevScrollY.current = currentScrollY;
+  //     // console.log(goingUp, currentScrollY);
+  //   };
+  //   window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [goingUp, sellBuyContainerOnScroll]);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [goingUp, sellBuyContainerOnScroll]);
 
   //log out function
   function logoutAccount() {
@@ -765,7 +765,7 @@ const Navbar = () => {
 
     if (response?.accessToken) {
       //function for google sign up wbesite
-      setshowSignIn((prevstate) => !prevstate);
+      setshowSignIn(false);
       setMobGSignUp(true);
     }
   };
@@ -886,7 +886,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="header-container">
+    <header className={matches ? "" : "header-container"}>
       {/* signup with google in mobile */}
       {MobGSignUp && (
         <div>
@@ -2205,7 +2205,9 @@ const Navbar = () => {
             </button>
           </div>
           <div className="mob-lower-div">
-            <p className="mob-lower-div-text">EMI Calculator</p>
+            <Link to="/AboutUs">
+              <p className="mob-lower-div-text">About Us</p>
+            </Link>
             <p
               className="mob-lower-div-text"
               onClick={() => {
@@ -2214,8 +2216,12 @@ const Navbar = () => {
             >
               FAQ
             </p>
-            <p className="mob-lower-div-text">Privacy Settings</p>
-            <p className="mob-lower-div-text">Terms and Condition</p>
+            <Link to="/PrivacyPolicy">
+              <p className="mob-lower-div-text">Privacy Policy</p>
+            </Link>
+            <Link to="/termsandconditions">
+              <p className="mob-lower-div-text">Terms and Condition</p>
+            </Link>
             <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
           </div>
         </div>
@@ -2303,18 +2309,29 @@ const Navbar = () => {
             >
               My Profile
             </p>
+            {/* <Link to="/UserVehicles"> */}
             <p
               className="mob-lower-div-text"
               onClick={() => {
                 window.location.href = "/UserVehicles";
               }}
             >
-              My Product
+              My Vehicle
             </p>
-            <p className="mob-lower-div-text">My Order</p>
+            {/* </Link> */}
+            <p
+              className="mob-lower-div-text"
+              onClick={() => {
+                window.location.href = "/UserOrder";
+              }}
+            >
+              My Enquiries
+            </p>
           </div>
           <div className="mob-lower-div">
-            <p className="mob-lower-div-text">EMI Calculator</p>
+            <Link to="/AboutUs">
+              <p className="mob-lower-div-text">About Us</p>
+            </Link>
             <p
               className="mob-lower-div-text"
               onClick={() => {
@@ -2323,8 +2340,12 @@ const Navbar = () => {
             >
               FAQ
             </p>
-            <p className="mob-lower-div-text">Privacy Settings</p>
-            <p className="mob-lower-div-text">Terms and Condition</p>
+            <Link to="/PrivacyPolicy">
+              <p className="mob-lower-div-text">Privacy Policy</p>
+            </Link>
+            <Link to="/termsandconditions">
+              <p className="mob-lower-div-text">Terms and Condition</p>
+            </Link>
             <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
             <p
               className="mob-lower-div-text mob-contact-us"

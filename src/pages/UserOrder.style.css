@@ -1,3 +1,121 @@
+@media screen and (max-width: 1000px) {
+  
+.user-order-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #fe620d !important; */
+}
+.user-order-header h1 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  color: #050f56;
+  margin-bottom: 30px;
+  position: relative;
+}
+.user-order-header h1::after {
+  content: "";
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 85px;
+  height: 4px;
+  border-radius: 5px;
+  background-color: #fe620d;
+}
+.lottie-div{
+  width: 60%;
+}
+.right-order-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.right-order-container{
+  /* background-color: #fe620d !important; */
+
+  background: #FFFFFF;
+box-shadow: 0px 1px 6px 2px rgba(0, 0, 0, 0.11);
+border-radius: 20px;
+width: 55%;
+padding: 30px;
+display: flex;
+flex-direction: column;
+}
+.order-msg{
+  font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: #BABABA;
+margin-bottom: 4rem;
+}
+
+.browse-veicles-button{
+  height: 4rem;
+  width: 17rem;
+  background: #050F56;
+border-radius: 10px;
+border: none;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+color: #FFFFFF;
+
+}
+.seller-details-container{
+  display: flex;
+  flex-direction: column;
+  /* background-color: #fe620d;
+   */
+   background: #FFFFFF;
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+border-radius: 3px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 7px !important;
+color: #878787;
+padding: 10px;
+gap: 10px !important;
+  margin-top: 20px !important;
+}
+.seller-details-container .stat{
+  /* margin-bottom: 20px !important; */
+}
+.text-color-blue{
+  color: #050F56;
+  font-weight: 600;
+}
+
+.card-img-wrapper img{
+  /* width: 220px !important; */
+  height: 160px !important;
+}
+.card-img-wrapper {
+  height: 160px !important;
+  width: 220px !important;
+  /* background-color: #fe620d !important; */
+}
+.mobile-enquiry-price{
+  position: absolute !important;
+  top: 23% !important;
+}
+.mobile-enquiry-img{
+  height: 120px !important;
+  width: 200px !important;
+  border-radius: 5px !important;
+}
+.mobile-enquiry-img img{
+  height: 100% !important;
+  width: 100% !important;
+  
+  border-radius: 5px !important;
+}
+}
 .user-order-header {
     display: flex;
     justify-content: center;

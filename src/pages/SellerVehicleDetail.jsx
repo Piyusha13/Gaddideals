@@ -95,6 +95,15 @@ const SellerVehicleDetail = ({
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
+  const [matches, setMatches] = useState(
+    window.matchMedia("(max-width: 1000px)").matches
+  );
+  useEffect(() => {
+    window
+      .matchMedia("(max-width: 1000px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  }, []);
+
   // frontside cropped
   const showCroppedImage = useCallback(async () => {
     setShowModal(!showModal);
@@ -365,8 +374,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={showModal}
                   onClickAway={() => {
@@ -427,8 +436,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={backShowModal}
                   onClickAway={() => {
@@ -487,8 +496,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={engShowModal}
                   onClickAway={() => {
@@ -551,8 +560,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={frontTyreLeftShowModal}
                   onClickAway={() => {
@@ -612,8 +621,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={fronttyreRightShowModal}
                   onClickAway={() => {
@@ -678,8 +687,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={sidePicLeftShowModal}
                   onClickAway={() => {
@@ -737,8 +746,8 @@ const SellerVehicleDetail = ({
                 />
 
                 <Modal
-                  width="90%"
-                  height="100%"
+                  width={matches ? "80%" : "90%"}
+                  height={matches ? "50%" : "100%"}
                   effect="fadeInUp"
                   visible={sidePicRightShowModal}
                   onClickAway={() => {

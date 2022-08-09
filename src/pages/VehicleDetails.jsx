@@ -93,6 +93,8 @@ const VehicleDetails = () => {
   const [otp, setOtp] = useState("");
   const [SellerDetails, setSellerDetails] = useState(false);
   const [similarVehicles, setSimilarVehicles] = useState([]);
+  const [similarVehicleId, setsimilarVehicleId] = useState("");
+  const [selectedSimilarVehicle, setselectedSimilarVehicle] = useState(false);
 
   const [userToken, setUserToken] = useState(localStorage.getItem("Token"));
   const locationCity = useSelector(selectLocation);
@@ -218,7 +220,7 @@ const VehicleDetails = () => {
       setCategoryId(res.data?.category?._id);
       setvehicleId(res.data?.vehicle?._id);
 
-      console.log(res.data?.vehicle?._id);
+      // console.log(res.data?.vehicle?._id);
       setSeller(res.data?.vehicle?.user);
 
       let frontBackArr = [];
@@ -250,6 +252,7 @@ const VehicleDetails = () => {
 
         if (response.data) {
           setSimilarVehicles(response?.data?.vehicle?.docs);
+          // console.log(response?.data?.vehicle?.docs);
 
           let frontBackArr = [];
           frontBackArr.push(
@@ -298,8 +301,9 @@ const VehicleDetails = () => {
     let user_token = localStorage.getItem("Token");
 
     if (validateFields()) {
+      console.log("yy" + similarVehicleId);
       let payload = {
-        vehicleId,
+        vehicleId: !selectedSimilarVehicle ? vehicleId : similarVehicleId,
         name,
         email,
         mob_no,
@@ -314,13 +318,13 @@ const VehicleDetails = () => {
           },
         })
         .then((result) => {
-          console.log(result.data);
+          // console.log(result.data);
           if (result.data.status === "failed") {
-            console.log(result.data);
+            // console.log(result.data);
             toast.error(result.data.message);
           } else {
             if (result.data.status === "success") {
-              console.log(result.data);
+              // console.log(result.data);
               // toast.success(result.data.message);
               setBuyerInput(!BuyerInput); //closing buyer input screen
               setBuyerOtp(!BuyerOtp); //displaying otp screen
@@ -340,7 +344,7 @@ const VehicleDetails = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // console.log(res.data.user);
         setcity(res.data.user.city);
         setname(res.data.user.name);
@@ -383,9 +387,10 @@ const VehicleDetails = () => {
   //enquri api hit => otp sent to mob no.
   async function enquiryApi() {
     let user_token = localStorage.getItem("Token");
+    console.log("yy" + similarVehicleId);
     if (validateFields()) {
       let payload = {
-        vehicleId,
+        vehicleId: !selectedSimilarVehicle ? vehicleId : similarVehicleId,
         name,
         email,
         mob_no,
@@ -393,19 +398,19 @@ const VehicleDetails = () => {
         city,
         hash: "ekxpmAB8m9v",
       };
-      console.log(payload);
+      // console.log(payload);
       await axios
         .post(Constant.postUrls.postAllEnquiries, payload)
         .then((result) => {
-          console.log(result.data);
+          // console.log(result.data);
           if (result.data.status === "failed") {
-            console.log(result.data);
+            // console.log(result.data);
             // toast.error(result.data.message);
             toast.error("You are already a user");
             toast.error("Please sign in for enquiry");
           } else {
             if (result.data.status === "success") {
-              console.log(result.data);
+              // console.log(result.data);
               // toast.success(result.data.message);
               setBuyerInput(!BuyerInput); //closing buyer input screen
               setBuyerOtp(!BuyerOtp); //displaying otp screen
@@ -425,7 +430,7 @@ const VehicleDetails = () => {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
     axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
-      console.log("result", result);
+      // console.log("result", result);
       if (mob_no === "") {
         // notify();
         toast.error("enter moile number");
@@ -447,7 +452,7 @@ const VehicleDetails = () => {
 
   function handleChange(o) {
     setOtp(o);
-    console.log(otp);
+    // console.log(otp);
   }
   //for otp page
   const ValidateMobileNo = () => {
@@ -465,11 +470,11 @@ const VehicleDetails = () => {
   //enquiry otp verify
   function enquiryVerifyOtp() {
     if (ValidateMobileNo()) {
-      console.log("otp verified");
+      // console.log("otp verified");
       console.warn({ mob_no, otp });
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllEnquiryOtps, payload).then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.data.status === "failed") {
           toast.error("incorrect otp");
@@ -486,11 +491,11 @@ const VehicleDetails = () => {
   //signup otp verify
   function signUpVeryfyOtp() {
     if (ValidateMobileNo()) {
-      console.log("otp verified");
+      // console.log("otp verified");
       console.warn({ mob_no, otp });
       let payload = { mob_no, otp };
       axios.post(Constant.postUrls.postAllOtps, payload).then((res) => {
-        console.log(res);
+        // console.log(res);
         localStorage.setItem("Token", res.data.user.accessToken);
         window.location.href = "/loggeduser";
         // if (res.data.status === "failed") {
@@ -509,7 +514,7 @@ const VehicleDetails = () => {
     console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
     axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
-      console.log("result", result);
+      // console.log("result", result);
       if (mob_no === "") {
         toast.error("enter moile number");
       } else if (result.data.status === "failed") {
@@ -533,7 +538,7 @@ const VehicleDetails = () => {
     return "Loading...";
   }
 
-  console.log(similarVehicles);
+  // console.log(similarVehicles);
 
   return (
     <>
@@ -875,7 +880,14 @@ const VehicleDetails = () => {
                   }}
                   value={mob_no}
                 ></input>
-                <img src={Edit} alt=""></img>
+                <img
+                  src={Edit}
+                  alt=""
+                  onClick={() => {
+                    setBuyerInput(!BuyerInput);
+                    setBuyerOtp(!BuyerOtp);
+                  }}
+                ></img>
               </div>
               <div className="enter-otp-text">Enter OTP to verify</div>
               <OtpInput
@@ -1386,7 +1398,7 @@ const VehicleDetails = () => {
             <div className="similar-vehicles-list">
               <Swiper
                 spaceBetween={20}
-                slidesPerView={3}
+                slidesPerView={matches ? 1.2 : 3}
                 grabCursor={true}
                 modules={[Autoplay]}
               >
@@ -1444,7 +1456,22 @@ const VehicleDetails = () => {
                             </SwiperSlide>
                           </Swiper>
                         </div> */}
-                        <button>Get Seller Details</button>
+                        <button
+                          onClick={() => {
+                            setselectedSimilarVehicle(true);
+                            setsimilarVehicleId(similar?._id);
+                            setSeller(similar?.user);
+                            console.log(similar?.user._id);
+                            console.log("hh" + similar._id);
+                            if (userToken) {
+                              getSingleUserInfo();
+                            } else {
+                              setBuyerInput(!BuyerInput);
+                            }
+                          }}
+                        >
+                          Get Seller Details
+                        </button>
                       </div>
                     </div>
                   </SwiperSlide>

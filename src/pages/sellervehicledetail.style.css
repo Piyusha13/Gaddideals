@@ -1,3 +1,21 @@
+@media screen and (max-width: 1000px){
+
+  .reactEasyCrop_Container {
+    width: 100%  !important;
+    height: 250px !important;
+    transform: translate(0%, 0%) !important;
+  }
+  .modal-btns {
+    position: absolute;
+    width: 100%;
+    bottom: 5% !important;
+    left: 27% !important;
+    transform: translate(0%, 0%) !important;
+    display: flex;
+    gap: 10px;
+  }
+  
+}
 .seller-form-container {
   width: 70% !important;
   margin: 0 auto;
@@ -137,11 +155,13 @@
   .row-two {
     margin-left: 1.5%;
     margin-top: 20px;
+    /* background-color: #ff0000 !important; */
   }
   .row-two .vehicle-documents {
     display: flex;
     align-items: flex-start;
-    gap: 40px !important;
+    gap: none !important;
+    justify-content: space-between !important;
     flex-wrap: wrap !important;
   }
   .row-two h6 {
