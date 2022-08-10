@@ -1976,7 +1976,7 @@
   padding: 0rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
 }
 
 .faq {
@@ -2094,7 +2094,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-  
   /* buyer details container */
 
   .buyer-dtails-container {
@@ -2315,3 +2314,18 @@
   z-index: 99;
   overflow-x: hidden;
 } */
+
+.no-data-home {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 1000px) {
+  .no-data-home {
+    width: 100px;
+  }
+}

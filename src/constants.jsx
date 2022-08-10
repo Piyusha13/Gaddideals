@@ -25,6 +25,7 @@ const Constant = {
     getAllSearchSuggestions: mainDomain + "api/vehicle/searchSuggestion",
     getAllStates: mainDomain + "api/state",
     getAllCity: mainDomain + "api/city",
+    getUser: mainDomain + "api/user",
     getAllTrustedClients: mainDomain + "api/trustedClient",
   },
   postUrls: {

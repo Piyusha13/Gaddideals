@@ -11,6 +11,11 @@ import { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import {
+  setSignUpValue,
+  setMobSignInValue,
+} from "../store/signup/signup.action";
 
 const Banner = () => {
   const [bannerData, setBannerData] = useState([]);
@@ -22,6 +27,7 @@ const Banner = () => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchCategories = async () => {
     const response = await axios.get(Constant.getUrls.getAllCategories);
@@ -68,7 +74,7 @@ const Banner = () => {
                   onClick={() => {
                     setIsCategoryActive(index);
                     if (!userToken) {
-                      toast.error("Please Login First");
+                      dispatch(setSignUpValue(true));
                     } else {
                       navigate(`/sellerform/${category._id}`);
                     }
@@ -92,7 +98,7 @@ const Banner = () => {
                   onClick={() => {
                     setIsCategoryActiveTwo(index);
                     if (!userToken) {
-                      toast.error("Please Login First");
+                      dispatch(setSignUpValue(true));
                     } else {
                       navigate(`/sellerform/${category._id}`);
                     }

@@ -256,6 +256,10 @@ const VehicleListings = () => {
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
+    const cityExists = statecities.find(
+      (cityJson) => city.toLowerCase() === cityJson.City.toLowerCase()
+    );
+
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
       return false;
@@ -276,6 +280,11 @@ const VehicleListings = () => {
       toast.error("please select user type");
       return false;
     }
+    if (!cityExists) {
+      toast.error("Please select a city");
+      return false;
+    }
+
     return true;
   };
 

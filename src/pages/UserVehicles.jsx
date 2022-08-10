@@ -75,11 +75,9 @@ function UserVehicles() {
       })
       .then((res) => {
         setvehicleData(res.data.getMyVehicle);
-        console.log(res.data.getMyVehicle);
         res.data.getMyVehicle.forEach((item, index) => {
           setvehicleName(item.model);
           setdataAvailable(true);
-          console.log(item.model);
         });
       });
   };
@@ -164,6 +162,15 @@ function UserVehicles() {
                   <span>My Enquiries</span>
                 </Link>
                 <Link to="/Userorder">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
+              <div className="my-order-div">
+                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <Link to="/myvehicleenq" className="my-order-text">
+                  <span>My Vehicle Enquiries</span>
+                </Link>
+                <Link to="/myvehicleenq">
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div>

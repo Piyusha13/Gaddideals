@@ -1,16 +1,3 @@
-@media screen and (max-width: 1000px) {
-  .sell-buy-container-moile {
-    position: sticky;
-    z-index: 99999;
-    top: 0px !important;
-  }
-  .nav-container {
-    position: fixed !important;
-    /* top: 0% !important; */
-    left: 0;
-    z-index: 9999;
-  }
-}
 @media screen and (min-width: 768px) and (max-width: 990px) {
   .language-1 {
     border-left: 1px solid #e6e6e6;
@@ -99,6 +86,7 @@
     background: #f4f4f4 !important;
     height: auto !important;
     display: flex;
+    top: 0 !important;
   }
   .container-fluid {
     justify-content: center !important;
@@ -480,6 +468,10 @@
   align-items: center;
   padding: 5px 0px;
   background: #050f56;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  min-height: 40px;
 }
 .sell-buy-container-desktop button {
   padding: 5px 20px;
@@ -559,6 +551,9 @@
     /* transform: translateX(10px) !important; */
     height: 120px;
     display: flex;
+    position: sticky;
+    top: 0 !important;
+    z-index: 9999;
   }
   .container-fluid {
     justify-content: center !important;
@@ -609,6 +604,9 @@
 /* NavBar */
 .nav-container {
   background: #f4f4f4;
+  position: sticky;
+  top: 40px;
+  z-index: 9999;
 }
 
 .logo img {
@@ -1564,7 +1562,7 @@ a {
   top: 95%;
   width: 100%;
   height: 200px;
-  z-index: 9999999;
+  z-index: 99999;
 }
 /* .mob-menue-overlay {
   background-color:transparent !important;

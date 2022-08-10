@@ -68,7 +68,6 @@ function MyVehicleEnq() {
         // console.log("insideeeeeeeeeeeeeeeeeeee");
         // console.log("enquiries response=======" + res);
         setvehicleData(res?.data?.getMyVehicleEnquiries);
-        console.log(res?.data?.getMyVehicleEnquiries);
         res?.data?.getMyVehicleEnquiries?.forEach((item, index) => {
           setvehicleName(item?.vehicle_id?.brand);
           setvehicleImg(item?.vehicle_id?.front_side_pic);

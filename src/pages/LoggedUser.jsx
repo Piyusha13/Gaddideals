@@ -44,15 +44,13 @@ function LoggedUser() {
   }
   const getDetails = () => {
     if (init() === "success") {
-      axios
-        .get("https://gaddideals.brokerinvoice.co.in/api/user")
-        .then((res) => {
-          setname(res?.data?.user);
-          setemail(res?.data?.user);
-          setmob_no(res?.data?.user);
-          setprofileimgstate(res?.data?.user);
-          setPriviousNum(res?.data?.user?.mob_no);
-        });
+      axios.get(Constant.getUrls.getUser).then((res) => {
+        setname(res?.data?.user);
+        setemail(res?.data?.user);
+        setmob_no(res?.data?.user);
+        setprofileimgstate(res?.data?.user);
+        setPriviousNum(res?.data?.user?.mob_no);
+      });
     }
   };
   function handlefile(e) {
@@ -180,6 +178,15 @@ function LoggedUser() {
                   <span>My Enquiries</span>
                 </Link>
                 <Link to="/UserOrder">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
+              <div className="my-order-div">
+                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <Link to="/myvehicleenq" className="my-order-text">
+                  <span>My Vehicle Enquiries</span>
+                </Link>
+                <Link to="/myvehicleenq">
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div>

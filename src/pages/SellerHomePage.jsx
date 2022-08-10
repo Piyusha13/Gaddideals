@@ -26,6 +26,7 @@ import imgPlaceholder from "../assets/img-not-available.jpg";
 import "./sellerhomepage.style.css";
 
 import Lottie from "react-lottie";
+import lottieAnimation from "../assets/my-vehicles-lottie.json";
 import animationData1 from "../assets/step-1-lottie.json";
 import animationData3 from "../assets/mental-therapy-lottie.json";
 import animationData2 from "../assets/step-3rd-lottie.json";
@@ -236,6 +237,10 @@ const SellerHomePage = () => {
       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
     let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
+    const cityExists = statecities.find(
+      (cityJson) => city.toLowerCase() === cityJson.City.toLowerCase()
+    );
+
     if (!validateName.test(name)) {
       toast.error("please enter valid name");
       return false;
@@ -254,6 +259,10 @@ const SellerHomePage = () => {
     }
     if (user_type === "") {
       toast.error("please select user type");
+      return false;
+    }
+    if (!cityExists) {
+      toast.error("Please select a city");
       return false;
     }
     return true;
@@ -568,6 +577,15 @@ const SellerHomePage = () => {
     // getSingleVehicleDetails();
   }, []);
 
+  const defaultOptionsVehicle = {
+    loop: true,
+    autoplay: true,
+    animationData: lottieAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -609,6 +627,7 @@ const SellerHomePage = () => {
             onClickAway={() => {
               setBuyerInput(!BuyerInput);
             }}
+            containerStyle={{ zIndex: 999999999 }}
           >
             <div className="buyer-dtails-container">
               <img
@@ -921,55 +940,66 @@ const SellerHomePage = () => {
                 }}
                 modules={[Navigation]}
               >
-                {latestTrucksData.map((latestTruck) => (
-                  // console.log(latestTruck.user.name),
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestTruck._id}
-                  >
-                    <div key={latestTruck._id} className="latest-card">
-                      <Link to={`/vehicledetails/${latestTruck._id}`}>
-                        <div className="latest-img-wrapper">
-                          <img
-                            src={
-                              latestTruck.front_side_pic
-                                ? `${imgurl}${latestTruck.front_side_pic}`
-                                : ` ${imgPlaceholder}`
-                            }
-                            alt={latestTruck?.brand?.title}
-                          />
-                        </div>
-                      </Link>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <div className="latest-title">
-                            <h5>{latestTruck?.brand?.title}</h5>
-                            <div className="latest-location">
-                              <img src={locationIcon} alt="location icon" />
-                              <span>{latestTruck.city.title}</span>
+                {latestTrucksData.length > 0 ? (
+                  <>
+                    {latestTrucksData.map((latestTruck) => (
+                      <SwiperSlide
+                        className="swiper-slide-latest"
+                        key={latestTruck._id}
+                      >
+                        <div key={latestTruck._id} className="latest-card">
+                          <Link to={`/vehicledetails/${latestTruck._id}`}>
+                            <div className="latest-img-wrapper">
+                              <img
+                                src={
+                                  latestTruck.front_side_pic
+                                    ? `${imgurl}${latestTruck.front_side_pic}`
+                                    : ` ${imgPlaceholder}`
+                                }
+                                alt={latestTruck?.brand?.title}
+                              />
                             </div>
+                          </Link>
+                          <div className="latest-info">
+                            <div className="latest-header">
+                              <div className="latest-title">
+                                <h5>{latestTruck?.brand?.title}</h5>
+                                <div className="latest-location">
+                                  <img src={locationIcon} alt="location icon" />
+                                  <span>{latestTruck.city.title}</span>
+                                </div>
+                              </div>
+                              <p>₹ {rupee_format(latestTruck.selling_price)}</p>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                setUserObj(latestTruck.user);
+                                setseller_id(latestTruck._id);
+
+                                if (userToken) {
+                                  getSingleUserInfo();
+                                } else {
+                                  setBuyerInput(!BuyerInput);
+                                }
+                              }}
+                            >
+                              Get Seller Details
+                            </button>
                           </div>
-                          <p>₹ {rupee_format(latestTruck.selling_price)}</p>
                         </div>
-
-                        <button
-                          onClick={() => {
-                            setUserObj(latestTruck.user);
-                            setseller_id(latestTruck._id);
-
-                            if (userToken) {
-                              getSingleUserInfo();
-                            } else {
-                              setBuyerInput(!BuyerInput);
-                            }
-                          }}
-                        >
-                          Get Seller Details
-                        </button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                      </SwiperSlide>
+                    ))}
+                  </>
+                ) : (
+                  <div className="no-data-home">
+                    <Lottie
+                      options={defaultOptionsVehicle}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+                )}
               </Swiper>
             </TabPanel>
             <TabPanel className="tab-panel">
@@ -992,56 +1022,68 @@ const SellerHomePage = () => {
                 }}
                 modules={[Navigation]}
               >
-                {latestBusesData.map((latestBuses) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestBuses._id}
-                  >
-                    <div key={latestBuses._id} className="latest-card">
-                      <Link to={`/vehicledetails/${latestBuses._id}`}>
-                        <div className="latest-img-wrapper">
-                          <img
-                            src={
-                              latestBuses.front_side_pic
-                                ? `${imgurl}${latestBuses.front_side_pic}`
-                                : ` ${imgPlaceholder}`
-                            }
-                            alt={latestBuses?.brand?.title}
-                          />
-                        </div>
-                      </Link>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <div className="latest-title">
-                            <h5>{latestBuses?.brand?.title}</h5>
-
-                            <div className="latest-location">
-                              <img src={locationIcon} alt="location icon" />
-                              <span>{latestBuses.city.title}</span>
+                {latestBusesData.length > 0 ? (
+                  <>
+                    {latestBusesData.map((latestBuses) => (
+                      <SwiperSlide
+                        className="swiper-slide-latest"
+                        key={latestBuses._id}
+                      >
+                        <div key={latestBuses._id} className="latest-card">
+                          <Link to={`/vehicledetails/${latestBuses._id}`}>
+                            <div className="latest-img-wrapper">
+                              <img
+                                src={
+                                  latestBuses.front_side_pic
+                                    ? `${imgurl}${latestBuses.front_side_pic}`
+                                    : ` ${imgPlaceholder}`
+                                }
+                                alt={latestBuses?.brand?.title}
+                              />
                             </div>
-                          </div>
-                          <p>₹ {rupee_format(latestBuses.selling_price)}</p>
-                        </div>
+                          </Link>
+                          <div className="latest-info">
+                            <div className="latest-header">
+                              <div className="latest-title">
+                                <h5>{latestBuses?.brand?.title}</h5>
 
-                        <button
-                          onClick={() => {
-                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                            // setvehicleId(latestBuses._id)
-                            setUserObj(latestBuses.user);
-                            setseller_id(latestBuses._id);
-                            if (userToken) {
-                              getSingleUserInfo();
-                            } else {
-                              setBuyerInput(!BuyerInput);
-                            }
-                          }}
-                        >
-                          Get Seller Details
-                        </button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                                <div className="latest-location">
+                                  <img src={locationIcon} alt="location icon" />
+                                  <span>{latestBuses.city.title}</span>
+                                </div>
+                              </div>
+                              <p>₹ {rupee_format(latestBuses.selling_price)}</p>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                                // setvehicleId(latestBuses._id)
+                                setUserObj(latestBuses.user);
+                                setseller_id(latestBuses._id);
+                                if (userToken) {
+                                  getSingleUserInfo();
+                                } else {
+                                  setBuyerInput(!BuyerInput);
+                                }
+                              }}
+                            >
+                              Get Seller Details
+                            </button>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </>
+                ) : (
+                  <div className="no-data-home">
+                    <Lottie
+                      options={defaultOptionsVehicle}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+                )}
               </Swiper>
             </TabPanel>
             <TabPanel className="tab-panel">
@@ -1064,56 +1106,70 @@ const SellerHomePage = () => {
                 }}
                 modules={[Navigation]}
               >
-                {latestTractorsData.map((latestTractor) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestTractor._id}
-                  >
-                    <div key={latestTractor._id} className="latest-card">
-                      <Link to={`/vehicledetails/${latestTractor._id}`}>
-                        <div className="latest-img-wrapper">
-                          <img
-                            src={
-                              latestTractor.front_side_pic
-                                ? `${imgurl}${latestTractor.front_side_pic}`
-                                : ` ${imgPlaceholder}`
-                            }
-                            alt={latestTractor?.brand?.title}
-                          />
-                        </div>
-                      </Link>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <div className="latest-title">
-                            <h5>{latestTractor?.brand?.title}</h5>
-
-                            <div className="latest-location">
-                              <img src={locationIcon} alt="location icon" />
-                              <span>{latestTractor.city.title}</span>
+                {latestTractorsData.length > 0 ? (
+                  <>
+                    {latestTractorsData.map((latestTractor) => (
+                      <SwiperSlide
+                        className="swiper-slide-latest"
+                        key={latestTractor._id}
+                      >
+                        <div key={latestTractor._id} className="latest-card">
+                          <Link to={`/vehicledetails/${latestTractor._id}`}>
+                            <div className="latest-img-wrapper">
+                              <img
+                                src={
+                                  latestTractor.front_side_pic
+                                    ? `${imgurl}${latestTractor.front_side_pic}`
+                                    : ` ${imgPlaceholder}`
+                                }
+                                alt={latestTractor?.brand?.title}
+                              />
                             </div>
-                          </div>
-                          <p>₹ {rupee_format(latestTractor.selling_price)}</p>
-                        </div>
+                          </Link>
+                          <div className="latest-info">
+                            <div className="latest-header">
+                              <div className="latest-title">
+                                <h5>{latestTractor?.brand?.title}</h5>
 
-                        <button
-                          onClick={() => {
-                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                            // setvehicleId(latestTractor._id)
-                            setUserObj(latestTractor.user);
-                            setseller_id(latestTractor._id);
-                            if (userToken) {
-                              getSingleUserInfo();
-                            } else {
-                              setBuyerInput(!BuyerInput);
-                            }
-                          }}
-                        >
-                          Get Seller Details
-                        </button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                                <div className="latest-location">
+                                  <img src={locationIcon} alt="location icon" />
+                                  <span>{latestTractor.city.title}</span>
+                                </div>
+                              </div>
+                              <p>
+                                ₹ {rupee_format(latestTractor.selling_price)}
+                              </p>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                                // setvehicleId(latestTractor._id)
+                                setUserObj(latestTractor.user);
+                                setseller_id(latestTractor._id);
+                                if (userToken) {
+                                  getSingleUserInfo();
+                                } else {
+                                  setBuyerInput(!BuyerInput);
+                                }
+                              }}
+                            >
+                              Get Seller Details
+                            </button>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </>
+                ) : (
+                  <div className="no-data-home">
+                    <Lottie
+                      options={defaultOptionsVehicle}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+                )}
               </Swiper>
             </TabPanel>
             <TabPanel className="tab-panel">
@@ -1136,58 +1192,76 @@ const SellerHomePage = () => {
                 }}
                 modules={[Navigation]}
               >
-                {latestConstructionData.map((latestConstruction) => (
-                  <SwiperSlide
-                    className="swiper-slide-latest"
-                    key={latestConstruction._id}
-                  >
-                    <div key={latestConstruction._id} className="latest-card">
-                      <Link to={`/vehicledetails/${latestConstruction._id}`}>
-                        <div className="latest-img-wrapper">
-                          <img
-                            src={
-                              latestConstruction.front_side_pic
-                                ? `${imgurl}${latestConstruction.front_side_pic}`
-                                : ` ${imgPlaceholder}`
-                            }
-                            alt={latestConstruction?.brand?.title}
-                          />
-                        </div>
-                      </Link>
-                      <div className="latest-info">
-                        <div className="latest-header">
-                          <div className="latest-title">
-                            <h5>{latestConstruction?.brand?.title}</h5>
-
-                            <div className="latest-location">
-                              <img src={locationIcon} alt="location icon" />
-                              <span>{latestConstruction.city.title}</span>
-                            </div>
-                          </div>
-                          <p>
-                            ₹ {rupee_format(latestConstruction.selling_price)}
-                          </p>
-                        </div>
-
-                        <button
-                          onClick={() => {
-                            // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
-                            // setvehicleId(latestConstruction._id)
-                            setUserObj(latestConstruction.user);
-                            setseller_id(latestConstruction._id);
-                            if (userToken) {
-                              getSingleUserInfo();
-                            } else {
-                              setBuyerInput(!BuyerInput);
-                            }
-                          }}
+                {latestConstructionData.length > 0 ? (
+                  <>
+                    {latestConstructionData.map((latestConstruction) => (
+                      <SwiperSlide
+                        className="swiper-slide-latest"
+                        key={latestConstruction._id}
+                      >
+                        <div
+                          key={latestConstruction._id}
+                          className="latest-card"
                         >
-                          Get Seller Details
-                        </button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                          <Link
+                            to={`/vehicledetails/${latestConstruction._id}`}
+                          >
+                            <div className="latest-img-wrapper">
+                              <img
+                                src={
+                                  latestConstruction.front_side_pic
+                                    ? `${imgurl}${latestConstruction.front_side_pic}`
+                                    : ` ${imgPlaceholder}`
+                                }
+                                alt={latestConstruction?.brand?.title}
+                              />
+                            </div>
+                          </Link>
+                          <div className="latest-info">
+                            <div className="latest-header">
+                              <div className="latest-title">
+                                <h5>{latestConstruction?.brand?.title}</h5>
+
+                                <div className="latest-location">
+                                  <img src={locationIcon} alt="location icon" />
+                                  <span>{latestConstruction.city.title}</span>
+                                </div>
+                              </div>
+                              <p>
+                                ₹{" "}
+                                {rupee_format(latestConstruction.selling_price)}
+                              </p>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                // userToken ? setSellerDetails(!SellerDetails) : setBuyerInput(!BuyerInput)
+                                // setvehicleId(latestConstruction._id)
+                                setUserObj(latestConstruction.user);
+                                setseller_id(latestConstruction._id);
+                                if (userToken) {
+                                  getSingleUserInfo();
+                                } else {
+                                  setBuyerInput(!BuyerInput);
+                                }
+                              }}
+                            >
+                              Get Seller Details
+                            </button>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </>
+                ) : (
+                  <div className="no-data-home">
+                    <Lottie
+                      options={defaultOptionsVehicle}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
+                )}
               </Swiper>
             </TabPanel>
           </Tabs>
@@ -1294,12 +1368,12 @@ const SellerHomePage = () => {
       </div>
 
       {/* Trusted Brands */}
-      <div className="trusted-brands-section gd_container">
+      <div className="trusted-brands-section">
         <div className="trusted-brand-header">
           <h1>Trusted Clients</h1>
         </div>
 
-        <div className="trusted-brands-container">
+        <div className="trusted-brands-container gd_container">
           <Swiper
             slidesPerView={5}
             grabCursor={true}

@@ -142,6 +142,15 @@ function UserVehicles() {
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div>
+              <div className="my-order-div">
+                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <Link to="/myvehicleenq" className="my-order-text">
+                  <span>My Vehicle Enquiries</span>
+                </Link>
+                <Link to="/myvehicleenq">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div>
               {/* <div className="user-Faq-div">
                 <img className="help-img" src={help} alt=""></img>
                 <Link to="/UserFaq" className="user-Faq-text">
@@ -177,7 +186,7 @@ function UserVehicles() {
                 {vehicleData?.map((item) => (
                   <div className="card" key={item._id}>
                     <div className="card-wrapper-vehicles">
-                      <div className=" mobile-enquiry-img">
+                      <div className="card-img-wrapper mobile-enquiry-img">
                         <img src={imgurl + vehicleImg} alt="truck" />
                       </div>
                       <div className="card-info">

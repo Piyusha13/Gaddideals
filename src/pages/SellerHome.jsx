@@ -25,6 +25,8 @@ import animationData2 from "../assets/step-3rd-lottie.json";
 import { Link, useNavigate } from "react-router-dom";
 import { imgurl } from "../constants";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setMobSignInValue } from "../store/signup/signup.action";
 
 const SellerHome = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -43,6 +45,7 @@ const SellerHome = () => {
   );
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window
@@ -140,7 +143,7 @@ const SellerHome = () => {
                     onClick={() => {
                       setIsCategoryActive(index);
                       if (!userToken) {
-                        toast.error("Please Login First");
+                        dispatch(setMobSignInValue(true));
                       } else {
                         navigate(`/sellerform/${category._id}`);
                       }
@@ -164,7 +167,7 @@ const SellerHome = () => {
                     onClick={() => {
                       setIsCategoryActiveTwo(index);
                       if (!userToken) {
-                        toast.error("Please Login First");
+                        dispatch(setMobSignInValue(true));
                       } else {
                         navigate(`/sellerform/${category._id}`);
                       }
@@ -340,12 +343,12 @@ const SellerHome = () => {
       </div>
 
       {/* Trusted Brands */}
-      <div className="trusted-brands-section gd_container">
+      <div className="trusted-brands-section">
         <div className="trusted-brand-header">
           <h1>Trusted Clients</h1>
         </div>
 
-        <div className="trusted-brands-container">
+        <div className="trusted-brands-container gd_container">
           <Swiper
             slidesPerView={5}
             grabCursor={true}

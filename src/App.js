@@ -14,6 +14,7 @@ import Subscription from "./pages/Subscription";
 import SellerHome from "./pages/SellerHome";
 import VehicleCard from "./pages/VehicleCard";
 import DirectSignup from "./components/DirectSignup";
+import MyVehicleEnq from "./pages/MyVehicleEnq";
 import "../src/App.css";
 
 import { setCurrentCity } from "./store/location/location.action";
@@ -148,6 +149,7 @@ function App() {
         <Route element={<AboutUs />} path="/AboutUs" />
         <Route element={<TermsAndConditions />} path="/termsandconditions" />
         <Route element={<PrivacyPolicy />} path="/PrivacyPolicy" />
+        <Route element={<MyVehicleEnq />} path="/myvehicleenq" />
       </Routes>
       <ToastContainer autoClose={3000} />
     </>
