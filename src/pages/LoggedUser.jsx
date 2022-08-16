@@ -17,6 +17,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import clipboard from "../assets/clipboard.png";
+import myVehicleEnqIco from "../assets/myvehicle_enq.png";
 
 import { imgurl } from "./../constants";
 
@@ -42,9 +43,9 @@ function LoggedUser() {
     localStorage.clear();
     window.location.href = "/";
   }
-  const getDetails = () => {
+  const getDetails = async () => {
     if (init() === "success") {
-      axios.get(Constant.getUrls.getUser).then((res) => {
+      await axios.get(Constant.getUrls.getUser).then((res) => {
         setname(res?.data?.user);
         setemail(res?.data?.user);
         setmob_no(res?.data?.user);
@@ -182,7 +183,11 @@ function LoggedUser() {
                 </Link>
               </div>
               <div className="my-order-div">
-                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <img
+                  className="clipboard-img"
+                  src={myVehicleEnqIco}
+                  alt=""
+                ></img>
                 <Link to="/myvehicleenq" className="my-order-text">
                   <span>My Vehicle Enquiries</span>
                 </Link>
@@ -262,84 +267,80 @@ function LoggedUser() {
             </div>
             <form onSubmit={handleSumit}>
               <p className="name-lable">Name</p>
-              <>
-                <div className="user-name-input-div">
-                  <input
-                    readOnly={editablename}
-                    value={name?.name}
-                    name="name"
-                    className="user-name-right-input"
-                    onChange={(e) => {
-                      onHandleChange(e);
-                    }}
-                  />
-                  <span
-                    onClick={() => {
-                      seteditablename(false);
-                      // setname("");
-                    }}
-                    onChange={(e) => {
-                      setname(e.target.value);
-                      console.log(name.name);
-                    }}
-                    className="user-name-edit"
-                  >
-                    Edit
-                  </span>
-                </div>
-              </>
+
+              <div className="user-name-input-div">
+                <input
+                  readOnly={editablename}
+                  value={name?.name}
+                  name="name"
+                  className="user-name-right-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                />
+                <span
+                  onClick={() => {
+                    seteditablename(false);
+                    // setname("");
+                  }}
+                  className="user-name-edit"
+                >
+                  Edit
+                </span>
+              </div>
+
               <p className="email-lable">Email</p>
-              <>
-                <div className="user-email-input-div">
-                  <input
-                    readOnly={editableEmail}
-                    value={email?.email}
-                    name="email"
-                    className="user-email-input"
-                    onChange={(e) => {
-                      onHandleChange(e);
-                    }}
-                  ></input>
-                  <span
-                    onClick={() => {
-                      seteditableEmail(false);
-                      setemail("");
-                    }}
-                    className="user-email-edit"
-                  >
-                    Edit
-                  </span>
-                </div>
-              </>
+
+              <div className="user-email-input-div">
+                <input
+                  readOnly={editableEmail}
+                  value={email?.email}
+                  name="email"
+                  className="user-email-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                ></input>
+                <span
+                  onClick={() => {
+                    seteditableEmail(false);
+                    setemail("");
+                  }}
+                  className="user-email-edit"
+                >
+                  Edit
+                </span>
+              </div>
+
               <p className="mobile-lable">Mobile Number</p>
-              <>
-                <div className="user-mobile-input-div">
-                  <input
-                    type="number"
-                    readOnly={editableMob}
-                    value={mob_no?.mob_no}
-                    name="mob_no"
-                    className="user-mobile-input"
-                    onChange={(e) => {
-                      onHandleChange(e);
-                    }}
-                  ></input>
-                  <span
-                    onClick={() => {
-                      seteditableMob(false);
-                      setmob_no("");
-                    }}
-                    className="user-mobile-edit"
-                  >
-                    Edit
-                  </span>
-                </div>
-              </>
+
+              <div className="user-mobile-input-div">
+                <input
+                  type="number"
+                  readOnly={editableMob}
+                  value={mob_no?.mob_no}
+                  name="mob_no"
+                  className="user-mobile-input"
+                  onChange={(e) => {
+                    onHandleChange(e);
+                  }}
+                ></input>
+                <span
+                  onClick={() => {
+                    seteditableMob(false);
+                    setmob_no("");
+                  }}
+                  className="user-mobile-edit"
+                >
+                  Edit
+                </span>
+              </div>
+
               {/* <p className="subs-lable">My Subscription</p>
-          <div className="user-subs-input-div">
-            <input readOnly={true} className="user-subs-input"></input>
-            <span className="user-subs-edit">Edit</span>
-          </div> */}
+                  <div className="user-subs-input-div">
+                    <input readOnly={true} className="user-subs-input"></input>
+                    <span className="user-subs-edit">Edit</span>
+                  </div> */}
               <button className="save-changes-button" type="submit">
                 SAVE CHANGES
               </button>

@@ -11,6 +11,7 @@ import shipping from "../assets/shipping.png";
 import help from "../assets/help.png";
 import logout from "../assets/logout.png";
 import next_arrow from "../assets/next_arrow.svg";
+import myVehicleEnqIco from "../assets/myvehicle_enq.png";
 // import edit_box from "../assets/edit_box.jpg";
 // import edit_pen from "../assets/edit.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -166,7 +167,11 @@ function UserVehicles() {
                 </Link>
               </div>
               <div className="my-order-div">
-                <img className="clipboard-img" src={clipboard} alt=""></img>
+                <img
+                  className="clipboard-img"
+                  src={myVehicleEnqIco}
+                  alt=""
+                ></img>
                 <Link to="/myvehicleenq" className="my-order-text">
                   <span>My Vehicle Enquiries</span>
                 </Link>

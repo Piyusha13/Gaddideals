@@ -1099,9 +1099,8 @@ const VehicleDetails = () => {
                 <div className="heading-container">
                   <div className="title">
                     <h3>
-                      {getvehicledetails?.model
-                        ? getvehicledetails?.model?.name
-                        : "No model found"}
+                      {getvehicledetails?.brand?.title}{" "}
+                      {getvehicledetails?.model?.name}
                     </h3>
                     <div className="truck-location">
                       <img src={locationIcon} alt="location" />
@@ -1486,7 +1485,9 @@ const VehicleDetails = () => {
 
                       <div className="vehicle-info">
                         <div className="title">
-                          <h5>{similar?.brand?.title}</h5>
+                          <h5>
+                            {similar?.brand?.title} {similar?.model?.name}
+                          </h5>
                           <div className="location">
                             <img src={locationIcon} alt="location icon" />
                             <span>{similar?.city?.title}</span>

@@ -404,8 +404,9 @@ const VehicleListings = () => {
     if (searchInput.length > 0) {
       const res = await axios.get(
         `${Constant.getUrls.getAllVehicles}` +
-          `/searchSuggestion?q=` +
-          searchInput.toLowerCase()
+          `?q=` +
+          searchInput.toLowerCase() +
+          "&status=approved"
       );
 
       setVehiclesArray(res.data.vehicle.docs);
@@ -434,16 +435,16 @@ const VehicleListings = () => {
     const response = await axios.get(`${Constant.getUrls.getAllCategories}`);
     if (response) {
       setCategories(response.data.category.docs);
-      if (!location.category) {
-        setCat(response.data.category.docs[0]._id);
-        location.category_name =
-          response.data.category.docs[0].title.toLowerCase();
-        console.log(locationCity);
-        // location.city = cityId;
-        location.category = response.data.category.docs[0]._id;
-        let prevUrl = queryString.stringify(location);
-        navigate("?" + prevUrl);
-      }
+      // if (!location.category) {
+      //   setCat(response.data.category.docs[0]._id);
+      //   location.category_name =
+      //     response.data.category.docs[0].title.toLowerCase();
+      //   console.log(locationCity);
+      //   // location.city = cityId;
+      //   location.category = response.data.category.docs[0]._id;
+      //   let prevUrl = queryString.stringify(location);
+      //   navigate("?" + prevUrl);
+      // }
       fetchVehiclesAPI(location);
     }
   };
@@ -1261,7 +1262,6 @@ const VehicleListings = () => {
                   name="minprice"
                   value={minPrice}
                   onChange={handleMin}
-                  min="0"
                 />
               </div>
               <div className="price-input">
@@ -1272,7 +1272,6 @@ const VehicleListings = () => {
                   name="maxprice"
                   value={maxPrice}
                   onChange={handleMax}
-                  max="1500000"
                 />
               </div>
             </div>
@@ -1665,11 +1664,7 @@ const VehicleListings = () => {
 
               {categories.map((category) => (
                 <a
-                  href={
-                    "/vehiclelistings?category=" +
-                    category._id +
-                    `&city=${locationCity}`
-                  }
+                  href={"/vehiclelistings?category=" + category._id}
                   key={category._id}
                 >
                   <div className="category" key={category._id}>
@@ -1953,7 +1948,9 @@ const VehicleListings = () => {
                   </Link>
                   <div className="vehicle-info">
                     <div className="name">
-                      <h3>{vehicle.brand.title}</h3>
+                      <h3>
+                        {vehicle.brand.title} {vehicle?.model?.name}
+                      </h3>
                       <div className="location">
                         <img src={locationIcon} alt="location-icon" />
                         <span>{vehicle.city.title}</span>

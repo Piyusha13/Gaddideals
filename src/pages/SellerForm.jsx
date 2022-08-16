@@ -319,6 +319,7 @@ const SellerForm = () => {
     let validateModel = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
     let validateVehicleNo =
       /^[A-Z|a-z]{2}\s?[0-9]{1,2}\s?[A-Z|a-z]{0,3}\s?[0-9]{4}$/;
+    let validateNums = /^[1-9]+[0-9]*$/;
 
     if (step === 1) {
       if (stateTitle === "") {
@@ -355,6 +356,18 @@ const SellerForm = () => {
         toast.error("Please enter vaild vehicle number");
       } else if (formData.vehiclenumber === "") {
         toast.error("Vehicle number is required");
+      } else if (formData.kmsdriven) {
+        if (!validateNums.test(formData.kmsdriven)) {
+          toast.error("Please enter valid kilometers");
+        } else {
+          setStep(step + 1);
+        }
+      } else if (formData.noofhrs) {
+        if (!validateNums.test(formData.noofhrs)) {
+          toast.error("Please enter valid no of hrs");
+        } else {
+          setStep(step + 1);
+        }
       } else if (fuel === "") {
         toast.error("Fuel type is required");
       } else {
@@ -365,8 +378,32 @@ const SellerForm = () => {
     if (step === 2) {
       if (tyreCondition === "") {
         toast.error("Tyre condition is required");
+      } else if (formData.nooftyres) {
+        if (!validateNums.test(formData.nooftyres)) {
+          toast.error("Please enter valid no of tyres");
+        } else {
+          setStep(step + 1);
+        }
+      } else if (formData.horsepower) {
+        if (!validateNums.test(formData.horsepower)) {
+          toast.error("Please enter valid no of horsepower");
+        } else {
+          setStep(step + 1);
+        }
+      } else if (formData.noofseats) {
+        if (!validateNums.test(formData.noofseats)) {
+          toast.error("Please enter valid no of seats");
+        } else {
+          setStep(step + 1);
+        }
       } else if (formData.pricingvehicle === "") {
         toast.error("Vehicle price is required");
+      } else if (formData.pricingvehicle) {
+        if (!validateNums.test(formData.pricingvehicle)) {
+          toast.error("Please enter vaild price of the vehicle");
+        } else {
+          setStep(step + 1);
+        }
       } else if (rc === "") {
         toast.error("RC is required");
       } else {
@@ -1048,6 +1085,7 @@ const SellerForm = () => {
             handleOnChange={handleOnChange}
             setYearTitle={setYearTitle}
             setYear={setYear}
+            year={year}
             yearTitle={yearTitle}
             setFuel={setFuel}
             setOwner={setOwner}
@@ -1063,6 +1101,7 @@ const SellerForm = () => {
             setCityTitle={setCityTitle}
             stateTitle={stateTitle}
             setStateId={setStateId}
+            stateId={stateId}
             setStateTitle={setStateTitle}
             setBrandId={setBrandId}
             setBrandTitle={setBrandTitle}
@@ -1085,6 +1124,7 @@ const SellerForm = () => {
             setCitySuggestionBox={setCitySuggestionBox}
             modelSuggestionBox={modelSuggestionBox}
             setModelSuggestionBox={setModelSuggestionBox}
+            vehicleID={vehicleID}
           />
         </>
       );

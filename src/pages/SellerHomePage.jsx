@@ -963,7 +963,10 @@ const SellerHomePage = () => {
                           <div className="latest-info">
                             <div className="latest-header">
                               <div className="latest-title">
-                                <h5>{latestTruck?.brand?.title}</h5>
+                                <h5>
+                                  {latestTruck?.brand?.title}{" "}
+                                  {latestTruck?.model?.name}
+                                </h5>
                                 <div className="latest-location">
                                   <img src={locationIcon} alt="location icon" />
                                   <span>{latestTruck.city.title}</span>
@@ -1045,7 +1048,10 @@ const SellerHomePage = () => {
                           <div className="latest-info">
                             <div className="latest-header">
                               <div className="latest-title">
-                                <h5>{latestBuses?.brand?.title}</h5>
+                                <h5>
+                                  {latestBuses?.brand?.title}{" "}
+                                  {latestBuses?.model?.name}
+                                </h5>
 
                                 <div className="latest-location">
                                   <img src={locationIcon} alt="location icon" />
@@ -1129,7 +1135,10 @@ const SellerHomePage = () => {
                           <div className="latest-info">
                             <div className="latest-header">
                               <div className="latest-title">
-                                <h5>{latestTractor?.brand?.title}</h5>
+                                <h5>
+                                  {latestTractor?.brand?.title}{" "}
+                                  {latestTractor?.model?.name}
+                                </h5>
 
                                 <div className="latest-location">
                                   <img src={locationIcon} alt="location icon" />
@@ -1220,7 +1229,10 @@ const SellerHomePage = () => {
                           <div className="latest-info">
                             <div className="latest-header">
                               <div className="latest-title">
-                                <h5>{latestConstruction?.brand?.title}</h5>
+                                <h5>
+                                  {latestConstruction?.brand?.title}{" "}
+                                  {latestConstruction?.model?.name}
+                                </h5>
 
                                 <div className="latest-location">
                                   <img src={locationIcon} alt="location icon" />

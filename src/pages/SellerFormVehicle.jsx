@@ -86,6 +86,9 @@ const SellerFormVehicle = ({
   modelSuggestionBox,
   setModelSuggestionBox,
   fetchCities,
+  vehicleID,
+  year,
+  stateId,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
@@ -93,6 +96,8 @@ const SellerFormVehicle = ({
   const [seeMoreSuggestion, setSeeMoreSuggestion] = useState(false);
 
   const [overlayState, setOverlayState] = useState(false);
+
+  const [disableCity, setDisableCity] = useState(true);
 
   const continueNext = (e) => {
     e.preventDefault();
@@ -125,6 +130,7 @@ const SellerFormVehicle = ({
   const handleOnStateFocus = (e) => {
     setOverlayState(true);
     setStatesSuggestionBox(true);
+    setCitySuggestionBox(false);
   };
 
   const handleOnCityFocus = (e) => {
@@ -137,6 +143,18 @@ const SellerFormVehicle = ({
     fetchVehiclesArray();
     fetchFuelTypeArray();
   }, []);
+
+  const checkYearActive = (yearTitle) => {
+    return yearTitle;
+  };
+
+  if (vehicleID) {
+    const idx = yearsArray.find(
+      (year, index) => index === checkYearActive(yearTitle)
+    );
+    console.log(idx);
+    setIsYearActive(idx);
+  }
 
   return (
     <>
@@ -214,6 +232,7 @@ const SellerFormVehicle = ({
                             setStateId(state._id);
                             fetchCities(state?._id);
                             setStateTitle(state.title);
+                            setDisableCity((prevDisabled) => !prevDisabled);
                             setStatesSuggestionBox(false);
                           }}
                         >
@@ -237,6 +256,7 @@ const SellerFormVehicle = ({
                     value={cityTitle && cityTitle}
                     placeholder="Pune"
                     onChange={handleCityChange}
+                    disabled={disableCity}
                     onFocus={handleOnCityFocus}
                   />
 
@@ -332,10 +352,22 @@ const SellerFormVehicle = ({
                 </label>
                 <div className="years">
                   {isYearActive > 5 && (
-                    <div className={"year active"}>
+                    <div className="year active">
                       <span>{yearTitle}</span>
                     </div>
                   )}
+                  {/* {vehicleID && (
+                    <>
+                      {year ? (
+                        ""
+                      ) : (
+                        <div className="year active">
+                          <span>{year === "" ? yearTitle : "No Year"}</span>
+                        </div>
+                      )}
+                    </>
+                  )} */}
+
                   {yearsArray.slice(0, 6).map((years, index) => (
                     <>
                       {years.year <= currentYear && (
@@ -348,7 +380,6 @@ const SellerFormVehicle = ({
                             setYearTitle(years.year);
                             setIsYearActive(index);
                             tagsArray.push(years.year);
-                            console.log(index);
                           }}
                           key={years._id}
                         >
@@ -431,6 +462,11 @@ const SellerFormVehicle = ({
               <div className="form-controls">
                 <label htmlFor="owners">Number of owners</label>
                 <div className="owners">
+                  {vehicleID && (
+                    <div className="owner active">
+                      <span>{owner === undefined ? "No Owner" : owner}</span>
+                    </div>
+                  )}
                   {ownersArray.map((owners, index) => (
                     <div
                       key={index}

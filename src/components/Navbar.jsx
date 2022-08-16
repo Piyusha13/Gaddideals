@@ -1015,7 +1015,13 @@ const Navbar = () => {
                   {filterBrandsArray.map((brand) => (
                     <a
                       key={brand._id}
-                      href={`/vehiclelistings?brand[]=` + brand?._id}
+                      href={
+                        location.category
+                          ? `/vehiclelistings?brand[]=` +
+                            brand?._id +
+                            `&category=${location.category}`
+                          : `/vehiclelistings?brand[]=` + brand?._id
+                      }
                       data-bs-toggle="tooltip"
                       data-bs-title="Default tooltip"
                     >
@@ -1032,7 +1038,13 @@ const Navbar = () => {
                   {filterModelsArray.map((model) => (
                     <a
                       key={model._id}
-                      href={`/vehiclelistings?model[]=` + model?._id}
+                      href={
+                        location.category
+                          ? `/vehiclelistings?model[]=` +
+                            model?._id +
+                            `&category=${location.category}`
+                          : `/vehiclelistings?model[]=` + model?._id
+                      }
                       data-bs-toggle="tooltip"
                       data-bs-title="Default tooltip"
                     >
