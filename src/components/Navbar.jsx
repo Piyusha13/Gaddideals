@@ -59,6 +59,7 @@ import {
   selectMobSignInValue,
 } from "../store/signup/signup.selector";
 import loadGT from "../Helpers/gtt_loader";
+import { log } from "util";
 
 const queryString = require("query-string");
 
@@ -497,15 +498,15 @@ const Navbar = () => {
   }
 
   //website timer fuction
-  const [counter, setCounter] = React.useState(59);
-  React.useEffect(() => {
-    const timer =
-      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-    if (counter === 0) {
-      setEnableResendOtp(true);
-    }
-    return () => clearInterval(timer);
-  }, [counter]);
+  const [counter, setCounter] = useState(59);
+  // React.useEffect(() => {
+  //   const timer =
+  //     counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+  //   if (counter === 0) {
+  //     setEnableResendOtp(true);
+  //   }
+  //   return () => clearInterval(timer);
+  // }, [counter]);
 
   //moile login section
 
@@ -909,11 +910,32 @@ const Navbar = () => {
     return true;
   };
 
+  async function userName() {
+    await axios
+      .get(Constant.getUrls.getUser, {
+        headers: {
+          Authorization: ` Bearer ${token} `,
+        },
+      })
+      .then((res) => {
+        setname(res?.data?.user?.name);
+        console.log(res);
+        console.log(res?.data?.user?.name);
+      });
+  }
+
+  useEffect(() => {
+    if (token) {
+      userName();
+    }
+  }, []);
+
   return (
     <>
       {/* signup with google in mobile */}
 
-      {sellBuyContainerOnScroll && (
+      <div className="header">
+        {/* {sellBuyContainerOnScroll && ( */}
         <div
           className="sell-buy-container-moile"
           onscroll={() => {
@@ -927,108 +949,108 @@ const Navbar = () => {
             <button className="sell-btn">Sell used commercial vehicle</button>
           </Link>
         </div>
-      )}
-      <div
-        className="sell-buy-container-desktop"
-        onscroll={() => {
-          setsellBuyContainerOnScroll(false);
-        }}
-      >
-        <Link to="/vehiclelistings">
-          <button>Buy used commercial vehicle</button>
-        </Link>
-        <Link to="/sellerhome">
-          <button className="sell-btn">Sell used commercial vehicle</button>
-        </Link>
-      </div>
+        {/* )} */}
+        <div
+          className="sell-buy-container-desktop"
+          onscroll={() => {
+            setsellBuyContainerOnScroll(false);
+          }}
+        >
+          <Link to="/vehiclelistings">
+            <button>Buy used commercial vehicle</button>
+          </Link>
+          <Link to="/sellerhome">
+            <button className="sell-btn">Sell used commercial vehicle</button>
+          </Link>
+        </div>
 
-      <nav className="navbar navbar-expand-lg nav-container">
-        <div className="container-fluid gd_container navar_div">
-          <div className="logo">
-            <a href="/" className="navbar-brand">
-              <img src={logoIcon} alt="logo" />
-            </a>
-          </div>
+        <nav className="navbar navbar-expand-lg nav-container">
+          <div className="container-fluid gd_container navar_div">
+            <div className="logo">
+              <a href="/" className="navbar-brand">
+                <img src={logoIcon} alt="logo" />
+              </a>
+            </div>
 
-          <div className="brand-categories">
-            {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
-              <Tooltip title={catgeoryIcon?.title} placement="bottom" arrow>
-                <a
-                  href={"/vehiclelistings?category=" + catgeoryIcon._id}
-                  className={`${
-                    activeCategory === catgeoryIcon._id
-                      ? "brand-category active"
-                      : "brand-category"
-                  }`}
-                  onClick={() => {
-                    setActiveCategory(index);
-                    // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
-                  }}
-                  key={catgeoryIcon._id}
-                >
-                  <img
-                    src={`${imgurl}${catgeoryIcon.icon}`}
-                    alt={catgeoryIcon.title}
-                  />
-                </a>
-              </Tooltip>
-            ))}
-          </div>
-
-          <div onClick={Openmenu} className="hamburger-menu ">
-            <img src={hamburgerIcon} alt="mobile menu" />
-          </div>
-
-          <div className="search-container">
-            <img src={searchIcon} alt="search icon" className="search-icon" />
-            <input
-              type="search"
-              placeholder="Search"
-              value={searchValue}
-              onChange={handleSearchChange}
-            />
-
-            {searchSuggestion && (
-              <div className="search-nav-suggestion">
-                {filterBrandsArray.map((brand) => (
+            <div className="brand-categories">
+              {navIcons.slice(0, 4).map((catgeoryIcon, index) => (
+                <Tooltip title={catgeoryIcon?.title} placement="bottom" arrow>
                   <a
-                    key={brand._id}
-                    href={`/vehiclelistings?brand[]=` + brand?._id}
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Default tooltip"
+                    href={"/vehiclelistings?category=" + catgeoryIcon._id}
+                    className={`${
+                      activeCategory === catgeoryIcon._id
+                        ? "brand-category active"
+                        : "brand-category"
+                    }`}
+                    onClick={() => {
+                      setActiveCategory(index);
+                      // navigate("/vehiclelistings?category=" + catgeoryIcon._id);
+                    }}
+                    key={catgeoryIcon._id}
                   >
-                    <p
-                      onClick={() => {
-                        setSearchValue(brand.title);
-                        setSearchSuggestion(!searchSuggestion);
-                      }}
-                    >
-                      {brand.title}
-                    </p>
+                    <img
+                      src={`${imgurl}${catgeoryIcon.icon}`}
+                      alt={catgeoryIcon.title}
+                    />
                   </a>
-                ))}
-                {filterModelsArray.map((model) => (
-                  <a
-                    key={model._id}
-                    href={`/vehiclelistings?model[]=` + model?._id}
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Default tooltip"
-                  >
-                    <p
-                      onClick={() => {
-                        setSearchValue(model.title);
-                        setSearchSuggestion(!searchSuggestion);
-                      }}
-                    >
-                      {model.name}
-                    </p>
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
+                </Tooltip>
+              ))}
+            </div>
 
-          {/* <div className="location-container sm-device">
+            <div onClick={Openmenu} className="hamburger-menu ">
+              <img src={hamburgerIcon} alt="mobile menu" />
+            </div>
+
+            <div className="search-container">
+              <img src={searchIcon} alt="search icon" className="search-icon" />
+              <input
+                type="search"
+                placeholder="Search"
+                value={searchValue}
+                onChange={handleSearchChange}
+              />
+
+              {searchSuggestion && (
+                <div className="search-nav-suggestion">
+                  {filterBrandsArray.map((brand) => (
+                    <a
+                      key={brand._id}
+                      href={`/vehiclelistings?brand[]=` + brand?._id}
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Default tooltip"
+                    >
+                      <p
+                        onClick={() => {
+                          setSearchValue(brand.title);
+                          setSearchSuggestion(!searchSuggestion);
+                        }}
+                      >
+                        {brand.title}
+                      </p>
+                    </a>
+                  ))}
+                  {filterModelsArray.map((model) => (
+                    <a
+                      key={model._id}
+                      href={`/vehiclelistings?model[]=` + model?._id}
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Default tooltip"
+                    >
+                      <p
+                        onClick={() => {
+                          setSearchValue(model.title);
+                          setSearchSuggestion(!searchSuggestion);
+                        }}
+                      >
+                        {model.name}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* <div className="location-container sm-device">
             <div
               className="location"
               onClick={() => setLangDropdown(!langDropdown)}
@@ -1081,165 +1103,166 @@ const Navbar = () => {
             )}
           </div> */}
 
-          <div className="languages-container">
-            <div className="language">
-              <span className="SelectedLanguageDecoration notranslate">
-                {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
-              </span>
+            <div className="languages-container">
+              <div className="language">
+                <span className="SelectedLanguageDecoration notranslate">
+                  {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
+                </span>
+              </div>
+
+              <div className="language-arrow-icon">
+                <img
+                  onClick={() => {
+                    setdropdown(!dropdown);
+                  }}
+                  src={dropdown ? upArrowIcon : downArrow}
+                  alt="down arrow"
+                />
+              </div>
+              {dropdown && (
+                <div className="drop-down">
+                  <p
+                    onClick={() => {
+                      // window.location.reload();
+                      // updateLanguage("en");
+                      setselectedLanguage("en");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "en";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "en");
+                      // return console.log(a.value)
+                      // window.location.reload();
+                      location.lang = "en";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-1 notranslate"
+                  >
+                    English
+                  </p>
+                  <p
+                    onClick={() => {
+                      setselectedLanguage("hi");
+                      // updateLanguage("hi");
+                      setdropdown(!dropdown);
+                      var a = document.querySelector(
+                        "#google_translate_element select"
+                      );
+                      a.value = "hi";
+                      a.dispatchEvent(new Event("change"));
+                      localStorage.setItem("lang", "hi");
+                      // window.location.reload();
+                      // return console.log(a.value);
+
+                      location.lang = "hi";
+                      let prevUrl = queryString.stringify(location);
+                      window.location.href =
+                        window.location.pathname + "?" + prevUrl;
+                    }}
+                    className="language-2 notranslate"
+                  >
+                    हिन्दी
+                  </p>
+                </div>
+              )}
             </div>
 
-            <div className="language-arrow-icon">
-              <img
+            {token ? (
+              <Link to="/loggeduser">
+                <div className="user">
+                  <img src={userIcon} alt="user icon" />
+                  <span>Hello {name.substring(0, name.indexOf(" "))}</span>
+                </div>
+              </Link>
+            ) : (
+              <div
                 onClick={() => {
-                  setdropdown(!dropdown);
+                  setvisible(!visible);
+                  setonclose(!onclose);
                 }}
-                src={dropdown ? upArrowIcon : downArrow}
-                alt="down arrow"
-              />
-            </div>
-            {dropdown && (
-              <div className="drop-down">
-                <p
-                  onClick={() => {
-                    // window.location.reload();
-                    // updateLanguage("en");
-                    setselectedLanguage("en");
-                    setdropdown(!dropdown);
-                    var a = document.querySelector(
-                      "#google_translate_element select"
-                    );
-                    a.value = "en";
-                    a.dispatchEvent(new Event("change"));
-                    localStorage.setItem("lang", "en");
-                    // return console.log(a.value)
-                    // window.location.reload();
-                    location.lang = "en";
-                    let prevUrl = queryString.stringify(location);
-                    window.location.href =
-                      window.location.pathname + "?" + prevUrl;
-                  }}
-                  className="language-1 notranslate"
-                >
-                  English
-                </p>
-                <p
-                  onClick={() => {
-                    setselectedLanguage("hi");
-                    // updateLanguage("hi");
-                    setdropdown(!dropdown);
-                    var a = document.querySelector(
-                      "#google_translate_element select"
-                    );
-                    a.value = "hi";
-                    a.dispatchEvent(new Event("change"));
-                    localStorage.setItem("lang", "hi");
-                    // window.location.reload();
-                    // return console.log(a.value);
-
-                    location.lang = "hi";
-                    let prevUrl = queryString.stringify(location);
-                    window.location.href =
-                      window.location.pathname + "?" + prevUrl;
-                  }}
-                  className="language-2 notranslate"
-                >
-                  हिन्दी
-                </p>
+                className="user"
+              >
+                <img src={userIcon} alt="user icon" />
               </div>
             )}
           </div>
-
-          {token ? (
-            <Link to="/loggeduser">
-              <div className="user">
-                <img src={userIcon} alt="user icon" />
-              </div>
-            </Link>
-          ) : (
-            <div
-              onClick={() => {
-                setvisible(!visible);
-                setonclose(!onclose);
-              }}
-              className="user"
-            >
-              <img src={userIcon} alt="user icon" />
-            </div>
-          )}
-        </div>
-        {/* open hamurger menue */}
-        {hamburgervisile && (
-          <div className="mob-menue-container">
-            <div className="mob-top-div">
-              <div className="mob-languages-container">
-                <div className="language">
-                  <span className="SelectedLanguageDecoration notranslate">
-                    {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
-                  </span>
-                </div>
-                <div className="language-arrow-icon">
-                  <img
-                    onClick={() => {
-                      setdropdown(!dropdown);
-                    }}
-                    src={dropdown ? upArrowIcon : downArrow}
-                    alt="down arrow"
-                  />
-                </div>
-                {dropdown && (
-                  <div className="drop-down">
-                    <p
-                      onClick={() => {
-                        // window.location.reload();
-                        // updateLanguage("en");
-                        setselectedLanguage("en");
-                        setdropdown(!dropdown);
-                        var a = document.querySelector(
-                          "#google_translate_element select"
-                        );
-                        a.value = "en";
-                        a.dispatchEvent(new Event("change"));
-                        localStorage.setItem("lang", "en");
-                        // return console.log(a.value)
-                        // window.location.reload();
-                        location.lang = "en";
-                        let prevUrl = queryString.stringify(location);
-                        window.location.href =
-                          window.location.pathname + "?" + prevUrl;
-                      }}
-                      className="language-1 notranslate"
-                    >
-                      English
-                    </p>
-                    <p
-                      onClick={() => {
-                        setselectedLanguage("hi");
-                        // updateLanguage("hi");
-                        setdropdown(!dropdown);
-                        var a = document.querySelector(
-                          "#google_translate_element select"
-                        );
-                        a.value = "hi";
-                        a.dispatchEvent(new Event("change"));
-                        localStorage.setItem("lang", "hi");
-                        // window.location.reload();
-                        // return console.log(a.value);
-
-                        location.lang = "hi";
-                        let prevUrl = queryString.stringify(location);
-                        window.location.href =
-                          window.location.pathname + "?" + prevUrl;
-                      }}
-                      className="language-2 notranslate"
-                    >
-                      हिन्दी
-                    </p>
+          {/* open hamurger menue */}
+          {hamburgervisile && (
+            <div className="mob-menue-container">
+              <div className="mob-top-div">
+                <div className="mob-languages-container">
+                  <div className="language">
+                    <span className="SelectedLanguageDecoration notranslate">
+                      {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
+                    </span>
                   </div>
-                )}
-              </div>
-              {/* <input placeholder="Location" className="mob-location-input" />
+                  <div className="language-arrow-icon">
+                    <img
+                      onClick={() => {
+                        setdropdown(!dropdown);
+                      }}
+                      src={dropdown ? upArrowIcon : downArrow}
+                      alt="down arrow"
+                    />
+                  </div>
+                  {dropdown && (
+                    <div className="drop-down">
+                      <p
+                        onClick={() => {
+                          // window.location.reload();
+                          // updateLanguage("en");
+                          setselectedLanguage("en");
+                          setdropdown(!dropdown);
+                          var a = document.querySelector(
+                            "#google_translate_element select"
+                          );
+                          a.value = "en";
+                          a.dispatchEvent(new Event("change"));
+                          localStorage.setItem("lang", "en");
+                          // return console.log(a.value)
+                          // window.location.reload();
+                          location.lang = "en";
+                          let prevUrl = queryString.stringify(location);
+                          window.location.href =
+                            window.location.pathname + "?" + prevUrl;
+                        }}
+                        className="language-1 notranslate"
+                      >
+                        English
+                      </p>
+                      <p
+                        onClick={() => {
+                          setselectedLanguage("hi");
+                          // updateLanguage("hi");
+                          setdropdown(!dropdown);
+                          var a = document.querySelector(
+                            "#google_translate_element select"
+                          );
+                          a.value = "hi";
+                          a.dispatchEvent(new Event("change"));
+                          localStorage.setItem("lang", "hi");
+                          // window.location.reload();
+                          // return console.log(a.value);
+
+                          location.lang = "hi";
+                          let prevUrl = queryString.stringify(location);
+                          window.location.href =
+                            window.location.pathname + "?" + prevUrl;
+                        }}
+                        className="language-2 notranslate"
+                      >
+                        हिन्दी
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
-              {/* <div className="location-container">
+                {/* <div className="location-container">
               <div
                 className="location"
                 onClick={() => setLangDropdown(!langDropdown)}
@@ -1292,1118 +1315,304 @@ const Navbar = () => {
                 </div>
               )}
             </div> */}
-            </div>
+              </div>
 
-            <div className="mob-middle-div">
-              <button
-                className="mob-login-button"
-                onClick={() => {
-                  setshowsignup(!showsignup);
-                  sethamburgervisile(!hamburgervisile);
-                }}
-              >
-                {" "}
-                Login
-              </button>
-              <button
-                className="mob-register-button"
-                onClick={() => {
-                  setshowSignIn(!showSignIn);
-                  sethamburgervisile(!hamburgervisile);
-                }}
-              >
-                Register
-              </button>
-            </div>
-            <div className="mob-lower-div">
-              <Link to="/AboutUs">
-                <p className="mob-lower-div-text">About Us</p>
-              </Link>
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/UserFaq";
-                }}
-              >
-                FAQ
-              </p>
-              <Link to="/PrivacyPolicy">
-                <p className="mob-lower-div-text">Privacy Policy</p>
-              </Link>
-              <Link to="/termsandconditions">
-                <p className="mob-lower-div-text">Terms and Condition</p>
-              </Link>
-              <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
-            </div>
-          </div>
-        )}
-
-        {LoggedUserHamburgerMenue && (
-          <div className="mob-menue-container">
-            <div className="mob-top-div">
-              {/* <input placeholder="Location" className="mob-location-input" />
-            <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
-              <div className="mob-languages-container">
-                <div className="language">
-                  <span className="SelectedLanguageDecoration notranslate">
-                    {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
-                  </span>
-                </div>
-                <div className="language-arrow-icon">
-                  <img
-                    onClick={() => {
-                      setdropdown(!dropdown);
-                    }}
-                    src={dropdown ? upArrowIcon : downArrow}
-                    alt="down arrow"
-                  />
-                </div>
-                {dropdown && (
-                  <div className="drop-down">
-                    <p
-                      onClick={() => {
-                        // window.location.reload();
-                        // updateLanguage("en");
-                        setselectedLanguage("en");
-                        setdropdown(!dropdown);
-                        var a = document.querySelector(
-                          "#google_translate_element select"
-                        );
-                        a.value = "en";
-                        a.dispatchEvent(new Event("change"));
-                        localStorage.setItem("lang", "en");
-                        // return console.log(a.value)
-                        // window.location.reload();
-                        location.lang = "en";
-                        let prevUrl = queryString.stringify(location);
-                        window.location.href =
-                          window.location.pathname + "?" + prevUrl;
-                      }}
-                      className="language-1 notranslate"
-                    >
-                      English
-                    </p>
-                    <p
-                      onClick={() => {
-                        setselectedLanguage("hi");
-                        // updateLanguage("hi");
-                        setdropdown(!dropdown);
-                        var a = document.querySelector(
-                          "#google_translate_element select"
-                        );
-                        a.value = "hi";
-                        a.dispatchEvent(new Event("change"));
-                        localStorage.setItem("lang", "hi");
-                        // window.location.reload();
-                        // return console.log(a.value);
-
-                        location.lang = "hi";
-                        let prevUrl = queryString.stringify(location);
-                        window.location.href =
-                          window.location.pathname + "?" + prevUrl;
-                      }}
-                      className="language-2 notranslate"
-                    >
-                      हिन्दी
-                    </p>
-                  </div>
-                )}
+              <div className="mob-middle-div">
+                <button
+                  className="mob-login-button"
+                  onClick={() => {
+                    setshowsignup(!showsignup);
+                    sethamburgervisile(!hamburgervisile);
+                  }}
+                >
+                  {" "}
+                  Login
+                </button>
+                <button
+                  className="mob-register-button"
+                  onClick={() => {
+                    setshowSignIn(!showSignIn);
+                    sethamburgervisile(!hamburgervisile);
+                  }}
+                >
+                  Register
+                </button>
+              </div>
+              <div className="mob-lower-div">
+                <Link to="/AboutUs">
+                  <p className="mob-lower-div-text">About Us</p>
+                </Link>
+                <p
+                  className="mob-lower-div-text"
+                  onClick={() => {
+                    window.location.href = "/UserFaq";
+                  }}
+                >
+                  FAQ
+                </p>
+                <Link to="/PrivacyPolicy">
+                  <p className="mob-lower-div-text">Privacy Policy</p>
+                </Link>
+                <Link to="/termsandconditions">
+                  <p className="mob-lower-div-text">Terms and Condition</p>
+                </Link>
+                <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
               </div>
             </div>
+          )}
 
-            <div className="mob-LoggedUser-middle-div">
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/loggeduser";
-                }}
-              >
-                My Profile
-              </p>
-              {/* <Link to="/UserVehicles"> */}
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/UserVehicles";
-                }}
-              >
-                My Vehicle
-              </p>
-              {/* </Link> */}
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/UserOrder";
-                }}
-              >
-                My Enquiries
-              </p>
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/myvehicleenq";
-                }}
-              >
-                My Vehicle Enquiries
-              </p>
-              <p className="mob-lower-div-text">My Order</p>
-            </div>
-            <div className="mob-lower-div">
-              <Link to="/AboutUs">
-                <p className="mob-lower-div-text">About Us</p>
-              </Link>
-              <p
-                className="mob-lower-div-text"
-                onClick={() => {
-                  window.location.href = "/UserFaq";
-                }}
-              >
-                FAQ
-              </p>
-              <Link to="/PrivacyPolicy">
-                <p className="mob-lower-div-text">Privacy Policy</p>
-              </Link>
-              <Link to="/termsandconditions">
-                <p className="mob-lower-div-text">Terms and Condition</p>
-              </Link>
-              <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
-              <p
-                className="mob-lower-div-text mob-contact-us"
-                onClick={logoutAccount}
-              >
-                Sign out
-              </p>
-            </div>
-          </div>
-        )}
+          {LoggedUserHamburgerMenue && (
+            <div className="mob-menue-container">
+              <div className="mob-top-div">
+                {/* <input placeholder="Location" className="mob-location-input" />
+            <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
+                <div className="mob-languages-container">
+                  <div className="language">
+                    <span className="SelectedLanguageDecoration notranslate">
+                      {selectedLanguage === "en" ? "English" : "हिन्दी"}{" "}
+                    </span>
+                  </div>
+                  <div className="language-arrow-icon">
+                    <img
+                      onClick={() => {
+                        setdropdown(!dropdown);
+                      }}
+                      src={dropdown ? upArrowIcon : downArrow}
+                      alt="down arrow"
+                    />
+                  </div>
+                  {dropdown && (
+                    <div className="drop-down">
+                      <p
+                        onClick={() => {
+                          // window.location.reload();
+                          // updateLanguage("en");
+                          setselectedLanguage("en");
+                          setdropdown(!dropdown);
+                          var a = document.querySelector(
+                            "#google_translate_element select"
+                          );
+                          a.value = "en";
+                          a.dispatchEvent(new Event("change"));
+                          localStorage.setItem("lang", "en");
+                          // return console.log(a.value)
+                          // window.location.reload();
+                          location.lang = "en";
+                          let prevUrl = queryString.stringify(location);
+                          window.location.href =
+                            window.location.pathname + "?" + prevUrl;
+                        }}
+                        className="language-1 notranslate"
+                      >
+                        English
+                      </p>
+                      <p
+                        onClick={() => {
+                          setselectedLanguage("hi");
+                          // updateLanguage("hi");
+                          setdropdown(!dropdown);
+                          var a = document.querySelector(
+                            "#google_translate_element select"
+                          );
+                          a.value = "hi";
+                          a.dispatchEvent(new Event("change"));
+                          localStorage.setItem("lang", "hi");
+                          // window.location.reload();
+                          // return console.log(a.value);
 
-        {MobGSignUp && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={MobGSignUp}
-              onClickAway={() => {
-                setMobGSignUp(!MobGSignUp);
-                clearAllStates();
-              }}
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
-                <img
-                  className="mob-resp-closing-arrow"
-                  onClick={() => {
-                    setMobGSignUp(!MobGSignUp);
-                    clearAllStates();
-                  }}
-                  src={closingArrow}
-                  alt=""
-                ></img>
-                <p className="mob-resp-signin-text">
-                  Sign up to
-                  <span className="text-color-blue"> Gaddideals </span>
-                </p>
-
-                <input
-                  className="mob-resp-name-input"
-                  onChange={(e) => {
-                    setname(e.target.value);
-                  }}
-                  value={name}
-                  type="text"
-                  placeholder="Name "
-                />
-                <input
-                  className="mob-resp-name-input"
-                  onChange={(e) => {
-                    setmob_no(e.target.value);
-                  }}
-                  value={mob_no}
-                  maxLength={10}
-                  placeholder="Mobile number "
-                />
-                <input
-                  className="mob-resp-name-input"
-                  onChange={(e) => {
-                    setemail(e.target.value);
-                  }}
-                  value={email}
-                  type="email"
-                  placeholder="Email "
-                />
-                <div className="mob-resp-location-div">
-                  <input
-                    className="mob-resp-location-input"
-                    onChange={(e) => {
-                      setcity(e.target.value);
-                    }}
-                    value={city}
-                    type="text"
-                    placeholder="Location "
-                    onFocus={() => {
-                      setlocationDropDown(!locationDropDown);
-                    }}
-                  />
-                  <img src={locationIcon} alt=""></img>
-                  {locationDropDown && (
-                    <div className="sign-up-loaction-drop-down">
-                      {filterCurentCities.map((data) => (
-                        <p
-                          onClick={() => {
-                            setcity(data.City);
-                            setlocationDropDown(false);
-                          }}
-                        >
-                          {data.City}
-                        </p>
-                      ))}
+                          location.lang = "hi";
+                          let prevUrl = queryString.stringify(location);
+                          window.location.href =
+                            window.location.pathname + "?" + prevUrl;
+                        }}
+                        className="language-2 notranslate"
+                      >
+                        हिन्दी
+                      </p>
                     </div>
                   )}
                 </div>
-                <button
-                  className="mob-resp-next-button"
-                  onClick={() => {
-                    setMobileSignup();
-                  }}
-                >
-                  SIGN UP
-                </button>
+              </div>
+
+              <div className="mob-LoggedUser-middle-div">
                 <p
-                  className="mob-resp-already-a-member-text"
+                  className="mob-lower-div-text"
                   onClick={() => {
-                    setshowSignIn(!showSignIn); //closing signup page
-                    setshowsignup(!showsignup); //opening signin page
+                    window.location.href = "/loggeduser";
                   }}
                 >
-                  <span className="text-color-blue">
-                    Already a user? SIGN IN
-                  </span>
+                  My Profile
+                </p>
+                {/* <Link to="/UserVehicles"> */}
+                <p
+                  className="mob-lower-div-text"
+                  onClick={() => {
+                    window.location.href = "/UserVehicles";
+                  }}
+                >
+                  My Vehicle
+                </p>
+                {/* </Link> */}
+                <p
+                  className="mob-lower-div-text"
+                  onClick={() => {
+                    window.location.href = "/UserOrder";
+                  }}
+                >
+                  My Enquiries
+                </p>
+                <p
+                  className="mob-lower-div-text"
+                  onClick={() => {
+                    window.location.href = "/myvehicleenq";
+                  }}
+                >
+                  My Vehicle Enquiries
+                </p>
+                <p className="mob-lower-div-text">My Order</p>
+              </div>
+              <div className="mob-lower-div">
+                <Link to="/AboutUs">
+                  <p className="mob-lower-div-text">About Us</p>
+                </Link>
+                <p
+                  className="mob-lower-div-text"
+                  onClick={() => {
+                    window.location.href = "/UserFaq";
+                  }}
+                >
+                  FAQ
+                </p>
+                <Link to="/PrivacyPolicy">
+                  <p className="mob-lower-div-text">Privacy Policy</p>
+                </Link>
+                <Link to="/termsandconditions">
+                  <p className="mob-lower-div-text">Terms and Condition</p>
+                </Link>
+                <p className="mob-lower-div-text mob-contact-us">Contact Us</p>
+                <p
+                  className="mob-lower-div-text mob-contact-us"
+                  onClick={logoutAccount}
+                >
+                  Sign out
                 </p>
               </div>
-            </Modal>
-          </div>
-        )}
-        {/* signup with google */}
-        {GSignUp && (
-          <div className="signup-main_parent">
-            <div
-              className="signup-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setvisibleSignUp(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
+            </div>
+          )}
 
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="signup-closing-arrow"
-                onClick={() => {
+          {MobGSignUp && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={MobGSignUp}
+                onClickAway={() => {
+                  setMobGSignUp(!MobGSignUp);
                   clearAllStates();
-                  setonclose(false);
-                  setTimeout(() => {
-                    setvisible(false);
-                  }, 300);
-                  setTimeout(() => {
-                    setGSignUp(false);
-                  }, 300);
                 }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="signup-sign-in-title">
-                Sign up to
-                <span className="signup-text-color-blue"> Gaddideals </span>
-              </p>
-              <input
-                onChange={(e) => {
-                  setname(e.target.value);
-                }}
-                value={name}
-                type="text"
-                className="signup-phone-no-input"
-                placeholder="Name "
-              />
-              <input
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
-                maxLength={10}
-                className="signup-phone-no-input"
-                placeholder="Mobile number "
-                // type="number"
-              />
-              <input
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                value={email}
-                type="email"
-                className="signup-phone-no-input"
-                placeholder="Email "
-              />
-              <div className="SinguplocationIcon">
-                <input
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
-                  value={city}
-                  type="text"
-                  className="signup-location-input"
-                  placeholder="Location "
-                />
-                <img
-                  className="Singup-location-Icon"
-                  src={SinguplocationIcon}
-                  alt=""
-                ></img>
-              </div>
-              {hidePassword ? null : (
-                <>
-                  <input
-                    onChange={(e) => {
-                      setpassword(e.target.value);
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={() => {
+                      setMobGSignUp(!MobGSignUp);
+                      clearAllStates();
                     }}
-                    value={password}
-                    type="password"
-                    className="signup-phone-no-input"
-                    placeholder="Password "
-                  />
-                  <p className="password-guide">
-                    Password length must be less than 10 characters
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-signin-text">
+                    Sign up to
+                    <span className="text-color-blue"> Gaddideals </span>
                   </p>
-                  <div className="SingupEyeIconDiv">
-                    <input
-                      onChange={(e) => {
-                        setconfirm_password(e.target.value);
-                      }}
-                      value={confirm_password}
-                      type={eye ? "text" : "password"}
-                      className="signup-location-input"
-                      placeholder="Confirm Password"
-                    />
-                    <img
-                      alt=""
-                      onClick={() => {
-                        seteye(!eye);
-                      }}
-                      className="Singup-eye-Icon"
-                      src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-                    ></img>
-                  </div>
-                </>
-              )}
-              <button
-                onClick={() => {
-                  websiteGoogleSignup();
-                  // toast.success("working");
-                }}
-                className="signup-sign-in-button"
-              >
-                SIGN UP
-              </button>
-              <p
-                onClick={() => {
-                  setvisible(true);
-                  setGSignUp(false);
-                }}
-                className="signup-create-account"
-              >
-                Already a user? SIGN IN
-              </p>
-            </div>
-          </div>
-        )}
-        {/* sign in with google */}
-        {GoogleSignIn && (
-          <div className="signup-main_parent">
-            <div
-              className="signup-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setGoogleSignIn(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
 
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="signup-closing-arrow"
-                onClick={() => {
-                  clearAllStates();
-                  setonclose(false);
-                  setTimeout(() => {
-                    setvisible(false);
-                  }, 300);
-                  setTimeout(() => {
-                    setGoogleSignIn(false);
-                  }, 300);
-                }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="signup-sign-in-title">
-                Sign up to
-                <span className="signup-text-color-blue"> Gaddideals </span>
-              </p>
-              <input
-                onChange={(e) => {
-                  setname(e.target.value);
-                }}
-                value={name}
-                type="text"
-                className="signup-phone-no-input"
-                placeholder="Name "
-              />
-              <input
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
-                maxLength={10}
-                className="signup-phone-no-input"
-                placeholder="Mobile number "
-                // type="number"
-              />
-              <input
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                value={email}
-                type="email"
-                className="signup-phone-no-input"
-                placeholder="Email "
-              />
-              <div className="SinguplocationIcon">
-                <input
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
-                  value={city}
-                  type="text"
-                  className="signup-location-input"
-                  placeholder="Location "
-                />
-                <img
-                  className="Singup-location-Icon"
-                  src={SinguplocationIcon}
-                  alt=""
-                ></img>
-              </div>
-              {hidePassword ? null : (
-                <>
                   <input
+                    className="mob-resp-name-input"
                     onChange={(e) => {
-                      setpassword(e.target.value);
+                      setname(e.target.value);
                     }}
-                    value={password}
-                    type="password"
-                    className="signup-phone-no-input"
-                    placeholder="Password "
+                    value={name}
+                    type="text"
+                    placeholder="Name "
                   />
-
-                  <div className="SingupEyeIconDiv">
-                    <input
-                      onChange={(e) => {
-                        setconfirm_password(e.target.value);
-                      }}
-                      value={confirm_password}
-                      type={eye ? "text" : "password"}
-                      className="signup-location-input"
-                      placeholder="Confirm Password"
-                    />
-                    <img
-                      alt=""
-                      onClick={() => {
-                        seteye(!eye);
-                      }}
-                      className="Singup-eye-Icon"
-                      src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-                    ></img>
-                  </div>
-                </>
-              )}
-              <button
-                onClick={() => {
-                  setGSignIp();
-                }}
-                className="signup-sign-in-button"
-              >
-                SIGN UP
-              </button>
-              <p
-                onClick={() => {
-                  setvisible(true);
-                  setvisibleSignUp(false);
-                }}
-                className="signup-create-account"
-              >
-                Already a user? SIGN IN
-              </p>
-            </div>
-          </div>
-        )}
-        {FaceookSignIn && (
-          <div className="signup-main_parent">
-            <div
-              className="signup-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setGoogleSignIn(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="signup-closing-arrow"
-                onClick={() => {
-                  clearAllStates();
-                  setonclose(false);
-                  setTimeout(() => {
-                    setvisible(false);
-                  }, 300);
-                  setTimeout(() => {
-                    setGoogleSignIn(false);
-                  }, 300);
-                }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="signup-sign-in-title">
-                Sign up to
-                <span className="signup-text-color-blue"> Gaddidealss </span>
-              </p>
-              <input
-                onChange={(e) => {
-                  setname(e.target.value);
-                }}
-                value={name}
-                type="text"
-                className="signup-phone-no-input"
-                placeholder="Name "
-              />
-              <input
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
-                maxLength={10}
-                className="signup-phone-no-input"
-                placeholder="Mobile number "
-                // type="number"
-              />
-              <input
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                value={email}
-                type="email"
-                className="signup-phone-no-input"
-                placeholder="Email "
-              />
-              <div className="SinguplocationIcon">
-                <input
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
-                  value={city}
-                  type="text"
-                  className="signup-location-input"
-                  placeholder="Location "
-                />
-                <img
-                  className="Singup-location-Icon"
-                  src={SinguplocationIcon}
-                  alt=""
-                ></img>
-              </div>
-              {hidePassword ? null : (
-                <>
                   <input
+                    className="mob-resp-name-input"
                     onChange={(e) => {
-                      setpassword(e.target.value);
+                      setmob_no(e.target.value);
                     }}
-                    value={password}
-                    type="password"
-                    className="signup-phone-no-input"
-                    placeholder="Password "
+                    value={mob_no}
+                    maxLength={10}
+                    placeholder="Mobile number "
                   />
-
-                  <div className="SingupEyeIconDiv">
+                  <input
+                    className="mob-resp-name-input"
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                    }}
+                    value={email}
+                    type="email"
+                    placeholder="Email "
+                  />
+                  <div className="mob-resp-location-div">
                     <input
+                      className="mob-resp-location-input"
                       onChange={(e) => {
-                        setconfirm_password(e.target.value);
+                        setcity(e.target.value);
                       }}
-                      value={confirm_password}
-                      type={eye ? "text" : "password"}
-                      className="signup-location-input"
-                      placeholder="Confirm Password"
+                      value={city}
+                      type="text"
+                      placeholder="Location "
+                      onFocus={() => {
+                        setlocationDropDown(!locationDropDown);
+                      }}
                     />
-                    <img
-                      alt=""
-                      onClick={() => {
-                        seteye(!eye);
-                      }}
-                      className="Singup-eye-Icon"
-                      src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-                    ></img>
+                    <img src={locationIcon} alt=""></img>
+                    {locationDropDown && (
+                      <div className="sign-up-loaction-drop-down">
+                        {filterCurentCities.map((data) => (
+                          <p
+                            onClick={() => {
+                              setcity(data.City);
+                              setlocationDropDown(false);
+                            }}
+                          >
+                            {data.City}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </>
-              )}
-              <button
-                onClick={() => {
-                  setFBSignIp();
-                }}
-                className="signup-sign-in-button"
-              >
-                SIGN UP
-              </button>
-              <p
-                onClick={() => {
-                  setvisible(true);
-                  setvisibleSignUp(false);
-                }}
-                className="signup-create-account"
-              >
-                Already a user? SIGN IN
-              </p>
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      setMobileSignup();
+                    }}
+                  >
+                    SIGN UP
+                  </button>
+                  <p
+                    className="mob-resp-already-a-member-text"
+                    onClick={() => {
+                      setshowSignIn(!showSignIn); //closing signup page
+                      setshowsignup(!showsignup); //opening signin page
+                    }}
+                  >
+                    <span className="text-color-blue">
+                      Already a user? SIGN IN
+                    </span>
+                  </p>
+                </div>
+              </Modal>
             </div>
-          </div>
-        )}
-
-        {/* seller display sign in */}
-        {displaySignIn && (
-          <div className="main_parent">
-            <div
-              className={onDisplayClose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setOnDisplayClose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                  dispatch(setSignUpValue(false));
-                  setOnDisplayClose(onDisplayClose);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                top: 0,
-                zIndex: 99999999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onDisplayClose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="closing-arrow"
-                onClick={() => {
-                  clearAllStates();
-                  setOnDisplayClose(false);
-                  setTimeout(() => {
-                    setvisible(false);
-                    dispatch(setSignUpValue(false));
-                    setOnDisplayClose(onDisplayClose);
-                  }, 300);
-                }}
-                src={closingArrow}
-                alt=""
-              />
-
-              <p className="sign-in-title">
-                Sign in to<span className="text-color-blue"> Gaddideals </span>
-              </p>
-              <p className="sign-in-welcome-text">
-                Welcome back! Sign in with your data that you entered during
-                registration
-              </p>
-              <div class="sign-in-google">
-                <img src={googleLogo} alt=""></img>
-
-                <GoogleLogin
-                  // uxMode="popup"
-                  render={(renderProps) => (
-                    <button
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                      style={{
-                        cursor: "pointer",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        fontFamily: "Poppins",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        fontSize: "1vw",
-                        color: "#cfcfcf",
-                      }}
-                    >
-                      Sign in with Google
-                    </button>
-                  )}
-                  clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                  onSuccess={responseGoogle}
-                  onFailure={responseFailedGoogle}
-                  cookiePolicy={"single_host_origin"}
-                />
-              </div>
-              <button className="sign-in-fb">
-                <img src={facebookLogo} alt=""></img>
-                {/* Sign in with Facebook */}
-                {/* <FacebookLogin
-                appId="615601846567774"
-                autoLoad={false}
-                fields="name,email,picture"
-                onClick={componentClicked}
-                callback={responseFacebook}
-              /> */}
-                <FacebookLogin
-                  appId="615601846567774"
-                  // autoLoad={false}
-
-                  callback={responseFacebook}
-                  cssClass="my-facebook-button-class"
-                  fields="name,email"
-                  render={(renderProps) => (
-                    <button onClick={renderProps.onClick}>
-                      This is my custom FB button
-                    </button>
-                  )}
-                />
-              </button>
-              <button
-                className="sign-in-email"
-                onClick={() => {
-                  setvisibleMailSigIn(!visibleMailSigIn);
-                  // setvisible(false);
-                }}
-              >
-                <img src={gmailLogo} alt=""></img>
-                Sign in with Email & Password
-              </button>
-              <div className="or-div">
-                <hr></hr>
-                <span className="or">or</span>
-                <hr></hr>
-              </div>
-              <input
-                // type="tel"
-                maxLength="10"
-                // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                className="phone-no-input"
-                placeholder="Phone number "
-                name="mob_no"
-                value={mob_no}
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-              />
-              <button
-                onClick={() => {
-                  saveUser();
-                }}
-                className="sign-in-button"
-              >
-                SIGN IN
-              </button>
-
-              <p
-                onClick={() => {
-                  setvisibleSignUp(!visibleSignUp);
-                  setvisible(false);
-                  // setvisibleOTP(true);
-                }}
-                className="create-account"
-              >
-                Sign Up or Create Account
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* sign IN */}
-        {visible && (
-          <div className="main_parent">
-            <div
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                top: 0,
-                zIndex: 99999999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="closing-arrow"
-                onClick={() => {
-                  clearAllStates();
-                  setonclose(false);
-                  setTimeout(() => {
-                    setvisible(false);
-                  }, 300);
-                }}
-                src={closingArrow}
-                alt=""
-              />
-
-              <p className="sign-in-title">
-                Sign in to<span className="text-color-blue"> Gaddideals </span>
-              </p>
-              <p className="sign-in-welcome-text">
-                Welcome back! Sign in with your data that you entered during
-                registration
-              </p>
-              <div class="sign-in-google">
-                <img src={googleLogo} alt=""></img>
-
-                <GoogleLogin
-                  // uxMode="popup"
-                  render={(renderProps) => (
-                    <button
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                      style={{
-                        cursor: "pointer",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        fontFamily: "Poppins",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        fontSize: "1vw",
-                        color: "#cfcfcf",
-                      }}
-                    >
-                      Sign in with Google
-                    </button>
-                  )}
-                  clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                  onSuccess={responseGoogle}
-                  onFailure={responseFailedGoogle}
-                  cookiePolicy={"single_host_origin"}
-                />
-              </div>
-              <button className="sign-in-fb">
-                <img src={facebookLogo} alt=""></img>
-                {/* Sign in with Facebook */}
-                {/* <FacebookLogin
-                appId="615601846567774"
-                autoLoad={false}
-                fields="name,email,picture"
-                onClick={componentClicked}
-                callback={responseFacebook}
-              /> */}
-                <FacebookLogin
-                  appId="615601846567774"
-                  // autoLoad={false}
-
-                  callback={responseFacebook}
-                  cssClass="my-facebook-button-class"
-                  fields="name,email"
-                  render={(renderProps) => (
-                    <button onClick={renderProps.onClick}>
-                      This is my custom FB button
-                    </button>
-                  )}
-                />
-              </button>
-              <button
-                className="sign-in-email"
-                onClick={() => {
-                  setvisibleMailSigIn(!visibleMailSigIn);
-                  // setvisible(false);
-                }}
-              >
-                <img src={gmailLogo} alt=""></img>
-                Sign in with Email & Password
-              </button>
-              <div className="or-div">
-                <hr></hr>
-                <span className="or">or</span>
-                <hr></hr>
-              </div>
-              <input
-                // type="tel"
-                maxLength="10"
-                // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                className="phone-no-input"
-                placeholder="Phone number "
-                name="mob_no"
-                value={mob_no}
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-              />
-              <button
-                onClick={() => {
-                  saveUser();
-                }}
-                className="sign-in-button"
-              >
-                SIGN IN
-              </button>
-
-              <p
-                onClick={() => {
-                  setvisibleSignUp(!visibleSignUp);
-                  setvisible(false);
-                  // setvisibleOTP(true);
-                }}
-                className="create-account"
-              >
-                Sign Up or Create Account
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Sign Up */}
-
-        {visibleSignUp && (
-          <div className="signup-main_parent">
-            {/* {locationDropDown && (
-            <div
-              className="mob-menue-overlay"
-              onClick={() => {
-                setlocationDropDown(false);
-              }}
-            ></div>
-          )} */}
-            <div
-              className="signup-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setvisibleSignUp(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-                overflowY: "scroll",
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="signup-closing-arrow"
+          )}
+          {/* signup with google */}
+          {GSignUp && (
+            <div className="signup-main_parent">
+              <div
+                className="signup-parent"
+                className={onclose ? "parent" : "slideBack"}
                 onClick={() => {
                   clearAllStates();
                   setonclose(false);
@@ -2414,17 +1623,513 @@ const Navbar = () => {
                     setvisibleSignUp(false);
                   }, 300);
                 }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="signup-sign-in-title">
-                Sign up to
-                <span className="signup-text-color-blue"> Gaddideals </span>
-              </p>
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
 
-              <div className="signup-other-option-div">
-                <div className="box-1">
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
+                <img
+                  className="signup-closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setonclose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                    setTimeout(() => {
+                      setGSignUp(false);
+                    }, 300);
+                  }}
+                  src={closingArrow}
+                  alt=""
+                />
+                <p className="signup-sign-in-title">
+                  Sign up to
+                  <span className="signup-text-color-blue"> Gaddideals </span>
+                </p>
+                <input
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
+                  value={name}
+                  type="text"
+                  className="signup-phone-no-input"
+                  placeholder="Name "
+                />
+                <input
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                  value={mob_no}
+                  maxLength={10}
+                  className="signup-phone-no-input"
+                  placeholder="Mobile number "
+                  // type="number"
+                />
+                <input
+                  onChange={(e) => {
+                    setemail(e.target.value);
+                  }}
+                  value={email}
+                  type="email"
+                  className="signup-phone-no-input"
+                  placeholder="Email "
+                />
+                <div className="SinguplocationIcon">
+                  <input
+                    onChange={(e) => {
+                      setcity(e.target.value);
+                    }}
+                    value={city}
+                    type="text"
+                    className="signup-location-input"
+                    placeholder="Location "
+                  />
+                  <img
+                    className="Singup-location-Icon"
+                    src={SinguplocationIcon}
+                    alt=""
+                  ></img>
+                </div>
+                {hidePassword ? null : (
+                  <>
+                    <input
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                      value={password}
+                      type="password"
+                      className="signup-phone-no-input"
+                      placeholder="Password "
+                    />
+                    <p className="password-guide">
+                      Password length must be less than 10 characters
+                    </p>
+                    <div className="SingupEyeIconDiv">
+                      <input
+                        onChange={(e) => {
+                          setconfirm_password(e.target.value);
+                        }}
+                        value={confirm_password}
+                        type={eye ? "text" : "password"}
+                        className="signup-location-input"
+                        placeholder="Confirm Password"
+                      />
+                      <img
+                        alt=""
+                        onClick={() => {
+                          seteye(!eye);
+                        }}
+                        className="Singup-eye-Icon"
+                        src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                      ></img>
+                    </div>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    websiteGoogleSignup();
+                    // toast.success("working");
+                  }}
+                  className="signup-sign-in-button"
+                >
+                  SIGN UP
+                </button>
+                <p
+                  onClick={() => {
+                    setvisible(true);
+                    setGSignUp(false);
+                  }}
+                  className="signup-create-account"
+                >
+                  Already a user? SIGN IN
+                </p>
+              </div>
+            </div>
+          )}
+          {/* sign in with google */}
+          {GoogleSignIn && (
+            <div className="signup-main_parent">
+              <div
+                className="signup-parent"
+                className={onclose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  setonclose(false);
+                  setTimeout(() => {
+                    setvisible(false);
+                  }, 300);
+                  setTimeout(() => {
+                    setGoogleSignIn(false);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
+                <img
+                  className="signup-closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setonclose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                    setTimeout(() => {
+                      setGoogleSignIn(false);
+                    }, 300);
+                  }}
+                  src={closingArrow}
+                  alt=""
+                />
+                <p className="signup-sign-in-title">
+                  Sign up to
+                  <span className="signup-text-color-blue"> Gaddideals </span>
+                </p>
+                <input
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
+                  value={name}
+                  type="text"
+                  className="signup-phone-no-input"
+                  placeholder="Name "
+                />
+                <input
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                  value={mob_no}
+                  maxLength={10}
+                  className="signup-phone-no-input"
+                  placeholder="Mobile number "
+                  // type="number"
+                />
+                <input
+                  onChange={(e) => {
+                    setemail(e.target.value);
+                  }}
+                  value={email}
+                  type="email"
+                  className="signup-phone-no-input"
+                  placeholder="Email "
+                />
+                <div className="SinguplocationIcon">
+                  <input
+                    onChange={(e) => {
+                      setcity(e.target.value);
+                    }}
+                    value={city}
+                    type="text"
+                    className="signup-location-input"
+                    placeholder="Location "
+                  />
+                  <img
+                    className="Singup-location-Icon"
+                    src={SinguplocationIcon}
+                    alt=""
+                  ></img>
+                </div>
+                {hidePassword ? null : (
+                  <>
+                    <input
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                      value={password}
+                      type="password"
+                      className="signup-phone-no-input"
+                      placeholder="Password "
+                    />
+
+                    <div className="SingupEyeIconDiv">
+                      <input
+                        onChange={(e) => {
+                          setconfirm_password(e.target.value);
+                        }}
+                        value={confirm_password}
+                        type={eye ? "text" : "password"}
+                        className="signup-location-input"
+                        placeholder="Confirm Password"
+                      />
+                      <img
+                        alt=""
+                        onClick={() => {
+                          seteye(!eye);
+                        }}
+                        className="Singup-eye-Icon"
+                        src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                      ></img>
+                    </div>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    setGSignIp();
+                  }}
+                  className="signup-sign-in-button"
+                >
+                  SIGN UP
+                </button>
+                <p
+                  onClick={() => {
+                    setvisible(true);
+                    setvisibleSignUp(false);
+                  }}
+                  className="signup-create-account"
+                >
+                  Already a user? SIGN IN
+                </p>
+              </div>
+            </div>
+          )}
+          {FaceookSignIn && (
+            <div className="signup-main_parent">
+              <div
+                className="signup-parent"
+                className={onclose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  setonclose(false);
+                  setTimeout(() => {
+                    setvisible(false);
+                  }, 300);
+                  setTimeout(() => {
+                    setGoogleSignIn(false);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
+                <img
+                  className="signup-closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setonclose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                    setTimeout(() => {
+                      setGoogleSignIn(false);
+                    }, 300);
+                  }}
+                  src={closingArrow}
+                  alt=""
+                />
+                <p className="signup-sign-in-title">
+                  Sign up to
+                  <span className="signup-text-color-blue"> Gaddidealss </span>
+                </p>
+                <input
+                  onChange={(e) => {
+                    setname(e.target.value);
+                  }}
+                  value={name}
+                  type="text"
+                  className="signup-phone-no-input"
+                  placeholder="Name "
+                />
+                <input
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                  value={mob_no}
+                  maxLength={10}
+                  className="signup-phone-no-input"
+                  placeholder="Mobile number "
+                  // type="number"
+                />
+                <input
+                  onChange={(e) => {
+                    setemail(e.target.value);
+                  }}
+                  value={email}
+                  type="email"
+                  className="signup-phone-no-input"
+                  placeholder="Email "
+                />
+                <div className="SinguplocationIcon">
+                  <input
+                    onChange={(e) => {
+                      setcity(e.target.value);
+                    }}
+                    value={city}
+                    type="text"
+                    className="signup-location-input"
+                    placeholder="Location "
+                  />
+                  <img
+                    className="Singup-location-Icon"
+                    src={SinguplocationIcon}
+                    alt=""
+                  ></img>
+                </div>
+                {hidePassword ? null : (
+                  <>
+                    <input
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                      value={password}
+                      type="password"
+                      className="signup-phone-no-input"
+                      placeholder="Password "
+                    />
+
+                    <div className="SingupEyeIconDiv">
+                      <input
+                        onChange={(e) => {
+                          setconfirm_password(e.target.value);
+                        }}
+                        value={confirm_password}
+                        type={eye ? "text" : "password"}
+                        className="signup-location-input"
+                        placeholder="Confirm Password"
+                      />
+                      <img
+                        alt=""
+                        onClick={() => {
+                          seteye(!eye);
+                        }}
+                        className="Singup-eye-Icon"
+                        src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                      ></img>
+                    </div>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    setFBSignIp();
+                  }}
+                  className="signup-sign-in-button"
+                >
+                  SIGN UP
+                </button>
+                <p
+                  onClick={() => {
+                    setvisible(true);
+                    setvisibleSignUp(false);
+                  }}
+                  className="signup-create-account"
+                >
+                  Already a user? SIGN IN
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* seller display sign in */}
+          {displaySignIn && (
+            <div className="main_parent">
+              <div
+                className={onDisplayClose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  setOnDisplayClose(false);
+                  setTimeout(() => {
+                    setvisible(false);
+                    dispatch(setSignUpValue(false));
+                    setOnDisplayClose(onDisplayClose);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  top: 0,
+                  zIndex: 99999999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={
+                  onDisplayClose ? "DivSignInWithOptions" : "slideBack"
+                }
+              >
+                <img
+                  className="closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setOnDisplayClose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                      dispatch(setSignUpValue(false));
+                      setOnDisplayClose(onDisplayClose);
+                    }, 300);
+                  }}
+                  src={closingArrow}
+                  alt=""
+                />
+
+                <p className="sign-in-title">
+                  Sign in to
+                  <span className="text-color-blue"> Gaddideals </span>
+                </p>
+                <p className="sign-in-welcome-text">
+                  Welcome back! Sign in with your data that you entered during
+                  registration
+                </p>
+                <div class="sign-in-google">
+                  <img src={googleLogo} alt=""></img>
+
                   <GoogleLogin
+                    // uxMode="popup"
                     render={(renderProps) => (
                       <button
                         onClick={renderProps.onClick}
@@ -2440,626 +2145,310 @@ const Navbar = () => {
                           color: "#cfcfcf",
                         }}
                       >
-                        <img
-                          className="website-google-signup-img"
-                          src={mobGmailIcon}
-                          alt=""
-                        />
-                        Google
-                        {/* Sign in with Google */}
+                        Sign in with Google
                       </button>
                     )}
                     clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                    onSuccess={responseGoogleSignup}
+                    onSuccess={responseGoogle}
                     onFailure={responseFailedGoogle}
                     cookiePolicy={"single_host_origin"}
                   />
                 </div>
-                <div className="box-2">
-                  {/* <img className="website-fb-signup-img" src={mobFbIcon} alt="" /> */}
+                <button className="sign-in-fb">
+                  <img src={facebookLogo} alt=""></img>
+                  {/* Sign in with Facebook */}
+                  {/* <FacebookLogin
+                appId="615601846567774"
+                autoLoad={false}
+                fields="name,email,picture"
+                onClick={componentClicked}
+                callback={responseFacebook}
+              /> */}
                   <FacebookLogin
                     appId="615601846567774"
                     // autoLoad={false}
-                    callback={responseFacebookSignup}
-                    cssClass="website-facebook-sign-up-button-class"
+
+                    callback={responseFacebook}
+                    cssClass="my-facebook-button-class"
                     fields="name,email"
                     render={(renderProps) => (
                       <button onClick={renderProps.onClick}>
-                        <img
-                          className="website-fb-signup-img"
-                          src={mobFbIcon}
-                          alt=""
-                        />{" "}
+                        This is my custom FB button
                       </button>
                     )}
                   />
-                  <p className="paddingTop-5">Facebook</p>
-                </div>
-              </div>
-
-              <div className="or-div">
-                <hr></hr>
-                <span className="or">or</span>
-                <hr></hr>
-              </div>
-
-              <input
-                onChange={(e) => {
-                  setname(e.target.value);
-                }}
-                value={name}
-                type="text"
-                className="signup-phone-no-input"
-                placeholder="Name "
-              />
-              <input
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
-                maxLength={10}
-                className="signup-phone-no-input"
-                placeholder="Mobile number "
-                // type="number"
-              />
-              <input
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                value={email}
-                type="email"
-                className="signup-phone-no-input"
-                placeholder="Email "
-              />
-              <div className="SinguplocationIcon">
-                <input
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
-                  onFocus={() => {
-                    setlocationDropDown(!locationDropDown);
-                  }}
-                  value={city}
-                  type="text"
-                  className="signup-location-input"
-                  placeholder="Location "
-                />
-                <img
-                  className="Singup-location-Icon"
-                  src={SinguplocationIcon}
-                  alt="location icon"
-                />
-                {locationDropDown && (
-                  <div className="sign-up-loaction-drop-down">
-                    {filterCurentCities.map((data) => (
-                      <p
-                        onClick={() => {
-                          setcity(data.City);
-                          setlocationDropDown(false);
-                        }}
-                      >
-                        {data.City}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {/* {hidePassword ? null : (
-              <> */}
-              <input
-                onChange={(e) => {
-                  setpassword(e.target.value);
-                }}
-                value={password}
-                type="password"
-                className="signup-phone-no-input"
-                placeholder="Password "
-              />
-              {/* <p className="password-guide">
-                  Password length must be less than 10 characters
-                </p> */}
-              <div className="SingupEyeIconDiv">
-                <input
-                  onChange={(e) => {
-                    setconfirm_password(e.target.value);
-                  }}
-                  value={confirm_password}
-                  type={eye ? "text" : "password"}
-                  className="signup-location-input"
-                  placeholder="Confirm Password"
-                />
-                <img
-                  alt=""
+                </button>
+                <button
+                  className="sign-in-email"
                   onClick={() => {
-                    seteye(!eye);
+                    setvisibleMailSigIn(!visibleMailSigIn);
+                    // setvisible(false);
                   }}
-                  className="Singup-eye-Icon"
-                  src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
-                ></img>
+                >
+                  <img src={gmailLogo} alt=""></img>
+                  Sign in with Email & Password
+                </button>
+                <div className="or-div">
+                  <hr></hr>
+                  <span className="or">or</span>
+                  <hr></hr>
+                </div>
+                <input
+                  // type="tel"
+                  maxLength="10"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  className="phone-no-input"
+                  placeholder="Phone number "
+                  name="mob_no"
+                  value={mob_no}
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    saveUser();
+                  }}
+                  className="sign-in-button"
+                >
+                  SIGN IN
+                </button>
+
+                <p
+                  onClick={() => {
+                    setvisibleSignUp(!visibleSignUp);
+                    setvisible(false);
+                    // setvisibleOTP(true);
+                  }}
+                  className="create-account"
+                >
+                  Sign Up or Create Account
+                </p>
               </div>
-              {/* </>
-            )} */}
-              <button
-                onClick={() => {
-                  setSignup();
-                }}
-                className="signup-sign-in-button"
-              >
-                SIGN UP
-              </button>
-              <p
-                onClick={() => {
-                  setvisible(true);
-                  setvisibleSignUp(false);
-                }}
-                className="signup-create-account"
-              >
-                Already a user? SIGN IN
-              </p>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* OTP */}
-
-        {visibleOTP && (
-          <div className="otp-main_parent">
-            <div
-              className="otp-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                setonclose(false);
-                setvisibleSignUp(false);
-                setTimeout(() => {
-                  setvisible(false);
-                }, 300);
-                setTimeout(() => {
-                  setvisibleOTP(false);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="otp-closing-arrow"
+          {/* sign IN */}
+          {visible && (
+            <div className="main_parent">
+              <div
+                className={onclose ? "parent" : "slideBack"}
                 onClick={() => {
                   clearAllStates();
                   setonclose(false);
-                  setvisibleSignUp(false);
+                  setTimeout(() => {
+                    setvisible(false);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  top: 0,
+                  zIndex: 99999999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
+                <img
+                  className="closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setonclose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                  }}
+                  src={closingArrow}
+                  alt=""
+                />
+
+                <p className="sign-in-title">
+                  Sign in to
+                  <span className="text-color-blue"> Gaddideals </span>
+                </p>
+                <p className="sign-in-welcome-text">
+                  Welcome back! Sign in with your data that you entered during
+                  registration
+                </p>
+                <div class="sign-in-google">
+                  <img src={googleLogo} alt=""></img>
+
+                  <GoogleLogin
+                    // uxMode="popup"
+                    render={(renderProps) => (
+                      <button
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "transparent",
+                          border: "none",
+                          fontFamily: "Poppins",
+                          fontStyle: "normal",
+                          fontWeight: 500,
+                          fontSize: "1vw",
+                          color: "#cfcfcf",
+                        }}
+                      >
+                        Sign in with Google
+                      </button>
+                    )}
+                    clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                    onSuccess={responseGoogle}
+                    onFailure={responseFailedGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </div>
+                <button className="sign-in-fb">
+                  <img src={facebookLogo} alt=""></img>
+                  {/* Sign in with Facebook */}
+                  {/* <FacebookLogin
+                appId="615601846567774"
+                autoLoad={false}
+                fields="name,email,picture"
+                onClick={componentClicked}
+                callback={responseFacebook}
+              /> */}
+                  <FacebookLogin
+                    appId="615601846567774"
+                    // autoLoad={false}
+
+                    callback={responseFacebook}
+                    cssClass="my-facebook-button-class"
+                    fields="name,email"
+                    render={(renderProps) => (
+                      <button onClick={renderProps.onClick}>
+                        This is my custom FB button
+                      </button>
+                    )}
+                  />
+                </button>
+                <button
+                  className="sign-in-email"
+                  onClick={() => {
+                    setvisibleMailSigIn(!visibleMailSigIn);
+                    // setvisible(false);
+                  }}
+                >
+                  <img src={gmailLogo} alt=""></img>
+                  Sign in with Email & Password
+                </button>
+                <div className="or-div">
+                  <hr></hr>
+                  <span className="or">or</span>
+                  <hr></hr>
+                </div>
+                <input
+                  // type="tel"
+                  maxLength="10"
+                  // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                  className="phone-no-input"
+                  placeholder="Phone number "
+                  name="mob_no"
+                  value={mob_no}
+                  onChange={(e) => {
+                    setmob_no(e.target.value);
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    saveUser();
+                  }}
+                  className="sign-in-button"
+                >
+                  SIGN IN
+                </button>
+
+                <p
+                  onClick={() => {
+                    setvisibleSignUp(!visibleSignUp);
+                    setvisible(false);
+                    // setvisibleOTP(true);
+                  }}
+                  className="create-account"
+                >
+                  Sign Up or Create Account
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Sign Up */}
+
+          {visibleSignUp && (
+            <div className="signup-main_parent">
+              {/* {locationDropDown && (
+            <div
+              className="mob-menue-overlay"
+              onClick={() => {
+                setlocationDropDown(false);
+              }}
+            ></div>
+          )} */}
+              <div
+                className="signup-parent"
+                className={onclose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  setonclose(false);
                   setTimeout(() => {
                     setvisible(false);
                   }, 300);
                   setTimeout(() => {
-                    setvisibleOTP(false);
+                    setvisibleSignUp(false);
                   }, 300);
                 }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="otp-sign-in-title">
-                Enter<span className="signup-text-color-blue"> OTP </span>
-              </p>
-              <p className="otp-welcome-text">
-                We’ve sent an OTP to your phone number.
-              </p>
-              <p className="otp-phone-no-text">Phone Number</p>
-              <input
-                value={mob_no}
-                type="number"
-                className="otp-phone-no-input"
-                placeholder="Mobile number "
-                onChange={(e) => {
-                  console.log(mob_no);
-                  setmob_no(e.target.value);
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+                  overflowY: "scroll",
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
                 }}
-              />
-              <p className="otp-phone-no-text">One time password</p>
-              <input
-                value={otp}
-                type="number"
-                className="otp-phone-no-input"
-                placeholder="Enter OTP"
-                onChange={(e) => {
-                  setotp(e.target.value);
-                }}
-              />
-              <span className="timer"> 00:{counter}s</span>
-              {EnableResendOtp && (
-                <p
-                  onClick={() => {
-                    setvisibleSignUp(!visibleSignUp);
-                    setvisible(true);
-                  }}
-                  className="otp-create-account"
-                >
-                  Didn’t recive the OTP?{" "}
-                  <span
-                    className="otp-text-color-blue"
-                    onClick={() => {
-                      resendotp();
-                    }}
-                  >
-                    RESEND OTP
-                  </span>
-                </p>
-              )}
-              <button
-                onClick={() => {
-                  savePhoneOtp();
-                }}
-                className="otp-sign-in-button"
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
               >
-                VERIFY OTP
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* sign in with mail and password */}
-        {visibleMailSigIn && (
-          <div className="otp-main_parent">
-            <div
-              className="otp-parent"
-              className={onclose ? "parent" : "slideBack"}
-              onClick={() => {
-                clearAllStates();
-                // setonclose(false);
-                setvisibleSignUp(false);
-                // setTimeout(() => {
-                //   setvisible(false);
-                // }, 300);
-                setTimeout(() => {
-                  setvisibleMailSigIn(!visibleMailSigIn);
-                }, 300);
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "30px",
-                paddingLeft: "40px",
-                fontFamily: "Arial",
-                width: "35%",
-
-                float: "right",
-                height: "100%",
-                position: "fixed",
-                zIndex: 9999999999999999,
-                right: 0,
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: "30px 0px 0px 30px",
-              }}
-              className={onclose ? "DivSignInWithOptions" : "slideBack"}
-            >
-              <img
-                className="otp-closing-arrow"
-                onClick={() => {
-                  clearAllStates();
-                  // setonclose(false);
-                  setvisibleSignUp(false);
-                  // setTimeout(() => {
-                  //   setvisible(false);
-                  // }, 300);
-                  setTimeout(() => {
-                    setvisibleMailSigIn(!visibleMailSigIn);
-                  }, 300);
-                }}
-                src={closingArrow}
-                alt=""
-              />
-              <p className="otp-sign-in-title">
-                Enter
-                <span className="signup-text-color-blue">
-                  {" "}
-                  Email and Password{" "}
-                </span>
-              </p>
-              <p className="otp-welcome-text">
-                Sign in using your email and password
-              </p>
-              <p className="otp-phone-no-text">Email</p>
-              <input
-                value={email}
-                type="text"
-                className="otp-phone-no-input"
-                placeholder="Email "
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-              />
-              <p className="otp-phone-no-text">Password</p>
-              <input
-                value={password}
-                type="password"
-                className="otp-phone-no-input"
-                placeholder="Enter password"
-                onChange={(e) => {
-                  setpassword(e.target.value);
-                }}
-              />
-
-              <button
-                onClick={() => {
-                  saveMailPassword();
-                }}
-                className="otp-sign-in-button"
-              >
-                Sign in
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* seller mobile dispatch */}
-        {mobDisplaySignIn && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={mobDisplaySignIn}
-              onClickAway={() => {
-                dispatch(setMobSignInValue(false));
-                clearAllStates();
-              }}
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
                 <img
-                  className="mob-resp-closing-arrow"
+                  className="signup-closing-arrow"
                   onClick={() => {
-                    dispatch(setMobSignInValue(false));
                     clearAllStates();
+                    setonclose(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                    setTimeout(() => {
+                      setvisibleSignUp(false);
+                    }, 300);
                   }}
                   src={closingArrow}
                   alt=""
-                ></img>
-                <p className="mob-resp-signin-text">
-                  Sign in to
-                  <span className="text-color-blue"> Gaddideals </span>
-                </p>
-                <p className="mob-resp-welcome-text">
-                  Welcome back! Sign in with your data that you entered during
-                  registration
-                </p>
-                <input
-                  className="mob-resp-moile-input"
-                  placeholder="Phone Number"
-                  name="mob_no"
-                  value={mob_no}
-                  onChange={(e) => {
-                    setmob_no(e.target.value);
-                  }}
                 />
-                <p
-                  className="mob-resp-not-a-member-text"
-                  onClick={() => {
-                    setshowSignIn(!showSignIn); //opening signup page
-                    dispatch(setMobSignInValue(false)); //closing signin page
-                  }}
-                >
-                  Not a member?{" "}
-                  <span className="text-color-blue">Create Account</span>
-                </p>
-                <button
-                  className="mob-resp-next-button"
-                  onClick={() => {
-                    saveMobileUser();
-                  }}
-                >
-                  NEXT
-                </button>
-                <div className="mob-resp-multiple-signin">
-                  <>
-                    <FacebookLogin
-                      appId="615601846567774"
-                      // autoLoad={false}
-                      callback={responseFacebook}
-                      cssClass="my-facebook-button-class"
-                      fields="name,email"
-                      render={(renderProps) => (
-                        <button onClick={renderProps.onClick}></button>
-                      )}
-                    />
-                  </>
-                  <>
-                    <GoogleLogin
-                      render={(renderProps) => (
-                        <button
-                          className="my-google-button-class"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "transparent",
-                            border: "none",
-                            fontFamily: "Poppins",
-                            fontStyle: "normal",
-                            fontWeight: 0,
-                            fontSize: "1vw",
-                            color: "#cfcfcf",
-                          }}
-                        ></button>
-                      )}
-                      clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                      onSuccess={responseGoogle}
-                      onFailure={responseFailedGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
-                  </>
-                  <img
-                    className="mob-resp-mail-signin"
-                    src={mobMailIcon}
-                    alt=""
-                    onClick={() => {
-                      setshowMailSigIn(!showMailSigIn);
-                      dispatch(setMobSignInValue(false));
-                    }}
-                  ></img>
-                </div>
-              </div>
-            </Modal>
-          </div>
-        )}
-
-        {/* open mobile responsive sign up */}
-        {showsignup && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={showsignup}
-              onClickAway={() => {
-                setshowsignup(!showsignup);
-                clearAllStates();
-              }}
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
-                <img
-                  className="mob-resp-closing-arrow"
-                  onClick={() => {
-                    setshowsignup(!showsignup);
-                    clearAllStates();
-                  }}
-                  src={closingArrow}
-                  alt=""
-                ></img>
-                <p className="mob-resp-signin-text">
-                  Sign in to
-                  <span className="text-color-blue"> Gaddideals </span>
-                </p>
-                <p className="mob-resp-welcome-text">
-                  Welcome back! Sign in with your data that you entered during
-                  registration
-                </p>
-                <input
-                  className="mob-resp-moile-input"
-                  placeholder="Phone Number"
-                  name="mob_no"
-                  value={mob_no}
-                  onChange={(e) => {
-                    setmob_no(e.target.value);
-                  }}
-                />
-                <p
-                  className="mob-resp-not-a-member-text"
-                  onClick={() => {
-                    setshowSignIn(!showSignIn); //opening signup page
-                    setshowsignup(!showsignup); //closing signin page
-                  }}
-                >
-                  Not a member?{" "}
-                  <span className="text-color-blue">Create Account</span>
-                </p>
-                <button
-                  className="mob-resp-next-button"
-                  onClick={() => {
-                    saveMobileUser();
-                  }}
-                >
-                  NEXT
-                </button>
-                <div className="mob-resp-multiple-signin">
-                  <>
-                    <FacebookLogin
-                      appId="615601846567774"
-                      // autoLoad={false}
-                      callback={responseFacebook}
-                      cssClass="my-facebook-button-class"
-                      fields="name,email"
-                      render={(renderProps) => (
-                        <button onClick={renderProps.onClick}></button>
-                      )}
-                    />
-                  </>
-                  <>
-                    <GoogleLogin
-                      render={(renderProps) => (
-                        <button
-                          className="my-google-button-class"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                          style={{
-                            cursor: "pointer",
-                            backgroundColor: "transparent",
-                            border: "none",
-                            fontFamily: "Poppins",
-                            fontStyle: "normal",
-                            fontWeight: 0,
-                            fontSize: "1vw",
-                            color: "#cfcfcf",
-                          }}
-                        ></button>
-                      )}
-                      clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                      onSuccess={responseGoogle}
-                      onFailure={responseFailedGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
-                  </>
-                  <img
-                    className="mob-resp-mail-signin"
-                    src={mobMailIcon}
-                    alt=""
-                    onClick={() => {
-                      setshowMailSigIn(!showMailSigIn);
-                      setshowsignup(!showsignup);
-                    }}
-                  ></img>
-                </div>
-              </div>
-            </Modal>
-          </div>
-        )}
-
-        {showSignIn && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={showSignIn}
-              onClickAway={() => {
-                setshowSignIn(!showSignIn);
-                clearAllStates();
-              }}
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
-                <img
-                  className="mob-resp-closing-arrow"
-                  onClick={() => {
-                    setshowSignIn(!showSignIn);
-                    clearAllStates();
-                  }}
-                  src={closingArrow}
-                  alt=""
-                ></img>
-                <p className="mob-resp-signin-text">
+                <p className="signup-sign-in-title">
                   Sign up to
-                  <span className="text-color-blue"> Gaddideals </span>
+                  <span className="signup-text-color-blue"> Gaddideals </span>
                 </p>
+
                 <div className="signup-other-option-div">
                   <div className="box-1">
                     <GoogleLogin
@@ -3088,18 +2477,19 @@ const Navbar = () => {
                         </button>
                       )}
                       clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
-                      onSuccess={MobresponseGoogleSignup}
+                      onSuccess={responseGoogleSignup}
                       onFailure={responseFailedGoogle}
                       cookiePolicy={"single_host_origin"}
                     />
                   </div>
                   <div className="box-2">
+                    {/* <img className="website-fb-signup-img" src={mobFbIcon} alt="" /> */}
                     <FacebookLogin
                       appId="615601846567774"
-                      callback={MobresponseFacebookSignup}
+                      // autoLoad={false}
+                      callback={responseFacebookSignup}
                       cssClass="website-facebook-sign-up-button-class"
                       fields="name,email"
-                      // onClick={(renderProps) => renderProps.onClick}
                       render={(renderProps) => (
                         <button onClick={renderProps.onClick}>
                           <img
@@ -3121,46 +2511,51 @@ const Navbar = () => {
                 </div>
 
                 <input
-                  className="mob-resp-name-input"
                   onChange={(e) => {
                     setname(e.target.value);
                   }}
                   value={name}
                   type="text"
+                  className="signup-phone-no-input"
                   placeholder="Name "
                 />
                 <input
-                  className="mob-resp-name-input"
                   onChange={(e) => {
                     setmob_no(e.target.value);
                   }}
                   value={mob_no}
                   maxLength={10}
+                  className="signup-phone-no-input"
                   placeholder="Mobile number "
+                  // type="number"
                 />
                 <input
-                  className="mob-resp-name-input"
                   onChange={(e) => {
                     setemail(e.target.value);
                   }}
                   value={email}
                   type="email"
+                  className="signup-phone-no-input"
                   placeholder="Email "
                 />
-                <div className="mob-resp-location-div">
+                <div className="SinguplocationIcon">
                   <input
-                    className="mob-resp-location-input"
                     onChange={(e) => {
                       setcity(e.target.value);
                     }}
-                    value={city}
-                    type="text"
-                    placeholder="Location "
                     onFocus={() => {
                       setlocationDropDown(!locationDropDown);
                     }}
+                    value={city}
+                    type="text"
+                    className="signup-location-input"
+                    placeholder="Location "
                   />
-                  <img src={locationIcon} alt=""></img>
+                  <img
+                    className="Singup-location-Icon"
+                    src={SinguplocationIcon}
+                    alt="location icon"
+                  />
                   {locationDropDown && (
                     <div className="sign-up-loaction-drop-down">
                       {filterCurentCities.map((data) => (
@@ -3176,199 +2571,837 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-                {hidePassword ? null : (
-                  <>
-                    <input
-                      className="mob-resp-name-input"
-                      onChange={(e) => {
-                        setpassword(e.target.value);
-                      }}
-                      value={password}
-                      type="password"
-                      placeholder="Password "
-                    />
-                    <div className="mob-resp-confirmPassword-div">
-                      <input
-                        className="mob-resp-confirmPassword-input"
-                        onChange={(e) => {
-                          setconfirm_password(e.target.value);
-                        }}
-                        value={confirm_password}
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Confirm Password"
-                      />
-                      <img
-                        src={showPassword ? SingupEyeIcon : SingupClosedEyeIcon}
-                        onClick={() => {
-                          setshowPassword(!showPassword);
-                        }}
-                        alt=""
-                      ></img>
-                    </div>
-                  </>
-                )}
-                <button
-                  className="mob-resp-next-button"
-                  onClick={() => {
-                    setMobileSignup();
+                {/* {hidePassword ? null : (
+              <> */}
+                <input
+                  onChange={(e) => {
+                    setpassword(e.target.value);
                   }}
+                  value={password}
+                  type="password"
+                  className="signup-phone-no-input"
+                  placeholder="Password "
+                />
+                {/* <p className="password-guide">
+                  Password length must be less than 10 characters
+                </p> */}
+                <div className="SingupEyeIconDiv">
+                  <input
+                    onChange={(e) => {
+                      setconfirm_password(e.target.value);
+                    }}
+                    value={confirm_password}
+                    type={eye ? "text" : "password"}
+                    className="signup-location-input"
+                    placeholder="Confirm Password"
+                  />
+                  <img
+                    alt=""
+                    onClick={() => {
+                      seteye(!eye);
+                    }}
+                    className="Singup-eye-Icon"
+                    src={eye ? SingupEyeIcon : SingupClosedEyeIcon}
+                  ></img>
+                </div>
+                {/* </>
+            )} */}
+                <button
+                  onClick={() => {
+                    setSignup();
+                  }}
+                  className="signup-sign-in-button"
                 >
                   SIGN UP
                 </button>
                 <p
-                  className="mob-resp-already-a-member-text"
                   onClick={() => {
-                    setshowSignIn(!showSignIn); //closing signup page
-                    setshowsignup(!showsignup); //opening signin page
+                    setvisible(true);
+                    setvisibleSignUp(false);
                   }}
+                  className="signup-create-account"
                 >
-                  <span className="text-color-blue">
-                    Already a user? SIGN IN
-                  </span>
+                  Already a user? SIGN IN
                 </p>
               </div>
-            </Modal>
-          </div>
-        )}
+            </div>
+          )}
 
-        {/* open mobile responsive otp page */}
-        {showOtp && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={showOtp}
-              onClickAway={closeOtp}
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
+          {/* OTP */}
+
+          {visibleOTP && (
+            <div className="otp-main_parent">
+              <div
+                className="otp-parent"
+                className={onclose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  setonclose(false);
+                  setvisibleSignUp(false);
+                  setTimeout(() => {
+                    setvisible(false);
+                  }, 300);
+                  setTimeout(() => {
+                    setvisibleOTP(false);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
                 <img
-                  className="mob-resp-closing-arrow"
-                  onClick={closeOtp}
+                  className="otp-closing-arrow"
+                  onClick={() => {
+                    clearAllStates();
+                    setonclose(false);
+                    setvisibleSignUp(false);
+                    setTimeout(() => {
+                      setvisible(false);
+                    }, 300);
+                    setTimeout(() => {
+                      setvisibleOTP(false);
+                    }, 300);
+                  }}
                   src={closingArrow}
                   alt=""
-                ></img>
-                <p className="mob-resp-enterOtp-text">
-                  Enter<span className="text-color-blue"> OTP </span>
+                />
+                <p className="otp-sign-in-title">
+                  Enter<span className="signup-text-color-blue"> OTP </span>
                 </p>
-                <p className="mob-resp-otpSent-text">
+                <p className="otp-welcome-text">
                   We’ve sent an OTP to your phone number.
                 </p>
-                <p className="mob-resp-phone-num-text">Phone Number</p>
+                <p className="otp-phone-no-text">Phone Number</p>
                 <input
-                  className="mob-resp-moile-input"
-                  placeholder="Phone Number"
-                  name="mob_no"
                   value={mob_no}
+                  type="number"
+                  className="otp-phone-no-input"
+                  placeholder="Mobile number "
                   onChange={(e) => {
-                    console.log("hjj");
+                    console.log(mob_no);
                     setmob_no(e.target.value);
                   }}
                 />
-                <p className="mob-resp-otp-text">One time password</p>
-                <div>
-                  <input
-                    value={otp}
-                    type="number"
-                    placeholder="Enter OTP"
-                    onChange={(e) => {
-                      setotp(e.target.value);
+                <p className="otp-phone-no-text">One time password</p>
+                <input
+                  value={otp}
+                  type="number"
+                  className="otp-phone-no-input"
+                  placeholder="Enter OTP"
+                  onChange={(e) => {
+                    setotp(e.target.value);
+                  }}
+                />
+                <span className="timer"> 00:{counter}s</span>
+                {EnableResendOtp && (
+                  <p
+                    onClick={() => {
+                      setvisibleSignUp(!visibleSignUp);
+                      setvisible(true);
                     }}
-                    className="mob-resp-moile-input"
-                    name="mob_no"
-                  />
-                  <span></span>
-                </div>
-                <p
-                  className="mob-resp-not-a-member-text"
-                  onClick={() => {
-                    resendotp();
-                  }}
-                >
-                  Didn’t recive the OTP?{" "}
-                  <span className="text-color-blue">RESEND OTP</span>
-                </p>
+                    className="otp-create-account"
+                  >
+                    Didn’t recive the OTP?{" "}
+                    <span
+                      className="otp-text-color-blue"
+                      onClick={() => {
+                        resendotp();
+                      }}
+                    >
+                      RESEND OTP
+                    </span>
+                  </p>
+                )}
                 <button
-                  className="mob-resp-next-button"
                   onClick={() => {
-                    saveMoilePhoneOtp();
+                    savePhoneOtp();
                   }}
+                  className="otp-sign-in-button"
                 >
                   VERIFY OTP
                 </button>
               </div>
-            </Modal>
-          </div>
-        )}
+            </div>
+          )}
 
-        {showMailSigIn && (
-          <div>
-            <Modal
-              width="90%"
-              effect="fadeInRight"
-              className="modal"
-              visible={showMailSigIn}
-              onClickAway={() => {
-                setshowMailSigIn(!showMailSigIn);
-              }} //chnage
-            >
-              {/* for CSS check  MobileRespSignInPage.style.css */}
-              <div className="mob-signin-resp">
+          {/* sign in with mail and password */}
+          {visibleMailSigIn && (
+            <div className="otp-main_parent">
+              <div
+                className="otp-parent"
+                className={onclose ? "parent" : "slideBack"}
+                onClick={() => {
+                  clearAllStates();
+                  // setonclose(false);
+                  setvisibleSignUp(false);
+                  // setTimeout(() => {
+                  //   setvisible(false);
+                  // }, 300);
+                  setTimeout(() => {
+                    setvisibleMailSigIn(!visibleMailSigIn);
+                  }, 300);
+                }}
+              ></div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "30px",
+                  paddingLeft: "40px",
+                  fontFamily: "Arial",
+                  width: "35%",
+
+                  float: "right",
+                  height: "100%",
+                  position: "fixed",
+                  zIndex: 9999999999999999,
+                  right: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "30px 0px 0px 30px",
+                }}
+                className={onclose ? "DivSignInWithOptions" : "slideBack"}
+              >
                 <img
-                  className="mob-resp-closing-arrow"
+                  className="otp-closing-arrow"
                   onClick={() => {
-                    setshowMailSigIn(!showMailSigIn);
+                    clearAllStates();
+                    // setonclose(false);
+                    setvisibleSignUp(false);
+                    // setTimeout(() => {
+                    //   setvisible(false);
+                    // }, 300);
+                    setTimeout(() => {
+                      setvisibleMailSigIn(!visibleMailSigIn);
+                    }, 300);
                   }}
                   src={closingArrow}
                   alt=""
-                ></img>
-                <p className="mob-resp-enterOtp-text">
+                />
+                <p className="otp-sign-in-title">
                   Enter
-                  <span className="text-color-blue"> Email and Password </span>
+                  <span className="signup-text-color-blue">
+                    {" "}
+                    Email and Password{" "}
+                  </span>
                 </p>
-                <p className="mob-resp-otpSent-text">
-                  Sign in with your email and password.
+                <p className="otp-welcome-text">
+                  Sign in using your email and password
                 </p>
-                <p className="mob-resp-phone-num-text">Email</p>
+                <p className="otp-phone-no-text">Email</p>
                 <input
-                  className="mob-resp-moile-input"
-                  placeholder="Email"
-                  name="email"
-                  type="text"
                   value={email}
+                  type="text"
+                  className="otp-phone-no-input"
+                  placeholder="Email "
                   onChange={(e) => {
                     setemail(e.target.value);
                   }}
                 />
-                <p className="mob-resp-otp-text">Password</p>
-                <div>
-                  <input
-                    value={password}
-                    type="password"
-                    placeholder="Enter password"
-                    onChange={(e) => {
-                      setpassword(e.target.value);
-                    }}
-                    className="mob-resp-moile-input"
-                    name="password"
-                  />
-                  <span></span>
-                </div>
+                <p className="otp-phone-no-text">Password</p>
+                <input
+                  value={password}
+                  type="password"
+                  className="otp-phone-no-input"
+                  placeholder="Enter password"
+                  onChange={(e) => {
+                    setpassword(e.target.value);
+                  }}
+                />
 
                 <button
-                  className="mob-resp-next-button"
                   onClick={() => {
-                    saveMobMailPassword();
+                    saveMailPassword();
                   }}
+                  className="otp-sign-in-button"
                 >
-                  Sign In
+                  Sign in
                 </button>
               </div>
-            </Modal>
-          </div>
-        )}
-      </nav>
+            </div>
+          )}
+
+          {/* seller mobile dispatch */}
+          {mobDisplaySignIn && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={mobDisplaySignIn}
+                onClickAway={() => {
+                  dispatch(setMobSignInValue(false));
+                  clearAllStates();
+                }}
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={() => {
+                      dispatch(setMobSignInValue(false));
+                      clearAllStates();
+                    }}
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-signin-text">
+                    Sign in to
+                    <span className="text-color-blue"> Gaddideals </span>
+                  </p>
+                  <p className="mob-resp-welcome-text">
+                    Welcome back! Sign in with your data that you entered during
+                    registration
+                  </p>
+                  <input
+                    className="mob-resp-moile-input"
+                    placeholder="Phone Number"
+                    name="mob_no"
+                    value={mob_no}
+                    onChange={(e) => {
+                      setmob_no(e.target.value);
+                    }}
+                  />
+                  <p
+                    className="mob-resp-not-a-member-text"
+                    onClick={() => {
+                      setshowSignIn(!showSignIn); //opening signup page
+                      dispatch(setMobSignInValue(false)); //closing signin page
+                    }}
+                  >
+                    Not a member?{" "}
+                    <span className="text-color-blue">Create Account</span>
+                  </p>
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      saveMobileUser();
+                    }}
+                  >
+                    NEXT
+                  </button>
+                  <div className="mob-resp-multiple-signin">
+                    <>
+                      <FacebookLogin
+                        appId="615601846567774"
+                        // autoLoad={false}
+                        callback={responseFacebook}
+                        cssClass="my-facebook-button-class"
+                        fields="name,email"
+                        render={(renderProps) => (
+                          <button onClick={renderProps.onClick}></button>
+                        )}
+                      />
+                    </>
+                    <>
+                      <GoogleLogin
+                        render={(renderProps) => (
+                          <button
+                            className="my-google-button-class"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              fontFamily: "Poppins",
+                              fontStyle: "normal",
+                              fontWeight: 0,
+                              fontSize: "1vw",
+                              color: "#cfcfcf",
+                            }}
+                          ></button>
+                        )}
+                        clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                        onSuccess={responseGoogle}
+                        onFailure={responseFailedGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </>
+                    <img
+                      className="mob-resp-mail-signin"
+                      src={mobMailIcon}
+                      alt=""
+                      onClick={() => {
+                        setshowMailSigIn(!showMailSigIn);
+                        dispatch(setMobSignInValue(false));
+                      }}
+                    ></img>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+          )}
+
+          {/* open mobile responsive sign up */}
+          {showsignup && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={showsignup}
+                onClickAway={() => {
+                  setshowsignup(!showsignup);
+                  clearAllStates();
+                }}
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={() => {
+                      setshowsignup(!showsignup);
+                      clearAllStates();
+                    }}
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-signin-text">
+                    Sign in to
+                    <span className="text-color-blue"> Gaddideals </span>
+                  </p>
+                  <p className="mob-resp-welcome-text">
+                    Welcome back! Sign in with your data that you entered during
+                    registration
+                  </p>
+                  <input
+                    className="mob-resp-moile-input"
+                    placeholder="Phone Number"
+                    name="mob_no"
+                    value={mob_no}
+                    onChange={(e) => {
+                      setmob_no(e.target.value);
+                    }}
+                  />
+                  <p
+                    className="mob-resp-not-a-member-text"
+                    onClick={() => {
+                      setshowSignIn(!showSignIn); //opening signup page
+                      setshowsignup(!showsignup); //closing signin page
+                    }}
+                  >
+                    Not a member?{" "}
+                    <span className="text-color-blue">Create Account</span>
+                  </p>
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      saveMobileUser();
+                    }}
+                  >
+                    NEXT
+                  </button>
+                  <div className="mob-resp-multiple-signin">
+                    <>
+                      <FacebookLogin
+                        appId="615601846567774"
+                        // autoLoad={false}
+                        callback={responseFacebook}
+                        cssClass="my-facebook-button-class"
+                        fields="name,email"
+                        render={(renderProps) => (
+                          <button onClick={renderProps.onClick}></button>
+                        )}
+                      />
+                    </>
+                    <>
+                      <GoogleLogin
+                        render={(renderProps) => (
+                          <button
+                            className="my-google-button-class"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              fontFamily: "Poppins",
+                              fontStyle: "normal",
+                              fontWeight: 0,
+                              fontSize: "1vw",
+                              color: "#cfcfcf",
+                            }}
+                          ></button>
+                        )}
+                        clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                        onSuccess={responseGoogle}
+                        onFailure={responseFailedGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </>
+                    <img
+                      className="mob-resp-mail-signin"
+                      src={mobMailIcon}
+                      alt=""
+                      onClick={() => {
+                        setshowMailSigIn(!showMailSigIn);
+                        setshowsignup(!showsignup);
+                      }}
+                    ></img>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+          )}
+
+          {showSignIn && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={showSignIn}
+                onClickAway={() => {
+                  setshowSignIn(!showSignIn);
+                  clearAllStates();
+                }}
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={() => {
+                      setshowSignIn(!showSignIn);
+                      clearAllStates();
+                    }}
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-signin-text">
+                    Sign up to
+                    <span className="text-color-blue"> Gaddideals </span>
+                  </p>
+                  <div className="signup-other-option-div">
+                    <div className="box-1">
+                      <GoogleLogin
+                        render={(renderProps) => (
+                          <button
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                            style={{
+                              cursor: "pointer",
+                              backgroundColor: "transparent",
+                              border: "none",
+                              fontFamily: "Poppins",
+                              fontStyle: "normal",
+                              fontWeight: 500,
+                              fontSize: "1vw",
+                              color: "#cfcfcf",
+                            }}
+                          >
+                            <img
+                              className="website-google-signup-img"
+                              src={mobGmailIcon}
+                              alt=""
+                            />
+                            Google
+                            {/* Sign in with Google */}
+                          </button>
+                        )}
+                        clientId="863672492597-0lp66a0tumqv8pjcek3bsgmvuhb0fio8.apps.googleusercontent.com"
+                        onSuccess={MobresponseGoogleSignup}
+                        onFailure={responseFailedGoogle}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                    </div>
+                    <div className="box-2">
+                      <FacebookLogin
+                        appId="615601846567774"
+                        callback={MobresponseFacebookSignup}
+                        cssClass="website-facebook-sign-up-button-class"
+                        fields="name,email"
+                        // onClick={(renderProps) => renderProps.onClick}
+                        render={(renderProps) => (
+                          <button onClick={renderProps.onClick}>
+                            <img
+                              className="website-fb-signup-img"
+                              src={mobFbIcon}
+                              alt=""
+                            />{" "}
+                          </button>
+                        )}
+                      />
+                      <p className="paddingTop-5">Facebook</p>
+                    </div>
+                  </div>
+
+                  <div className="or-div">
+                    <hr></hr>
+                    <span className="or">or</span>
+                    <hr></hr>
+                  </div>
+
+                  <input
+                    className="mob-resp-name-input"
+                    onChange={(e) => {
+                      setname(e.target.value);
+                    }}
+                    value={name}
+                    type="text"
+                    placeholder="Name "
+                  />
+                  <input
+                    className="mob-resp-name-input"
+                    onChange={(e) => {
+                      setmob_no(e.target.value);
+                    }}
+                    value={mob_no}
+                    maxLength={10}
+                    placeholder="Mobile number "
+                  />
+                  <input
+                    className="mob-resp-name-input"
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                    }}
+                    value={email}
+                    type="email"
+                    placeholder="Email "
+                  />
+                  <div className="mob-resp-location-div">
+                    <input
+                      className="mob-resp-location-input"
+                      onChange={(e) => {
+                        setcity(e.target.value);
+                      }}
+                      value={city}
+                      type="text"
+                      placeholder="Location "
+                      onFocus={() => {
+                        setlocationDropDown(!locationDropDown);
+                      }}
+                    />
+                    <img src={locationIcon} alt=""></img>
+                    {locationDropDown && (
+                      <div className="sign-up-loaction-drop-down">
+                        {filterCurentCities.map((data) => (
+                          <p
+                            onClick={() => {
+                              setcity(data.City);
+                              setlocationDropDown(false);
+                            }}
+                          >
+                            {data.City}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {hidePassword ? null : (
+                    <>
+                      <input
+                        className="mob-resp-name-input"
+                        onChange={(e) => {
+                          setpassword(e.target.value);
+                        }}
+                        value={password}
+                        type="password"
+                        placeholder="Password "
+                      />
+                      <div className="mob-resp-confirmPassword-div">
+                        <input
+                          className="mob-resp-confirmPassword-input"
+                          onChange={(e) => {
+                            setconfirm_password(e.target.value);
+                          }}
+                          value={confirm_password}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Confirm Password"
+                        />
+                        <img
+                          src={
+                            showPassword ? SingupEyeIcon : SingupClosedEyeIcon
+                          }
+                          onClick={() => {
+                            setshowPassword(!showPassword);
+                          }}
+                          alt=""
+                        ></img>
+                      </div>
+                    </>
+                  )}
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      setMobileSignup();
+                    }}
+                  >
+                    SIGN UP
+                  </button>
+                  <p
+                    className="mob-resp-already-a-member-text"
+                    onClick={() => {
+                      setshowSignIn(!showSignIn); //closing signup page
+                      setshowsignup(!showsignup); //opening signin page
+                    }}
+                  >
+                    <span className="text-color-blue">
+                      Already a user? SIGN IN
+                    </span>
+                  </p>
+                </div>
+              </Modal>
+            </div>
+          )}
+
+          {/* open mobile responsive otp page */}
+          {showOtp && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={showOtp}
+                onClickAway={closeOtp}
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={closeOtp}
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-enterOtp-text">
+                    Enter<span className="text-color-blue"> OTP </span>
+                  </p>
+                  <p className="mob-resp-otpSent-text">
+                    We’ve sent an OTP to your phone number.
+                  </p>
+                  <p className="mob-resp-phone-num-text">Phone Number</p>
+                  <input
+                    className="mob-resp-moile-input"
+                    placeholder="Phone Number"
+                    name="mob_no"
+                    value={mob_no}
+                    onChange={(e) => {
+                      console.log("hjj");
+                      setmob_no(e.target.value);
+                    }}
+                  />
+                  <p className="mob-resp-otp-text">One time password</p>
+                  <div>
+                    <input
+                      value={otp}
+                      type="number"
+                      placeholder="Enter OTP"
+                      onChange={(e) => {
+                        setotp(e.target.value);
+                      }}
+                      className="mob-resp-moile-input"
+                      name="mob_no"
+                    />
+                    <span></span>
+                  </div>
+                  <p
+                    className="mob-resp-not-a-member-text"
+                    onClick={() => {
+                      resendotp();
+                    }}
+                  >
+                    Didn’t recive the OTP?{" "}
+                    <span className="text-color-blue">RESEND OTP</span>
+                  </p>
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      saveMoilePhoneOtp();
+                    }}
+                  >
+                    VERIFY OTP
+                  </button>
+                </div>
+              </Modal>
+            </div>
+          )}
+
+          {showMailSigIn && (
+            <div>
+              <Modal
+                width="90%"
+                effect="fadeInRight"
+                className="modal"
+                visible={showMailSigIn}
+                onClickAway={() => {
+                  setshowMailSigIn(!showMailSigIn);
+                }} //chnage
+              >
+                {/* for CSS check  MobileRespSignInPage.style.css */}
+                <div className="mob-signin-resp">
+                  <img
+                    className="mob-resp-closing-arrow"
+                    onClick={() => {
+                      setshowMailSigIn(!showMailSigIn);
+                    }}
+                    src={closingArrow}
+                    alt=""
+                  ></img>
+                  <p className="mob-resp-enterOtp-text">
+                    Enter
+                    <span className="text-color-blue">
+                      {" "}
+                      Email and Password{" "}
+                    </span>
+                  </p>
+                  <p className="mob-resp-otpSent-text">
+                    Sign in with your email and password.
+                  </p>
+                  <p className="mob-resp-phone-num-text">Email</p>
+                  <input
+                    className="mob-resp-moile-input"
+                    placeholder="Email"
+                    name="email"
+                    type="text"
+                    value={email}
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                    }}
+                  />
+                  <p className="mob-resp-otp-text">Password</p>
+                  <div>
+                    <input
+                      value={password}
+                      type="password"
+                      placeholder="Enter password"
+                      onChange={(e) => {
+                        setpassword(e.target.value);
+                      }}
+                      className="mob-resp-moile-input"
+                      name="password"
+                    />
+                    <span></span>
+                  </div>
+
+                  <button
+                    className="mob-resp-next-button"
+                    onClick={() => {
+                      saveMobMailPassword();
+                    }}
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </Modal>
+            </div>
+          )}
+        </nav>
+      </div>
       {langDropdown && (
         <div
           className="location-overlay"

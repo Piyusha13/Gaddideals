@@ -25,7 +25,7 @@
     background: #050F56;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 13px;
-    padding: 20px 20px !important;
+    padding: 18px 20px !important;
     }
     .heading-PP span{
         text-shadow: -1px 1px 0 rgb(255, 255, 255),
@@ -36,7 +36,7 @@
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 500;
-        font-size: 20px !important;
+        font-size: 16px !important;
         letter-spacing: 0.1em;
         color:#050F56;
     }
@@ -45,7 +45,7 @@
         margin-top: -20px !important;
         font-family: 'Poppins';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300 !important;
     font-size: 16px !important;
     /* line-height: 45px; */
     display: flex;
@@ -82,6 +82,32 @@
     }
 }
 
+@media screen and (min-width: 768px) and (max-width: 820px){
+    .heading-PP{
+        position: absolute;
+        top: 64% !important;
+        /* z-index: 99999999999999; */
+        /* left: 30%; */
+    border: none;
+    background: #050F56;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    padding: 18px 40px !important;
+    }
+    .heading-PP span{
+        text-shadow: -1px 1px 0 rgb(255, 255, 255),
+                              1px 1px 0 rgb(255, 255, 255),
+                             1px -1px 0 rgb(255, 255, 255),
+                            -1px -1px 0 rgb(255, 255, 255);
+        /* border: 2px solid #FFFFFF; */
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px !important;
+        letter-spacing: 0.1em;
+        color:#050F56;
+    }
+}
 .banner-div{
     width: 100% !important;
     /* height: 550px; */
@@ -128,7 +154,7 @@ padding: 30px 50px;
     margin-top: -50px;
     font-family: 'Poppins';
 font-style: normal;
-font-weight: 400;
+font-weight: 300 !important;
 font-size: 20px;
 /* line-height: 45px; */
 display: flex;
@@ -160,6 +186,6 @@ color: #696969;
     flex-direction: column;
     /* background-color: palegreen; */
     width: 170px;
-    top: 45%;
+    top: 45%;   
     right: 5%;
 }

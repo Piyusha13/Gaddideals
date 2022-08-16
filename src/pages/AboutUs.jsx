@@ -22,10 +22,10 @@ function AboutUs() {
           src={TACbannerImg}
           alt="terms&conditionsImg"
         />
-        <div className="heading-TAC">
+        <div className="heading-AU">
           <span>About Us</span>
         </div>
-        <div className="downloads-div">
+        <div className="AU-downloads-div">
           <img src={gp} className="gp-img" alt="" />
           <img src={ap} className="ap-img" alt="" />
         </div>

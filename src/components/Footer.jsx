@@ -59,9 +59,6 @@ const Footer = () => {
             <div className="footer-sitemap-one">
               <ul>
                 <li>
-                  <a href="#contactus">Contact Us</a>
-                </li>
-                <li>
                   <a href="/AboutUs">About Us</a>
                 </li>
                 <li>
@@ -79,14 +76,17 @@ const Footer = () => {
                 {/* <li>
                   <a href="#blog">Blog</a>
                 </li> */}
-                <li>
+                {/* <li>
                   <a href="#customerservices">Customer Services</a>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <a href="#howItWorks">How It Works</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="#faqs">FAQs</a>
+                </li>
+                <li>
+                  <a href="#contactus">Contact Us</a>
                 </li>
               </ul>
             </div>
@@ -270,9 +270,6 @@ const Footer = () => {
             <div className="mobile-footer-sitemap-one">
               <ul>
                 <li>
-                  <a href="#contactus">Contact Us</a>
-                </li>
-                <li>
                   <a href="/AboutUs">About Us</a>
                 </li>
                 <li>
@@ -290,14 +287,17 @@ const Footer = () => {
                 {/* <li>
                   <a href="#blog">Blog</a>
                 </li> */}
-                <li>
+                {/* <li>
                   <a href="#customerservices">Customer Services</a>
                 </li>
                 <li>
                   <a href="#howItWorks">How It Works</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="#faqs">FAQ's</a>
+                </li>
+                <li>
+                  <a href="#contactus">Contact Us</a>
                 </li>
               </ul>
             </div>

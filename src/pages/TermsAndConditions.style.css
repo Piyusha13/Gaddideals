@@ -18,7 +18,7 @@
      height: 73% !important;   
     }
     .heading-TAC{
-        width: 55% !important;
+        width: auto !important;
         position: absolute;
         top: 59%;
         /* z-index: 99999999999999; */
@@ -28,7 +28,7 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 13px;
     
-    padding: 20px 5px !important;
+    padding: 20px 10px !important;
     }
     .heading-TAC span{
         text-shadow: -1px 1px 0 rgb(255, 255, 255),
@@ -39,7 +39,7 @@
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 500;
-        font-size: 20px !important;
+        font-size: 14px !important;
         /* background-color: orange; */
         letter-spacing: 0.1em;
         color:#050F56;
@@ -53,6 +53,8 @@
     font-size: 20px;
     /* line-height: 45px; */
     display: flex;
+    flex-direction: column;
+
     align-items: center;
     /* background-color: orange; */
     color: #696969;
@@ -81,6 +83,44 @@
         flex-direction: column;
         /* background-color: palegreen; */
         width: 170px;
+        top: 45%;
+        right: 5%;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 820px){
+    .heading-TAC{
+        width: auto !important;
+        position: absolute;
+        top: 64% !important;
+        /* z-index: 99999999999999; */
+        /* left: 30%; */
+    border: none;
+    background: #050F56;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    
+    padding: 20px 10px !important;
+    }
+    .heading-TAC span{
+        text-shadow: -1px 1px 0 rgb(255, 255, 255),
+                              1px 1px 0 rgb(255, 255, 255),
+                             1px -1px 0 rgb(255, 255, 255),
+                            -1px -1px 0 rgb(255, 255, 255);
+        /* border: 2px solid #FFFFFF; */
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px !important;
+        /* background-color: orange; */
+        letter-spacing: 0.1em;
+        color:#050F56;
+    }
+    .downloads-div{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        /* background-color: palegreen; */
+        width: 200px !important;
         top: 45%;
         right: 5%;
     }
@@ -138,6 +178,8 @@ font-size: 20px;
 /* line-height: 45px; */
 display: flex;
 align-items: center;
+flex-direction: column;
+
 /* background-color: orange; */
 color: #696969;
 }
@@ -167,4 +209,21 @@ color: #696969;
     width: 170px;
     top: 45%;
     right: 5%;
+}
+.cotent-div h5{
+    color: #050F56;
+    font-weight: bold;
+    align-self: flex-start;
+}
+.cotent-div h1{
+    color: #050F56;
+    font-weight: bold;
+    align-self: flex-start;
+
+}
+.cotent-div p{
+    font-weight: 300;
+    font-family: 'Poppins';
+font-style: normal;
+font-size: 18px;
 }

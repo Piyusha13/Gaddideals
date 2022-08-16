@@ -452,12 +452,12 @@
     margin-right: 10px;
   }
 }
-.header-container {
+/* .header-container {
   position: sticky;
   top: 0;
   left: 0;
   z-index: 1000;
-}
+} */
 .sell-buy-container-moile {
   display: none;
 }
@@ -468,9 +468,9 @@
   align-items: center;
   padding: 5px 0px;
   background: #050f56;
-  position: sticky;
-  top: 0;
-  z-index: 9999;
+  /* position: sticky; */
+  /* top: 0; */
+  /* z-index: 9999; */
   min-height: 40px;
 }
 .sell-buy-container-desktop button {
@@ -551,8 +551,8 @@
     /* transform: translateX(10px) !important; */
     height: 120px;
     display: flex;
-    position: sticky;
-    top: 0 !important;
+    /* position: sticky; */
+    /* top: 39.5 !important; */
     z-index: 9999;
   }
   .container-fluid {
@@ -604,8 +604,8 @@
 /* NavBar */
 .nav-container {
   background: #f4f4f4;
-  position: sticky;
-  top: 40px;
+  /* position: sticky; */
+  /* top: 40px; */
   z-index: 9999;
 }
 
@@ -926,6 +926,11 @@
   align-items: center;
   cursor: pointer;
   margin-left: 12px;
+  font-size: 14px;
+  color: #505050;
+}
+.user span{
+  margin-left: 10px;
 }
 .user img {
   width: 20px;
@@ -1407,6 +1412,7 @@ a {
   font-style: normal;
   font-weight: 500;
   font-size: 1vw;
+  vertical-align: none !important;
 }
 @media screen and (min-width: 1367px) {
   .timer {
@@ -1588,4 +1594,9 @@ a {
   .paddingTop-5 {
     font-size: 10px !important;
   }
+}
+.header{
+  position: sticky !important;
+  top: 0% !important;
+  z-index: 9999 !important;
 }

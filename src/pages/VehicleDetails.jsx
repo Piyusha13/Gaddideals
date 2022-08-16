@@ -1,5 +1,21 @@
 import "./vehicledetails.style.css";
 import statecities from "../state-cities.json";
+import {
+  EmailIcon,
+  FacebookIcon,
+  LinkedinIcon,
+  TelegramIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 
 import locationIcon from "../assets/location.png";
 import calculatorIcon from "../assets/calculator.png";
@@ -78,6 +94,7 @@ const VehicleDetails = () => {
   const [getvehicledetails, setVehicleDetails] = useState({});
   const [locationDropDown, setlocationDropDown] = useState(false);
 
+  const [shareVehicle, setShareVehicle] = useState(false);
   let user_token = localStorage.getItem("Token");
   const [imageArray, setImageArray] = useState([]);
   const [similarImageArr, setSimilarImageArr] = useState([]);
@@ -546,16 +563,17 @@ const VehicleDetails = () => {
     return "Loading...";
   }
 
-  // console.log(similarVehicles);
+  // console.log("hey" + window.location);
 
   return (
     <>
       <Navbar />
+
       {EmiModal && (
         <Modal
           visible={EmiModal}
-          width={matches ? "85%" : "100vw"}
-          height={matches ? "auto" : "100%"}
+          width={matches ? "90%" : "100vw"}
+          height={matches ? "auto" : "auto"}
           effect="fadeInUp"
           onClickAway={() => {
             setEmiModal(!EmiModal);
@@ -563,6 +581,14 @@ const VehicleDetails = () => {
         >
           <div className="emi-section">
             <div className="emi-left-side-div">
+              <img
+                className="cross-img-mobile"
+                src={CloseTab}
+                alt=""
+                onClick={() => {
+                  setEmiModal(!EmiModal);
+                }}
+              />
               <div className="emi-left-top-div">
                 <p>
                   <span className="selling-price"> ₹{rupee_format(emi)} </span>{" "}
@@ -611,6 +637,7 @@ const VehicleDetails = () => {
             {/* <div className="verticle-hr"></div> */}
             <div className="emi-right-side-div">
               <img
+                className="cross-img"
                 src={CloseTab}
                 alt=""
                 onClick={() => {
@@ -1091,8 +1118,43 @@ const VehicleDetails = () => {
                       <img src={calculatorIcon} alt="calculator icon" />
                       <span>EMI Calcualtor</span>
                     </div>
-                    <div className="share">
+                    <div
+                      className="share"
+                      onClick={() => {
+                        setShareVehicle(!shareVehicle);
+                      }}
+                    >
                       <img src={shareIcon} alt="share icon" />
+
+                      <div
+                        className={
+                          shareVehicle
+                            ? matches
+                              ? "mobile-share-vehicle-link"
+                              : "share-vehicle-link"
+                            : "hide-share-link-div"
+                        }
+                      >
+                        <FacebookShareButton url={window.location}>
+                          <FacebookIcon size={40} round={true} />
+                        </FacebookShareButton>
+                        <WhatsappShareButton url={window.location}>
+                          <WhatsappIcon size={40} round={true} />
+                        </WhatsappShareButton>
+
+                        <EmailShareButton url={window.location}>
+                          <EmailIcon size={40} round={true} />
+                        </EmailShareButton>
+                        <LinkedinShareButton url={window.location}>
+                          <LinkedinIcon size={40} round={true} />
+                        </LinkedinShareButton>
+                        <TelegramShareButton url={window.location}>
+                          <TelegramIcon size={40} round={true} />
+                        </TelegramShareButton>
+                        <TwitterShareButton url={window.location}>
+                          <TwitterIcon size={40} round={true} />
+                        </TwitterShareButton>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1486,6 +1548,14 @@ const VehicleDetails = () => {
             </div>
           </div>
         </section>
+      )}
+      {shareVehicle && (
+        <div
+          className="full-screen-overlay"
+          onClick={() => {
+            setShareVehicle(false);
+          }}
+        ></div>
       )}
       <Footer />
     </>
