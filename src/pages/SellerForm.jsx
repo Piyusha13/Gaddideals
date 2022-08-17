@@ -1125,6 +1125,8 @@ const SellerForm = () => {
             modelSuggestionBox={modelSuggestionBox}
             setModelSuggestionBox={setModelSuggestionBox}
             vehicleID={vehicleID}
+            editVehicleObj={editVehicleObj}
+            fuel={fuel}
           />
         </>
       );
@@ -1170,6 +1172,8 @@ const SellerForm = () => {
             bodyTypeTitle={bodyTypeTitle}
             setBodyTypeTitle={setBodyTypeTitle}
             setBodyTypeId={setBodyTypeId}
+            bodyTypeId={bodyTypeId}
+            vehicleID={vehicleID}
           />
         </>
       );

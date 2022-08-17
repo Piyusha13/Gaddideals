@@ -42,6 +42,9 @@ import { useEffect, useState } from "react";
 import Constant from "../constants";
 import "swiper/css";
 
+import Lightbox from "react-18-image-lightbox";
+import "react-18-image-lightbox/style.css";
+
 import { toast } from "react-toastify";
 import { FaUserTie } from "react-icons/fa";
 
@@ -73,6 +76,7 @@ import { withStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Pie } from "react-chartjs-2";
 import { Chart, ArcElement } from "chart.js";
+import { zIndex } from "material-ui/styles";
 Chart.register(ArcElement);
 
 const PrettoSlider = withStyles({
@@ -124,6 +128,9 @@ const VehicleDetails = () => {
   const [isTypeActive, setIsTypeActive] = useState();
   const [vehicleId, setvehicleId] = useState("");
   const [seller, setSeller] = useState("");
+
+  const [isLightboxOpen, setIsLightBoxOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   const [editableIntrest, seteditableIntrest] = useState(true);
   const [EmiModal, setEmiModal] = useState(false);
@@ -563,7 +570,7 @@ const VehicleDetails = () => {
     return "Loading...";
   }
 
-  // console.log("hey" + window.location);
+  let images = imageArray.map((index) => imgurl + index);
 
   return (
     <>
@@ -1031,11 +1038,33 @@ const VehicleDetails = () => {
                           : `${imgPlaceHolder}`
                       }
                       alt="truck"
+                      onClick={() => setIsLightBoxOpen(true)}
                     />
                   </SwiperSlide>
                 ))}
               </Swiper>
             </div>
+
+            {isLightboxOpen && (
+              <Lightbox
+                mainSrc={images[photoIndex]}
+                nextSrc={images[(photoIndex + 1) % images.length]}
+                prevSrc={
+                  images[(photoIndex + images.length - 1) % images.length]
+                }
+                onCloseRequest={() => setIsLightBoxOpen(false)}
+                onMovePrevRequest={() =>
+                  setPhotoIndex(
+                    (photoIndex + images.length - 1) % images.length
+                  )
+                }
+                clickOutsideToClose={true}
+                onMoveNextRequest={() =>
+                  setPhotoIndex((photoIndex + 1) % images.length)
+                }
+                imageTitle={`${getvehicledetails?.brand?.title}  ${getvehicledetails?.model?.name}`}
+              />
+            )}
 
             {/* Mob Vehicle Thumbnail */}
             <div className="mob-vehicle-thumbnail">

@@ -47,6 +47,8 @@ const SellerFormRegistration = ({
   isBodyTypeActive,
   setIsBodyTypeActive,
   setBodyTypeId,
+  vehicleID,
+  bodyTypeId,
 }) => {
   const continueNext = (e) => {
     e.preventDefault();
@@ -61,6 +63,26 @@ const SellerFormRegistration = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (vehicleID) {
+    let permitIndex = permitsArray
+      .map((permit) => permit.permit)
+      .indexOf(permit);
+    setIsPermitActive(permitIndex);
+
+    let tyreCondIndex = tyreConditionArray
+      .map((tyreCond) => tyreCond.condition.toLowerCase())
+      .indexOf(tyreCondition);
+    setIsTyreCondActive(tyreCondIndex);
+
+    let bodyTypeIndex = bodyTypeArray
+      .map((bodyType) => bodyType._id)
+      .indexOf(bodyTypeId);
+    setIsBodyTypeActive(bodyTypeIndex);
+
+    let rcIndex = RCArray.map((rc) => rc.rc).indexOf(rc);
+    setIsRCActive(rcIndex);
+  }
 
   return (
     <>

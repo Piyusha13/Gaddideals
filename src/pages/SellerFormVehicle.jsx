@@ -89,6 +89,8 @@ const SellerFormVehicle = ({
   vehicleID,
   year,
   stateId,
+  editVehicleObj,
+  fuel,
 }) => {
   const [yearsArray, setYearsArray] = useState([]);
   const [fuelTypesArray, setFuelTypesArray] = useState([]);
@@ -144,16 +146,17 @@ const SellerFormVehicle = ({
     fetchFuelTypeArray();
   }, []);
 
-  const checkYearActive = (yearTitle) => {
-    return yearTitle;
-  };
-
   if (vehicleID) {
-    const idx = yearsArray.find(
-      (year, index) => index === checkYearActive(yearTitle)
-    );
-    console.log(idx);
-    setIsYearActive(idx);
+    let editYearIndex = yearsArray.map((year) => year.year).indexOf(yearTitle);
+    setIsYearActive(editYearIndex);
+
+    let editOwnerIndex = ownersArray.map((owner) => owner.owner).indexOf(owner);
+    setIsOwnerActive(editOwnerIndex);
+
+    let editFuelTypeIndex = fuelTypesArray
+      .map((fuelType) => fuelType._id)
+      .indexOf(fuel);
+    setIsFuelActive(editFuelTypeIndex);
   }
 
   return (
@@ -256,7 +259,7 @@ const SellerFormVehicle = ({
                     value={cityTitle && cityTitle}
                     placeholder="Pune"
                     onChange={handleCityChange}
-                    disabled={disableCity}
+                    disabled={vehicleID ? false : disableCity}
                     onFocus={handleOnCityFocus}
                   />
 
@@ -356,17 +359,6 @@ const SellerFormVehicle = ({
                       <span>{yearTitle}</span>
                     </div>
                   )}
-                  {/* {vehicleID && (
-                    <>
-                      {year ? (
-                        ""
-                      ) : (
-                        <div className="year active">
-                          <span>{year === "" ? yearTitle : "No Year"}</span>
-                        </div>
-                      )}
-                    </>
-                  )} */}
 
                   {yearsArray.slice(0, 6).map((years, index) => (
                     <>
@@ -462,11 +454,6 @@ const SellerFormVehicle = ({
               <div className="form-controls">
                 <label htmlFor="owners">Number of owners</label>
                 <div className="owners">
-                  {vehicleID && (
-                    <div className="owner active">
-                      <span>{owner === undefined ? "No Owner" : owner}</span>
-                    </div>
-                  )}
                   {ownersArray.map((owners, index) => (
                     <div
                       key={index}

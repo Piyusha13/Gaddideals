@@ -929,7 +929,7 @@
   font-size: 14px;
   color: #505050;
 }
-.user span{
+.user span {
   margin-left: 10px;
 }
 .user img {
@@ -1595,12 +1595,12 @@ a {
     font-size: 10px !important;
   }
 }
-.header{
+.header {
   position: sticky !important;
   top: 0% !important;
-  z-index: 9999 !important;
+  z-index: 999 !important;
 }
-.Logged-user-name{
+.Logged-user-name {
   padding: 10px;
   padding-bottom: 0%;
   color: #050f56;
