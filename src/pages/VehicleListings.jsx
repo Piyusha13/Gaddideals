@@ -1959,23 +1959,23 @@ const VehicleListings = () => {
                     <div className="truck-stats">
                       <div className="stat">
                         <span>
-                          {vehicle.km_driven !== ""
+                          {vehicle.km_driven !== undefined
                             ? vehicle.km_driven + " km"
-                            : "95,075km"}
+                            : "Undefined"}
                         </span>
                       </div>
                       <div className="stat">
                         <span>
-                          {vehicle.no_of_owner !== ""
-                            ? vehicle.no_of_owner + " owner"
-                            : "1st Owner"}
+                          {vehicle.no_of_owner !== undefined
+                            ? vehicle.no_of_owner
+                            : "Undefined"}
                         </span>
                       </div>
                       <div className="stat">
                         <span>
-                          {vehicle.horse_power !== ""
+                          {vehicle.horse_power !== undefined
                             ? vehicle.horse_power
-                            : "100 hp"}
+                            : "Undefined"}
                         </span>
                       </div>
                     </div>

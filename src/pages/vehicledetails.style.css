@@ -857,6 +857,9 @@
     font-size: 12px;
     color: #121212;
     margin-left: 3px;
+    /* background-color: #00adef; */
+    display: flex;
+    flex-direction: column;
   }
 
   .similar-vehicles-container
@@ -1911,6 +1914,7 @@
   font-weight: bold;
   font-size: 12px;
   color: #121212;
+  
 }
 
 .similar-vehicles-container
@@ -1919,6 +1923,7 @@
   .vehicle-info
   .price {
   margin-top: 10px;
+  
 }
 
 .similar-vehicles-container

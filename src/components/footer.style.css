@@ -652,7 +652,7 @@
     text-decoration: none;
     font-family: "Roboto";
     font-weight: 400;
-    font-size: 8px !important;
+    font-size: 5px !important;
     color: #ffffff;
     position: relative;
     margin: 10px 0px 0px 0px !important;
@@ -664,10 +664,10 @@
     .mobile-cities-row
     .mobile-border {
     position: absolute;
-    top: 17px !important;
+    top: 14px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 2px !important;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -679,10 +679,10 @@
     .mobile-border:nth-of-type(2)::after {
     content: "";
     position: absolute;
-    top: 26px !important;
+    top: 22px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -694,10 +694,10 @@
     .mobile-border:nth-of-type(3)::after {
     content: "";
     position: absolute;
-    top: 48px !important;
+    top: 40px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -709,10 +709,10 @@
     .mobile-border:nth-of-type(4)::after {
     content: "";
     position: absolute;
-    top: 70px !important;
+    top: 58px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -753,7 +753,7 @@
     text-decoration: none;
     font-family: "Roboto";
     font-weight: 400;
-    font-size: 8px !important;
+    font-size: 5px !important;
     color: #ffffff;
     position: relative;
     margin: 10px 0px 0px 0px !important;
@@ -765,10 +765,10 @@
     .mobile-brands-row
     .mobile-border {
     position: absolute;
-    top: 17px !important;
+    top: 14px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -780,10 +780,10 @@
     .mobile-border:nth-of-type(2)::after {
     content: "";
     position: absolute;
-    top: 26px !important;
+    top: 22px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -795,10 +795,10 @@
     .mobile-border:nth-of-type(3)::after {
     content: "";
     position: absolute;
-    top: 48px !important;
+    top: 40px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;
@@ -810,10 +810,10 @@
     .mobile-border:nth-of-type(4)::after {
     content: "";
     position: absolute;
-    top: 70px !important;
+    top: 58px !important;
     left: 125%;
     width: 1px !important;
-    height: 12px !important;
+    height: 10px !important;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     background-color: #ffffff;

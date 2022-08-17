@@ -349,32 +349,32 @@ const Footer = () => {
 
               <div className="mobile-brands">
                 <div className="mobile-brands-row">
-                  <a href="#city">NewDelhi</a>
+                  <a href="#city">Tata</a>
                   <span className="mobile-border"></span>
-                  <a href="#city">Noida</a>
+                  <a href="#city">Volvo</a>
                   <span className="mobile-border"></span>
-                  <a href="#city">Kolkata</a>
+                  <a href="#city">Hyundai</a>
                   <span className="mobile-border"></span>
-                  <a href="#city">Pune</a>
-                  <span className="mobile-border"></span>
-                </div>
-
-                <div className="mobile-brands-row">
-                  <a href="#city">Ahmedabad</a>
-                  <span className="mobile-border"></span>
-                  <a href="#city">Bengaluru</a>
-                  <span className="mobile-border"></span>
-                  <a href="#city">Mumbai</a>
-                  <span className="mobile-border"></span>
-                  <a href="#city">Pune</a>
+                  <a href="#city">Caterpillar</a>
                   <span className="mobile-border"></span>
                 </div>
 
                 <div className="mobile-brands-row">
-                  <a href="#city">Gurgaon</a>
-                  <a href="#city">Hyderabad</a>
-                  <a href="#city">Chennai</a>
-                  <a href="#city">Pune</a>
+                  <a href="#city">Mahindra</a>
+                  <span className="mobile-border"></span>
+                  <a href="#city">ACE</a>
+                  <span className="mobile-border"></span>
+                  <a href="#city">BEML Limited</a>
+                  <span className="mobile-border"></span>
+                  <a href="#city">Apollo Infratech</a>
+                  <span className="mobile-border"></span>
+                </div>
+
+                <div className="mobile-brands-row">
+                  <a href="#city">TIL Limited</a>
+                  <a href="#city">Deccan Construction</a>
+                  <a href="#city">Nakoda Machinery</a>
+                  <a href="#city">Gamzen</a>
                 </div>
               </div>
             </div>

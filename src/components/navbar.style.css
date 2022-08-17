@@ -1600,3 +1600,9 @@ a {
   top: 0% !important;
   z-index: 9999 !important;
 }
+.Logged-user-name{
+  padding: 10px;
+  padding-bottom: 0%;
+  color: #050f56;
+  font-weight: bold;
+}

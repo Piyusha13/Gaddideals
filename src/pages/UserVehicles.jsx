@@ -58,6 +58,7 @@ function UserVehicles() {
   };
   function logoutAccount() {
     localStorage.clear();
+    window.location.href = "/";
   }
   const [dataAvailable, setdataAvailable] = useState(false);
   // const [array,setarray]=useState("");
@@ -188,19 +189,23 @@ function UserVehicles() {
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div> */}
-              <div className="sign-out-div">
-                <img className="logout-img" src={logout} alt=""></img>
-                {/* <span className="sign-out-text"> Sign out</span> */}
-                <Link to="/">
+              <div className="my-order-div">
+                <img className="clipboard-img" src={logout} alt=""></img>
+                <Link to="/myvehicleenq" className="my-order-text">
                   <span
-                    className="sign-out-text"
                     onClick={() => {
                       logoutAccount();
                     }}
                   >
-                    {" "}
                     Sign out
                   </span>
+                </Link>
+                <Link to="">
+                  <img
+                    className="next-arrow-img hidden"
+                    src={next_arrow}
+                    alt=""
+                  ></img>
                 </Link>
               </div>
             </div>

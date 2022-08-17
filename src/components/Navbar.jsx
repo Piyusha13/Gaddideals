@@ -23,6 +23,7 @@ import googleLogo from "../assets/google_logo.svg";
 import facebookLogo from "../assets/facebook_logo.svg";
 import gmailLogo from "../assets/gmail_logo.png";
 import "./navbar.style.css";
+// import { useTimer } from "react-timer-hook";
 
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -67,6 +68,21 @@ const Navbar = () => {
   const displaySignIn = useSelector(selectSignUpValue);
   const mobDisplaySignIn = useSelector(selectMobSignInValue);
 
+  // const [seconds, setSeconds] = useState(59);
+  // const [minutes, setMinutes] = useState(0);
+
+  // var timer;
+  // useEffect(() => {
+
+  //   timer = setInterval(() => {
+  //     setSeconds(seconds - 1);
+  //     if (seconds === 0) {
+  //       setEnableResendOtp(true);
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
+
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
   const [activeCategory, setActiveCategory] = useState(location.category);
@@ -76,6 +92,8 @@ const Navbar = () => {
   const [visible, setvisible] = useState(false);
   const [onclose, setonclose] = useState(false);
   const [onDisplayClose, setOnDisplayClose] = useState(true);
+
+  const [loggedUserName, setLoggedUserName] = useState("");
 
   const [city, setcity] = useState("");
 
@@ -88,6 +106,19 @@ const Navbar = () => {
       .matchMedia("(max-width: 1000px)")
       .addEventListener("change", (e) => setMatches(e.matches));
   }, []);
+
+  // function MyTimer({ expiryTimestamp }) {
+  //   const {
+  //     seconds,
+  //     minutes,
+  //     hours,
+  //     days,
+  //     isRunning,
+  //     start,
+  //     pause,
+  //     resume,
+  //     restart,
+  //   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
   const [searchValue, setSearchValue] = useState("");
   const [brandsArray, setBrandsArray] = useState([]);
@@ -464,7 +495,7 @@ const Navbar = () => {
           if (res?.data?.status === "success") {
             toast.success(res?.data?.message);
             // setmob_no(res.data.mob_no);
-            // console.log(res);
+            console.log(res);
             setmob_no(mob_no);
             setvisibleSignUp(false);
             setvisibleOTP(true);
@@ -499,14 +530,18 @@ const Navbar = () => {
 
   //website timer fuction
   const [counter, setCounter] = useState(59);
-  // React.useEffect(() => {
-  //   const timer =
-  //     counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-  //   if (counter === 0) {
-  //     setEnableResendOtp(true);
-  //   }
-  //   return () => clearInterval(timer);
-  // }, [counter]);
+  useEffect(() => {
+    const timer =
+      counter > 0 &&
+      setInterval(() => {
+        setCounter(counter - 1);
+        // if (counter === 0) {
+        //   setEnableResendOtp(true);
+        // }
+      }, 1000);
+
+    return () => clearInterval(timer);
+  }, [counter]);
 
   //moile login section
 
@@ -911,6 +946,7 @@ const Navbar = () => {
   };
 
   async function userName() {
+    // var inValid = /\s/;
     await axios
       .get(Constant.getUrls.getUser, {
         headers: {
@@ -918,9 +954,18 @@ const Navbar = () => {
         },
       })
       .then((res) => {
-        setname(res?.data?.user?.name);
-        console.log(res);
-        console.log(res?.data?.user?.name);
+        setLoggedUserName(res?.data?.user?.name);
+
+        // console.log("hey" + name.includes(" "));
+        // if (name.includes(" ")) {
+        //   const [first, last] = name.split(" ");
+        //   console.log(first);
+
+        //   setLoggedUserName(first);
+        // } else {
+        //   console.log("first" + name);
+        //   setLoggedUserName(name);
+        // }
       });
   }
 
@@ -1187,7 +1232,10 @@ const Navbar = () => {
               <Link to="/loggeduser">
                 <div className="user">
                   <img src={userIcon} alt="user icon" />
-                  <span>Hello {name.substring(0, name.indexOf(" "))}</span>
+                  <span>
+                    Hello{" "}
+                    {loggedUserName.substring(0, loggedUserName.indexOf(" "))}
+                  </span>
                 </div>
               </Link>
             ) : (
@@ -1376,6 +1424,10 @@ const Navbar = () => {
           {LoggedUserHamburgerMenue && (
             <div className="mob-menue-container">
               <div className="mob-top-div">
+                <p className="Logged-user-name">
+                  Hello{" "}
+                  {loggedUserName.substring(0, loggedUserName.indexOf(" "))}
+                </p>
                 {/* <input placeholder="Location" className="mob-location-input" />
             <img className="mob-arrow-img" src={downArrow} alt="down arrow" /> */}
                 <div className="mob-languages-container">
@@ -2721,6 +2773,10 @@ const Navbar = () => {
                   }}
                 />
                 <span className="timer"> 00:{counter}s</span>
+
+                {/* <span> */}
+                {/* <span>{minutes}</span>:<span>{seconds}</span> */}
+                {/* </span> */}
                 {EnableResendOtp && (
                   <p
                     onClick={() => {

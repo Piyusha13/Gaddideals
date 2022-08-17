@@ -81,36 +81,64 @@ function LoggedUser() {
     console.log(e.target.files[0]);
     console.log(name);
   }
+
+  const validateFeilds = () => {
+    let validateName = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    let validateMobNo =
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    let validateEmail = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+
+    if (!validateName.test(name.name)) {
+      toast.error("please enter valid name");
+      return false;
+    }
+
+    if (!validateMobNo.test(mob_no.mob_no)) {
+      toast.error("please enter valid mobile number");
+      return false;
+    }
+    if (!validateEmail.test(email.email)) {
+      toast.error("please enter valid email id");
+      return false;
+    }
+    return true;
+  };
+
   function handleSumit(e) {
     e.preventDefault();
-    let user_token = localStorage.getItem("Token");
-    console.log(name.name);
-    console.log(email.email);
-    console.log(mob_no.mob_no);
-    console.log(profileImg);
-    let fdi = new FormData();
-    fdi.append("name", name.name);
-    fdi.append("email", email.email);
-    fdi.append("mob_no", mob_no.mob_no);
-    fdi.append("profile_pic_url", profileImg);
-    // const updatedData = {
-    //     name: name.name,
-    //     email: email.email,
-    //     mob_no: mob_no.mob_no,
-    // }
-    axios
-      .put(Constant.putAllUrls.putAllUsers, fdi, {
-        headers: {
-          Authorization: ` Bearer ${user_token} `,
-        },
-      })
-      .then(
-        toast.success("Saved successfully")
-        // (res) => console.log(res)
-        // res.data.status==='success'? setnavigate(true):setnavigate(false)
-      );
-    if (previousNum !== mob_no.mob_no) {
-      logoutAccount();
+
+    if (validateFeilds()) {
+      let user_token = localStorage.getItem("Token");
+      console.log(name.name);
+      console.log(email.email);
+      console.log(mob_no.mob_no);
+      console.log(profileImg);
+
+      let fdi = new FormData();
+      fdi.append("name", name.name);
+      fdi.append("email", email.email);
+      fdi.append("mob_no", mob_no.mob_no);
+      fdi.append("profile_pic_url", profileImg);
+      // const updatedData = {
+      //     name: name.name,
+      //     email: email.email,
+      //     mob_no: mob_no.mob_no,
+      // }
+
+      axios
+        .put(Constant.putAllUrls.putAllUsers, fdi, {
+          headers: {
+            Authorization: ` Bearer ${user_token} `,
+          },
+        })
+        .then(
+          toast.success("Saved successfully")
+          // (res) => console.log(res)
+          // res.data.status==='success'? setnavigate(true):setnavigate(false)
+        );
+      if (previousNum !== mob_no.mob_no) {
+        logoutAccount();
+      }
     }
   }
   function setSignup() {
@@ -204,11 +232,10 @@ function LoggedUser() {
                   <img className="next-arrow-img" src={next_arrow} alt=""></img>
                 </Link>
               </div> */}
-              <div className="sign-out-div">
-                <img className="logout-img" src={logout} alt=""></img>
-                <Link to="/">
+              <div className="my-order-div">
+                <img className="clipboard-img" src={logout} alt=""></img>
+                <Link to="/myvehicleenq" className="my-order-text">
                   <span
-                    className="sign-out-text"
                     onClick={() => {
                       logoutAccount();
                     }}
@@ -216,7 +243,30 @@ function LoggedUser() {
                     Sign out
                   </span>
                 </Link>
+                <Link to="">
+                  <img
+                    className="next-arrow-img hidden"
+                    src={next_arrow}
+                    alt=""
+                  ></img>
+                </Link>
               </div>
+              {/* <div className="my-order-div">
+                <img className="logout-img" src={logout} alt=""></img>
+                <Link to="/">
+                  <span
+                    className="my-order-text"
+                    onClick={() => {
+                      logoutAccount();
+                    }}
+                  >
+                    Sign out
+                  </span>
+                </Link>
+                <Link to="/myvehicleenq">
+                  <img className="next-arrow-img" src={next_arrow} alt=""></img>
+                </Link>
+              </div> */}
             </div>
           </div>
           <div className="right-profile-container">
@@ -273,14 +323,18 @@ function LoggedUser() {
                   readOnly={editablename}
                   value={name?.name}
                   name="name"
-                  className="user-name-right-input"
+                  className={
+                    editablename
+                      ? "user-name-right-input"
+                      : "user-name-right-input-active"
+                  }
                   onChange={(e) => {
                     onHandleChange(e);
                   }}
                 />
                 <span
                   onClick={() => {
-                    seteditablename(false);
+                    seteditablename(!editablename);
                     // setname("");
                   }}
                   className="user-name-edit"
@@ -296,14 +350,18 @@ function LoggedUser() {
                   readOnly={editableEmail}
                   value={email?.email}
                   name="email"
-                  className="user-email-input"
+                  className={
+                    editableEmail
+                      ? "user-email-input"
+                      : "user-name-right-input-active"
+                  }
                   onChange={(e) => {
                     onHandleChange(e);
                   }}
                 ></input>
                 <span
                   onClick={() => {
-                    seteditableEmail(false);
+                    seteditableEmail(!editableEmail);
                     setemail("");
                   }}
                   className="user-email-edit"
@@ -320,14 +378,18 @@ function LoggedUser() {
                   readOnly={editableMob}
                   value={mob_no?.mob_no}
                   name="mob_no"
-                  className="user-mobile-input"
+                  className={
+                    editableMob
+                      ? "user-mobile-input"
+                      : "user-name-right-input-active"
+                  }
                   onChange={(e) => {
                     onHandleChange(e);
                   }}
                 ></input>
                 <span
                   onClick={() => {
-                    seteditableMob(false);
+                    seteditableMob(!editableMob);
                     setmob_no("");
                   }}
                   className="user-mobile-edit"
