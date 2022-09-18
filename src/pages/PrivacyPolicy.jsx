@@ -22,8 +22,23 @@ function PrivacyPolicy() {
           <span>Privacy Policy</span>
         </div>
         <div className="downloads-div">
-          <img src={gp} className="gp-img" alt="" />
-          <img src={ap} className="ap-img" alt="" />
+          <img
+            src={gp}
+            className="gp-img"
+            alt=""
+            onClick={() => {
+              window.location.href =
+                "https://play.google.com/store/games?utm_source=apac_med&utm_medium=hasem&utm_content=Oct0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-py-Evergreen-Oct0121-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700058906740516_creativeid_480977734970_device_c&gclid=Cj0KCQjw54iXBhCXARIsADWpsG-CCJ0Va1SM47pcLde7OIB2qTUQqRMNXrjApqyWTvovb5yTz72kgn8aAnMeEALw_wcB&gclsrc=aw.ds";
+            }}
+          />
+          <img
+            src={ap}
+            className="ap-img"
+            alt=""
+            onClick={() => {
+              window.location.href = "https://www.apple.com/in/app-store/";
+            }}
+          />
         </div>
       </div>
       <div className="cotent-div gd_container">

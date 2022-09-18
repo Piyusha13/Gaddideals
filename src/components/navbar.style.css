@@ -1606,3 +1606,21 @@ a {
   color: #050f56;
   font-weight: bold;
 }
+.otp-timer{
+  /* background-color: #050f56; */
+  align-self: flex-end !important;
+  color: #00adef;
+}
+.otp-timer p{
+  display: inline;
+}
+@media screen and (max-width: 1000px){
+
+.otp-timer{
+  /* background-color: #050f56; */
+  align-self: flex-end !important;
+  color: #00adef;
+  justify-content: flex-end;
+  float: right;
+}
+}

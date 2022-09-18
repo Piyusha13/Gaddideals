@@ -84,6 +84,8 @@
         /* background-color: palegreen; */
         width: 170px;
         top: 45%;
+        cursor: pointer;
+
         right: 5%;
     }
 }
@@ -123,6 +125,8 @@
         width: 200px !important;
         top: 45%;
         right: 5%;
+        cursor: pointer;
+
     }
 }
 
@@ -209,6 +213,8 @@ color: #696969;
     width: 170px;
     top: 45%;
     right: 5%;
+    cursor: pointer;
+
 }
 .cotent-div h5{
     color: #050F56;

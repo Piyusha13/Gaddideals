@@ -65,8 +65,11 @@ import { log } from "util";
 const queryString = require("query-string");
 
 const Navbar = () => {
+  const [EnableResendOtp, setEnableResendOtp] = useState(false);
   const displaySignIn = useSelector(selectSignUpValue);
   const mobDisplaySignIn = useSelector(selectMobSignInValue);
+
+  const [timerVisible, settimerVisible] = useState(true);
 
   // const [seconds, setSeconds] = useState(59);
   // const [minutes, setMinutes] = useState(0);
@@ -82,6 +85,18 @@ const Navbar = () => {
   //   }, 1000);
   //   return () => clearInterval(timer);
   // }, []);
+
+  const [counter, setCounter] = React.useState(59);
+
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    if (counter === 0) {
+      setEnableResendOtp(true);
+      settimerVisible(false);
+    }
+    return () => clearInterval(timer);
+  }, [counter]);
 
   const location = queryString.parse(window.location.search);
   const [navIcons, setNavIcons] = useState([]);
@@ -133,7 +148,6 @@ const Navbar = () => {
 
   const [GoogleSignIn, setGoogleSignIn] = useState(false);
   const [FaceookSignIn, setFaceookSignIn] = useState(false);
-  const [EnableResendOtp, setEnableResendOtp] = useState(false);
 
   const [GSignUp, setGSignUp] = useState(false);
 
@@ -509,10 +523,10 @@ const Navbar = () => {
   }
   //wesite resed otp
   function resendotp() {
-    console.warn({ mob_no });
+    // console.warn({ mob_no });
     let payload = { mob_no, hash: "ekxpmAB8m9v" };
-    axios.post(Constant.postUrls.postAllSignins, payload).then((result) => {
-      console.log("result", result);
+    axios.post(Constant.postUrls.potsALLresendotps, payload).then((result) => {
+      console.log("resend result" + result);
       if (mob_no === "") {
         toast.error("enter moile number");
       } else if (result?.data?.status === "failed") {
@@ -523,25 +537,11 @@ const Navbar = () => {
           toast.success(result?.data?.message);
           // setotp(result.data.otp);
           setCounter(59);
+          settimerVisible(true);
         }
       }
     });
   }
-
-  //website timer fuction
-  const [counter, setCounter] = useState(59);
-  useEffect(() => {
-    const timer =
-      counter > 0 &&
-      setInterval(() => {
-        setCounter(counter - 1);
-        // if (counter === 0) {
-        //   setEnableResendOtp(true);
-        // }
-      }, 1000);
-
-    return () => clearInterval(timer);
-  }, [counter]);
 
   //moile login section
 
@@ -2772,11 +2772,14 @@ const Navbar = () => {
                     setotp(e.target.value);
                   }}
                 />
-                <span className="timer"> 00:{counter}s</span>
+                {timerVisible && (
+                  <div className="otp-timer">
+                    <span>00:</span>
+                    <span>{counter}</span>
+                    <p>s</p>
+                  </div>
+                )}
 
-                {/* <span> */}
-                {/* <span>{minutes}</span>:<span>{seconds}</span> */}
-                {/* </span> */}
                 {EnableResendOtp && (
                   <p
                     onClick={() => {
@@ -2790,6 +2793,7 @@ const Navbar = () => {
                       className="otp-text-color-blue"
                       onClick={() => {
                         resendotp();
+                        settimerVisible(true);
                       }}
                     >
                       RESEND OTP
@@ -3377,15 +3381,25 @@ const Navbar = () => {
                     />
                     <span></span>
                   </div>
-                  <p
-                    className="mob-resp-not-a-member-text"
-                    onClick={() => {
-                      resendotp();
-                    }}
-                  >
-                    Didn’t recive the OTP?{" "}
-                    <span className="text-color-blue">RESEND OTP</span>
-                  </p>
+                  {timerVisible && (
+                    <div className="otp-timer">
+                      <span>00:</span>
+                      <span>{counter}</span>
+                      <p>s</p>
+                    </div>
+                  )}
+                  {EnableResendOtp && (
+                    <p
+                      className="mob-resp-not-a-member-text"
+                      onClick={() => {
+                        resendotp();
+                      }}
+                    >
+                      Didn’t recive the OTP?{" "}
+                      <span className="text-color-blue">RESEND OTP</span>
+                    </p>
+                  )}
+
                   <button
                     className="mob-resp-next-button"
                     onClick={() => {

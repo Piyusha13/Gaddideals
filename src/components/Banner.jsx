@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+// import CircularProgress from "@mui/material/CircularProgress";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import "./banner.style.css";
 import { useState, useEffect } from "react";
@@ -49,7 +50,7 @@ const Banner = () => {
   }, []);
 
   if (isLoading) {
-    return "Loading...";
+    return <CircularProgress />;
   }
 
   const pagination = {

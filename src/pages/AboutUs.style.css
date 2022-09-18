@@ -90,6 +90,7 @@
         width: 20% !important;
         top: 45%;
         right: 5%;
+        cursor: pointer;
     }
     .vision-top-div{
         width: 100%;
@@ -349,6 +350,8 @@
         width: 100px ;
         top: 40% !important;
         right: 3% !important;
+        cursor: pointer;
+
     }
     .vision-top-div{
         width: 100%;
@@ -1127,6 +1130,8 @@ color: #696969;
     width: 170px;
     top: 45%;
     right: 5%;
+    cursor: pointer;
+
 }
 .vision-top-div{
     width: 100%;
@@ -1162,7 +1167,7 @@ text-align: left;
 }
 .vision-mid-div{
     position: absolute;
-    z-index: 999;
+    z-index: 99;
     width: 55% ;
     right: 0%;
     top: 45%;
@@ -1190,7 +1195,7 @@ text-align: left;
     right: 3%;
     width: 63%;
     height: auto;
-    z-index: 999;
+    z-index: 99;
     /* background: rgba(5, 14, 86, 0.651); */
     background-color: #050F56;
     opacity: 0.7;

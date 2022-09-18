@@ -79,6 +79,8 @@
         width: 90px !important;
         top: 45% !important;
         right: 1% !important;
+        cursor: pointer;
+
     }
 }
 
@@ -188,4 +190,6 @@ color: #696969;
     width: 170px;
     top: 45%;   
     right: 5%;
+    cursor: pointer;
+
 }

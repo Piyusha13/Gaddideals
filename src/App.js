@@ -31,10 +31,15 @@ import AboutUs from "./pages/AboutUs";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const queryString = require("query-string");
 
 function App() {
   const location = queryString.parse(window.location.search);
+
+  AOS.init();
 
   const navigate = useNavigate();
 

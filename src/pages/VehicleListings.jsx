@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 // import { useSelector } from "react-redux";
+import React from "react";
 
 import statecities from "../state-cities.json";
 
@@ -109,6 +110,21 @@ const VehicleListings = () => {
       user_type: "Other",
     },
   ];
+
+  const [EnableResendOtp, setEnableResendOtp] = useState(false);
+  const [timerVisible, settimerVisible] = useState(true);
+
+  const [counter, setCounter] = React.useState(25);
+
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    if (counter === 0) {
+      setEnableResendOtp(true);
+      settimerVisible(false);
+    }
+    return () => clearInterval(timer);
+  }, [counter]);
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 1000px)").matches
@@ -221,8 +237,10 @@ const VehicleListings = () => {
       } else {
         if (result.data.status === "success") {
           toast.success(result.data.message);
-          setOtp(result.data.otp);
-
+          // setOtp(result.data.otp);
+          settimerVisible(true);
+          setEnableResendOtp(false);
+          setCounter(25);
           // setCounter(59);
         }
       }
@@ -967,220 +985,223 @@ const VehicleListings = () => {
   return (
     <>
       <Navbar />
-      {BuyerInput && (
-        <div>
-          <Modal
-            visible={BuyerInput}
-            width={matches ? "85%" : "35%"}
-            effect="fadeInUp"
-            onClickAway={() => {
+
+      <Modal
+        visible={BuyerInput}
+        width={matches ? "85%" : "35%"}
+        effect="fadeInLeft"
+        onClickAway={() => {
+          setBuyerInput(!BuyerInput);
+        }}
+      >
+        <div className="buyer-dtails-container">
+          <img
+            src={CloseTab}
+            alt=""
+            onClick={() => {
               setBuyerInput(!BuyerInput);
             }}
-          >
-            <div className="buyer-dtails-container">
-              <img
-                src={CloseTab}
-                alt=""
-                onClick={() => {
-                  setBuyerInput(!BuyerInput);
-                }}
-              ></img>
-              <h1>Please share your contact</h1>
-              <input
-                className="buyer-name"
-                onChange={(e) => {
-                  setname(e.target.value);
-                }}
-                value={name}
-                type="text"
-                placeholder="Name "
-              ></input>
-              <input
-                className="buyer-number"
-                placeholder="Phone Number "
-                onChange={(e) => {
-                  setmob_no(e.target.value);
-                }}
-                value={mob_no}
-                maxLength={10}
-              ></input>
-              <input
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-                value={email}
-                type="email"
-                className="buyer-email"
-                placeholder="Email"
-              ></input>
+          ></img>
+          <h1>Please share your contact</h1>
+          <input
+            className="buyer-name"
+            onChange={(e) => {
+              setname(e.target.value);
+            }}
+            value={name}
+            type="text"
+            placeholder="Name "
+          ></input>
+          <input
+            className="buyer-number"
+            placeholder="Phone Number "
+            onChange={(e) => {
+              setmob_no(e.target.value);
+            }}
+            value={mob_no}
+            maxLength={10}
+          ></input>
+          <input
+            onChange={(e) => {
+              setemail(e.target.value);
+            }}
+            value={email}
+            type="email"
+            className="buyer-email"
+            placeholder="Email"
+          ></input>
 
-              <div className="buyer-location">
-                <input
-                  onChange={(e) => {
-                    setcity(e.target.value);
-                  }}
-                  value={city}
-                  placeholder="Location"
-                  onFocus={() => {
-                    setlocationDropDown(!locationDropDown);
-                  }}
-                ></input>
-                <img src={downArrow} alt=""></img>
-                {locationDropDown && (
-                  <div className="sign-up-loaction-drop-down">
-                    {filterCurentCities.map((data) => (
-                      <p
-                        onClick={() => {
-                          setcity(data.City);
-                          setlocationDropDown(false);
-                        }}
-                      >
-                        {data.City}
-                      </p>
-                    ))}
-                  </div>
-                )}
+          <div className="buyer-location">
+            <input
+              onChange={(e) => {
+                setcity(e.target.value);
+              }}
+              value={city}
+              placeholder="Location"
+              onFocus={() => {
+                setlocationDropDown(!locationDropDown);
+              }}
+            ></input>
+            <img src={downArrow} alt=""></img>
+            {locationDropDown && (
+              <div className="sign-up-loaction-drop-down">
+                {filterCurentCities.map((data) => (
+                  <p
+                    onClick={() => {
+                      setcity(data.City);
+                      setlocationDropDown(false);
+                    }}
+                  >
+                    {data.City}
+                  </p>
+                ))}
               </div>
+            )}
+          </div>
 
-              <div className="dealerType">
-                <div className="dealer-que">What type of user are you?</div>
-                <div className="dealerTypeOption">
-                  {dealerType.map((user_types, index) => (
-                    <div
-                      key={index}
-                      className={
-                        isTypeActive === index ? "dealer active" : "dealer"
-                      }
-                      onClick={() => {
-                        setuser_type(user_types.user_type);
-                        setIsTypeActive(index);
-                      }}
-                    >
-                      <span>{user_types.user_type}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  if (user_token) {
-                    LoggedenquiryApi();
-                  } else {
-                    enquiryApi(); //posting data into enquiry api
+          <div className="dealerType">
+            <div className="dealer-que">What type of user are you?</div>
+            <div className="dealerTypeOption">
+              {dealerType.map((user_types, index) => (
+                <div
+                  key={index}
+                  className={
+                    isTypeActive === index ? "dealer active" : "dealer"
                   }
-                }}
-              >
-                Get Contact Details
-              </button>
+                  onClick={() => {
+                    setuser_type(user_types.user_type);
+                    setIsTypeActive(index);
+                  }}
+                >
+                  <span>{user_types.user_type}</span>
+                </div>
+              ))}
             </div>
-          </Modal>
-        </div>
-      )}
-      {BuyerOtp && (
-        <div>
-          <Modal
-            visible={BuyerOtp}
-            width={matches ? "85%" : "35%"}
-            effect="fadeInUp"
-            onClickAway={() => {
-              setBuyerOtp(!BuyerOtp);
+          </div>
+
+          <button
+            onClick={() => {
+              if (user_token) {
+                LoggedenquiryApi();
+              } else {
+                enquiryApi(); //posting data into enquiry api
+              }
+              setCounter(25);
             }}
           >
-            <div className="buyer-otp-container">
-              <img
-                src={CloseTab}
-                alt=""
-                onClick={() => {
-                  setBuyerOtp(!BuyerOtp);
-                }}
-              ></img>
-              <div className="instruction-text">
-                6 digit code sent to mobile number
-              </div>
-              <div className="buyer-phone-number-input">
-                <input
-                  placeholder="Enter Phone Number"
-                  onChange={(e) => {
-                    setmob_no(e.target.value);
-                  }}
-                  value={mob_no}
-                ></input>
-                <img
-                  src={Edit}
-                  alt=""
-                  onClick={() => {
-                    setBuyerInput(!BuyerInput);
-                    setBuyerOtp(!BuyerOtp);
-                  }}
-                ></img>
-              </div>
-              <div className="enter-otp-text">Enter OTP to verify</div>
-              <OtpInput
-                containerStyle="otpStyle"
-                inputStyle="otBoxStyle"
-                numInputs={6}
-                separator={<span></span>}
-                value={otp}
-                type="number"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              ></OtpInput>
-              <div
-                className="new-otp-text"
+            Get Contact Details
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        visible={BuyerOtp}
+        width={matches ? "85%" : "35%"}
+        effect="fadeInLeft"
+        onClickAway={() => {
+          setBuyerOtp(!BuyerOtp);
+        }}
+      >
+        <div className="buyer-otp-container">
+          <img
+            src={CloseTab}
+            alt=""
+            onClick={() => {
+              setBuyerOtp(!BuyerOtp);
+            }}
+          ></img>
+          <div className="instruction-text">
+            6 digit code sent to mobile number
+          </div>
+          <div className="buyer-phone-number-input">
+            <input
+              placeholder="Enter Phone Number"
+              onChange={(e) => {
+                setmob_no(e.target.value);
+              }}
+              value={mob_no}
+            ></input>
+            <img
+              src={Edit}
+              alt=""
+              onClick={() => {
+                setBuyerInput(!BuyerInput);
+                setBuyerOtp(!BuyerOtp);
+              }}
+            ></img>
+          </div>
+          <div className="enter-otp-text">Enter OTP to verify</div>
+          <OtpInput
+            containerStyle="otpStyle"
+            inputStyle="otBoxStyle"
+            numInputs={6}
+            separator={<span></span>}
+            value={otp}
+            type="number"
+            onChange={(e) => {
+              handleChange(e);
+            }}
+          ></OtpInput>
+          <div className="new-otp-text">
+            {timerVisible && (
+              <p>
+                Get new OTP in
+                <span className="blue-text"> {counter} sec</span>
+              </p>
+            )}
+            {EnableResendOtp && (
+              <p
                 onClick={() => {
                   resendotp();
                 }}
+                className="blue-text"
               >
-                Get new OTP in 25 sec
-              </div>
-              <button
-                onClick={() => {
-                  if (userToken) {
-                    enquiryVerifyOtp(); //verify enquiry otp
-                  } else {
-                    enquiryVerifyOtp();
-                    signUpVeryfyOtp(); //hitting both api
-                  }
-                }}
-              >
-                Verify
-              </button>
-            </div>
-          </Modal>
-        </div>
-      )}
-      {SellerDetails && (
-        <div>
-          <Modal
-            visible={SellerDetails}
-            width={matches ? "85%" : "35%"}
-            effect="fadeInUp"
-            onClickAway={() => {
-              setSellerDetails(!SellerDetails);
+                Resend
+              </p>
+            )}
+          </div>
+          <button
+            onClick={() => {
+              if (userToken) {
+                enquiryVerifyOtp(); //verify enquiry otp
+              } else {
+                enquiryVerifyOtp();
+                signUpVeryfyOtp(); //hitting both api
+              }
             }}
           >
-            <div className="sellerDetailsContainer">
-              <img
-                src={CloseTab}
-                alt=""
-                onClick={() => {
-                  setSellerDetails(!SellerDetails);
-                }}
-              ></img>
-              <div className="userProfilePic">
-                <img src={imgurl + userObj?.profile_pic_url}></img>
-              </div>
-              <div className="userName">{userObj?.name}</div>
-              <hr></hr>
-              <input value={userObj?.name} placeholder="Name"></input>
-              <input value={userObj?.mob_no} placeholder="Phone Numer"></input>
-              <input value={userObj?.email} placeholder="Email"></input>
-            </div>
-          </Modal>
+            Verify
+          </button>
         </div>
-      )}
+      </Modal>
+
+      <Modal
+        visible={SellerDetails}
+        width={matches ? "85%" : "35%"}
+        effect="fadeInLeft"
+        onClickAway={() => {
+          setSellerDetails(!SellerDetails);
+        }}
+      >
+        <div className="sellerDetailsContainer">
+          <img
+            src={CloseTab}
+            alt=""
+            onClick={() => {
+              setSellerDetails(!SellerDetails);
+            }}
+          ></img>
+          <div className="userProfilePic">
+            <img src={imgurl + userObj?.profile_pic_url}></img>
+          </div>
+          <div className="userName">{userObj?.name}</div>
+          <hr></hr>
+          <input value={userObj?.name} placeholder="Name"></input>
+          <input value={userObj?.mob_no} placeholder="Phone Numer"></input>
+          <input value={userObj?.email} placeholder="Email"></input>
+        </div>
+      </Modal>
+
       <div className="filter-sort-button-div">
         <div
           className="filter-button"
